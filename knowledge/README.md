@@ -6,10 +6,10 @@
 
 | 学科 | 条目数 |
 |---|---|
-| [物理](物理/README.md) | 8 |
+| [物理](物理/README.md) | 16 |
 | [地理](地理/README.md) | 6 |
 | [科学](科学/README.md) | 1 |
-| **合计** | **15** |
+| **合计** | **23** |
 
 ## 目录约定
 
@@ -46,7 +46,13 @@
 | 来源 | 条目 |
 |---|---|
 | 出版社官方勘误表（[ev-014](../evidence/README.md) / ev-015） | 地理 6 条 · 科学 1 条 |
-| 跨教材对比（ev-001 / [ev-016](../evidence/README.md) / ev-018 / ev-019） | 物理 7 条 |
+| 跨教材对比（ev-001 / [ev-016](../evidence/README.md) / ev-018） | 物理 5 条 |
+| **OpenStax《Physics》Teacher Support**（[ev-020](../evidence/README.md)~ev-023，**CC BY**） | 物理 11 条 |
+
+> [!IMPORTANT]
+> **CC BY 来源正在成为主力。** `ev-018` 起接入的 OpenStax《Physics》是 **CC BY 4.0**，
+> 可自由复用（署名即可），而 `ev-016` 那本同社教材是 CC BY-NC-SA，只能引用定位。
+> **采集应优先在 CC BY 的源上做。**
 
 > [!IMPORTANT]
 > **这次清理不只是「换名字」。** 写 [类比选择与学段相关](物理/命题/类比选择与学段相关.md) 时，
