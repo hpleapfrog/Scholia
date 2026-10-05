@@ -11,11 +11,8 @@
 |---|---|
 | `knowledge/` | 本协议 |
 | `证据/`（本库原创部分） | 本协议；单个文件若另有许可，以 [证据/README.md](证据/README.md) 的「许可」列为准 |
-| `LICENSE` `CONTRIBUTORS.md` `DISCLAIMER.md` `README.md` | 本协议 |
-| `画像/` `投影/` | 本协议 |
-| 各目录下的 `README.md` | 本协议 |
-| `docs/00` `docs/01` | 本协议 |
-| `tools/`、`docs/diagrams/`、`docs/02-Markdown存储格式.md` | **MIT**，见 [LICENSE-CODE](LICENSE-CODE) |
+| `README.md` `CONTRIBUTING.md` `LICENSE` | 本协议 |
+| `FORMAT.md` `tools/` | **MIT**，见 [LICENSE-CODE](LICENSE-CODE) |
 
 ## 你可以自由地
 
@@ -33,9 +30,9 @@
 
 CC BY-SA 4.0 第 3(a)(1) 条允许以「合理方式」署名。本库条目数量庞大，逐条署名不现实，因此统一采用以下方式：
 
-- **署名主体**：本项目全体贡献者，名单见 [CONTRIBUTORS.md](CONTRIBUTORS.md)
-- **具体条目的作者**：见该文件 front-matter 的 `author` 字段，以及 Git 提交历史
-- **复用本库内容时**：保留一条指向本仓库与 `CONTRIBUTORS.md` 的链接，即视为满足署名要求
+- **署名主体**：本项目全体贡献者，见 Git 提交历史
+- **具体条目的作者**：见该文件 front-matter 的 `author` 字段
+- **复用本库内容时**：保留一条指向本仓库的链接，即视为满足署名要求
 
 > [!IMPORTANT]
 > 「相同方式共享」是本协议的核心：**任何人都可以拿本库去用、去改、去卖，但衍生品必须同样开放。**
@@ -54,4 +51,4 @@ CC BY-SA 4.0 第 3(a)(1) 条允许以「合理方式」署名。本库条目数�
 ## 无担保
 
 本库内容按「现状」提供，不附带任何明示或默示的担保。
-**使用前请务必阅读 [DISCLAIMER.md](DISCLAIMER.md)。**
+**使用前请务必阅读 [README.md](README.md) 的「免责」一节。**

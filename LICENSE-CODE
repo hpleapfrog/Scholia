@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 本项目贡献者（见 CONTRIBUTORS.md）
+Copyright (c) 2026 本项目贡献者（见 Git 提交历史）
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,7 @@ SOFTWARE.
 
 | 路径 | 说明 |
 |---|---|
-| `tools/` | 校验器、求值器、投影脚本 |
-| `docs/diagrams/` | 图表生成脚本 |
-| `docs/02-Markdown存储格式.md` | **格式规范** |
+| `tools/` | `kbcheck.py` —— 格式与图级校验器 |
+| `FORMAT.md` | **格式规范** |
 
 格式规范刻意采用宽松许可：**若格式本身带共享条款，他人实现它就会有法律顾虑——那等于亲手阻止自己的格式成为标准。**

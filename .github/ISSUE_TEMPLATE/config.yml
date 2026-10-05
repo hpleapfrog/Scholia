@@ -3,9 +3,9 @@ contact_links:
   - name: 💬 提问 / 方法论 / 探索性想法
     url: https://github.com/hpleapfrog/Scholia/discussions
     about: 这些内容请走 Discussions，不走 Issue —— Discussions 里的主张在升级为 Issue + PR 之前，对结论零影响。
-  - name: 📖 贡献指南与治理规则
+  - name: 📖 贡献指南与状态规则
     url: https://github.com/hpleapfrog/Scholia/blob/main/CONTRIBUTING.md
-    about: 先读这里：三个通道的分工、证据门槛、状态规则。
+    about: 先读这里：三个通道的分工、证据门槛、状态规则、最小权力起步。
   - name: ⚠️ 免责声明
-    url: https://github.com/hpleapfrog/Scholia/blob/main/DISCLAIMER.md
-    about: 本库不构成医疗、法律或其他专业建议。使用前必须阅读。
+    url: https://github.com/hpleapfrog/Scholia/blob/main/README.md#免责
+    about: 这不是教材，也不构成医疗、法律或其他专业建议。使用前必须阅读。

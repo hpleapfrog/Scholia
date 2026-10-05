@@ -11,7 +11,7 @@
 ## 我是否手改了 `status`？
 
 - [ ] **没有**，`status` 我没有动
-- [ ] 有，我按 [GOVERNANCE](../GOVERNANCE.md) 第 2 节的规则改了，依据写在下面
+- [ ] 有，我按 [CONTRIBUTING](../CONTRIBUTING.md) 的规则改了，依据写在下面
 
 > 只有状态真的变了才勾第二项。改状态必须写明依据哪几条存活论证。
 

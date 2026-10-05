@@ -2,16 +2,17 @@
 # -*- coding: utf-8 -*-
 """机械校验：不依赖任何密钥、不依赖任何第三方库。
 
-校验项目里所有知识对象是否符合 docs/02-Markdown存储格式.md 的规范。
+校验项目里所有知识对象是否符合 FORMAT.md 的规范。
 
 用法:
     python tools/kbcheck.py
 
 退出码:
     0  全部通过
-    1  有不符合规范之处（CI 会据此判定失败）
+    1  有不符合规范之处
 
-这一层刻意放在 AI 之前：格式都不合法，就没必要花钱调模型。
+它查的是**人读不出来的东西**：单看一个文件都没问题，问题只在文件之间
+（id 冲突、链接可达性、教法禁忌是否为空）。
 """
 import collections
 import os
@@ -107,6 +108,9 @@ def check_all():
                 for sec in REQUIRED_SECTIONS[t]:
                     if f"## {sec}" not in text:
                         errors.append(f"{rel}: 缺必备小节「{sec}」")
+                # FORMAT.md §5：所有类型都必须有 ## 论证（草案下可留空）
+                if "## 论证" not in text:
+                    errors.append(f"{rel}: 缺必备小节「论证」（所有类型都必须有）")
 
             if i in ids:
                 errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}")
