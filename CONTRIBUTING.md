@@ -106,6 +106,19 @@ git push origin fix/ohm-law-temperature
 
 ## 五、提交前自检
 
+**先跑一遍校验：**
+
+```bash
+python tools/kbcheck.py
+```
+
+它查的是**人读不出来的东西**——单看一个文件都没问题，问题只在文件之间：`id` 有没有撞、链接是否可达、必备小节齐全吗、教法禁忌是不是空的。
+
+> [!IMPORTANT]
+> 这是**手动挡：你得自己跑。** 仓库目前没有 CI
+> （见 [GOVERNANCE](GOVERNANCE.md) 触发条件 C）。不通过就先修，别提 PR。
+
+- [ ] 我跑过 `python tools/kbcheck.py`，**并且通过**
 - [ ] 我只改了该改的东西，没有顺手重排别人的内容
 - [ ] front-matter 字段完整（`id` `type` `title` `status` `author` `created` `updated` `scope` `edges` `evidence` `license`）
 - [ ] 每条证据都有可核验定位，且已登记进 [证据索引](证据/README.md)
