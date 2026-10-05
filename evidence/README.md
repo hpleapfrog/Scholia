@@ -28,6 +28,7 @@
 | ev-017 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.1 Current，[m42341](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42341/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 电流（备用） |
 | ev-018 | 教材（全文） | 低 | OpenStax《Physics》§19.2 Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 欧姆定律 · 水管类比 · 电流方向误解 · 类比选择与学段相关 |
 | ev-019 | 教材（全文） | 低 | OpenStax《Physics》§19.3 Series Circuits，[m54435](https://github.com/openstax/osbooks-physics/blob/main/modules/m54435/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 水管类比（做法与禁忌） |
+| ev-020 | 教材（全文） | 低 | OpenStax《Physics》**全 23 章 / 98 模块**的 Teacher Support 教学提示（580 条，含 649 个分组标记），[仓库](https://github.com/openstax/osbooks-physics) | 2020 | **CC BY 4.0** · **可自由复用** | 教材内建分组教学变体 |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，
