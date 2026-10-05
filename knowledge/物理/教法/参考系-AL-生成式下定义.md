@@ -2,6 +2,7 @@
 id: kb:physics:method-frame-al-generative-definition
 type: 教法
 title: 参考系 · 进阶：让学生自己下定义并互相检验
+knowledge_point: ["[参考系](../知识点/参考系.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05

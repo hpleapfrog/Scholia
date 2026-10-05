@@ -2,6 +2,7 @@
 id: kb:physics:method-speed-al-socratic
 type: 教法
 title: 速度与速率 · 进阶：苏格拉底式追问 + 平均速度反例
+knowledge_point: ["[速度与速率](../知识点/速度与速率.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05

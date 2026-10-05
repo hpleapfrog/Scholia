@@ -2,6 +2,7 @@
 id: kb:physics:method-frame-ol-guided-discovery
 type: 教法
 title: 参考系 · 年级水平：从「位置是什么」提问引导
+knowledge_point: ["[参考系](../知识点/参考系.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05

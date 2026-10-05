@@ -2,6 +2,7 @@
 id: kb:physics:method-ptgraph-bl-ol-narrative
 type: 教法
 title: 位置-时间图 · 低于/年级水平：情境叙事 → 学生画图
+knowledge_point: ["[位置-时间图](../知识点/位置-时间图.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05

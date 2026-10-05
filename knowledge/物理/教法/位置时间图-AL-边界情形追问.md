@@ -2,6 +2,7 @@
 id: kb:physics:method-ptgraph-al-boundary-cases
 type: 教法
 title: 位置-时间图 · 进阶：用边界情形逼问理想化
+knowledge_point: ["[位置-时间图](../知识点/位置-时间图.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
