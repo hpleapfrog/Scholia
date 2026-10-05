@@ -81,7 +81,7 @@ python tools/kbcheck.py
 
 | 部分 | 许可 |
 |---|---|
-| 知识内容（`knowledge/` `证据/` `README.md` `FORMAT.md`） | **CC BY-SA 4.0** —— [LICENSE](LICENSE) |
+| 知识内容（`knowledge/` `evidence/` `README.md` `FORMAT.md`） | **CC BY-SA 4.0** —— [LICENSE](LICENSE) |
 | 代码（`tools/`） | **MIT** —— [LICENSE-CODE](LICENSE-CODE) |
 
 知识内容用 **ShareAlike**：可以拿去用、改、甚至卖，但**衍生品必须同样开放**——防止社区维护的勘误成果被封闭圈占。
@@ -105,7 +105,7 @@ python tools/kbcheck.py
 
 ```
 knowledge/   知识对象：命题 · 教法 · 误解 · 路径 · 资源
-证据/        证据索引与可复算的原始数据
+evidence/    证据索引与可复算的原始数据
 tools/       kbcheck.py（唯一的脚本）
 ```
 

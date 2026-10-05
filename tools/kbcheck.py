@@ -47,6 +47,9 @@ REQUIRED_SECTIONS = {
 # 禁止在知识对象里出现的结论性用语（AI 或人都不能写）
 FORBIDDEN_PHRASES = []
 
+# 没有 .md 扩展名、但含 Markdown 链接的文档，必须一并检查
+EXTRA_TEXT_FILES = ["LICENSE", "LICENSE-CODE"]
+
 
 def parse_front_matter(text):
     """取出 front-matter 原文；没有则返回 None。"""
@@ -65,20 +68,29 @@ def fm_value(fm, key):
     return m.group(1).strip().strip('"') if m else None
 
 
-def scan_markdown():
+def scan_text_files():
+    """所有含 Markdown 链接的文档。
+
+    注意：不只是 .md —— LICENSE / LICENSE-CODE 没有扩展名，但同样含相对链接。
+    漏掉它们会形成盲区（曾真实漏掉一处引用）。
+    """
     files = []
     for base, dirs, names in os.walk(ROOT):
         dirs[:] = [d for d in dirs if d not in {".git", "node_modules", "__pycache__"}]
         for n in names:
             if n.endswith(".md"):
                 files.append(Path(base) / n)
+    for n in EXTRA_TEXT_FILES:
+        p = ROOT / n
+        if p.exists():
+            files.append(p)
     return sorted(files)
 
 
 def check_all():
     errors = []
     ids = {}
-    md_files = scan_markdown()
+    md_files = scan_text_files()
 
     for path in md_files:
         rel = path.relative_to(ROOT).as_posix()
@@ -146,7 +158,7 @@ def check_all():
 def main():
     md_files, ids, errors = check_all()
 
-    print(f"扫描 {len(md_files)} 个 markdown 文件，识别知识对象 {len(ids)} 条")
+    print(f"扫描 {len(md_files)} 个文档，识别知识对象 {len(ids)} 条")
     print()
 
     if errors:
