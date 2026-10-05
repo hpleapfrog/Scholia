@@ -1,0 +1,71 @@
+name: 新增教法
+description: 提交一种教学做法。必须包含适用条件与禁忌
+title: "[教法] "
+labels: ["type:method"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]
+        > **方法没有对错，只有对谁、在什么条件下。**
+        > 说不清禁忌，说明证据还不够 —— 这条会被退回。
+
+  - type: input
+    id: target
+    attributes:
+      label: 目标知识点
+      placeholder: knowledge/物理/命题/电流.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: technique
+    attributes:
+      label: 做法是什么
+      description: 具体到别人能照着做。不要写"因材施教"这种无法执行的话。
+    validations:
+      required: true
+
+  - type: textarea
+    id: conditions
+    attributes:
+      label: 适用条件
+      description: 先修水平 / 年龄段 / 班级规模 / 设备 / 语言 / 文化背景
+    validations:
+      required: true
+
+  - type: textarea
+    id: contraindications
+    attributes:
+      label: 对谁不适用？理由是什么？（必填）
+      description: 填不出来就说明证据不足。例如「对物理系本科生不适用：先修过高，类比会固化错误直觉」
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 证据
+      description: 课堂经验在教法里是合法证据，但请标注样本量（多少个班 / 多少名学生）。
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 效果怎么衡量
+      description: 后测正确率 / 迁移测验 / 留存率 / 时间成本。没有量化也可以，但请说明。
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我知道教法**不能**标为「已确证」——它只能「有效」或「争议」
+          required: true
+        - label: 我填了「禁忌」栏
+          required: true
+        - label: 我理解 👍 点赞不作为判定依据
+          required: true

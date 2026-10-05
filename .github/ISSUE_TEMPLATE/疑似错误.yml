@@ -1,0 +1,61 @@
+name: 疑似错误
+description: 报告某条知识点可能存在的事实、单位、引用或时效问题
+title: "[疑似错误] "
+labels: ["type:claim", "status:待审"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提交前请确认：**这是一个可判定的问题**（能回答"是 / 否 / 证据不足"）。
+        开放式的讨论请走 [Discussions](https://github.com/hpleapfrog/Scholia/discussions) —— 那里不影响结论。
+
+  - type: input
+    id: node
+    attributes:
+      label: 知识点文件路径或 id
+      placeholder: knowledge/物理/命题/欧姆定律.md
+    validations:
+      required: true
+
+  - type: dropdown
+    id: error_kind
+    attributes:
+      label: 属于哪种问题
+      options:
+        - 数值错误
+        - 单位 / 量纲错误
+        - 引用错误（文献不存在、页码不对）
+        - 内容过时
+        - 表述陷阱（容易导致误解）
+        - 与现行指南 / 标准冲突
+        - 缺失前提条件
+    validations:
+      required: true
+
+  - type: textarea
+    id: basis
+    attributes:
+      label: 你的依据（必须可核验）
+      description: ISBN+版次+页码 / DOI / 官方条款号 / 数据 / 可复算脚本。过不了门槛的依据不会进入判定。
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 该问题在什么范围、对谁成立？
+      description: 例如「仅对初中口径成立」「在温度剧烈变化时不成立」
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我没有上传教材原文或扫描页
+          required: true
+        - label: 我理解 👍 点赞不作为判定依据
+          required: true
+        - label: 我理解结论由证据等级与反驳关系决定，不由人数决定
+          required: true

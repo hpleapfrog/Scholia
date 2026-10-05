@@ -1,0 +1,57 @@
+name: 先修关系争议
+description: 质疑"必须先学 A 才能学 B"这类断言
+title: "[先修] "
+labels: ["type:path"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **先修关系本身也是命题，不是配置项。**
+        所以「学导数必须先学极限」这句话可以被反驳、被攻击、被判为争议。
+
+  - type: input
+    id: edge
+    attributes:
+      label: 涉及的先修边
+      placeholder: 电流 → 欧姆定律
+    validations:
+      required: true
+
+  - type: dropdown
+    id: claim
+    attributes:
+      label: 你的主张
+      options:
+        - 这条先修是多余的（可以跳过）
+        - 这条先修不充分（还需要别的）
+        - 这条先修顺序反了
+        - 这条先修只对特定人群成立
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: 理由
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 证据
+      description: |
+        **学习数据优先**——例如学过 X 再学 Y 与直接学 Y 的通过率差异。
+        个人经验也可以，但请说明样本量。
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我理解先修关系属于「命题」，同样要遵守证据门槛
+          required: true
+        - label: 我理解 👍 点赞不作为判定依据
+          required: true
