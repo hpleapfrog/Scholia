@@ -18,15 +18,23 @@
 |---|---|---|---|---|---|---|
 | ev-001 | 教材 | 低 | 《义务教育教科书·物理》九年级全一册，人教版，2013，P.79 | 2013 | 外部来源 · 仅引用定位 | 欧姆定律 · 电压符号差异 |
 | ev-002 | 实验数据 | 高 | [导体U-I数据.csv](导体U-I数据.csv)（可复算） | 2026 | CC-BY-SA-4.0（本库） | 欧姆定律 |
-| ev-009 | 课堂经验 | 低 | 某校初三 2 个班对照观察，n = 92 | 2026 | CC-BY-SA-4.0（本库） | 水管类比 |
-| ev-010 | 教学观察 | 低 | 本科物理课观察，n = 1 个班 | 2026 | CC-BY-SA-4.0（本库） | 水管类比（禁忌） |
-| ev-011 | 课堂测评 | 低 | 初三学完后测，误解率约 30%，n = 92 | 2026 | CC-BY-SA-4.0（本库） | 误解：把电压当成水流速度 |
-| ev-012 | 课堂测评 | 低 | 高中生测评，误解率约 12%，n = 210 | 2026 | CC-BY-SA-4.0（本库） | 误解：把电压当成水流速度 |
+| ev-009 | ⚠️ **已作废** | — | 本库**构造的示例数据**（「某校初三 2 个班对照观察」），**从未真实存在** | — | — | 无（原引用条目已重写） |
+| ev-010 | ⚠️ **已作废** | — | 本库**构造的示例数据**（「本科物理课观察」），**从未真实存在** | — | — | 无（原引用条目已重写） |
+| ev-011 | ⚠️ **已作废** | — | 本库**构造的示例数据**（「初三学完后测」），**从未真实存在** | — | — | 无（原引用条目已删除） |
+| ev-012 | ⚠️ **已作废** | — | 本库**构造的示例数据**（「高中生测评」），**从未真实存在** | — | — | 无（原引用条目已删除） |
 | ev-014 | **出版社勘误表** | **高** | OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，[PDF](https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf) | 2024 | 外部来源 · 仅引用定位 | 地理勘误 ×6 |
 | ev-015 | **出版社勘误表** | **高** | 雅集《科學新世紀 1A》勘誤表，[ZIP](https://e-aristo.hk/t/downloads/science/scicent_amendments_2024_c.zip) | 2024 | 外部来源 · 仅引用定位 | 科学勘误 ×1 |
 | ev-016 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.3 Ohm's Law: Resistance and Simple Circuits，[m42344](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42344/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 摩擦类比 · 局限性位置 · 电压符号差异 |
 | ev-017 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.1 Current，[m42341](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42341/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 电流（备用） |
-| ev-018 | 教材（全文） | 低 | OpenStax《Physics》§19.2 Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 类比选择与学段相关 · 摩擦类比 |
+| ev-018 | 教材（全文） | 低 | OpenStax《Physics》§19.2 Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 欧姆定律 · 水管类比 · 电流方向误解 · 类比选择与学段相关 |
+| ev-019 | 教材（全文） | 低 | OpenStax《Physics》§19.3 Series Circuits，[m54435](https://github.com/openstax/osbooks-physics/blob/main/modules/m54435/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 水管类比（做法与禁忌） |
+
+> [!CAUTION]
+> **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，
+> 描述中的课堂观察与测评从未发生过。
+>
+> 编号**不回收**（保留痕迹），但**不得再被任何条目引用**。
+> 引用它们的 3 个条目已于 2026-10-05 全部重写或删除。
 
 > [!NOTE]
 > **编号不连续是有意的。** `ev-xxx` 一旦分配就不再改变——删掉条目也不会回收编号，
