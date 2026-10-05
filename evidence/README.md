@@ -26,6 +26,7 @@
 | ev-015 | **出版社勘误表** | **高** | 雅集《科學新世紀 1A》勘誤表，[ZIP](https://e-aristo.hk/t/downloads/science/scicent_amendments_2024_c.zip) | 2024 | 外部来源 · 仅引用定位 | 科学勘误 ×1 |
 | ev-016 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.3 Ohm's Law: Resistance and Simple Circuits，[m42344](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42344/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 摩擦类比 · 局限性位置 · 电压符号差异 |
 | ev-017 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.1 Current，[m42341](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42341/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 电流（备用） |
+| ev-018 | 教材（全文） | 低 | OpenStax《Physics》§19.2 Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 类比选择与学段相关 · 摩擦类比 |
 
 > [!NOTE]
 > **编号不连续是有意的。** `ev-xxx` 一旦分配就不再改变——删掉条目也不会回收编号，
@@ -60,6 +61,22 @@
 |---|---|---|
 | 「出版社声明 p.13 漏字」 | 读勘误表 | ✅ **够** |
 | 「教材 p.13 真的漏字」 | 翻开教材 | ❌ 不够（勘误表可能滞后，新印次或已修正） |
+
+### 开放教材的许可分两档，别混
+
+`ev-016`~`ev-018` 都来自 OpenStax，但许可不同：
+
+| 教材 | 许可 | 能做什么 |
+|---|---|---|
+| OpenStax《Physics》 | **CC BY 4.0** | 可自由复用正文（署名即可） |
+| OpenStax《College Physics 2e》 | **CC BY-NC-SA 4.0** | **只能引用定位与短引用**，不可复用正文 |
+
+**筛查结果**：OpenStax 的 55 个教材仓库中，只有 **13 个是 CC BY**，其余 **41 个含 NC**。
+
+> [!IMPORTANT]
+> **本库是 CC BY-SA 4.0（无 NC），与 NC 内容不兼容。**
+> **同一出版社的书，许可可能不同，必须逐本查**——本例中《Physics》是 CC BY，
+> 而同社的《College Physics 2e》和《University Physics》都是 CC BY-NC-SA。
 
 ## 原始数据
 
