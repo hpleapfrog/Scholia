@@ -32,6 +32,7 @@
 | ev-021 | 教材（全文） | 低 | OpenStax《Physics》§2.1 Relative Motion, Distance, and Displacement，[m54108](https://github.com/openstax/osbooks-physics/blob/main/modules/m54108/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 参考系教法 ×3 · 参考系误解 |
 | ev-022 | 教材（全文） | 低 | OpenStax《Physics》§2.2 Speed and Velocity，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 速度与速率教法 ×2 |
 | ev-023 | 教材（全文） | 低 | OpenStax《Physics》§2.3 Position vs. Time Graphs，[m54110](https://github.com/openstax/osbooks-physics/blob/main/modules/m54110/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 位置-时间图教法 ×2 |
+| ev-024 | 教材（全文） | 低 | Utah State Board of Education《7th Grade Science》（SEEd 标准），[PDF](https://www.uen.org/emedia/resources/oer/7thGradeSEEd.pdf)，148 页 | 2020 | **CC BY-NC-SA 3.0** · **仅引用定位与短语** | 力与运动（初中）· 现象探究循环 |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，
@@ -61,6 +62,33 @@
 >
 > 同时，**单一课堂经验在教法里是合法证据**——教法条件性强、迁移性差，
 > 把医学标准硬套过来会把有效的本土经验全部滤掉。
+
+### 一个真实的不对称：初中级开放教材几乎都是 NC
+
+采集时发现的规律，记录在此以免重复踩：
+
+| 学段 | 来源 | 许可 |
+|---|---|---|
+| **高中** | OpenStax《Physics》（`osbooks-physics`） | **CC BY 4.0** ✅ 可自由复用 |
+| **初中** | Utah State Board of Education 6 / 7 / 8 年级科学 | **CC BY-NC-SA 3.0** ❌ 仅可引用 |
+| 初中（上游） | CK-12 Foundation（Utah 教材的内容来源） | **CC BY-NC** ❌ 仅可引用 |
+
+> [!WARNING]
+> **高中级能自由复用，初中级只能引用。**
+>
+> 美国中学 OER 大量基于 CK-12，而 CK-12 是 **NC**。
+> 所以「扩充到初中知识点」在许可上比高中**更受限**——
+> 条目只能写**我们自己的摘要 + 短语级引用**，不能搬用教材表述。
+
+### 另一类限制：初中教材多没有教学指导
+
+| 来源 | 有结构化教学指导吗 |
+|---|---|
+| OpenStax《Physics》 | ✅ **580 条 Teacher Support**，含 649 个分组标记 |
+| Utah 7 年级 | ❌ 学生用书，**没有** Teacher Support / misconception 标注 |
+
+**含义**：初中源能提供**知识内容与学段边界**（如"矢量推迟到高中"），
+但**提供不了分档教法**。初中级的 `教法` 需要另找来源，或由教师贡献。
 
 ### 一类特殊的高等级证据：出版社勘误表
 
