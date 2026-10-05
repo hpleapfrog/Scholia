@@ -2,6 +2,7 @@
 id: kb:physics:method-speed-bl-ol-everyday-language
 type: 教法
 title: 速度与速率 · 低于/年级水平：从日常用语切入
+knowledge_point: ["[速度与速率](../知识点/速度与速率.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05

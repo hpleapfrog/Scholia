@@ -2,6 +2,7 @@
 id: kb:physics:method-frame-bl-multi-viewpoint
 type: 教法
 title: 参考系 · 低于年级水平：多个参考点并置观察
+knowledge_point: ["[参考系](../知识点/参考系.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
