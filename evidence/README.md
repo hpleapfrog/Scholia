@@ -29,6 +29,9 @@
 | ev-018 | 教材（全文） | 低 | OpenStax《Physics》§19.2 Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 欧姆定律 · 水管类比 · 电流方向误解 · 类比选择与学段相关 |
 | ev-019 | 教材（全文） | 低 | OpenStax《Physics》§19.3 Series Circuits，[m54435](https://github.com/openstax/osbooks-physics/blob/main/modules/m54435/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 水管类比（做法与禁忌） |
 | ev-020 | 教材（全文） | 低 | OpenStax《Physics》**全 23 章 / 98 模块**的 Teacher Support 教学提示（580 条，含 649 个分组标记），[仓库](https://github.com/openstax/osbooks-physics) | 2020 | **CC BY 4.0** · **可自由复用** | 教材内建分组教学变体 |
+| ev-021 | 教材（全文） | 低 | OpenStax《Physics》§2.1 Relative Motion, Distance, and Displacement，[m54108](https://github.com/openstax/osbooks-physics/blob/main/modules/m54108/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 参考系教法 ×3 · 参考系误解 |
+| ev-022 | 教材（全文） | 低 | OpenStax《Physics》§2.2 Speed and Velocity，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 速度与速率教法 ×2 |
+| ev-023 | 教材（全文） | 低 | OpenStax《Physics》§2.3 Position vs. Time Graphs，[m54110](https://github.com/openstax/osbooks-physics/blob/main/modules/m54110/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 位置-时间图教法 ×2 |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，
