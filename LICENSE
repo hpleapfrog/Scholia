@@ -10,7 +10,7 @@
 | 路径 | 许可 |
 |---|---|
 | `knowledge/` | 本协议 |
-| `证据/`（本库原创部分） | 本协议；单个文件若另有许可，以 [证据/README.md](证据/README.md) 的「许可」列为准 |
+| `evidence/`（本库原创部分） | 本协议；单个文件若另有许可，以 [evidence/README.md](evidence/README.md) 的「许可」列为准 |
 | `README.md` `CONTRIBUTING.md` `LICENSE` | 本协议 |
 | `FORMAT.md` `tools/` | **MIT**，见 [LICENSE-CODE](LICENSE-CODE) |
 
@@ -45,7 +45,7 @@ CC BY-SA 4.0 第 3(a)(1) 条允许以「合理方式」署名。本库条目数�
 > 事实与数据本身不受版权保护，受版权保护的是**表达**。
 
 - 引用第三方证据（论文、指南、数据集、教材）时，遵守其原始许可协议
-- 每条证据的来源与许可见 [证据/README.md](证据/README.md) 的「许可」列
+- 每条证据的来源与许可见 [evidence/README.md](evidence/README.md) 的「许可」列
 - 若你认为本库内容侵犯了你的权利，请提 Issue，我们会及时处理
 
 ## 无担保
