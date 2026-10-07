@@ -27,7 +27,7 @@ TYPES = {"知识点", "命题", "教法", "误解", "路径", "资源"}
 
 ALLOWED_STATUS = {
     "知识点": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
-    "命题": {"草案", "待审", "争议", "暂定确认", "已确证", "已推翻", "需复审", "已失效"},
+    "命题": {"草案", "待审", "争议", "暂定确认", "已确证", "已推翻", "失据", "需复审", "已失效"},
     "教法": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
     "误解": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
     "资源": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
@@ -138,6 +138,51 @@ def section_body(text, name):
     rest = text[m.end():]
     nxt = re.search(r"^##\s+", rest, re.M)
     return rest[:nxt.start()] if nxt else rest
+
+
+# 论证 ID 形如 `### A1 · …` / `### M2 · …` / `### K3 · …`
+ARG_ID = re.compile(r"^###\s+([A-Z]+\d+)\s*[·:：]", re.M)
+
+
+def arg_ids(text):
+    """取条目 `## 论证` 下的论证 ID 集合（小写）。"""
+    body = section_body(text, "论证")
+    return {x.lower() for x in ARG_ID.findall(body or "")}
+
+
+def check_arguments(objects, errors):
+    """`支持` / `攻击` 边必须落到**具体某个论证**上。
+
+    这是本库的核心机制（论证被攻击 → 存活集合 → 状态），
+    所以边不能只指向条目，必须带论证锚点。
+    """
+    for rel, o in objects.items():
+        for key in ("支持", "攻击"):
+            for tgt in fm_links(o["fm"], key):
+                anchor = tgt.split("#")[1].strip().lower() if "#" in tgt else ""
+                r = resolve_link(o["path"], tgt)
+                dest = objects.get(r) if r else None
+                if dest is None:
+                    errors.append(f"{rel}: `{key}` 指向的不是知识对象 -> {tgt}")
+                    continue
+                if not anchor:
+                    errors.append(
+                        f"{rel}: `{key}` 必须带论证锚点（如 `#a1`）-> {tgt}"
+                        f"；只指向条目无法定位被攻击的是哪条论证")
+                    continue
+                ids = arg_ids(dest["text"])
+                if not ids:
+                    errors.append(f"{rel}: `{key}` 指向的条目里没有可定位的论证 ID -> {tgt}")
+                elif anchor not in ids:
+                    errors.append(
+                        f"{rel}: `{key}` 的锚点 `#{anchor}` 在目标条目里不存在"
+                        f"（该条目可用: {', '.join('#' + x for x in sorted(ids))}）")
+
+        # 同一条目内论证 ID 必须唯一
+        raw = [x.lower() for x in ARG_ID.findall(section_body(o["text"], "论证") or "")]
+        dup = [x for x, c in collections.Counter(raw).items() if c > 1]
+        if dup:
+            errors.append(f"{rel}: `## 论证` 里论证 ID 重复 {sorted(set(dup))}")
 
 
 def check_graph(objects, errors, warnings):
@@ -363,6 +408,7 @@ def check_all():
 
     # 图校验：单看一个文件查不出来的那部分
     check_graph(objects, errors, warnings)
+    check_arguments(objects, errors)
     check_paths(objects, errors, warnings)
     stats = check_path_outcomes(objects, errors, warnings)
 
@@ -395,9 +441,10 @@ def main():
     print("  · id 唯一")
     print("  · 相对链接全部可达")
     print("  · 必备小节齐全")
-    print("  ── 以下四项是单看一个文件查不出来的 ──")
+    print("  ── 以下五项是单看一个文件查不出来的 ──")
     print("  · `先修` 边只连「知识点」，且无环")
     print("  · `教法` 都有 `knowledge_point`，且指向「知识点」")
+    print("  · `支持` / `攻击` 边都落在具体论证上（锚点存在）")
     print("  · 每条路径的「先修缺口」已机械校验（无缺口）")
     for rel, (cov, total) in sorted(stats.items()):
         print(f"  · 目标覆盖度：{Path(rel).stem} —— {cov}/{total} "
