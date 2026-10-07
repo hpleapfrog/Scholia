@@ -68,7 +68,7 @@ license: CC-BY-SA-4.0
 
 | 编号 | 类型 | 等级 | 定位 | 许可 |
 |---|---|---|---|---|
-| ev-026 | 教材（全文） | 低 | OpenStax《Physics》§16.1，[m54357](https://github.com/openstax/osbooks-physics/blob/main/modules/m54357/index.cnxml) | **CC BY 4.0** |
+| ev-026 | 教材（全文） | 低 | OpenStax《Physics》第 16 章 · ，[m54357](https://github.com/openstax/osbooks-physics/blob/main/modules/m54357/index.cnxml) | **CC BY 4.0** |
 
 ## 论证
 

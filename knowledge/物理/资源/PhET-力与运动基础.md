@@ -27,7 +27,7 @@ license: CC-BY-SA-4.0
 | 资源名 | PhET Interactive Simulations — **Forces and Motion: Basics** |
 | 直达链接 | <https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_en.html> |
 | 教材内的入口 | `https://openstax.org/l/forcesandmotion`（短链，实测解析到上面那个直达链接） |
-| 教材出处 | OpenStax《Physics》§4.2 Newton's First Law: Inertia，模块 [m54138](https://github.com/openstax/osbooks-physics/blob/main/modules/m54138/index.cnxml) |
+| 教材出处 | OpenStax《Physics》第 4 章 · Newton's First Law: Inertia，模块 [m54138](https://github.com/openstax/osbooks-physics/blob/main/modules/m54138/index.cnxml) |
 | 运行方式 | 浏览器内运行，**无需安装** |
 | 归属学科 | [惯性](../知识点/惯性.md) |
 

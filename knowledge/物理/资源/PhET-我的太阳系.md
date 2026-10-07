@@ -28,7 +28,7 @@ license: CC-BY-SA-4.0
 | 资源名 | PhET Interactive Simulations — **My Solar System** |
 | 直达链接 | <https://phet.colorado.edu/sims/html/my-solar-system/latest/my-solar-system_en.html> |
 | 教材内的入口 | `https://openstax.org/l/28mysolar`（短链，实测解析到 PhET 的 legacy 页面） |
-| 教材出处 | OpenStax《Physics》§7.2 Kepler's Laws of Planetary Motion，模块 [m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) |
+| 教材出处 | OpenStax《Physics》第 7 章 · Kepler's Laws of Planetary Motion，模块 [m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) |
 | 运行方式 | 浏览器内运行，**无需安装** |
 | 归属学科 | [开普勒定律](../知识点/开普勒定律.md) |
 
