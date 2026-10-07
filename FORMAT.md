@@ -128,6 +128,41 @@ knowledge_point: ["[参考系](../知识点/参考系.md)"]
 
 `tools/kbcheck.py` 会校验该链接**必须指向一个 `知识点` 类型的条目**。
 
+### `水平档` 记什么（以及它的证据基础）
+
+`教法` 的 `scope.水平档` 记的是**教材标记的跨度**——该条建议被标给了哪些群体。
+
+> [!IMPORTANT]
+> **一条建议可以同时标给多个群体。** 源文件里标记挂在 `<para>` 上：
+>
+> ```xml
+> <para><span>[BL]</span><span>[OL]</span> You may want to introduce…</para>
+> <para><span>[AL]</span> Explain that the reference frames…</para>
+> ```
+>
+> 所以 `水平档` 应当写成 **`低于年级水平 / 年级水平（BL / OL）`** 这种**跨度**，
+> **不是**从里面挑一个。
+
+> [!CAUTION]
+> **四个缩写的展开式在教材里没有图例。**
+>
+> 实测（见 [`evidence/os-teacher-markers.py`](evidence/os-teacher-markers.py)）：
+> `Below Level` 全书**只出现一次**（且是在散文里），`Advanced Learners` **一次都没有**。
+> 只有 `English Learners` 有旁证（m54057 里 `[BL][EL]` 后紧跟 `English learners may need…`）。
+>
+> **所以「`[BL]` = 低于年级水平」是对常见教育缩写的推断，不是引用。**
+> **本库的 `(知识点 × 水平档)` 模型建立在这个推断上。**
+
+> [!WARNING]
+> **`[EL]`（English Learners）不是水平档，是语言身份**，不要与其他三个并列为「分档标记」。
+
+**统计口径必须连同规则与 commit 给出。** 同一份源文件，两种口径不同：
+
+| 口径 | 含义 | 结果 |
+|---|---|---|
+| **宽松** | `os-teacher` note 文本里出现该字符串 | 648（BL 207 / OL 245 / AL 191 / EL 5） |
+| **严格** | 标记是 `<para>` 开头的连续 `<span>` | 637（EL **0**——它常是裸文本） |
+
 ### `路径` 的额外必填字段：`outcomes`
 
 `路径` 必须声明**可观测的学习成果**（编号 `o1` `o2` …），并在 `## 编排` 表里为每个环节标注它覆盖哪些成果：
