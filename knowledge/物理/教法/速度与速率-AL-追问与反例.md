@@ -83,7 +83,7 @@ license: CC-BY-SA-4.0
 
 | 编号 | 类型 | 等级 | 定位 | 许可 |
 |---|---|---|---|---|
-| ev-022 | 教材（全文） | 低 | OpenStax《Physics》§2.2，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | **CC BY 4.0** |
+| ev-022 | 教材（全文） | 低 | OpenStax《Physics》第 2 章 · ，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | **CC BY 4.0** |
 
 ## 论证
 

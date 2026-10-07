@@ -83,7 +83,7 @@ license: CC-BY-SA-4.0
 
 | 编号 | 类型 | 等级 | 定位 | 许可 |
 |---|---|---|---|---|
-| ev-034 | 教材（全文） | 低 | OpenStax《Physics》§13.2 Wave Properties: Speed, Amplitude, Frequency, and Period，[m54321](https://github.com/openstax/osbooks-physics/blob/main/modules/m54321/index.cnxml) | **CC BY 4.0** |
+| ev-034 | 教材（全文） | 低 | OpenStax《Physics》第 13 章 · Wave Properties: Speed, Amplitude, Frequency, and Period，[m54321](https://github.com/openstax/osbooks-physics/blob/main/modules/m54321/index.cnxml) | **CC BY 4.0** |
 
 ## 论证
 

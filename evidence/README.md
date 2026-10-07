@@ -12,6 +12,42 @@
 > **绝不上传教材原文或扫描页。**
 > 只存页码定位、短引用、原创摘要与结论。事实与数据不受版权保护，**表达**受版权保护。
 
+### 定位必须**可核验**，不能是「看起来像定位」的东西
+
+> [!CAUTION]
+> **本库犯过一次，而且犯得很系统：节号是编的。**
+>
+> 40 个文件里写着 `§16.1` / `§7.2` / `§22.1` 这类节号。
+> 实测 OpenStax 仓库：
+>
+> | 检查 | 结果 |
+> |---|---|
+> | `collections/physics.collection.xml` 里的 `number=` | **0 次** |
+> | 同上，`label` | **0 次** |
+> | 模块 `index.cnxml` 的 `<title>` | **裸标题**（`Reflection`），无节号 |
+>
+> **节号根本不在源文件里。** 那些数字是按**模块顺序**推的，而且**内部约定互相矛盾**：
+>
+> | 章 | 模块顺序 | 本库曾写 | 隐含约定 |
+> |---|---|---|---|
+> | 7 | Introduction · Kepler · Newton | Kepler = `§7.2` | Introduction **算** 7.1 |
+> | 16 | Introduction · Reflection · Refraction · Lenses | Reflection = `§16.1` | Introduction **不算** |
+>
+> **两处用了相反的约定——这本身就证明它们是猜的。**
+
+**已全部改为可核验的写法**：`第 N 章 · 模块标题`，外加模块 id（可点开原文）。
+
+| 不可核验 | 可核验 |
+|---|---|
+| `§16.1 Reflection` | `第 16 章 · Reflection` + 模块 [m54357](https://github.com/openstax/osbooks-physics/blob/main/modules/m54357/index.cnxml) |
+
+> [!IMPORTANT]
+> **能对上 ≠ 精确。** 教材的**印刷版**确实有节号，
+> 但它**不在我们读的这份源文件里**。
+> **写一个我们核不了的数字，等于伪造定位**——哪怕它碰巧是对的。
+>
+> 若日后要写节号，必须**对到印刷版或官方网页版**，并在证据行注明依据。
+
 ## 本库自己犯过的一次：把**构造的数据**登记成「实验数据」
 
 > [!CAUTION]
@@ -75,8 +111,8 @@
 | ev-015 | **出版社勘误表** | **高** | 雅集《科學新世紀 1A》勘誤表，[ZIP](https://e-aristo.hk/t/downloads/science/scicent_amendments_2024_c.zip) | 2024 | 外部来源 · 仅引用定位 | 科学勘误 ×1 |
 | ev-016 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.3 Ohm's Law: Resistance and Simple Circuits，[m42344](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42344/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 摩擦类比 · 局限性位置 · 电压符号差异 |
 | ev-017 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.1 Current，[m42341](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42341/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 电流（备用） |
-| ev-018 | 教材（全文） | 低 | OpenStax《Physics》§19.2 Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 欧姆定律 · 水管类比 · 电流方向误解 · 类比选择与学段相关 |
-| ev-019 | 教材（全文） | 低 | OpenStax《Physics》§19.3 Series Circuits，[m54435](https://github.com/openstax/osbooks-physics/blob/main/modules/m54435/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 水管类比（做法与禁忌） |
+| ev-018 | 教材（全文） | 低 | OpenStax《Physics》第 19 章 · Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 欧姆定律 · 水管类比 · 电流方向误解 · 类比选择与学段相关 |
+| ev-019 | 教材（全文） | 低 | OpenStax《Physics》第 19 章 · Series Circuits，[m54435](https://github.com/openstax/osbooks-physics/blob/main/modules/m54435/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 水管类比（做法与禁忌） |
 | ev-020 | 教材（全文）**+ 可复算脚本与明细** | 低 | OpenStax《Physics》**全 23 章 / 98 模块**的 Teacher Support。**脚本** [`os-teacher-markers.py`](os-teacher-markers.py) · **明细** [`os-teacher-markers.csv`](os-teacher-markers.csv) · ref `main` **commit `dfdfd7a5356ecdd42e504de3df50d9153e33ea49`** | 2020 | **CC BY 4.0** · **可自由复用** | 教材内建分组教学变体 |
 
 > [!CAUTION]
@@ -94,22 +130,22 @@
 > 差的 `EL`(6→5)、合计(649→648)、便签(580→582) 来自 **`main` 前移**。
 >
 > **教训：写死一个会漂移的数字，等于把它变成断言。** 数字要连同**规则 + commit** 一起给。
-| ev-021 | 教材（全文） | 低 | OpenStax《Physics》§2.1 Relative Motion, Distance, and Displacement，[m54108](https://github.com/openstax/osbooks-physics/blob/main/modules/m54108/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 参考系教法 ×3 · 参考系误解 |
-| ev-022 | 教材（全文） | 低 | OpenStax《Physics》§2.2 Speed and Velocity，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 速度与速率教法 ×2 |
-| ev-023 | 教材（全文） | 低 | OpenStax《Physics》§2.3 Position vs. Time Graphs，[m54110](https://github.com/openstax/osbooks-physics/blob/main/modules/m54110/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 位置-时间图教法 ×2 |
+| ev-021 | 教材（全文） | 低 | OpenStax《Physics》第 2 章 · Relative Motion, Distance, and Displacement，[m54108](https://github.com/openstax/osbooks-physics/blob/main/modules/m54108/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 参考系教法 ×3 · 参考系误解 |
+| ev-022 | 教材（全文） | 低 | OpenStax《Physics》第 2 章 · Speed and Velocity，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 速度与速率教法 ×2 |
+| ev-023 | 教材（全文） | 低 | OpenStax《Physics》第 2 章 · Position vs. Time Graphs，[m54110](https://github.com/openstax/osbooks-physics/blob/main/modules/m54110/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 位置-时间图教法 ×2 |
 | ev-024 | 教材（全文） | 低 | Utah State Board of Education《7th Grade Science》（SEEd 标准），[PDF](https://www.uen.org/emedia/resources/oer/7thGradeSEEd.pdf)，148 页 | 2020 | **CC BY-NC-SA 3.0** · **仅引用定位与短语** | 力与运动（初中）· 现象探究循环 |
-| ev-025 | 教材（全文） | 低 | OpenStax《Physics》§4.2 Newton's First Law of Motion: Inertia，[m54138](https://github.com/openstax/osbooks-physics/blob/main/modules/m54138/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 惯性 · 惯性教法 ×2 · 运动物体自然慢下来 |
-| ev-026 | 教材（全文） | 低 | OpenStax《Physics》§16.1 Reflection，[m54357](https://github.com/openstax/osbooks-physics/blob/main/modules/m54357/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 光的反射 · 反射教法 ×2 |
-| ev-027 | 教材（全文） | 低 | OpenStax《Physics》§14.1 Speed of Sound, Frequency, and Wavelength，[m54331](https://github.com/openstax/osbooks-physics/blob/main/modules/m54331/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 声速与频率 · 声速教法 ×2 |
-| ev-028 | 教材（全文） | 低 | OpenStax《Physics》§9.2 Mechanical Energy and Conservation of Energy，[m54273](https://github.com/openstax/osbooks-physics/blob/main/modules/m54273/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 机械能守恒 · 机械能教法 ×2 · 运动物体自然慢下来 |
+| ev-025 | 教材（全文） | 低 | OpenStax《Physics》第 4 章 · Newton's First Law of Motion: Inertia，[m54138](https://github.com/openstax/osbooks-physics/blob/main/modules/m54138/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 惯性 · 惯性教法 ×2 · 运动物体自然慢下来 |
+| ev-026 | 教材（全文） | 低 | OpenStax《Physics》第 16 章 · Reflection，[m54357](https://github.com/openstax/osbooks-physics/blob/main/modules/m54357/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 光的反射 · 反射教法 ×2 |
+| ev-027 | 教材（全文） | 低 | OpenStax《Physics》第 14 章 · Speed of Sound, Frequency, and Wavelength，[m54331](https://github.com/openstax/osbooks-physics/blob/main/modules/m54331/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 声速与频率 · 声速教法 ×2 |
+| ev-028 | 教材（全文） | 低 | OpenStax《Physics》第 9 章 · Mechanical Energy and Conservation of Energy，[m54273](https://github.com/openstax/osbooks-physics/blob/main/modules/m54273/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 机械能守恒 · 机械能教法 ×2 · 运动物体自然慢下来 |
 | ev-029 | **交互式模拟（读产物头部）** | 低 | PhET「Forces and Motion: Basics」，[直达链接](https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_en.html)；教材内入口为 OpenStax 短链 `openstax.org/l/forcesandmotion`（实测解析到该直达链接） | 2026 | **CC BY-NC 4.0** · **仅引用定位** | PhET 力与运动基础（本库第一条 `资源`） |
-| ev-030 | 教材（全文） | 低 | OpenStax《Physics》§15.1 The Electromagnetic Spectrum，[m54342](https://github.com/openstax/osbooks-physics/blob/main/modules/m54342/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 电磁波谱 · 电磁波谱教法 ×2 · 可见光误解 |
-| ev-031 | 教材（全文） | 低 | OpenStax《Physics》§7.2 Kepler's Laws of Planetary Motion，[m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 开普勒定律 · 开普勒教法 ×2 |
+| ev-030 | 教材（全文） | 低 | OpenStax《Physics》第 15 章 · The Electromagnetic Spectrum，[m54342](https://github.com/openstax/osbooks-physics/blob/main/modules/m54342/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 电磁波谱 · 电磁波谱教法 ×2 · 可见光误解 |
+| ev-031 | 教材（全文） | 低 | OpenStax《Physics》第 7 章 · Kepler's Laws of Planetary Motion，[m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 开普勒定律 · 开普勒教法 ×2 |
 | ev-032 | **交互式模拟（读产物头部）** | 低 | PhET「My Solar System」，[直达链接](https://phet.colorado.edu/sims/html/my-solar-system/latest/my-solar-system_en.html)；教材内入口为 OpenStax 短链 `openstax.org/l/28mysolar` | 2026 | **CC BY-NC 4.0** · **仅引用定位** | PhET 我的太阳系（第二条 `资源`） |
-| ev-033 | 教材（全文） | 低 | OpenStax《Physics》§13.1 Types of Waves，[m54314](https://github.com/openstax/osbooks-physics/blob/main/modules/m54314/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 波（知识点）· 波教法 BL · 波把物质一起推走 |
-| ev-034 | 教材（全文） | 低 | OpenStax《Physics》§13.2 Wave Properties: Speed, Amplitude, Frequency, and Period，[m54321](https://github.com/openstax/osbooks-physics/blob/main/modules/m54321/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 波（知识点）· 波教法 OL |
-| ev-035 | 教材（全文） | 低 | OpenStax《Physics》§22.1 The Structure of the Atom，[m54582](https://github.com/openstax/osbooks-physics/blob/main/modules/m54582/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 原子结构 · 原子结构教法 ×3 |
-| ev-036 | 教材（全文） | 低 | OpenStax《Physics》§9.1 Work, Power, and the Work–Energy Theorem，[m54271](https://github.com/openstax/osbooks-physics/blob/main/modules/m54271/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 功与功率 · 功与功率教法 ×2 |
+| ev-033 | 教材（全文） | 低 | OpenStax《Physics》第 13 章 · Types of Waves，[m54314](https://github.com/openstax/osbooks-physics/blob/main/modules/m54314/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 波（知识点）· 波教法 BL · 波把物质一起推走 |
+| ev-034 | 教材（全文） | 低 | OpenStax《Physics》第 13 章 · Wave Properties: Speed, Amplitude, Frequency, and Period，[m54321](https://github.com/openstax/osbooks-physics/blob/main/modules/m54321/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 波（知识点）· 波教法 OL |
+| ev-035 | 教材（全文） | 低 | OpenStax《Physics》第 22 章 · The Structure of the Atom，[m54582](https://github.com/openstax/osbooks-physics/blob/main/modules/m54582/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 原子结构 · 原子结构教法 ×3 |
+| ev-036 | 教材（全文） | 低 | OpenStax《Physics》第 9 章 · Work, Power, and the Work–Energy Theorem，[m54271](https://github.com/openstax/osbooks-physics/blob/main/modules/m54271/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 功与功率 · 功与功率教法 ×2 |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，

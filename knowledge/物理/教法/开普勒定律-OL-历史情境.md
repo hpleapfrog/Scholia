@@ -86,7 +86,7 @@ license: CC-BY-SA-4.0
 
 | 编号 | 类型 | 等级 | 定位 | 许可 |
 |---|---|---|---|---|
-| ev-031 | 教材（全文） | 低 | OpenStax《Physics》§7.2 Kepler's Laws of Planetary Motion，[m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) | **CC BY 4.0** |
+| ev-031 | 教材（全文） | 低 | OpenStax《Physics》第 7 章 · Kepler's Laws of Planetary Motion，[m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) | **CC BY 4.0** |
 
 ## 论证
 
