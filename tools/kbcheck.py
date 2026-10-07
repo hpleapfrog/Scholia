@@ -115,7 +115,32 @@ def fm_links(fm, key):
     return re.findall(r"\[[^\]]*\]\(([^)]+)\)", line)
 
 
-def check_graph(objects, errors):
+def fm_nested(fm, key):
+    """取 front-matter 里可能是缩进（如 scope 下）的键值。"""
+    m = re.search(rf"^[ \t]*{key}:\s*(.+)$", fm, re.M)
+    return m.group(1).strip() if m else ""
+
+
+STAGES = ("小学", "初中", "高中", "大学")
+
+
+def stages_of(obj):
+    """从 scope.学段 解析出学段集合，例如「初中至高中」-> {初中, 高中}。"""
+    v = fm_nested(obj["fm"], "学段")
+    return {s for s in STAGES if s in v}
+
+
+def section_body(text, name):
+    """取 `## name` 到下一个 `##` 之间的正文。"""
+    m = re.search(rf"^##\s+{re.escape(name)}\s*$", text, re.M)
+    if not m:
+        return None
+    rest = text[m.end():]
+    nxt = re.search(r"^##\s+", rest, re.M)
+    return rest[:nxt.start()] if nxt else rest
+
+
+def check_graph(objects, errors, warnings):
     """先修关系与教法归属的图校验 —— 这些是单看一个文件查不出来的。"""
     prereq = {}
 
@@ -136,6 +161,13 @@ def check_graph(objects, errors):
                     f"{rel}: `先修` 必须指向「知识点」，实际指向 type={dest['type']} -> {tgt}")
             else:
                 prereq.setdefault(rel, []).append(r)
+                # 跨学段先修边：允许，但要求作者显式认领（警告，不阻塞）
+                a, b = stages_of(o), stages_of(dest)
+                if a and b and not (a & b):
+                    warnings.append(
+                        f"{rel}: 跨学段先修边 —— 「{Path(rel).stem}」({'/'.join(sorted(a))}) "
+                        f"先修「{Path(r).stem}」({'/'.join(sorted(b))})。"
+                        f"请确认这是概念前置，而非「进阶」关系")
 
         # 教法必须有 knowledge_point，且指向「知识点」
         if t == "教法":
@@ -174,8 +206,8 @@ def check_graph(objects, errors):
             dfs(n)
 
 
-def check_paths(objects, errors):
-    """路径的先修缺口 —— 设计里说这项「可机械校验」，这里把它真的实现出来。"""
+def check_paths(objects, errors, warnings):
+    """路径的先修缺口 + 跨学段提示。"""
     for rel, o in objects.items():
         if o["type"] != "路径":
             continue
@@ -210,9 +242,57 @@ def check_paths(objects, errors):
                         f"{rel}: 先修缺口 —— 引用了「{Path(r).stem}」，"
                         f"但它的先修「{Path(pr).stem}」不在本路径内，也未声明为外部先修")
 
+        # 路径跨学段提示
+        pstage = stages_of(o)
+        for r in sorted(refs):
+            kstage = stages_of(objects[r])
+            if pstage and kstage and not (pstage & kstage):
+                warnings.append(
+                    f"{rel}: 路径跨学段 —— 路径为 {'/'.join(sorted(pstage))}，"
+                    f"但引用了 {'/'.join(sorted(kstage))} 的知识点「{Path(r).stem}」")
+
+
+def check_path_outcomes(objects, errors, warnings):
+    """目标覆盖度 —— 从前是人工判断，这里改成机械校验。
+
+    路径在 front-matter 声明 `outcomes`（可观测的学习成果，编号 o1/o2/…），
+    并在 `## 编排` 表里为每个环节标注它覆盖哪些成果。校验器检查：
+    每个声明的成果是否至少被一个环节覆盖。
+    """
+    stats = {}
+    for rel, o in objects.items():
+        if o["type"] != "路径":
+            continue
+
+        m = re.search(r"^outcomes:\s*\n((?:[ \t]+.*\n?)*)", o["fm"], re.M)
+        block = m.group(1) if m else ""
+        declared = re.findall(r"\b(o\d+)\b", block)
+
+        if not declared:
+            warnings.append(
+                f"{rel}: 未声明 `outcomes` —— 目标覆盖度无法机械校验（仍是人工判断）")
+            continue
+
+        body = section_body(o["text"], "编排") or ""
+        covered = set(re.findall(r"\b(o\d+)\b", body))
+
+        missing = [x for x in declared if x not in covered]
+        stats[rel] = (len(declared) - len(missing), len(declared))
+
+        if missing:
+            errors.append(
+                f"{rel}: 目标覆盖度不足 —— 以下学习成果没有任何环节覆盖: {missing}")
+        extra = covered - set(declared)
+        if extra:
+            errors.append(
+                f"{rel}: 编排里覆盖了未声明的成果编号: {sorted(extra)}")
+
+    return stats
+
 
 def check_all():
     errors = []
+    warnings = []
     ids = {}
     objects = {}
     md_files = scan_text_files()
@@ -282,17 +362,24 @@ def check_all():
                 errors.append(f"{rel}: 链接目标不存在 -> [{label}]({target})")
 
     # 图校验：单看一个文件查不出来的那部分
-    check_graph(objects, errors)
-    check_paths(objects, errors)
+    check_graph(objects, errors, warnings)
+    check_paths(objects, errors, warnings)
+    stats = check_path_outcomes(objects, errors, warnings)
 
-    return md_files, ids, errors
+    return md_files, ids, errors, warnings, stats
 
 
 def main():
-    md_files, ids, errors = check_all()
+    md_files, ids, errors, warnings, stats = check_all()
 
     print(f"扫描 {len(md_files)} 个文档，识别知识对象 {len(ids)} 条")
     print()
+
+    if warnings:
+        print("提示（不阻塞）：")
+        for w in warnings:
+            print(f"  ! {w}")
+        print()
 
     if errors:
         print("不符合规范之处：")
@@ -308,10 +395,13 @@ def main():
     print("  · id 唯一")
     print("  · 相对链接全部可达")
     print("  · 必备小节齐全")
-    print("  ── 以下三项是单看一个文件查不出来的 ──")
+    print("  ── 以下四项是单看一个文件查不出来的 ──")
     print("  · `先修` 边只连「知识点」，且无环")
     print("  · `教法` 都有 `knowledge_point`，且指向「知识点」")
     print("  · 每条路径的「先修缺口」已机械校验（无缺口）")
+    for rel, (cov, total) in sorted(stats.items()):
+        print(f"  · 目标覆盖度：{Path(rel).stem} —— {cov}/{total} "
+              f"({cov/total:.0%})，无未覆盖成果")
     return 0
 
 
