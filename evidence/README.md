@@ -37,6 +37,7 @@
 | ev-026 | 教材（全文） | 低 | OpenStax《Physics》§16.1 Reflection，[m54357](https://github.com/openstax/osbooks-physics/blob/main/modules/m54357/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 光的反射 · 反射教法 ×2 |
 | ev-027 | 教材（全文） | 低 | OpenStax《Physics》§14.1 Speed of Sound, Frequency, and Wavelength，[m54331](https://github.com/openstax/osbooks-physics/blob/main/modules/m54331/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 声速与频率 · 声速教法 ×2 |
 | ev-028 | 教材（全文） | 低 | OpenStax《Physics》§9.2 Mechanical Energy and Conservation of Energy，[m54273](https://github.com/openstax/osbooks-physics/blob/main/modules/m54273/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 机械能守恒 · 机械能教法 ×2 · 运动物体自然慢下来 |
+| ev-029 | **交互式模拟（读产物头部）** | 低 | PhET「Forces and Motion: Basics」，[直达链接](https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_en.html)；教材内入口为 OpenStax 短链 `openstax.org/l/forcesandmotion`（实测解析到该直达链接） | 2026 | **CC BY-NC 4.0** · **仅引用定位** | PhET 力与运动基础（本库第一条 `资源`） |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，
@@ -93,6 +94,32 @@
 
 **含义**：初中源能提供**知识内容与学段边界**（如"矢量推迟到高中"），
 但**提供不了分档教法**。初中级的 `教法` 需要另找来源，或由教师贡献。
+
+### 一个真实的许可陷阱：许可不随教材传播
+
+OpenStax 教材正文里**内嵌 PhET 模拟**（`<iframe>` + OpenStax 短链，
+外层 `<media class="os-embed">` 带一段描述）。
+
+实测结果（读**模拟产物自身的头部**，权威来源）：
+
+| 层 | 内容 | 许可 |
+|---|---|---|
+| 教材 | OpenStax《Physics》 | **CC BY 4.0** ✅ |
+| 教材内嵌的模拟 | PhET「Forces and Motion: Basics」 | **CC BY-NC 4.0** ❌ |
+| 抽查的另外三个模拟 | my-solar-system / bending-light / color-vision | **CC BY-NC 4.0** ❌ |
+
+> [!CAUTION]
+> **「教材可以自由复用」不能推出「教材里嵌的东西也可以」。**
+>
+> PhET 模拟文件头部原文：
+> `COMMERCIAL USE REQUIRES A COMMERCIAL LICENSE AGREEMENT FROM THE UNIVERSITY OF COLORADO BOULDER.`
+>
+> 并且**要求在「使用处附近」标注归属**，推荐措辞：
+> `Simulation by PhET Interactive Simulations, University of Colorado Boulder, licensed under CC BY-NC 4.0`
+>
+> **照抄教材结构的再发布者会踩到这一条。**
+>
+> 这也说明：**逐条核实许可不能靠印象**——我原先以为 PhET 是 CC BY，**实测推翻了它**。
 
 ### 一类特殊的高等级证据：出版社勘误表
 
