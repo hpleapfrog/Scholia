@@ -28,7 +28,23 @@
 | ev-017 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.1 Current，[m42341](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42341/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 电流（备用） |
 | ev-018 | 教材（全文） | 低 | OpenStax《Physics》§19.2 Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 欧姆定律 · 水管类比 · 电流方向误解 · 类比选择与学段相关 |
 | ev-019 | 教材（全文） | 低 | OpenStax《Physics》§19.3 Series Circuits，[m54435](https://github.com/openstax/osbooks-physics/blob/main/modules/m54435/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 水管类比（做法与禁忌） |
-| ev-020 | 教材（全文） | 低 | OpenStax《Physics》**全 23 章 / 98 模块**的 Teacher Support 教学提示（580 条，含 649 个分组标记），[仓库](https://github.com/openstax/osbooks-physics) | 2020 | **CC BY 4.0** · **可自由复用** | 教材内建分组教学变体 |
+| ev-020 | 教材（全文）**+ 可复算脚本与明细** | 低 | OpenStax《Physics》**全 23 章 / 98 模块**的 Teacher Support。**脚本** [`os-teacher-markers.py`](os-teacher-markers.py) · **明细** [`os-teacher-markers.csv`](os-teacher-markers.csv) · ref `main` **commit `dfdfd7a5356ecdd42e504de3df50d9153e33ea49`** | 2020 | **CC BY 4.0** · **可自由复用** | 教材内建分组教学变体 |
+
+> [!CAUTION]
+> **ev-020 原先只写「580 条，含 649 个分组标记」，而库里既无脚本也无数据**——
+> 那一栏因此被一次对抗审查击中（[攻击条目](../knowledge/物理/命题/攻击-教材内建分组教学变体.md) 的 `A4`）。
+>
+> **现已补上脚本 + 明细 + commit 哈希。** 现行数字：
+>
+> | 口径 | `os-teacher` 便签 | BL | OL | AL | EL | 合计 |
+> |---|---|---|---|---|---|---|
+> | **宽松**（note 里任意出现） | **582** | 207 | 245 | 191 | **5** | **648** |
+> | 严格（`<para>` 开头的 `<span>`） | — | 205 | 243 | 189 | 0 | 637 |
+>
+> **旧声称的 649 / 580 两者都不是**——它是**某次 `main` 的快照**。
+> 差的 `EL`(6→5)、合计(649→648)、便签(580→582) 来自 **`main` 前移**。
+>
+> **教训：写死一个会漂移的数字，等于把它变成断言。** 数字要连同**规则 + commit** 一起给。
 | ev-021 | 教材（全文） | 低 | OpenStax《Physics》§2.1 Relative Motion, Distance, and Displacement，[m54108](https://github.com/openstax/osbooks-physics/blob/main/modules/m54108/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 参考系教法 ×3 · 参考系误解 |
 | ev-022 | 教材（全文） | 低 | OpenStax《Physics》§2.2 Speed and Velocity，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 速度与速率教法 ×2 |
 | ev-023 | 教材（全文） | 低 | OpenStax《Physics》§2.3 Position vs. Time Graphs，[m54110](https://github.com/openstax/osbooks-physics/blob/main/modules/m54110/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 位置-时间图教法 ×2 |
