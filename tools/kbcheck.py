@@ -150,6 +150,77 @@ def arg_ids(text):
     return {x.lower() for x in ARG_ID.findall(body or "")}
 
 
+# 论证标题/正文里表示「已被击倒」的字样
+DEFEATED = re.compile(r"(被击倒|已击倒|已推翻|已失效)")
+# 论证标题里声称「存活」的字样
+CLAIMS_ALIVE = re.compile(r"[（(]\s*存活")
+
+
+def arg_states(text):
+    """返回 {id: {"title": 标题, "defeated": 是否标为被击倒, "alive": 是否自称存活}}。
+
+    只读 `### <ID> · <标题>` 那一行，以及紧随其后到下一个标题之间的少量文字
+    —— 因为「被击倒」这个判断通常写在标题里或 `- **状态**` 一行里。
+    """
+    body = section_body(text, "论证") or ""
+    out = {}
+    heads = list(ARG_ID.finditer(body))
+    for i, m in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(body)
+        chunk = body[m.start():end]
+        # 标题行本身 + 前 12 行
+        head_line = chunk.splitlines()[0] if chunk else ""
+        blk = "\n".join(chunk.splitlines()[:14])
+        out[m.group(1).lower()] = {
+            "title": head_line.strip(),
+            "defeated": bool(DEFEATED.search(head_line) or
+                             re.search(r"\*\*状态\*\*\s*[:：]\s*\*\*(被击倒|已击倒)", blk)),
+            "alive": bool(CLAIMS_ALIVE.search(head_line)),
+        }
+    return out
+
+
+def check_argument_liveness(objects, warnings):
+    """论证的「生存状态」与图上进边是否自洽。
+
+    这一条是 `FORMAT.md` §6「论证被攻击 → 求存活集合 → 定状态」主链路的机械版本。
+    它**不判断攻击本身**（那要人读），只报两种**结构上明显不对**的情形：
+
+    1. `支持` 边指向一个**已被击倒**的论证 —— 那支撑是空的
+    2. 论证自称**存活**，却**没有任何 `攻击` 边** —— 空集上的真空真命题
+
+    > [!NOTE]
+    > **曾经还有第三条：「`攻击` 边指向已被击倒的论证」——已删除。**
+    >
+    > 那条检查**给的是错的建议**：攻击边指向被它击倒的论证，
+    > **本来就是攻击要做的事**。它被删掉，而不是被调低到「提示」，
+    > 是因为**一个给错建议的检查比没有检查更糟**——它会训练人忽略提示。
+    """
+    inbound_support = collections.defaultdict(list)
+    inbound_attack = collections.defaultdict(list)
+    for rel, o in objects.items():
+        for key, bucket in (("支持", inbound_support), ("攻击", inbound_attack)):
+            for tgt in fm_links(o["fm"], key):
+                anchor = tgt.split("#")[1].strip().lower() if "#" in tgt else ""
+                r = resolve_link(o["path"], tgt)
+                if r and anchor:
+                    bucket[(r, anchor)].append(rel)
+
+    for rel, o in objects.items():
+        for aid, st in arg_states(o["text"]).items():
+            sup = inbound_support.get((rel, aid), [])
+            atk = inbound_attack.get((rel, aid), [])
+
+            if st["defeated"] and sup:
+                warnings.append(
+                    f"{rel}: 论证 `{aid}` 已标为**被击倒**，却仍有 {len(sup)} 条 `支持` 边"
+                    f"（如 {sup[0]}）—— 那些支撑是空的，应改指替代论证")
+            if st["alive"] and not atk:
+                warnings.append(
+                    f"{rel}: 论证 `{aid}` 自称**存活**，但它**没有任何 `攻击` 边**"
+                    f"—— 无攻击者时的「存活」是空转（FORMAT.md §6）")
+
+
 def check_arguments(objects, errors):
     """`支持` / `攻击` 边必须落到**具体某个论证**上。
 
@@ -421,6 +492,7 @@ def check_all():
     # 图校验：单看一个文件查不出来的那部分
     check_graph(objects, errors, warnings)
     check_arguments(objects, errors)
+    check_argument_liveness(objects, warnings)
     check_paths(objects, errors, warnings)
     stats = check_path_outcomes(objects, errors, warnings)
     argstats = argument_graph(objects)
