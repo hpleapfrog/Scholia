@@ -335,6 +335,18 @@ def check_path_outcomes(objects, errors, warnings):
     return stats
 
 
+def argument_graph(objects):
+    """统计进边：每个条目被多少个**条目**支持 / 攻击。"""
+    sup, atk = collections.Counter(), collections.Counter()
+    for o in objects.values():
+        for key, c in (("支持", sup), ("攻击", atk)):
+            for tgt in fm_links(o["fm"], key):
+                r = resolve_link(o["path"], tgt)
+                if r:
+                    c[r] += 1
+    return sup, atk
+
+
 def check_all():
     errors = []
     warnings = []
@@ -411,12 +423,13 @@ def check_all():
     check_arguments(objects, errors)
     check_paths(objects, errors, warnings)
     stats = check_path_outcomes(objects, errors, warnings)
+    argstats = argument_graph(objects)
 
-    return md_files, ids, errors, warnings, stats
+    return md_files, ids, errors, warnings, stats, argstats
 
 
 def main():
-    md_files, ids, errors, warnings, stats = check_all()
+    md_files, ids, errors, warnings, stats, argstats = check_all()
 
     print(f"扫描 {len(md_files)} 个文档，识别知识对象 {len(ids)} 条")
     print()
@@ -449,6 +462,19 @@ def main():
     for rel, (cov, total) in sorted(stats.items()):
         print(f"  · 目标覆盖度：{Path(rel).stem} —— {cov}/{total} "
               f"({cov/total:.0%})，无未覆盖成果")
+
+    sup, atk = argstats
+    if sup or atk:
+        print("  ── 论证图（进边）──")
+        print("  ! 条数不代表强度：来自**同一来源**的多个实例**不是独立证据**"
+              "（见 FORMAT.md §6）")
+        for rel in sorted(set(sup) | set(atk)):
+            bits = []
+            if sup.get(rel):
+                bits.append(f"支持 {sup[rel]}")
+            if atk.get(rel):
+                bits.append(f"攻击 {atk[rel]}")
+            print(f"    · {Path(rel).stem}：{' · '.join(bits)}")
     return 0
 
 
