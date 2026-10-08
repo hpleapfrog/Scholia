@@ -148,6 +148,8 @@
 | ev-036 | 教材（全文） | 低 | OpenStax《Physics》第 9 章 · Work, Power, and the Work–Energy Theorem，[m54271](https://github.com/openstax/osbooks-physics/blob/main/modules/m54271/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 功与功率 · 功与功率教法 ×2 |
 | ev-037 | 教材（全文） | 低 | OpenStax《Physics》第 7 章 · Newton's Law of Universal Gravitation and Einstein's Theory of General Relativity，[m54189](https://github.com/openstax/osbooks-physics/blob/main/modules/m54189/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 万有引力定律 · 万有引力教法 ×2 · 混淆 G 与 g |
 | ev-038 | 教材（全文） | 低 | OpenStax《Physics》第 16 章 · Refraction，[m54365](https://github.com/openstax/osbooks-physics/blob/main/modules/m54365/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 光的折射 · 折射教法 ×3 |
+| ev-039 | 教材（全文） | 低 | OpenStax《Physics》第 3 章 · Acceleration，[m54123](https://github.com/openstax/osbooks-physics/blob/main/modules/m54123/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 加速度 · 加速度教法 ×2 |
+| ev-040 | 教材（全文） | 低 | OpenStax《Physics》第 4 章 · Newton's Second Law of Motion，[m54142](https://github.com/openstax/osbooks-physics/blob/main/modules/m54142/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 牛顿第二定律 · 牛顿第二定律教法 ×2 |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，

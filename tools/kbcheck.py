@@ -418,6 +418,66 @@ def argument_graph(objects):
     return sup, atk
 
 
+def check_evidence_ids(objects, errors):
+    """`evidence:` 里的编号必须真的登记在 `evidence/README.md` 里，且不能是已作废的。
+
+    **为什么要有这一条**：本库曾经把 `ev-002`（后来判定为**构造数据**）当作
+    全库等级最高的证据，并且有 26 条边指向它。**一个写错的编号不会被任何东西发现**——
+    条目照样通过，读者照信。
+
+    报两种：
+
+    1. 编号**不在索引里** —— 多半是笔误，也可能是引用了不存在的证据
+    2. 编号**已被标为作废** —— 引用作废证据等于把撤回过的东西再拿回来用
+    """
+    index = ROOT / "evidence" / "README.md"
+    if not index.exists():
+        return
+    text = index.read_text(encoding="utf-8")
+    known, void = set(), set()
+    for line in text.splitlines():
+        m = re.match(r"\s*\|\s*(ev-\d+)\s*\|\s*([^|]*)\|", line)
+        if not m:
+            continue
+        known.add(m.group(1).lower())
+        if "已作废" in m.group(2) or "作废" in m.group(2):
+            void.add(m.group(1).lower())
+
+    for rel, o in objects.items():
+        ids = re.findall(r"ev-\d+", o["fm"], re.I)
+        for ev in sorted({x.lower() for x in ids}):
+            if ev not in known:
+                errors.append(f"{rel}: `evidence` 引用了索引里没有的编号 -> {ev}")
+            elif ev in void:
+                errors.append(
+                    f"{rel}: `evidence` 引用了**已作废**的编号 -> {ev}"
+                    f"（作废的证据不能再来支撑结论）")
+
+
+def check_readme_coverage(objects, errors):
+    """每个知识对象都必须在**它所属学科的 README** 里被提到。
+
+    **为什么要有这一条**：本库的 `物理/README.md` 是读者进库后的第一张表。
+    它**漏过两次**——一次是 5 条 `教法`（被一次对抗审查发现），
+    一次是 9 条（第 4 批 5 条 + 第 5 批 4 条，**我自己写完忘了登记**）。
+
+    **索引不会自己追上内容。** 这一条把它变成机械可查的：
+    文件名（`<name>.md`）必须出现在 `knowledge/<学科>/README.md` 里。
+    """
+    for rel, o in objects.items():
+        parts = Path(rel).parts
+        if len(parts) < 3 or parts[0] != "knowledge":
+            continue
+        subject_readme = ROOT / parts[0] / parts[1] / "README.md"
+        if not subject_readme.exists():
+            errors.append(f"{rel}: 所属学科缺少 README -> knowledge/{parts[1]}/README.md")
+            continue
+        if o["path"].name not in subject_readme.read_text(encoding="utf-8"):
+            errors.append(
+                f"{rel}: **学科 README 里没有登记它**"
+                f"（`knowledge/{parts[1]}/README.md` 必须提到 `{o['path'].name}`）")
+
+
 def check_all():
     errors = []
     warnings = []
@@ -493,6 +553,8 @@ def check_all():
     check_graph(objects, errors, warnings)
     check_arguments(objects, errors)
     check_argument_liveness(objects, warnings)
+    check_evidence_ids(objects, errors)
+    check_readme_coverage(objects, errors)
     check_paths(objects, errors, warnings)
     stats = check_path_outcomes(objects, errors, warnings)
     argstats = argument_graph(objects)
