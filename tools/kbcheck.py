@@ -368,6 +368,50 @@ def check_paths(objects, errors, warnings):
                     f"但引用了 {'/'.join(sorted(kstage))} 的知识点「{Path(r).stem}」")
 
 
+def check_path_steps(objects, errors):
+    """`路径` 的每个环节都必须连到一个**真实存在的知识对象**。
+
+    **为什么要有这一条**：`FORMAT.md` §2 把 `路径` 定义为「**知识点的编排**」，
+    但在此之前**没有任何检查要求环节连到东西**。
+
+    实测过：一份「从进站到出站」的乘车流程（环节是**动作**，
+    第 3、4 步的 `条目` 列只能写 `—`）**完全通过了校验**——
+    它报了「缺 README」和「缺 `## 论证`」，**对环节全空一字未提**。
+
+    **这条检查补的就是那个洞。** 它同时是「路径 = 教学编排」这个定义的机械版本：
+    一个环节如果**指不出库里对应的东西**，它就不是这个库意义上的「环节」。
+    """
+    for rel, o in objects.items():
+        if o["type"] != "路径":
+            continue
+        body = section_body(o["text"], "编排")
+        if not body:
+            continue
+        for line in body.splitlines():
+            s = line.strip()
+            if not s.startswith("|"):
+                continue
+            cells = [c.strip() for c in s.strip("|").split("|")]
+            if len(cells) < 2:
+                continue
+            # 只认「第一格是序号」的数据行，跳过表头与分隔行
+            if not re.fullmatch(r"\d+", cells[0]):
+                continue
+            step = cells[0]
+            name = cells[1][:24]
+            found = False
+            for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", s):
+                r = resolve_link(o["path"], target)
+                if r and r in objects:
+                    found = True
+                    break
+            if not found:
+                errors.append(
+                    f"{rel}: 第 {step} 步「{name}」**没有连到任何知识对象**"
+                    f"（`条目` 列必须指向库里存在的条目）"
+                    f"—— 路径是「知识点的编排」，指不出对象的步骤不是环节")
+
+
 def check_path_outcomes(objects, errors, warnings):
     """目标覆盖度 —— 从前是人工判断，这里改成机械校验。
 
@@ -556,6 +600,7 @@ def check_all():
     check_evidence_ids(objects, errors)
     check_readme_coverage(objects, errors)
     check_paths(objects, errors, warnings)
+    check_path_steps(objects, errors)
     stats = check_path_outcomes(objects, errors, warnings)
     argstats = argument_graph(objects)
 

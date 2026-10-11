@@ -7,9 +7,10 @@
 | 学科 | 条目数 |
 |---|---|
 | [物理](物理/README.md) | 80 |
+| [生活](生活/README.md) | 2 |
 | [地理](地理/README.md) | 6 |
 | [科学](科学/README.md) | 1 |
-| **合计** | **87** |
+| **合计** | **89** |
 
 > [!NOTE]
 > **上表的数字由 `kbcheck.py` 强制**（`check_readme_coverage`）：
