@@ -12,9 +12,9 @@
 | [医学](医学/README.md) | 2 |
 | [地理](地理/README.md) | 6 |
 | [科学](科学/README.md) | 1 |
-| [交通](交通/README.md) | 2 |
-| [法律](法律/README.md) | 2 |
-| **合计** | **104** |
+| [交通](交通/README.md) | 4 |
+| [法律](法律/README.md) | 4 |
+| **合计** | **108** |
 <!-- kbcheck:end -->
 
 > [!NOTE]
