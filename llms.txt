@@ -126,6 +126,9 @@ index.json
 | `knowledge/<学科>/README.md` | 每个学科的索引（表格） | 按学科浏览 |
 | `knowledge/物理/覆盖度/README.md` | 物理按中国高中对照的覆盖度 | **判断「本库有没有 X」** |
 | [`tools/kbcheck.py`](tools/kbcheck.py) | 全部校验规则（机器强制） | 想验证或复用机制 |
+| [`docs/RULES.md`](docs/RULES.md) | **规则注册表**（机械校验 / 人工复核，带 ID） | 想知道本库有哪些规则 |
+| [`AGENTS.md`](AGENTS.md) | 在仓库里工作的 agent 的入口与铁律 | 编码 / LLM agent |
+| [`tools/scholia_mcp.py`](tools/scholia_mcp.py) | **只读 MCP server**（把本库挂到 agent） | 想接入 agent |
 
 ---
 

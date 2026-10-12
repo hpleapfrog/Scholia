@@ -13,6 +13,7 @@
 | 证据 | [evidence/README.md](evidence/README.md) | 凭什么引用、等级与许可 | `kbcheck.py` |
 | 流程 | 本文件 + `.github/` 模板 | 怎么提交、谁能改状态 | 模板勾选 · 人工 |
 | 决策 | [`docs/decisions/`](docs/decisions/README.md) | 规则**为什么**这样定（案例 · 事故 · 推断） | 人（只追加） |
+| 规则表 | [`docs/RULES.md`](docs/RULES.md)（**生成**） | 有哪些规则、机械还是人工 | `--write-index` |
 | AI 契约 | [llms.txt](llms.txt) + [index.json](index.json)（**生成**） | 机器怎么读、怎么引用 | `--write-index` |
 | 执行 | [tools/kbcheck.py](tools/kbcheck.py) | 违规即失败 | 本地 / CI |
 

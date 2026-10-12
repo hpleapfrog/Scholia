@@ -4,7 +4,7 @@
 
 ## 学科
 
-<!-- stats:begin -->
+<!-- kbcheck:begin -->
 | 学科 | 条目数 |
 |---|---|
 | [物理](物理/README.md) | 86 |
@@ -13,7 +13,7 @@
 | [地理](地理/README.md) | 6 |
 | [科学](科学/README.md) | 1 |
 | **合计** | **100** |
-<!-- stats:end -->
+<!-- kbcheck:end -->
 
 > [!NOTE]
 > **上表的数字由 `kbcheck.py` 生成**（唯一来源是 `index.json`），不手写；

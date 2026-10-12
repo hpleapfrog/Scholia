@@ -2,16 +2,25 @@
 
 > **给 AI 与人类的知识库：只存有据可查的知识。**
 > 每条内容都带三样东西——**它的来源**、**它的状态**、**对它的反驳**。
+>
+> **A source-traceable knowledge base for AI and humans.** Every entry carries its
+> source, its status, and the rebuttals against it.
 
 ---
 
-## 入口
+## 入口 / Start here
 
-| 你是 | 从这里开始 |
+| 你是 / You are | 从这里开始 / Start |
 |---|---|
 | 想学东西的人 | [**START.md**](START.md) —— 按主题索引 · 怎么读一条 · 现在有什么、没什么 |
-| **AI / 程序** | [**llms.txt**](llms.txt) + 解析 [**index.json**](index.json) —— 哪些不能当事实引用、每条的真实来源、判断「本库有没有 X」查 `objects` |
+| **AI agent**（在本仓库工作） | [**AGENTS.md**](AGENTS.md) —— 铁律 · 怎么改 · 怎么跑校验 |
+| **AI / 程序**（读内容） | [**llms.txt**](llms.txt) + 解析 [**index.json**](index.json) —— 哪些不能引用、每条的真实来源 |
+| 想把这个库**挂到 agent** | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) —— 零依赖 MCP server（只读） |
 | 想知道库是怎么做出来的 | 本页往下 |
+
+> **English:** [START.md](START.md) for readers · [AGENTS.md](AGENTS.md) for agents
+> editing this repo · [llms.txt](llms.txt) + [index.json](index.json) for programs ·
+> [`tools/scholia_mcp.py`](tools/scholia_mcp.py) to wire it as an MCP server.
 
 ---
 
@@ -77,14 +86,14 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 
 ## 现状
 
-<!-- stats:begin -->
+<!-- kbcheck:begin -->
 | | |
 |---|---|
 | 知识对象 | **100 条** —— 教法 45 · 知识点 23 · 命题 21 · 误解 6 · 资源 4 · 路径 1 |
 | 学科 | 物理 86 · 生活 5 · 医学 2 · 地理 6 · 科学 1 |
 | 证据 | 43 条（含作废 5 条） |
 | 已确证 | **0 条** |
-<!-- stats:end -->
+<!-- kbcheck:end -->
 
 来源：OpenStax《Physics》(**CC BY**) · Utah 7 年级科学 · 出版社勘误表 · AASM 临床指南 · 随机对照试验（RCT）。
 已闭环 Issue / PR：见[已合并的 Pull requests](https://github.com/hpleapfrog/Scholia/pulls?q=is%3Apr+is%3Amerged)（**不写死编号——它会漂移**）。
