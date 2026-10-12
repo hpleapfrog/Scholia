@@ -66,7 +66,7 @@ This subject is no longer empty, but **it is nowhere near the subject "Law" itse
 
 | Gap | What exactly | What it blocks |
 |---|---|---|
-| **Lower-level and local rules** | administrative regulations, departmental rules, judicial interpretations, and **provincial standing committees' specific enforcement standards** — not a single one registered | the "To fill in" section of [specific enforcement standards are set by provincial standing committees](命题/具体执行标准由省级人大常委会规定.en.md) |
+| **Lower-level and local rules** | administrative regulations, departmental rules, judicial interpretations, and **provincial standing committees' specific enforcement standards** — not a single one registered | the "To be added" section of [specific enforcement standards are set by provincial standing committees](命题/具体执行标准由省级人大常委会规定.en.md) |
 | **Legal domains beyond road traffic** | the only source so far is the Road Traffic Safety Law | this subject's coverage |
 
 **Not filled for the sake of filling.** Until the three questions in the

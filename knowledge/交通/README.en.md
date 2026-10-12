@@ -56,7 +56,7 @@ This subject is no longer empty, but **it currently holds only one source**, the
 
 | Gap | What exactly |
 |---|---|
-| **Implementing regulations and national standards** | the law's **implementing regulations**, and the **national standards** for non-motor vehicles, are both unregistered — the "To fill in" section of [electric bicycles… fifteen kilometres](命题/电动自行车在非机动车道内最高时速不得超过十五公里.en.md) is blocked here |
+| **Implementing regulations and national standards** | the law's **implementing regulations**, and the **national standards** for non-motor vehicles, are both unregistered — the "To be added" section of [electric bicycles… fifteen kilometres](命题/电动自行车在非机动车道内最高时速不得超过十五公里.en.md) is blocked here |
 | **Rail** | this subject's boundary says it holds rules of movement on roads **and on rail**, but there is **not a single rail entry**; the subway material currently sits in [Daily life](../生活/README.en.md) |
 | **A checkable basis on the enforcement side** | [Without a fine receipt…](命题/不出具统一罚款收据当事人有权拒绝缴纳.en.md) answers only "what the law requires"; **"how to check a receipt" needs a provincial finance department's text**, not yet registered |
 
