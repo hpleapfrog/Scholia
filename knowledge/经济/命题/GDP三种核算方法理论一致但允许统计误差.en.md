@@ -10,7 +10,7 @@ scope:
   学科: 经济 · 统计口径
   学段: 不限
   适用: anyone checking whether "production-approach GDP, income-approach GDP and expenditure-approach GDP disagree, so one of them must be wrong"
-  条件: **applies to the accounting framework set out in the NBS explainer of 2021-02-18**; that page gives the three approaches and a qualitative account of the "statistical discrepancy", and **this entry checks no actual figure or discrepancy size for any period**
+  条件: "**applies to the accounting framework set out in the NBS explainer of 2021-02-18**; that page gives the three approaches and a qualitative account of the \"statistical discrepancy\", and **this entry checks no actual figure or discrepancy size for any period**"
 edges:
   先修: []
   支持: []

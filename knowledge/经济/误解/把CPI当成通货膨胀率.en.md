@@ -10,7 +10,7 @@ scope:
   学科: 经济 · 统计口径
   学段: 不限
   适用: anyone who quotes the CPI as a synonym for "the inflation rate"
-  条件: **applies to the uses of the CPI as set out on that NBS explainer page**; the page says only what the CPI can and cannot represent, and **this entry checks no actual CPI figure for any period** (the 2022 national CPI of 102.0% on that page is the page's own worked example, not a release verified by this repo)
+  条件: "**applies to the uses of the CPI as set out on that NBS explainer page**; the page says only what the CPI can and cannot represent, and **this entry checks no actual CPI figure for any period** (the 2022 national CPI of 102.0% on that page is the page's own worked example, not a release verified by this repo)"
 edges:
   先修: []
   支持: []

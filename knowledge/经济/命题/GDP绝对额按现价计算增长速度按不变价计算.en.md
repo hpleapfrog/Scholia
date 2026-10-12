@@ -10,7 +10,7 @@ scope:
   学科: 经济 · 统计口径
   学段: 不限
   适用: anyone checking whether "GDP totals and GDP growth rates can be derived from each other", or confirming which price basis a given GDP figure uses
-  条件: **applies to the basis stated in the note under Table 1 of the NBS's quarterly preliminary GDP release**; that note is a standing footnote on every release, and **this entry checks no actual figure for any period** (the Q3 2025 Table 1 figures quoted below are not stored as knowledge; they appear only to show the table's structure)
+  条件: "**applies to the basis stated in the note under Table 1 of the NBS's quarterly preliminary GDP release**; that note is a standing footnote on every release, and **this entry checks no actual figure for any period** (the Q3 2025 Table 1 figures quoted below are not stored as knowledge; they appear only to show the table's structure)"
 edges:
   先修: []
   支持: []
