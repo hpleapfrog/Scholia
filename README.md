@@ -1,107 +1,85 @@
 # Scholia
 
-> **A source-traceable knowledge base for AI and humans.**
-> Every entry carries three things — **its source**, **its status**, and **the rebuttals against it**.
+> **给 AI 与人类的知识库：只存有据可查的知识。**
+> 每条内容都带三样东西——**它的来源**、**它的状态**、**对它的反驳**。
 >
-> [中文版 →](README.zh.md)
+> English → [**README.en.md**](README.en.md)
 
 ---
 
-## Start here
+## 入口
 
-| You are | Start |
+| 你是 | 从这里开始 |
 |---|---|
-| Someone who wants to learn | [**START.md**](START.md) — topic index · how to read an entry · what's here and what's not |
-| **An AI agent** working in this repo | [**AGENTS.md**](AGENTS.md) — hard rules · how to edit · how to run checks |
-| **An AI / program** reading content | [**llms.txt**](llms.txt) + parse [**index.json**](index.json) — what must not be quoted, each entry's real source |
-| Wiring it into an agent | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) — zero-dependency read-only MCP server |
-| Curious how it's built | keep reading |
+| 想学东西的人 | [**START.md**](START.md) —— 按主题索引 · 怎么读一条 · 现在有什么、没什么 |
+| **AI agent**（在本仓库工作） | [**AGENTS.md**](AGENTS.md) —— 铁律 · 怎么改 · 怎么跑校验 |
+| **AI / 程序**（读内容） | [**llms.txt**](llms.txt) + 解析 [**index.json**](index.json) —— 哪些不能引用、每条的真实来源 |
+| 想把这个库**挂到 agent** | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) —— 零依赖 MCP server（只读） |
+| 想知道库是怎么做出来的 | 本页往下 |
 
 ---
 
-## Mission: remove noise, keep what's traceable
+## 使命：去除噪音，存放真实信息
 
-**Noise is not "wrong things" — it is "things you cannot trace."** An unsourced claim is
-more dangerous than a sourced mistake: the latter can be fixed; the former, you don't even
-know where to start.
+**噪音不是「错的东西」，是「无法追溯的东西」。** 一条来源不明的断言比一条有据可查的错误更危险——后者能被改，前者连从哪下手都不知道。
 
-| It does **not** | It **does** |
+| 它**不**做 | 它**做** |
 |---|---|
-| ❌ Decide "what is true" | ✅ Attach **evidence and rebuttals** to every claim |
-| ❌ Let a majority or an authority rule | ✅ Compute status from **evidence grade + rebuttal structure**, by rules |
-| ❌ Claim to be reliable | ✅ Make **checkability** visible: who signed it · where it came from · who attacked it · whether it survived |
+| ❌ 判定「什么是真的」 | ✅ 让每个主张**带上它的证据与它的反驳** |
+| ❌ 由多数人或权威裁定 | ✅ 由**证据等级 + 反驳关系**按规则算出状态 |
+| ❌ 声称自己可靠 | ✅ 让**可核验性**可见：谁署名 · 从哪来 · 被谁攻击过 · 攻不攻得倒 |
 
-**This is not a manifesto — it has already run three times:** data fabricated to demo the
-format nearly got quoted as evidence (voided, ID kept); an attribution claim with n=2 from a
-single source was downgraded to `失据` (unsupported); a claim boasting 15 supporting edges was
-found to come entirely from one book. **All three were caught by the mechanism, not by luck.**
+**这不是宣言，已经跑过三次**：为演示格式编造的示例数据差点被当证据引用（已作废、编号保留）；一条 n=2 同源归因的命题被判 `失据`；一条号称 15 条支持的命题被查出全部来自同一本书。**三次都是机制发现的。**
 
-## What this is
+## 这是什么
 
-Textbooks contain mistakes; teachers tell you about them by word of mouth. Scholia
-institutionalizes that. The protocol layer answers only three questions — **who signed this?
-where did it come from? what does it conflict with?** — and **never** answers "what is true."
-Truth is decided by each reader. The knowledge graph is one; a textbook is that graph
-projected for one reader.
+教材里有错，老师会口头告诉你哪一处错了。Scholia 把这件事制度化：协议层只回答三件事——**这份内容是谁署名的？它从哪里来？它和谁冲突？**——**永不回答**「什么是真的」。真伪由每个读者裁决。知识图是唯一的；教科书是这张图对某个具体读者的一次投影。
 
-**Three commitments:**
+**三条判断**：
 
-1. **Voting cannot decide truth.** A minority with hard evidence is not erased by numbers.
-2. **Knowledge must converge; teaching methods must coexist.** Ranking methods is dogma.
-3. **Exitable.** Anyone can fork away with full history, without anyone's permission.
+1. **投票不能决定真理。** 少数方只要证据够硬，就不会被人数抹掉。
+2. **知识要收敛，教法要并存。** 强行给教法排名就是制造教条。
+3. **可退出。** 任何人可带全部历史 fork 离开，不需要任何人同意。
 
-**Minimal goal:** finish one chapter of one textbook — 200 errata, the full path from 0 to 200.
-Not "backing up human knowledge."
+**最小目标**：先做完一本教材的一章——200 条勘误，跑通从 0 到 200 的全过程。不是「备份人类知识」。
 
-## Format & checks
+## 格式与校验
 
-**One concept = one `.md` file**: `front-matter` holds what machines need, the body what
-humans need; GitHub renders it natively, and argument graphs are drawn with Mermaid.
-Full spec in [FORMAT.md](FORMAT.md); the rule registry is [docs/RULES.md](docs/RULES.md).
+**一个知识点 = 一个 `.md` 文件**：front-matter 存机器需要的，正文存人需要的；GitHub 原生渲染，论证图用 Mermaid 直接画出来。完整规范见 [FORMAT.md](FORMAT.md)；规则清单见 [docs/RULES.md](docs/RULES.md)。
 
 ```bash
-python tools/kbcheck.py     # zero-dependency, offline; run once before committing
+python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 ```
 
-It checks two levels: **per-file** (front-matter, status validity, duplicate ids, broken links
-and anchors, required sections and their order, non-empty evidence, stage/level/date/author
-values, medical disclaimer block) and **graph** (prerequisite acyclicity, attack-edge anchors,
-path gaps, goal coverage — an uncovered outcome is a hard failure). **Every rule is verified
-with an injected error, not just written down.** A read-only **CI**
-([`.github/workflows/kbcheck.yml`](.github/workflows/kbcheck.yml)) runs it on every PR.
+它查两类东西：文件级（front-matter、状态合法性、撞 id、断链与锚点、必备小节与顺序、来源非空、学段/水平档/日期/署名取值、医学免责块）与图级（先修无环、攻击边锚点、路径缺口、目标覆盖度——有成果没被覆盖直接判失败）。**每一项都注入错误验证过，不是「写了就算」。** 另有 **CI**（[`.github/workflows/kbcheck.yml`](.github/workflows/kbcheck.yml)，只读、零依赖）在每次 PR 上自动跑。
 
-## Contributing
+## 怎么贡献
 
-| You want to | Where | Affects conclusions? |
+| 你想做什么 | 去哪里 | 影响结论吗 |
 |---|---|---|
-| Ask, discuss method, share rough ideas | **Discussions** | ❌ **No** |
-| Report a suspected error, submit a method | **Issue** (template) | Indirectly |
-| Actually change the knowledge | **PR** | ✅ **The only channel that can** |
+| 提问、聊方法论、不成熟的想法 | **Discussions** | ❌ **不影响** |
+| 报告疑似错误、提交教法 | **Issue**（用模板） | 间接 |
+| 真的修改知识本身 | **PR** | ✅ **唯一能改变结论的通道** |
 
-Two guardrails: **`status` may only be written by the PR author, by the rules** (writing
-`已确证`/confirmed needs an independent non-author review); **👍 only ranks attention, never decides.**
+两条护栏：**`status` 只能由 PR 作者按规则写入**（写「已确证」需一名非作者独立复核）；**👍 只作注意力排序，绝不作判定依据**。
 
-## License & disclaimer
+## 许可与免责
 
-| Part | License |
+| 部分 | 许可 |
 |---|---|
-| Knowledge content (`knowledge/` `evidence/` `README.md` `CONTRIBUTING.md`) | **CC BY-SA 4.0** (commercial OK; derivatives stay open) |
-| Code (`tools/`) and format spec (`FORMAT.md`) | **MIT** |
+| 知识内容（`knowledge/` `evidence/` `README.md` `CONTRIBUTING.md`） | **CC BY-SA 4.0**（可商用，衍生品须同样开放） |
+| 代码（`tools/`）与格式规范（`FORMAT.md`） | **MIT** |
 
-Attribution: see each entry's `author` field and the commit history; keeping a link back to
-this repository satisfies attribution.
+署名见各条目 `author` 字段与提交历史；复用时保留一条指向本仓库的链接即满足。
 
 > [!CAUTION]
-> - **This is not a textbook, and not a teaching prescription.** "Confirmed" (`已确证`) does not
->   mean absolutely correct — **and there are currently none** (see below).
-> - **`争议` (disputed) is an honest outcome, not a defect.** All teaching methods are
->   conditional; always check the contraindications field.
-> - **Never upload textbook text or scanned pages** — only locators, short quotes, and original
->   summaries. Facts are not copyrightable; expression is.
-> - **Medical entries carry a population qualifier and a disclaimer block**; relay them together.
-> - Provided "as is", with no warranty.
+> - **这不是教材，也不是教学处方。**「已确证」不表示绝对正确——**且目前一条都没有**（见下）。
+> - **`争议` 是诚实的结果，不是缺陷。** 教法全部是条件性的，用前必核对「禁忌」栏。
+> - **绝不上传教材原文或扫描页**，只存定位、短引用与原创摘要——事实不受版权保护，表达受。
+> - **医学条目带人群限定与免责块**，转述时必须连同限定一起给出。
+> - 内容按「现状」提供，无任何担保。
 
-## Status
+## 现状
 
 <!-- kbcheck:begin -->
 | | |
@@ -112,34 +90,30 @@ this repository satisfies attribution.
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
-Sources: OpenStax *Physics* (**CC BY**) · Utah Grade-7 Science · publisher errata · AASM clinical
-guideline · randomized controlled trials.
-Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Scholia/pulls?q=is%3Apr+is%3Amerged) (**no hard-coded numbers — they drift**).
+来源：OpenStax《Physics》(**CC BY**) · Utah 7 年级科学 · 出版社勘误表 · AASM 临床指南 · 随机对照试验（RCT）。
+已闭环 Issue / PR：见[已合并的 Pull requests](https://github.com/hpleapfrog/Scholia/pulls?q=is%3Apr+is%3Amerged)（**不写死编号——它会漂移**）。
 
 > [!NOTE]
-> **The table above is generated by `kbcheck.py`** (the single source is [`index.json`](index.json));
-> it is **never hand-written** — a hand-written number drifts, and a drifting number is an assertion.
+> **上表由 `kbcheck.py` 生成**（唯一来源是 [`index.json`](index.json)），**不手写**——
+> 手写的数字会漂移，而漂移的数字就是断言。
 
 > [!IMPORTANT]
-> **Nothing is "confirmed" yet.** That needs an **independent non-author review**, and there is
-> currently one contributor. **The rules are being followed, not missing.**
+> **没有一条是「已确证」。** 那需要一名**非作者的独立复核**，而目前只有一位贡献者。
+> **这是规则被遵守，不是内容缺失。**
 
-## Open questions (the important ones)
+## 未决（要紧的几条）
 
-1. **Can entry cost drop below 5 minutes?** ← **decides the project's survival** (most entries
-   are 30–60-minute full objects, the opposite of the "start from single errata" advice).
-2. `已确证` / `争议` / `已推翻` **have never been used** — a single contributor cannot produce them
-   honestly; this is not a gap code can fill.
-3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17), waiting for 3–5 cases); there is no way to express "advanced".
-4. Support-edge independence cannot be computed (sources are free text); goal coverage counts
-   "whether", not "how well".
+1. **录入成本能否压到 5 分钟以内** ← **决定项目生死**（目前绝大多数条目是 30–60 分钟的完整对象，与「从单点勘误开始」的建议相反）
+2. `已确证` / `争议` / `已推翻` **从未被使用**——单贡献者状态下无法诚实产生，不是能靠写代码补的缺口
+3. 前置在学科之外时表达不了（[Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)，等 3–5 例再动结构）；「进阶」关系没有表达手段
+4. `支持` 边的独立性算不出来（来源是自由文本，独立与否必须人判断）；目标覆盖度只算「有没有」，不算「够不够」
 
-## Layout
+## 目录
 
 ```
-knowledge/         knowledge objects: concepts · claims · methods · misconceptions · paths · resources
-evidence/          evidence index and reproducible raw data
-docs/RULES.md      rule registry (mechanically enforced vs. human-reviewed)
-docs/decisions/    the "why" behind rules — cases, incidents, inferences (moved out, not deleted)
-tools/             kbcheck.py (validator) · scholia_mcp.py (MCP server)
+knowledge/        知识对象：知识点 · 命题 · 教法 · 误解 · 路径 · 资源
+evidence/         证据索引与可复算的原始数据
+docs/RULES.md     规则注册表（机械校验 / 人工复核）
+docs/decisions/   规则的「为什么」——案例 · 事故 · 推断（从规范里搬出，不删）
+tools/            kbcheck.py（校验器）· scholia_mcp.py（MCP server）
 ```
