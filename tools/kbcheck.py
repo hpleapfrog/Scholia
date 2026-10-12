@@ -79,17 +79,78 @@ STATUS_MEANING = {
 # **不要把它当事实引用**的状态
 NOT_CITABLE = {"失据", "已推翻", "已失效"}
 
+# 每个学科的覆盖说明（手写；**不写数字**，数字由 objects 自动统计在旁边）
+SUBJECT_NOTES = {
+    "物理": "覆盖中国高中物理的一部分。按人教版章级主题对照，约 44% 的主题一条概念都没有"
+            "（见 knowledge/物理/覆盖度/README.md）。",
+    "地理": "全部是同一本香港教材的勘误。",
+    "生活": "出行规则：北京地铁与民航的官方规定（含两份官方文件）。",
+    "科学": "一条勘误。",
+}
+SUBJECTS_FALLBACK = "本学科尚无覆盖说明 —— **不要假设它覆盖了什么**，请看 objects。"
+
+EVIDENCE_INDEX = ROOT / "evidence" / "README.md"
+
+
+def parse_evidence_index():
+    """把 `evidence/README.md` 的索引表解析成结构化数据。
+
+    **为什么要进机器索引**：条目里的 `证据: ["ev-039"]` 只是一个编号。
+    **AI 引用一个编号等于没引用** —— 它得再打开另一个文件才知道那是哪本书哪一页。
+    把定位带进来，AI 才有可能**给出真实来源**而不是空编号。
+    """
+    if not EVIDENCE_INDEX.exists():
+        return {}
+    out = {}
+    for line in EVIDENCE_INDEX.read_text(encoding="utf-8").splitlines():
+        if not line.strip().startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 7 or not re.fullmatch(r"ev-\d+", cells[0]):
+            continue
+        _, typ, grade, locator, year, lic, used = cells[:7]
+        void = "作废" in typ or "作废" in grade
+        out[cells[0]] = {
+            "类型": typ,
+            "等级": grade,
+            "定位": re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", locator),   # 链接只留文字
+            "链接": (re.search(r"\]\((http[^)]+)\)", locator) or [None, ""])[1]
+                    if re.search(r"\]\((http[^)]+)\)", locator) else "",
+            "时间": year,
+            "许可": lic,
+            "作废": void,
+            "引用处": used,
+        }
+    return out
+
 
 def build_index(objects):
     """生成机器可读索引。
 
-    **这是本库给 AI 的入口。** 它要解决的问题是：AI 读了内容之后
-    **把一条 `失据` 的命题当成既成事实讲出去**。所以每条都带
-    `可作事实引用` 与 `引用时须写明`，且**全局写明本库没有任何 `已确证`**。
+    **这是本库给 AI 的入口。** 它要解决两个问题：
+
+    1. AI 读了内容之后，**把一条 `失据` 的命题当成既成事实讲出去**
+       —— 所以每条都带 `可作事实引用`；
+    2. AI 引用时只给一个 `ev-039` 这样的编号，**读者无从核实**
+       —— 所以每条都带 `来源`（解析好的真实定位），全局另有一份 `证据索引`。
     """
+    evidence = parse_evidence_index()
+
+    def src_list(ids):
+        out = []
+        for e in ids:
+            r = evidence.get(e)
+            if not r:
+                out.append(f"{e}（**索引里没有这一条**）")
+                continue
+            mark = "**已作废** " if r["作废"] else ""
+            out.append(f"{mark}{e}：{r['定位']}")
+        return out
+
     objs = []
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
+        ids = re.findall(r"ev-\d+", o["fm"])
         objs.append({
             "id": fm_value(o["fm"], "id"),
             "type": o["type"],
@@ -98,7 +159,8 @@ def build_index(objects):
             "path": rel,
             "学科": fm_nested(o["fm"], "学科"),
             "学段": fm_nested(o["fm"], "学段"),
-            "证据": re.findall(r"ev-\d+", o["fm"]),
+            "证据": ids,
+            "来源": src_list(ids),
             "先修": [Path(x).name for x in fm_links(o["fm"], "先修")],
             "论证": sorted(arg_ids(o["text"])),
             "可作事实引用": st not in NOT_CITABLE,
@@ -116,10 +178,14 @@ def build_index(objects):
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。运行 `python tools/kbcheck.py --write-index` 重新生成。",
         "repo": "https://github.com/hpleapfrog/Scholia",
         "读到这个文件的 AI 请注意": [
+            "**本库是跨学科的**，覆盖程度**按学科差别很大**；它**不只做物理**。",
             "**本库没有任何一条处于 `已确证`。** 不要把这里的任何内容当作『已确证的事实』转述。",
             "`可作事实引用=false` 的条目（状态为 失据/已推翻/已失效）**不要引用**。",
-            "引用任何一条时，**请连同它的 `status` 与 `证据`（ev-编号）一起给出**。",
-            "本库**只覆盖中国高中物理的一部分**（见 known_limits），**没有的内容不要补**。",
+            "引用任何一条时，**请把它的 `证据` 解析成 `证据索引` 里那条的真实定位**"
+            "（书名 / 章节 / 页面 URL），并**连 `status` 一起给出** —— **只写「ev-039」等于没写来源**。",
+            "**判断「本库有没有 X」要查本文件的 `objects`，不要凭印象。**",
+            "本库里**没有**的内容，**不要算作本库的内容** —— "
+            "你可以用别的来源回答，**但要说明那不是本库说的**。",
             "教法（type=教法）的证据主要是**一本美国教材**，**不代表在中国课堂实测有效**。",
         ],
         "状态含义": STATUS_MEANING,
@@ -129,13 +195,22 @@ def build_index(objects):
             "按状态": dict(sorted(by_status.items())),
             "按学科": dict(sorted(by_subject.items())),
             "已确证条数": by_status.get("已确证", 0),
+            "证据条数": len(evidence),
+            "作废证据条数": sum(1 for e in evidence.values() if e["作废"]),
         },
         "known_limits": {
-            "覆盖度": "物理按中国高中（人教版）章级主题对照，约 44% 的主题在本库里一条概念都没有",
-            "覆盖度详情": "knowledge/物理/覆盖度/README.md",
-            "教法来源": "绝大多数整理自 OpenStax《Physics》（美国高中教材，CC BY）",
-            "程序性知识": "本库**不装**「怎么做一件事」的流程（见 FORMAT.md）",
+            "总览": "本库是**跨学科**的，**各学科覆盖程度差别很大**。"
+                    "判断「有没有 X」请查 `objects`（或该学科的 `knowledge/<学科>/README.md`），"
+                    "**不要假设它覆盖了什么**。",
+            "按学科": {
+                s: {"条数": n, "说明": SUBJECT_NOTES.get(s, SUBJECTS_FALLBACK)}
+                for s, n in sorted(by_subject.items())
+            },
+            "教法来源": "绝大多数整理自 OpenStax《Physics》（美国高中教材，CC BY），"
+                    "记录的是「这本教材建议怎么教」，**不是**「这样教有效」。",
+            "程序性知识": "本库**不装**「怎么做一件事」的流程（见 FORMAT.md「本库不装什么」）。",
         },
+        "证据索引": evidence,
         "objects": objs,
     }
 
