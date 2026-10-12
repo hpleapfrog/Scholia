@@ -1,5 +1,7 @@
 # 物理
 
+> **English: [README.en.md](README.en.md)**
+
 ## 知识点（概念节点 · 先修关系的载体）
 
 ```mermaid
