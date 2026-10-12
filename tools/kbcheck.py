@@ -151,6 +151,7 @@ def build_index(objects):
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
         ids = re.findall(r"ev-\d+", o["fm"])
+        pre_h = o["text"].split("\n## ", 1)[0]
         objs.append({
             "id": fm_value(o["fm"], "id"),
             "type": o["type"],
@@ -159,6 +160,9 @@ def build_index(objects):
             "path": rel,
             "学科": fm_nested(o["fm"], "学科"),
             "学段": fm_nested(o["fm"], "学段"),
+            "适用": fm_nested(o["fm"], "适用"),
+            "条件": fm_nested(o["fm"], "条件"),
+            "免责块在正文最前": "> [!CAUTION]" in pre_h,
             "证据": ids,
             "来源": src_list(ids),
             "先修": [Path(x).name for x in fm_links(o["fm"], "先修")],
@@ -187,6 +191,10 @@ def build_index(objects):
             "本库里**没有**的内容，**不要算作本库的内容** —— "
             "你可以用别的来源回答，**但要说明那不是本库说的**。",
             "教法（type=教法）的证据主要是**一本美国教材**，**不代表在中国课堂实测有效**。",
+            "**转述任何对象前，先看它的 `适用` / `条件` / `免责块在正文最前`** —— "
+            "限定不是免责声明的装饰：医学条目的操作参数**只在该人群与条件下成立**，"
+            "转述时**必须把限定连同数字一起给出**；`免责块在正文最前=true` 的条目，"
+            "**转述前必须读 `path` 指向的文件正文开头**。",
         ],
         "状态含义": STATUS_MEANING,
         "统计": {
