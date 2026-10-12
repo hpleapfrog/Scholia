@@ -23,11 +23,11 @@
     "已失效": "依据已过时或被取代"
   },
   "统计": {
-    "对象总数": 92,
+    "对象总数": 98,
     "按类型": {
       "命题": 19,
-      "教法": 42,
-      "知识点": 20,
+      "教法": 45,
+      "知识点": 23,
       "误解": 6,
       "资源": 4,
       "路径": 1
@@ -36,17 +36,17 @@
       "失据": 2,
       "待审": 13,
       "暂定确认": 3,
-      "有效": 71,
+      "有效": 77,
       "需复审": 3
     },
     "按学科": {
       "地理": 6,
-      "物理": 80,
+      "物理": 86,
       "生活": 5,
       "科学": 1
     },
     "已确证条数": 0,
-    "证据条数": 37,
+    "证据条数": 40,
     "作废证据条数": 5
   },
   "known_limits": {
@@ -57,7 +57,7 @@
         "说明": "全部是同一本香港教材的勘误。"
       },
       "物理": {
-        "条数": 80,
+        "条数": 86,
         "说明": "覆盖中国高中物理的一部分。按人教版章级主题对照，约 44% 的主题一条概念都没有（见 knowledge/物理/覆盖度/README.md）。"
       },
       "生活": {
@@ -442,6 +442,36 @@
       "许可": "官方公开规章 · **仅引用条款号与短引用，不上传原文**",
       "作废": false,
       "引用处": "非自愿退票与变更、超售处置"
+    },
+    "ev-045": {
+      "类型": "教材（全文）",
+      "等级": "低",
+      "定位": "OpenStax《Physics》第 8 章 · Linear Momentum, Force, and Impulse，m54215",
+      "链接": "https://github.com/openstax/osbooks-physics/blob/main/modules/m54215/index.cnxml",
+      "时间": "2020",
+      "许可": "**CC BY 4.0** · **可自由复用**",
+      "作废": false,
+      "引用处": "动量和冲量 · 动量和冲量教法 ×1"
+    },
+    "ev-046": {
+      "类型": "教材（全文）",
+      "等级": "低",
+      "定位": "OpenStax《Physics》第 8 章 · Conservation of Momentum，m54202",
+      "链接": "https://github.com/openstax/osbooks-physics/blob/main/modules/m54202/index.cnxml",
+      "时间": "2020",
+      "许可": "**CC BY 4.0** · **可自由复用**",
+      "作废": false,
+      "引用处": "动量守恒定律 · 动量守恒教法 ×2"
+    },
+    "ev-047": {
+      "类型": "教材（全文）",
+      "等级": "低",
+      "定位": "OpenStax《Physics》第 8 章 · Elastic and Inelastic Collisions，m54209",
+      "链接": "https://github.com/openstax/osbooks-physics/blob/main/modules/m54209/index.cnxml",
+      "时间": "2020",
+      "许可": "**CC BY 4.0** · **可自由复用**",
+      "作废": false,
+      "引用处": "弹性碰撞与非弹性碰撞"
     }
   },
   "objects": [
@@ -1032,6 +1062,69 @@
       ],
       "来源": [
         "ev-039：OpenStax《Physics》第 3 章 · Acceleration，m54123"
+      ],
+      "先修": [],
+      "论证": [
+        "m1"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
+      "id": "kb:physics:method-momentum-al-two-forms",
+      "type": "教法",
+      "title": "动量和冲量 · 进阶：牛顿第二定律的两种写法",
+      "status": "有效",
+      "path": "knowledge/物理/教法/动量和冲量-AL-两种写法.md",
+      "学科": "物理",
+      "学段": "高中",
+      "证据": [
+        "ev-045"
+      ],
+      "来源": [
+        "ev-045：OpenStax《Physics》第 8 章 · Linear Momentum, Force, and Impulse，m54215"
+      ],
+      "先修": [],
+      "论证": [
+        "m1"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
+      "id": "kb:physics:method-momentum-al-whole-system",
+      "type": "教法",
+      "title": "动量守恒 · 进阶：地球上有没有完全孤立的系统",
+      "status": "有效",
+      "path": "knowledge/物理/教法/动量守恒-AL-守恒只能对整体说.md",
+      "学科": "物理",
+      "学段": "高中",
+      "证据": [
+        "ev-046"
+      ],
+      "来源": [
+        "ev-046：OpenStax《Physics》第 8 章 · Conservation of Momentum，m54202"
+      ],
+      "先修": [],
+      "论证": [
+        "m1"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
+      "id": "kb:physics:method-momentum-ol-word-conservation",
+      "type": "教法",
+      "title": "动量守恒 · 年级水平：先问「守恒」这个词",
+      "status": "有效",
+      "path": "knowledge/物理/教法/动量守恒-OL-先问守恒这个词.md",
+      "学科": "物理",
+      "学段": "高中",
+      "证据": [
+        "ev-046"
+      ],
+      "来源": [
+        "ev-046：OpenStax《Physics》第 8 章 · Conservation of Momentum，m54202"
       ],
       "先修": [],
       "论证": [
@@ -1848,6 +1941,52 @@
       "引用时须写明": "state=有效"
     },
     {
+      "id": "kb:physics:kp-momentum-impulse",
+      "type": "知识点",
+      "title": "动量和冲量",
+      "status": "有效",
+      "path": "knowledge/物理/知识点/动量和冲量.md",
+      "学科": "物理",
+      "学段": "高中",
+      "证据": [
+        "ev-045"
+      ],
+      "来源": [
+        "ev-045：OpenStax《Physics》第 8 章 · Linear Momentum, Force, and Impulse，m54215"
+      ],
+      "先修": [
+        "牛顿第二定律.md"
+      ],
+      "论证": [
+        "k22"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
+      "id": "kb:physics:kp-conservation-of-momentum",
+      "type": "知识点",
+      "title": "动量守恒定律",
+      "status": "有效",
+      "path": "knowledge/物理/知识点/动量守恒定律.md",
+      "学科": "物理",
+      "学段": "高中",
+      "证据": [
+        "ev-046"
+      ],
+      "来源": [
+        "ev-046：OpenStax《Physics》第 8 章 · Conservation of Momentum，m54202"
+      ],
+      "先修": [
+        "动量和冲量.md"
+      ],
+      "论证": [
+        "k23"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
       "id": "kb:physics:kp-atomic-structure",
       "type": "知识点",
       "title": "原子结构",
@@ -1929,6 +2068,30 @@
       "先修": [],
       "论证": [
         "k11"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
+      "id": "kb:physics:kp-elastic-inelastic-collisions",
+      "type": "知识点",
+      "title": "弹性碰撞与非弹性碰撞",
+      "status": "有效",
+      "path": "knowledge/物理/知识点/弹性碰撞与非弹性碰撞.md",
+      "学科": "物理",
+      "学段": "高中",
+      "证据": [
+        "ev-047"
+      ],
+      "来源": [
+        "ev-047：OpenStax《Physics》第 8 章 · Elastic and Inelastic Collisions，m54209"
+      ],
+      "先修": [
+        "动量守恒定律.md",
+        "机械能守恒.md"
+      ],
+      "论证": [
+        "k24"
       ],
       "可作事实引用": true,
       "引用时须写明": "state=有效"
