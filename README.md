@@ -87,7 +87,7 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 <!-- stats:end -->
 
 来源：OpenStax《Physics》(**CC BY**) · Utah 7 年级科学 · 出版社勘误表 · AASM 临床指南 · 随机对照试验（RCT）。
-已闭环 Issue / PR **#1 – #51**。
+已闭环 Issue / PR：见[已合并的 Pull requests](https://github.com/hpleapfrog/Scholia/pulls?q=is%3Apr+is%3Amerged)（**不写死编号——它会漂移**）。
 
 > [!NOTE]
 > **上表由 `kbcheck.py` 生成**（唯一来源是 [`index.json`](index.json)），**不手写**——
