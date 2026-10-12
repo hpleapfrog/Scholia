@@ -16,8 +16,10 @@
 |---|---|---|---|
 | [《中华人民共和国道路交通安全法》 (official text · third amendment of 2021)](资源/中华人民共和国道路交通安全法.en.md) | 资源 | 有效 | `ev-051` |
 | [The law sets only the range; the specific enforcement standard is set by the provincial standing committee](命题/具体执行标准由省级人大常委会规定.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [Compensation between a motor vehicle and a pedestrian / non-motor vehicle is allocated by fault; when the motor-vehicle side is faultless it still bears up to ten per cent](命题/机动车与行人事故的赔偿责任按过错分配.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [Medical institutions may not delay treatment of traffic-accident casualties because rescue fees have not been paid on time](命题/医疗机构不得因抢救费用未及时支付而拖延救治.en.md) | 命题 | 暂定确认 | `ev-051` |
 
-**The first two entries come from one source** (`ev-051`, verification depth `全文` / full text).
+**All four come from one source** (`ev-051`, verification depth `全文` / full text).
 That means this subject's current coverage is **not** the same as the subject "Law" itself —
 see "What is still missing" below.
 
@@ -75,5 +77,6 @@ This subject is no longer empty, but **it is nowhere near the subject "Law" itse
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
-| 2026-10-12 | first batch of 2 entries registered (1 `资源` + 1 `命题`), source `ev-051`; "Current state" changed from "no entries yet" to an entry table, "Why this is empty right now" changed to "What is still missing" | user asked to keep improving the knowledge base, without stopping midway | @hpleapfrog |
+| 2026-10-12 | added 2 `命题`: accident compensation allocated by fault (Art. 76), treatment may not be delayed for unpaid fees (Art. 75) | topic chosen against the subject boundary after ev-051 was registered | @hpleapfrog |
+| 2026-10-12 | first batch of 2 entries registered (1 `资源` + 1 `命题`), source `ev-051`; "Current state" changed from "no entries yet" to an entry table, "Why this is empty right now" changed to "What is still missing" | topic chosen against the subject boundary after ev-051 was registered | @hpleapfrog |
 | 2026-10-12 | established the subject; added `law` to `SUBJECT_SLUGS` | user asked to add the subject "Law" | @hpleapfrog |
