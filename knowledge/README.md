@@ -8,9 +8,10 @@
 |---|---|
 | [物理](物理/README.md) | 86 |
 | [生活](生活/README.md) | 5 |
+| [医学](医学/README.md) | 1 |
 | [地理](地理/README.md) | 6 |
 | [科学](科学/README.md) | 1 |
-| **合计** | **98** |
+| **合计** | **99** |
 
 > [!NOTE]
 > **上表的数字由 `kbcheck.py` 强制**（`check_readme_coverage`）：
