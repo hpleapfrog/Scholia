@@ -109,5 +109,6 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 ```
 knowledge/   知识对象：知识点 · 命题 · 教法 · 误解 · 路径 · 资源
 evidence/    证据索引与可复算的原始数据
+docs/decisions/  规则的「为什么」——案例 · 事故 · 推断（从规范里搬出，不删）
 tools/       kbcheck.py（唯一的脚本）
 ```
