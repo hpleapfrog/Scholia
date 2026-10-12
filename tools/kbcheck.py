@@ -193,6 +193,7 @@ def build_index(objects):
 
     return {
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。运行 `python tools/kbcheck.py --write-index` 重新生成。",
+        "schema_version": 2,
         "repo": "https://github.com/hpleapfrog/Scholia",
         "读到这个文件的 AI 请注意": [
             "**本库是跨学科的**，覆盖程度**按学科差别很大**；它**不只做物理**。",

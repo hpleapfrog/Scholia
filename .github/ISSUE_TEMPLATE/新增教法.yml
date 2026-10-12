@@ -1,7 +1,7 @@
 name: 新增教法
 description: 提交一种教学做法。必须包含适用条件与禁忌
 title: "[教法] "
-labels: ["type:method"]
+labels: ["type:method", "triage:待审"]
 body:
   - type: markdown
     attributes:

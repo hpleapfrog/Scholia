@@ -176,6 +176,16 @@ git push origin fix/ohm-law-temperature
 
 触发 C 是硬性的：**只要规则被绕过一次，社会约束就证明不够，必须换成机器约束。**
 
+> [!NOTE]
+> **CI 已提前启用**（[`.github/workflows/kbcheck.yml`](.github/workflows/kbcheck.yml)，只读、零依赖、不要密钥）——
+> 不等触发 C。**规则已经足够多，人工每次记得跑的成本高于机器每次跑。**
+
+### 标签是分诊用的，不是对象状态
+
+Issue 标签统一用 `type:*` 与 `triage:*` 前缀，**不要和知识对象的 `status` 混**：
+对象的 `status` 只能由 PR 按规则改；Issue 标签只是分诊，**不影响结论**。
+（`triage:*` / `type:*` 需在仓库 Settings → Labels 里建好。）
+
 ### 两条护栏
 
 1. **状态不能手改。** 改 `status` 必须在 PR 里写明依据哪几条存活论证。

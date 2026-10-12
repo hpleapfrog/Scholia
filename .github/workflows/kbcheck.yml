@@ -1,0 +1,21 @@
+name: kbcheck
+
+# 只读、零依赖、不要密钥。
+# 触发条件 C 原本要求「等到第一次违规改动」才引入 CI；现在提前启用，
+# 因为校验器已经有 16 项规则，人工每次记得跑的成本高于机器每次跑的成本。
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      # 校验器零第三方依赖，直接跑
+      - name: 运行 kbcheck
+        run: python tools/kbcheck.py
