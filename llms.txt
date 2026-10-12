@@ -1,5 +1,7 @@
 # Scholia
 
+> **English: [llms.en.txt](llms.en.txt)**
+
 > 一份可自行核验的物理与通识知识库。每条内容都带**它的来源**与**它的状态**。
 
 **本文件是给 AI 与程序读的入口。** 人类读者请去 [START.md](START.md)。
