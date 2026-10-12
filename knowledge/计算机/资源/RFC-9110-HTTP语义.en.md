@@ -11,7 +11,7 @@ scope:
   学段: 不限
   资源类型: standard body specification (plain text)
   适用: when you need to check "what the specification says about HTTP methods, status codes and field semantics"
-  条件: **applies only to RFC 9110 published in 2022-06**; this repo only verified §2.2 and §9.2 — the remaining sections were not checked
+  条件: "**applies only to RFC 9110 published in 2022-06**; this repo only verified §2.2 and §9.2 — the remaining sections were not checked"
 edges:
   先修: []
   支持: []

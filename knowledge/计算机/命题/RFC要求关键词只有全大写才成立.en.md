@@ -10,7 +10,7 @@ scope:
   学科: 计算机 · 标准与规范
   学段: 不限
   适用: when you need to check "does the must / should in this RFC count as a requirement"
-  条件: **applies to the BCP 14 pairing (RFC 2119 + RFC 8174)**; this entry only states what BCP 14 says, **and judges the compliance of no specific RFC**
+  条件: "**applies to the BCP 14 pairing (RFC 2119 + RFC 8174)**; this entry only states what BCP 14 says, **and judges the compliance of no specific RFC**"
 edges:
   先修: []
   支持: []

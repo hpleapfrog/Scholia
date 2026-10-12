@@ -10,7 +10,7 @@ scope:
   学科: 医学 · 临床证据
   学段: 不限
   适用: mechanical ventilation strategy for acute respiratory distress syndrome (ARDS) patients
-  条件: **only the population and setting of that trial**; **not operating guidance** — see the subject README
+  条件: "**only the population and setting of that trial**; **not operating guidance** — see the subject README"
 edges:
   先修: []
   支持: []

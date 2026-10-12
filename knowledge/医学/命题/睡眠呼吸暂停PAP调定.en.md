@@ -10,7 +10,7 @@ scope:
   学科: 医学 · 临床指南
   学段: 不限
   适用: positive airway pressure (PAP) titration for adults (≥12 y) with obstructive sleep apnea (OSA)
-  条件: **records only what the guideline prescribes and one randomized trial's conclusion**; **not operating guidance for any specific patient** — see the disclaimer below
+  条件: "**records only what the guideline prescribes and one randomized trial's conclusion**; **not operating guidance for any specific patient** — see the disclaimer below"
 edges:
   先修: []
   支持: []
