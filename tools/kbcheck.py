@@ -15,6 +15,7 @@
 （id 冲突、链接可达性、教法禁忌是否为空）。
 """
 import collections
+import json
 import os
 import re
 import sys
@@ -54,6 +55,112 @@ FORBIDDEN_PHRASES = []
 
 # 没有 .md 扩展名、但含 Markdown 链接的文档，必须一并检查
 EXTRA_TEXT_FILES = ["LICENSE", "LICENSE-CODE"]
+
+# ── 机器可读索引（index.json）────────────────────────────────────────────
+# 给 AI 与其他程序读的唯一入口。**由本脚本生成，不手写** ——
+# 手写的索引必然与内容脱节，那就是「信息是错的」。
+
+INDEX_FILE = ROOT / "index.json"
+
+# 状态的含义（给机器读；与 FORMAT.md §4 一致）
+STATUS_MEANING = {
+    "草案": "刚写下，尚未自检",
+    "待审": "内容完整，但没有任何人独立复核过",
+    "有效": "当前没有已知的**存活攻击**；**不等于**已被独立复核",
+    "争议": "存活集合里存在结论互相冲突的论证",
+    "暂定确认": "作者已核对，但**没有非作者的独立复核**",
+    "已确证": "本库最高等级：有**非作者**的独立复核。**（截至生成时，全库一条都没有）**",
+    "需复审": "刚被改动过，**还没有人重新看过**",
+    "已推翻": "已被论证推翻",
+    "失据": "**曾有论证，但被击倒了** —— 主张还在，**当前没有任何支撑它的论证**",
+    "已失效": "依据已过时或被取代",
+}
+
+# **不要把它当事实引用**的状态
+NOT_CITABLE = {"失据", "已推翻", "已失效"}
+
+
+def build_index(objects):
+    """生成机器可读索引。
+
+    **这是本库给 AI 的入口。** 它要解决的问题是：AI 读了内容之后
+    **把一条 `失据` 的命题当成既成事实讲出去**。所以每条都带
+    `可作事实引用` 与 `引用时须写明`，且**全局写明本库没有任何 `已确证`**。
+    """
+    objs = []
+    for rel, o in sorted(objects.items()):
+        st = fm_value(o["fm"], "status")
+        objs.append({
+            "id": fm_value(o["fm"], "id"),
+            "type": o["type"],
+            "title": fm_value(o["fm"], "title"),
+            "status": st,
+            "path": rel,
+            "学科": fm_nested(o["fm"], "学科"),
+            "学段": fm_nested(o["fm"], "学段"),
+            "证据": re.findall(r"ev-\d+", o["fm"]),
+            "先修": [Path(x).name for x in fm_links(o["fm"], "先修")],
+            "论证": sorted(arg_ids(o["text"])),
+            "可作事实引用": st not in NOT_CITABLE,
+            "引用时须写明": (f"state={st}"
+                        + ("；本库判定它**没有说话算数的论证**" if st in NOT_CITABLE else "")),
+        })
+
+    by_type, by_status, by_subject = collections.Counter(), collections.Counter(), collections.Counter()
+    for x in objs:
+        by_type[x["type"]] += 1
+        by_status[x["status"]] += 1
+        by_subject[x["学科"].split(" ")[0]] += 1
+
+    return {
+        "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。运行 `python tools/kbcheck.py --write-index` 重新生成。",
+        "repo": "https://github.com/hpleapfrog/Scholia",
+        "读到这个文件的 AI 请注意": [
+            "**本库没有任何一条处于 `已确证`。** 不要把这里的任何内容当作『已确证的事实』转述。",
+            "`可作事实引用=false` 的条目（状态为 失据/已推翻/已失效）**不要引用**。",
+            "引用任何一条时，**请连同它的 `status` 与 `证据`（ev-编号）一起给出**。",
+            "本库**只覆盖中国高中物理的一部分**（见 known_limits），**没有的内容不要补**。",
+            "教法（type=教法）的证据主要是**一本美国教材**，**不代表在中国课堂实测有效**。",
+        ],
+        "状态含义": STATUS_MEANING,
+        "统计": {
+            "对象总数": len(objs),
+            "按类型": dict(sorted(by_type.items())),
+            "按状态": dict(sorted(by_status.items())),
+            "按学科": dict(sorted(by_subject.items())),
+            "已确证条数": by_status.get("已确证", 0),
+        },
+        "known_limits": {
+            "覆盖度": "物理按中国高中（人教版）章级主题对照，约 44% 的主题在本库里一条概念都没有",
+            "覆盖度详情": "knowledge/物理/覆盖度/README.md",
+            "教法来源": "绝大多数整理自 OpenStax《Physics》（美国高中教材，CC BY）",
+            "程序性知识": "本库**不装**「怎么做一件事」的流程（见 FORMAT.md）",
+        },
+        "objects": objs,
+    }
+
+
+def check_index(objects, errors):
+    """`index.json` 必须与内容一致——不一致就报错，并告诉怎么修。
+
+    **这是「防止信息是错的」的机制部分**：索引不能手写、不能过期。
+    """
+    want = json.dumps(build_index(objects), ensure_ascii=False, indent=2, sort_keys=False) + "\n"
+    if not INDEX_FILE.exists():
+        errors.append("index.json 不存在 —— 运行 `python tools/kbcheck.py --write-index` 生成")
+        return
+    have = INDEX_FILE.read_text(encoding="utf-8").replace("\r\n", "\n")
+    if have != want:
+        errors.append(
+            "index.json **与内容不一致**（内容改过但索引没重新生成）—— "
+            "运行 `python tools/kbcheck.py --write-index`，然后一起提交")
+
+
+def write_index(objects):
+    INDEX_FILE.write_text(
+        json.dumps(build_index(objects), ensure_ascii=False, indent=2, sort_keys=False) + "\n",
+        encoding="utf-8")
+    return INDEX_FILE
 
 
 def parse_front_matter(text):
@@ -603,15 +710,23 @@ def check_all():
     check_path_steps(objects, errors)
     stats = check_path_outcomes(objects, errors, warnings)
     argstats = argument_graph(objects)
+    check_index(objects, errors)
 
-    return md_files, ids, errors, warnings, stats, argstats
+    return md_files, ids, errors, warnings, stats, argstats, objects
 
 
 def main():
-    md_files, ids, errors, warnings, stats, argstats = check_all()
+    write = "--write-index" in sys.argv
+    md_files, ids, errors, warnings, stats, argstats, objects = check_all()
 
     print(f"扫描 {len(md_files)} 个文档，识别知识对象 {len(ids)} 条")
     print()
+
+    if write:
+        p = write_index(objects)
+        print(f"已生成 {p.relative_to(ROOT).as_posix()}"
+              f"（{len(objects)} 条对象）—— 请与内容一起提交")
+        return 0
 
     if warnings:
         print("提示（不阻塞）：")
