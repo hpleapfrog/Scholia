@@ -56,6 +56,17 @@
 > For medical entries (whose `学科` contains "医学"), the `适用` and `条件` fields **are not decoration**:
 > they record that the guideline holds **only for which population, under what conditions**, and the body opens with a disclaimer block.
 > When restating these entries, **give the limits together with the numbers**; **do not** present them as advice for any patient.
+>
+> ### 7. When you go **outside** for a source: **opens ≠ true**
+>
+> Registering evidence here requires three questions (see [`evidence/README.en.md`](evidence/README.en.md)):
+> **who publishes it** · **earliest verifiable date** · **can a second source be found outside that publisher**.
+>
+> **Do not treat a page as evidence just because the link opens and the format is well-formed** —
+> **a site manufactured for this very citation has entirely legal locators.**
+> **Reverse-check identifiers**: the title a DOI resolves to, and the name a document number yields on the publisher's official site, **must match what you register**;
+> **several sites copying one sentence are still one source** (independence is counted by publishing body, not by number of domains).
+> **A source whose body you never read cannot carry "confirmed"** (with `核验深度` of `未核验` / `仅定位`, the entry cannot reach `暂定确认`).
 
 ---
 
