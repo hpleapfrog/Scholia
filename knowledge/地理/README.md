@@ -1,5 +1,7 @@
 # 地理
 
+> **English: [README.en.md](README.en.md)**
+
 来源：香港教育局「適用書目表」勘誤表索引 → 出版社官方勘误表。
 全部条目均为**出版社勘误表的一手声明**，见 [evidence/README.md](../../evidence/README.md) 的 `ev-014`。
 

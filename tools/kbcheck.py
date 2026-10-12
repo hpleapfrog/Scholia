@@ -1160,8 +1160,8 @@ def check_all():
         text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
         fm = parse_front_matter(text)
 
-        # 是否是知识对象（在 knowledge/ 下且不是 README）
-        is_object = ("knowledge/" in rel) and not rel.endswith("README.md")
+        # 是否是知识对象（在 knowledge/ 下且不是任何语言的 README）
+        is_object = ("knowledge/" in rel) and not rel.split("/")[-1].startswith("README")
 
         if fm is not None:
             keys = front_matter_keys(fm)
