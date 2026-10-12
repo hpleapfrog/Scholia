@@ -1,5 +1,7 @@
 # 证据索引
 
+> **English: [README.en.md](README.en.md)**
+
 全库共享。每条知识点的 `front-matter` 用编号引用这里的条目。
 
 ## 门槛
