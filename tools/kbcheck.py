@@ -65,7 +65,9 @@ ALLOWED_LICENSE = "CC-BY-SA-4.0"
 
 # 学科 → id 前缀（slug）。id 必须与学科一致，防止跨学科编号漂移。
 SUBJECT_SLUGS = {"物理": "physics", "生活": "life", "医学": "med",
-                 "地理": "geog", "科学": "science"}
+                 "地理": "geog", "科学": "science",
+                 "交通": "transport", "计算机": "computing", "经济": "econ",
+                 "法律": "law"}
 
 # 证据表的枚举（见 evidence/README.md 表头图例）
 EVIDENCE_CATEGORIES = {"教材", "论文", "指南", "官方文件", "交互式模拟",
@@ -126,6 +128,10 @@ SUBJECT_NOTES = {
     "地理": "全部是同一本香港教材的勘误。",
     "生活": "出行规则：北京地铁与民航的官方规定（含两份官方文件）。",
     "科学": "一条勘误。",
+    "交通": "道路交通与轨道交通：只收**官方文件**能核验的结论，不收办事流程。",
+    "计算机": "标准与官方文档能定位的结论；**不收教程式步骤**。",
+    "经济": "统计数据与权威文本能定位的结论；**不收预测与建议**。",
+    "法律": "成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。",
 }
 SUBJECTS_FALLBACK = "本学科尚无覆盖说明 —— **不要假设它覆盖了什么**，请看 objects。"
 
@@ -953,16 +959,53 @@ def check_evidence_table(errors):
             errors.append(f"evidence/README.md: {ev} 核验深度非法 -> {r['核验深度']!r}")
 
 
+# `未核验`（没打开过）与 `仅定位`（打开了但没读）都撑不起「确认」。
+UNREAD_DEPTHS = {"未核验", "仅定位"}
+CONFIRMING_STATUSES = ("暂定确认", "已确证")
+
+
+def check_evidence_verified_support(objects, errors):
+    """`暂定确认` / `已确证` 必须至少有**一条读过的**证据。
+
+    **防的是「来源本身是被人造出来的」**：一个格式完全合法的定位
+    只能证明**它在那儿**，证明不了**它说了什么**——
+    洗稿站、仿冒页、为这次引用新造的站点，定位全都合法。
+    `未核验` = 从没打开；`仅定位` = 打开了但没读正文。
+    **两条都不能单独把状态推到「确认」。**
+
+    **误报处理**：若一个 `资源` 只主张「该文件存在于该地址」，
+    把核验深度补成 `全文`/`摘要`（读一遍），或让条目停在 `待审`/`有效`。
+    """
+    ev = parse_evidence_index()
+    for rel, o in objects.items():
+        st = fm_value(o["fm"], "status")
+        if st not in CONFIRMING_STATUSES:
+            continue
+        ids = re.findall(r"ev-\d+", o["fm"])
+        known = {e: ev[e] for e in ids if e in ev and not ev[e]["作废"]}
+        if not known:
+            continue                      # 缺编号 / 作废由 R-EVID-01 管
+        if all(r["核验深度"] in UNREAD_DEPTHS for r in known.values()):
+            detail = " · ".join(f"{e}={r['核验深度']}" for e, r in known.items())
+            errors.append(
+                f"{rel}: `status` 是「{st}」，但它的证据**没有一条读过**"
+                f"（{detail}）—— 没读过就不能说「确认」；"
+                "把核验深度补成 `全文`/`摘要`，或把状态退回 `待审`")
+
+
 # ── 生成块：人类文档里的数字/清单，唯一来源是本脚本 ────────────────────────
 GENERATED_BEGIN = "<!-- kbcheck:begin -->"
 GENERATED_END = "<!-- kbcheck:end -->"
 
-SUBJECT_ORDER = ["物理", "生活", "医学", "地理", "科学"]
+SUBJECT_ORDER = ["物理", "生活", "医学", "地理", "科学",
+                 "交通", "计算机", "经济", "法律"]
 TYPE_ORDER = ["教法", "知识点", "命题", "误解", "资源", "路径"]
 TYPE_EN = {"教法": "methods", "知识点": "concepts", "命题": "claims",
            "误解": "misconceptions", "资源": "resources", "路径": "paths"}
 SUBJECT_EN = {"物理": "Physics", "生活": "Life", "医学": "Medicine",
-              "地理": "Geography", "科学": "Science"}
+              "地理": "Geography", "科学": "Science",
+              "交通": "Transport", "计算机": "Computing", "经济": "Economics",
+              "法律": "Law"}
 
 # ── 规则注册表：每条规则一个 ID，分「机械校验」与「人工复核」──────────────
 # 改了任何一条规则，**必须同时改这里的清单与对应的检查**——否则 R-INDEX-02 会失败。
@@ -978,7 +1021,7 @@ MECH_RULES = [
     ("R-SCHEMA-08", "`created` / `updated` 为 YYYY-MM-DD，且 updated ≥ created"),
     ("R-SCHEMA-09", "`author` 形如 `@handle` 或 `AI（模型）· 经 @复核 · 日期`"),
     ("R-SCHEMA-10", "`license` 必须是 CC-BY-SA-4.0"),
-    ("R-SCHEMA-11", "`id` 前缀与学科一致（物理→physics · 生活→life · 医学→med · 地理→geog · 科学→science）"),
+    ("R-SCHEMA-11", "`id` 前缀与学科一致（物理→physics · 生活→life · 医学→med · 地理→geog · 科学→science · 交通→transport · 计算机→computing · 经济→econ · 法律→law）"),
     ("R-SCHEMA-12", "`教法` 有 `knowledge_point`，且指向「知识点」"),
     ("R-SCHEMA-13", "`教法` 有 `scope.水平档`，取值 BL / OL / AL（可多档）或「不分档」"),
     ("R-SCHEMA-14", "医学条目有 `scope.条件`，且正文开头是 `> [!CAUTION]` 免责块"),
@@ -990,6 +1033,7 @@ MECH_RULES = [
     ("R-GRAPH-04", "`路径` 每个环节至少连到一个库内对象"),
     ("R-EVID-01", "`evidence` 编号已登记且未作废"),
     ("R-EVID-02", "证据表 `类别` / `等级` / `核验深度` 取值合法"),
+    ("R-EVID-03", "`暂定确认` / `已确证` 必须至少有一条 `核验深度` 为 `全文` / `摘要` 的证据（没读过不能说确认）"),
     ("R-INDEX-01", "`index.json` 与内容一致（改内容必须重生成）"),
     ("R-INDEX-02", "人类文档的生成块与 `index.json` / 规则表一致"),
     ("R-README-01", "每个对象都在所属学科 README 里登记"),
@@ -1005,8 +1049,9 @@ MANUAL_RULES = [
     ("M-06", "新引用资源逐条核对许可（教材 CC BY ≠ 它嵌的东西也是）"),
     ("M-07", "AI 攻击需人复核 + 署名披露（AI 不能当「已确证」的复核者）"),
     ("M-08", "统计数字不手写（交给 `--write-index` 生成）"),
-    ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」"),
+    ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」与「质疑来源是否为本次引用而伪造」"),
     ("M-10", "文档中英成对存放（`<name>.md` 中文 + `<name>.en.md` 英文），改一份同步另一份"),
+    ("M-11", "注册证据过**来源三问**：谁发布的（可问责主体）· 最早何时可查（存档早于本库引用）· 能否在该发布主体之外找到第二来源；自建站点 / 无主体转载页 / 反查不到的标识符不登记"),
 ]
 
 MECH_RULES_EN = [
@@ -1020,7 +1065,7 @@ MECH_RULES_EN = [
     ("R-SCHEMA-08", "`created` / `updated` are YYYY-MM-DD; updated ≥ created"),
     ("R-SCHEMA-09", "`author` is `@handle` or `AI（model）· 经 @reviewer · date`"),
     ("R-SCHEMA-10", "`license` must be CC-BY-SA-4.0"),
-    ("R-SCHEMA-11", "`id` prefix matches subject (物理→physics · 生活→life · 医学→med · 地理→geog · 科学→science)"),
+    ("R-SCHEMA-11", "`id` prefix matches subject (物理→physics · 生活→life · 医学→med · 地理→geog · 科学→science · 交通→transport · 计算机→computing · 经济→econ · 法律→law)"),
     ("R-SCHEMA-12", "`教法` has `knowledge_point` pointing to a 知识点"),
     ("R-SCHEMA-13", "`教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」"),
     ("R-SCHEMA-14", "medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block"),
@@ -1032,6 +1077,7 @@ MECH_RULES_EN = [
     ("R-GRAPH-04", "`路径` each 环节 connects to ≥1 in-repo object"),
     ("R-EVID-01", "`evidence` id registered and not voided"),
     ("R-EVID-02", "evidence table `类别` / `等级` / `核验深度` values valid"),
+    ("R-EVID-03", "`暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed)"),
     ("R-INDEX-01", "`index.json` consistent with content (regenerate on change)"),
     ("R-INDEX-02", "human-doc generated blocks match `index.json` / rule table"),
     ("R-README-01", "every object registered in its subject README"),
@@ -1047,8 +1093,9 @@ MANUAL_RULES_EN = [
     ("M-06", "check license per new source (textbook CC BY ≠ what it embeds is too)"),
     ("M-07", "AI attack needs human review + author disclosure (AI can't be the reviewer for 已确证)"),
     ("M-08", "statistics not hand-written (generated by `--write-index`)"),
-    ("M-09", "adversarial dispatch must include \"question whether the evidence really exists\""),
+    ("M-09", "adversarial dispatch must include \"question whether the evidence really exists\" and \"question whether the source was fabricated for this citation\""),
     ("M-10", "documents stored bilingually (`<name>.md` Chinese + `<name>.en.md` English); sync both"),
+    ("M-11", "new evidence passes the **three source questions**: who publishes it (an accountable body) · earliest verifiable date (archive predates this repo's citation) · can a second source be found outside that publisher; self-built sites, attribution-free repost pages and identifiers that don't resolve are not registered"),
 ]
 
 
@@ -1270,6 +1317,7 @@ def check_all():
     check_license(objects, errors)
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
+    check_evidence_verified_support(objects, errors)
     sync_generated(objects, False, errors)
 
     return md_files, ids, errors, warnings, stats, argstats, objects

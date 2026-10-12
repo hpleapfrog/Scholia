@@ -32,6 +32,34 @@ A verifiable locator is required: ISBN + edition + page / DOI / official-documen
 >
 > If section numbers are ever to be written, they must be **checked against the print or official web edition**, and the basis noted in the evidence row.
 
+### Is the source itself real: **three questions**
+
+**A legal locator ≠ true content.** Someone can **build a website, write the fake knowledge onto it, and wait for others to cite it** —
+that page has a well-formed DOI, a plausible document number and a link that opens;
+**only the content was manufactured for this very citation**. So before registering an evidence row, three questions must all be answerable:
+
+| # | Question | What counts as answered | Not answered |
+|---|---|---|---|
+| 1 | **Who publishes it** | an accountable body: publisher · journal · standards organisation · government agency · university | personal sites, attribution-free repost pages |
+| 2 | **Earliest verifiable date** | a third-party archive (e.g. Wayback) **predates this repo's first citation of it** | the content appeared only after we cited it |
+| 3 | **Can a second source be found outside that publisher** | a different publishing body, **and not a copy of each other** | several same-origin reposts = **still one source** |
+
+> [!IMPORTANT]
+> **Question 3 guards against the illusion of "cross-corroboration".**
+> Three sites copying the same false sentence at each other are still one source.
+> **Independence is counted by publishing body, not by number of domains or links.**
+
+**Identifiers must be reverse-checked**: the title a DOI resolves to, and the name a document number yields on the publisher's official site,
+**must match what we registered**. Well-formed but not resolvable = **stop** —
+that is exactly the shape of `ev-002`: **everything looked right except that it wasn't true.**
+
+> [!CAUTION]
+> **Mechanical backstop (`R-EVID-03`)**: evidence whose `核验深度` is `未核验` (never opened) or `仅定位`
+> (opened, but the body never read) **cannot alone** lift an entry to `暂定确认` / `已确证`.
+>
+> **If you haven't read it, you cannot say you confirmed it.** A well-formed locator
+> only proves **that it is there**; it does not prove **what it says**.
+
 ## An incident of our own: registering **constructed** data as "experimental data"
 
 > The full story is in [decision record: the evidence incidents](../docs/decisions/evidence-history.en.md) —
