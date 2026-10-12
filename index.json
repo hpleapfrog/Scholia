@@ -23,9 +23,9 @@
     "已失效": "依据已过时或被取代"
   },
   "统计": {
-    "对象总数": 99,
+    "对象总数": 100,
     "按类型": {
-      "命题": 20,
+      "命题": 21,
       "教法": 45,
       "知识点": 23,
       "误解": 6,
@@ -35,26 +35,26 @@
     "按状态": {
       "失据": 2,
       "待审": 13,
-      "暂定确认": 4,
+      "暂定确认": 5,
       "有效": 77,
       "需复审": 3
     },
     "按学科": {
-      "医学": 1,
+      "医学": 2,
       "地理": 6,
       "物理": 86,
       "生活": 5,
       "科学": 1
     },
     "已确证条数": 0,
-    "证据条数": 41,
+    "证据条数": 43,
     "作废证据条数": 5
   },
   "known_limits": {
     "总览": "本库是**跨学科**的，**各学科覆盖程度差别很大**。判断「有没有 X」请查 `objects`（或该学科的 `knowledge/<学科>/README.md`），**不要假设它覆盖了什么**。",
     "按学科": {
       "医学": {
-        "条数": 1,
+        "条数": 2,
         "说明": "本学科尚无覆盖说明 —— **不要假设它覆盖了什么**，请看 objects。"
       },
       "地理": {
@@ -487,6 +487,26 @@
       "许可": "外部文献 · **仅引用摘要与结论，不转载全文**",
       "作废": false,
       "引用处": "ARDS 低潮气量通气"
+    },
+    "ev-049": {
+      "类型": "**临床实践指南原文**",
+      "等级": "**高**（对「指南规定了什么」这类主张——原文即一手来源，同 `ev-043` 逻辑）",
+      "定位": "Kushida CA, Chediak A, Berry RB, et al. *Clinical guidelines for the manual titration of positive airway pressure in patients with obstructive sleep apnea.* **J Clin Sleep Med. 2008;4(2):157-171.** **PMID 18468315** · AASM 官方 PDF（**本库下载并全文抽取核对**，15 页）",
+      "链接": "https://pubmed.ncbi.nlm.nih.gov/18468315/",
+      "时间": "2008",
+      "许可": "外部文献 · **仅引用条目编号与短引用，不转载全文**",
+      "作废": false,
+      "引用处": "睡眠呼吸暂停 PAP 调定"
+    },
+    "ev-050": {
+      "类型": "**随机对照试验（RCT）**",
+      "等级": "**高**（本库阶梯的**最高档**）",
+      "定位": "Rosen CI, Auckley DH, Benca R, et al. *Multisite Randomized Trial of Portable Sleep Studies and Positive Airway Pressure Autotitration Versus Laboratory-Based Polysomnography for the Diagnosis and Treatment of Obstructive Sleep Apnea: The HomePAP Study.* **SLEEP 2012;35(6):757-766.** PMC3353048（**开放获取，本库读了摘要与方法部分**）",
+      "链接": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3353048/",
+      "时间": "2012",
+      "许可": "外部文献 · **仅引用摘要与结论，不转载全文**",
+      "作废": false,
+      "引用处": "睡眠呼吸暂停 PAP 调定"
     }
   },
   "objects": [
@@ -508,6 +528,31 @@
       "论证": [
         "a1",
         "a2"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=暂定确认"
+    },
+    {
+      "id": "kb:med:prop-osa-pap-titration",
+      "type": "命题",
+      "title": "对阻塞性睡眠呼吸暂停，成人 PAP 调定有指南明文规定的起始压、升级规则与达标判据",
+      "status": "暂定确认",
+      "path": "knowledge/医学/命题/睡眠呼吸暂停PAP调定.md",
+      "学科": "医学 · 临床指南",
+      "学段": "不限",
+      "证据": [
+        "ev-049",
+        "ev-050"
+      ],
+      "来源": [
+        "ev-049：Kushida CA, Chediak A, Berry RB, et al. *Clinical guidelines for the manual titration of positive airway pressure in patients with obstructive sleep apnea.* **J Clin Sleep Med. 2008;4(2):157-171.** **PMID 18468315** · AASM 官方 PDF（**本库下载并全文抽取核对**，15 页）",
+        "ev-050：Rosen CI, Auckley DH, Benca R, et al. *Multisite Randomized Trial of Portable Sleep Studies and Positive Airway Pressure Autotitration Versus Laboratory-Based Polysomnography for the Diagnosis and Treatment of Obstructive Sleep Apnea: The HomePAP Study.* **SLEEP 2012;35(6):757-766.** PMC3353048（**开放获取，本库读了摘要与方法部分**）"
+      ],
+      "先修": [],
+      "论证": [
+        "a1",
+        "a2",
+        "a3"
       ],
       "可作事实引用": true,
       "引用时须写明": "state=暂定确认"
