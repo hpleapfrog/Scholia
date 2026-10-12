@@ -10,7 +10,7 @@ scope:
   学科: 计算机 · 标准与规范
   学段: 不限
   适用: when you need to check "how an unrecognized HTTP status code must be handled", or "may a response be judged by its reason phrase"
-  条件: **applies only to the preamble of §15 in RFC 9110 (2022-06)**; this entry states the general rules only — **the definitions of the individual codes in §15.2–§15.6 were not checked one by one**
+  条件: "**applies only to the preamble of §15 in RFC 9110 (2022-06)**; this entry states the general rules only — **the definitions of the individual codes in §15.2–§15.6 were not checked one by one**"
 edges:
   先修: []
   支持: []

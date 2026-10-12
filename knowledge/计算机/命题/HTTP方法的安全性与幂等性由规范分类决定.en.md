@@ -10,7 +10,7 @@ scope:
   学科: 计算机 · 标准与规范
   学段: 不限
   适用: when you need to check "what GET / POST / PUT / DELETE actually are, and whether they may be retried automatically"
-  条件: **applies only to the classification in RFC 9110 §9.2 (2022-06)**; this entry states the specification's classification only, **and covers no framework's or client's implementation behaviour**
+  条件: "**applies only to the classification in RFC 9110 §9.2 (2022-06)**; this entry states the specification's classification only, **and covers no framework's or client's implementation behaviour**"
 edges:
   先修: []
   支持: []

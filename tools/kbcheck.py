@@ -360,6 +360,34 @@ def fm_nested(fm, key):
     return m.group(1).strip() if m else ""
 
 
+# YAML 里**不能作为裸标量（plain scalar）开头**的指示符。
+# 值以这些字符开头时必须加引号，否则严格 YAML 解析器（GitHub 渲染 front-matter
+# 时用的那种）会报错，文件页面直接显示解析异常。
+# 真实事故：`条件: **仅指……**` 的 `**` 被当成 alias 起始符，
+# 报 "did not find expected alphabetic or numeric character while scanning an alias"。
+_YAML_BAD_PLAIN_START = ("*", "`", "&", "!", "|", ">", "%", "@")
+
+
+def check_front_matter_shape(fm, rel, errors):
+    """front-matter 的每个 `key: value` 值若以 YAML 指示符开头且未加引号，报错。
+
+    零第三方依赖（本库校验器不装 PyYAML），只做这条最易复发、且会破坏
+    GitHub 页面渲染的检查；其余 YAML 合法性仍靠人工与本库自身的解析习惯。
+    """
+    for i, line in enumerate(fm.split("\n"), 1):
+        s = line.strip()
+        if not s or s.startswith("#"):
+            continue
+        m = re.match(r"^[^:]+:\s*(.+)$", s)
+        if not m:
+            continue
+        v = m.group(1)
+        if v[0] in _YAML_BAD_PLAIN_START:
+            errors.append(
+                f"{rel}: front-matter 第 {i} 行的值以 {v[0]!r} 开头，"
+                f"裸标量不允许（需加引号）—— 严格 YAML 解析器会报错")
+
+
 STAGES = ("小学", "初中", "高中", "大学")
 
 
@@ -1025,6 +1053,7 @@ MECH_RULES = [
     ("R-SCHEMA-12", "`教法` 有 `knowledge_point`，且指向「知识点」"),
     ("R-SCHEMA-13", "`教法` 有 `scope.水平档`，取值 BL / OL / AL（可多档）或「不分档」"),
     ("R-SCHEMA-14", "医学条目有 `scope.条件`，且正文开头是 `> [!CAUTION]` 免责块"),
+    ("R-SCHEMA-15", "front-matter 的 `key: value` 值不得以 YAML 指示符（`*` `&` `!` `|` `>` `%` `@` `` ` ``）开头而不加引号（否则严格 YAML 解析器报错）"),
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
     ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
@@ -1069,6 +1098,7 @@ MECH_RULES_EN = [
     ("R-SCHEMA-12", "`教法` has `knowledge_point` pointing to a 知识点"),
     ("R-SCHEMA-13", "`教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」"),
     ("R-SCHEMA-14", "medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block"),
+    ("R-SCHEMA-15", "a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it"),
     ("R-LINK-01", "link targets exist (relative · repo-absolute · YAML `url:`)"),
     ("R-LINK-02", "anchors exist (heading slug or argument id)"),
     ("R-GRAPH-01", "`先修` connects only 知识点, acyclic"),
@@ -1223,6 +1253,8 @@ def check_all():
                 missing = [k for k in REQUIRED_FIELDS if k not in keys]
                 if missing:
                     errors.append(f"{rel}: front-matter 缺字段 {missing}")
+
+                check_front_matter_shape(fm, rel, errors)
 
                 t, st, i = fm_value(fm, "type"), fm_value(fm, "status"), fm_value(fm, "id")
 
