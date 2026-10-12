@@ -35,8 +35,8 @@
 >
 > ### 4. **The repo is cross-disciplinary**, and **don't claim as the repo's what it doesn't cover**
 >
-> The repo **is not only physics** — it has **physics / daily life / medicine / geography / science**,
-> and **coverage varies hugely** by subject (physics the most, the others little).
+> The repo **is not only physics**. **Coverage varies hugely** by subject (physics the most, the rest just starting out).
+> **Do not quote this file's wording as the list of subjects** — a hand-written list inevitably goes stale.
 > **To judge "does the repo have X", check `objects` in `index.json` — don't go by impression.**
 >
 > For content **not** in the repo: you **may** answer from other sources,
