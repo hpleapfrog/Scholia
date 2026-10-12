@@ -11,7 +11,7 @@ scope:
   学段: 高中
   水平档: 年级水平（OL）
   适用: students who know frequency and wavelength but treat them as independently adjustable quantities
-  条件: `v = f λ` must already be established
+  条件: "`v = f λ` must already be established"
 edges:
   先修: []
   支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]

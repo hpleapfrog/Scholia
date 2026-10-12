@@ -10,7 +10,7 @@ scope:
   学科: 计算机 · 标准与规范
   学段: 不限
   适用: when you need to check "is this HTTP status code standard", or "is this RFC the complete status-code table"
-  条件: **applies to the 2025-09-15 version of the IANA registry**; this entry states that version's contents only, **and has verified no earlier or later version**
+  条件: "**applies to the 2025-09-15 version of the IANA registry**; this entry states that version's contents only, **and has verified no earlier or later version**"
 edges:
   先修: []
   支持: []

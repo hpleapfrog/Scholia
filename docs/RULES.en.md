@@ -10,7 +10,7 @@
 > **中文：** 由 [`tools/kbcheck.py`](../tools/kbcheck.py) 生成的规则注册表——**请勿手改**。
 
 <!-- kbcheck:begin -->
-**Mechanically enforced (27)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
+**Mechanically enforced (28)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
 
 | ID | Rule |
 |---|---|
@@ -28,6 +28,7 @@
 | `R-SCHEMA-12` | `教法` has `knowledge_point` pointing to a 知识点 |
 | `R-SCHEMA-13` | `教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」 |
 | `R-SCHEMA-14` | medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block |
+| `R-SCHEMA-15` | a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it |
 | `R-LINK-01` | link targets exist (relative · repo-absolute · YAML `url:`) |
 | `R-LINK-02` | anchors exist (heading slug or argument id) |
 | `R-GRAPH-01` | `先修` connects only 知识点, acyclic |
