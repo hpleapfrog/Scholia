@@ -105,6 +105,20 @@ STATUS_MEANING = {
 # **不要把它当事实引用**的状态
 NOT_CITABLE = {"失据", "已推翻", "已失效"}
 
+# 状态的中英对照（给 AI 与双语文档用）
+STATUS_EN = {
+    "草案": "draft",
+    "待审": "pending review",
+    "有效": "effective",
+    "争议": "disputed",
+    "暂定确认": "provisionally confirmed",
+    "已确证": "confirmed",
+    "需复审": "needs re-review",
+    "已推翻": "overturned",
+    "失据": "unsupported",
+    "已失效": "expired",
+}
+
 # 每个学科的覆盖说明（手写；**不写数字**，数字由 objects 自动统计在旁边）
 SUBJECT_NOTES = {
     "物理": "覆盖中国高中物理的一部分。按人教版章级主题对照，约 44% 的主题一条概念都没有"
@@ -225,6 +239,7 @@ def build_index(objects):
             "**转述前必须读 `path` 指向的文件正文开头**。",
         ],
         "状态含义": STATUS_MEANING,
+        "状态英文": STATUS_EN,
         "统计": {
             "对象总数": len(objs),
             "按类型": dict(sorted(by_type.items())),
@@ -991,6 +1006,7 @@ MANUAL_RULES = [
     ("M-07", "AI 攻击需人复核 + 署名披露（AI 不能当「已确证」的复核者）"),
     ("M-08", "统计数字不手写（交给 `--write-index` 生成）"),
     ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」"),
+    ("M-10", "文档中英成对存放（`<name>.en.md`；README 为 `README.zh.md`），改一份同步另一份"),
 ]
 
 

@@ -1,5 +1,7 @@
 # 贡献指南
 
+> English → [**CONTRIBUTING.en.md**](CONTRIBUTING.en.md)
+
 > 先读 [README](README.md) 与 [FORMAT.md](FORMAT.md)。
 
 ---
@@ -28,7 +30,7 @@
 
 > [!NOTE]
 > **人类文档里的数字不手写。** `README.md` / `knowledge/README.md` 的统计数字由
-> `index.json` 生成（夹在 `<!-- stats:begin -->` / `<!-- stats:end -->` 之间）。
+> `index.json` 生成（夹在 `<!-- kbcheck:begin -->` / `<!-- kbcheck:end -->` 之间）。
 > 手写的数字会漂移，**漂移的数字就是断言**（本库为此吃过一次攻击）。
 
 ---

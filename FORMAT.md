@@ -1,5 +1,7 @@
 # 存储格式
 
+> English → [**FORMAT.en.md**](FORMAT.en.md)
+
 > 一个知识点 = 一个 `.md` 文件。`front-matter` 存机器需要的，正文存人需要的。
 > **规则只有两种归宿**：**机械校验**（由 [`tools/kbcheck.py`](tools/kbcheck.py) 强制）
 > 或**约定 / 人工复核**（列在 [`CONTRIBUTING.md`](CONTRIBUTING.md) 的自检表里）。
@@ -7,6 +9,29 @@
 >
 > 规则**为什么**这样定（案例、事故、推断）见 [`docs/decisions/`](docs/decisions/README.md)；
 > 本文档只放**规则**。
+
+## 0. 语言：中英双语存放
+
+**本库的每一个文档都存两种语言**（`README` 例外，见下表）：
+
+| 文档 | 中文（规范） | 英文（译本） |
+|---|---|---|
+| **README**（门面） | `README.zh.md` | **`README.md`（主）** |
+| 规范 / 流程 / 证据 / 决策 / 学科 README / 规则表 | **`<name>.md`（主）** | `<name>.en.md` |
+| 知识条目（`knowledge/`） | **`<name>.md`（主）** | `<name>.en.md` |
+
+- **中文是知识条目的规范语言**（术语、`title`、引用以中文为准）；**英文是译本**，供国际读者与 AI。
+- **README 反过来**：英文为主（对外的门面），中文另存 `README.zh.md`。
+- **两份内容必须一致**；改一份就同步另一份。（目前靠人工，见 `docs/RULES.md` 的 `M-10`。）
+
+> **English:** Every document exists in both Chinese and English. For knowledge entries
+> and specs, `<name>.md` is the canonical Chinese and `<name>.en.md` is the translation;
+> the **README** is English-first (`README.md`) with `README.zh.md` alongside. Both
+> versions must be kept in sync.
+
+> [!IMPORTANT]
+> **本库有三个读者，看的是同一个文件。**
+
 
 > [!IMPORTANT]
 > **本库有三个读者，看的是同一个文件。**
@@ -177,6 +202,21 @@ license: CC-BY-SA-4.0
 > **知识点、教法、误解、路径、资源禁止使用「已确证」。**
 > 它们是组织层或条件性的，不存在唯一正确。允许教法用「已确证」，就等于承认存在唯一最优教法。
 > 只有 `命题` 可以「已确证」。
+
+**状态中英对照 / Status (bilingual)**（机器版见 `index.json` 的 `状态英文`）：
+
+| 状态 | English | 一句话 |
+|---|---|---|
+| 草案 | draft | 刚写下 |
+| 待审 | pending review | 有内容，没人复核 |
+| 有效 | effective | 无存活攻击（**不等于**已复核） |
+| 争议 | disputed | 存活论证结论冲突 |
+| 暂定确认 | provisionally confirmed | 作者已核对，无独立复核 |
+| 已确证 | confirmed | 有**非作者**独立复核（全库目前 **0 条**） |
+| 需复审 | needs re-review | 刚改过，没人重看 |
+| 失据 | unsupported | 曾有论证，被击倒 |
+| 已推翻 | overturned | 被论证推翻 |
+| 已失效 | expired | 依据过时 / 被取代 |
 
 ### `教法` 的额外必填字段
 
