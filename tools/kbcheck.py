@@ -119,13 +119,14 @@ def parse_evidence_index():
         if not line.strip().startswith("|"):
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) < 7 or not re.fullmatch(r"ev-\d+", cells[0]):
+        if len(cells) < 8 or not re.fullmatch(r"ev-\d+", cells[0]):
             continue
-        _, typ, grade, locator, year, lic, used = cells[:7]
-        void = "作废" in typ or "作废" in grade
+        _, cat, grade, depth, locator, year, lic, used = cells[:8]
+        void = "作废" in cat
         out[cells[0]] = {
-            "类型": typ,
+            "类别": cat,
             "等级": grade,
+            "核验深度": depth,
             "定位": re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", locator),   # 链接只留文字
             "链接": (re.search(r"\]\((http[^)]+)\)", locator) or [None, ""])[1]
                     if re.search(r"\]\((http[^)]+)\)", locator) else "",
