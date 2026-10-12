@@ -23,9 +23,9 @@
     "已失效": "依据已过时或被取代"
   },
   "统计": {
-    "对象总数": 98,
+    "对象总数": 99,
     "按类型": {
-      "命题": 19,
+      "命题": 20,
       "教法": 45,
       "知识点": 23,
       "误解": 6,
@@ -35,23 +35,28 @@
     "按状态": {
       "失据": 2,
       "待审": 13,
-      "暂定确认": 3,
+      "暂定确认": 4,
       "有效": 77,
       "需复审": 3
     },
     "按学科": {
+      "医学": 1,
       "地理": 6,
       "物理": 86,
       "生活": 5,
       "科学": 1
     },
     "已确证条数": 0,
-    "证据条数": 40,
+    "证据条数": 41,
     "作废证据条数": 5
   },
   "known_limits": {
     "总览": "本库是**跨学科**的，**各学科覆盖程度差别很大**。判断「有没有 X」请查 `objects`（或该学科的 `knowledge/<学科>/README.md`），**不要假设它覆盖了什么**。",
     "按学科": {
+      "医学": {
+        "条数": 1,
+        "说明": "本学科尚无覆盖说明 —— **不要假设它覆盖了什么**，请看 objects。"
+      },
       "地理": {
         "条数": 6,
         "说明": "全部是同一本香港教材的勘误。"
@@ -472,9 +477,41 @@
       "许可": "**CC BY 4.0** · **可自由复用**",
       "作废": false,
       "引用处": "弹性碰撞与非弹性碰撞"
+    },
+    "ev-048": {
+      "类型": "**随机对照试验（RCT）**",
+      "等级": "**高**（本库阶梯的**最高档**）",
+      "定位": "The Acute Respiratory Distress Syndrome Network. *Ventilation with Lower Tidal Volumes as Compared with Traditional Tidal Volumes for Acute Lung Injury and the Acute Respiratory Distress Syndrome.* **N Engl J Med. 2000 May 4;342(18):1301-8.** **PMID 10793162** · **DOI 10.1056/NEJM200005043421801**",
+      "链接": "https://pubmed.ncbi.nlm.nih.gov/10793162/",
+      "时间": "2000",
+      "许可": "外部文献 · **仅引用摘要与结论，不转载全文**",
+      "作废": false,
+      "引用处": "ARDS 低潮气量通气"
     }
   },
   "objects": [
+    {
+      "id": "kb:med:prop-ardsnet-low-tidal-volume",
+      "type": "命题",
+      "title": "对 ARDS 患者，低潮气量通气降低死亡率",
+      "status": "暂定确认",
+      "path": "knowledge/医学/命题/ARDS低潮气量通气.md",
+      "学科": "医学 · 临床证据",
+      "学段": "不限",
+      "证据": [
+        "ev-048"
+      ],
+      "来源": [
+        "ev-048：The Acute Respiratory Distress Syndrome Network. *Ventilation with Lower Tidal Volumes as Compared with Traditional Tidal Volumes for Acute Lung Injury and the Acute Respiratory Distress Syndrome.* **N Engl J Med. 2000 May 4;342(18):1301-8.** **PMID 10793162** · **DOI 10.1056/NEJM200005043421801**"
+      ],
+      "先修": [],
+      "论证": [
+        "a1",
+        "a2"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=暂定确认"
+    },
     {
       "id": "kb:geog:hk-ssgeog3e-vi-map-sources",
       "type": "命题",

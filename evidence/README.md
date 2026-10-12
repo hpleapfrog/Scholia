@@ -115,6 +115,27 @@
 >
 > **「可复算」解决「我能否验证」，不解决「它是什么」。而「官方原文」解决的正是后者。**
 
+
+> [!IMPORTANT]
+> **`ev-048` 是本库第一条**最高档**证据，而它暴露了阶梯的一个问题。**
+>
+> 本库的阶梯写的是：
+>
+> > 系统综述 / 元分析 > **随机对照试验** > 队列 > 病例 > 专家意见 > 教材
+>
+> **这套阶梯是为「关于人群的实证主张」设计的**（医学、社会科学的样子）。
+> 而在它出现之前，本库 **40 条证据里 37 条是教材、3 条是官方文件** ——
+> **顶端四档一次都没用过。**
+>
+> **问题不在没人用，在于这套阶梯对物理不公平**：
+> 一本教材里写的「`F = ma`」，按这张表落**最低档**；
+> 而它和「一本教材里说的某个教学建议」**完全不是一回事**。
+>
+> **一件物理事实不需要随机对照试验来支撑，而这张表说不出这个区别。**
+>
+> **这是已知问题，没在这一轮改**（本库的规矩：不要用一个样本改结构）。
+> **记住它：`物理` 的证据等级需要另一套标准，而不是往这张表上硬套。**
+
 ## 索引
 
 | 编号 | 类型 | 等级 | 定位 | 时间 | 许可 | 引用处 |
@@ -175,6 +196,7 @@
 | ev-045 | 教材（全文） | 低 | OpenStax《Physics》第 8 章 · Linear Momentum, Force, and Impulse，[m54215](https://github.com/openstax/osbooks-physics/blob/main/modules/m54215/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 动量和冲量 · 动量和冲量教法 ×1 |
 | ev-046 | 教材（全文） | 低 | OpenStax《Physics》第 8 章 · Conservation of Momentum，[m54202](https://github.com/openstax/osbooks-physics/blob/main/modules/m54202/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 动量守恒定律 · 动量守恒教法 ×2 |
 | ev-047 | 教材（全文） | 低 | OpenStax《Physics》第 8 章 · Elastic and Inelastic Collisions，[m54209](https://github.com/openstax/osbooks-physics/blob/main/modules/m54209/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 弹性碰撞与非弹性碰撞 |
+| ev-048 | **随机对照试验（RCT）** | **高**（本库阶梯的**最高档**） | The Acute Respiratory Distress Syndrome Network. *Ventilation with Lower Tidal Volumes as Compared with Traditional Tidal Volumes for Acute Lung Injury and the Acute Respiratory Distress Syndrome.* **N Engl J Med. 2000 May 4;342(18):1301-8.** **PMID [10793162](https://pubmed.ncbi.nlm.nih.gov/10793162/)** · **DOI [10.1056/NEJM200005043421801](https://doi.org/10.1056/NEJM200005043421801)** | 2000 | 外部文献 · **仅引用摘要与结论，不转载全文** | ARDS 低潮气量通气 |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，
