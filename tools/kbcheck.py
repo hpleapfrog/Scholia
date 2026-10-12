@@ -944,6 +944,10 @@ GENERATED_END = "<!-- kbcheck:end -->"
 
 SUBJECT_ORDER = ["物理", "生活", "医学", "地理", "科学"]
 TYPE_ORDER = ["教法", "知识点", "命题", "误解", "资源", "路径"]
+TYPE_EN = {"教法": "methods", "知识点": "concepts", "命题": "claims",
+           "误解": "misconceptions", "资源": "resources", "路径": "paths"}
+SUBJECT_EN = {"物理": "Physics", "生活": "Life", "医学": "Medicine",
+              "地理": "Geography", "科学": "Science"}
 
 # ── 规则注册表：每条规则一个 ID，分「机械校验」与「人工复核」──────────────
 # 改了任何一条规则，**必须同时改这里的清单与对应的检查**——否则 R-INDEX-02 会失败。
@@ -993,15 +997,15 @@ MANUAL_RULES = [
 def render_stats_block(index):
     s = index["统计"]
     by, sub = s["按类型"], s["按学科"]
-    types = " · ".join(f"{k} {by[k]}" for k in TYPE_ORDER if by.get(k))
-    subs = " · ".join(f"{k} {sub[k]}" for k in SUBJECT_ORDER if sub.get(k))
+    types = " · ".join(f"{k} {TYPE_EN[k]} {by[k]}" for k in TYPE_ORDER if by.get(k))
+    subs = " · ".join(f"{k} {SUBJECT_EN[k]} {sub[k]}" for k in SUBJECT_ORDER if sub.get(k))
     return "\n".join([
         "| | |",
         "|---|---|",
-        f"| 知识对象 | **{s['对象总数']} 条** —— {types} |",
-        f"| 学科 | {subs} |",
-        f"| 证据 | {s['证据条数']} 条（含作废 {s['作废证据条数']} 条） |",
-        f"| 已确证 | **{s['已确证条数']} 条** |",
+        f"| 对象 / Objects | **{s['对象总数']}** —— {types} |",
+        f"| 学科 / Subjects | {subs} |",
+        f"| 证据 / Evidence | {s['证据条数']}（含作废 / void {s['作废证据条数']}） |",
+        f"| 已确证 / Confirmed | **{s['已确证条数']}** |",
     ])
 
 
@@ -1037,6 +1041,7 @@ def generated_blocks(objects):
     index = build_index(objects)
     return {
         "README.md": render_stats_block(index),
+        "README.zh.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
         "docs/RULES.md": render_rules_block(),
     }
