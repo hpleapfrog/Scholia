@@ -16,3 +16,4 @@
 | [argument-required-for-all-types.md](argument-required-for-all-types.md) | 为什么六种类型都必须有 `## 论证` |
 | [status-and-liveness.md](status-and-liveness.md) | `失据` 的引入、「存活」零攻击、一条被删掉的检查 |
 | [support-count-not-strength.md](support-count-not-strength.md) | 为什么「15 条支持」是错误写法 |
+| [evidence-history.md](evidence-history.md) | 证据的事故：编出来的节号、`ev-002`、阶梯对物理不公平 |
