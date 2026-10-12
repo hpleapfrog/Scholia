@@ -1160,48 +1160,49 @@ def check_all():
         text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
         fm = parse_front_matter(text)
 
-        # 是否是知识对象（在 knowledge/ 下且不是任何语言的 README）
-        is_object = ("knowledge/" in rel) and not rel.split("/")[-1].startswith("README")
+        # 是否是知识对象（在 knowledge/ 下、不是任何语言的 README、也不是英文译本 .en.md）
+        _name = rel.split("/")[-1]
+        is_object = ("knowledge/" in rel) and not _name.startswith("README") and not _name.endswith(".en.md")
 
-        if fm is not None:
-            keys = front_matter_keys(fm)
-            dup = [k for k, c in collections.Counter(keys).items() if c > 1]
-            if dup:
-                errors.append(f"{rel}: front-matter 顶层键重复 {dup}")
-
-            missing = [k for k in REQUIRED_FIELDS if k not in keys]
-            if missing:
-                errors.append(f"{rel}: front-matter 缺字段 {missing}")
-
-            t, st, i = fm_value(fm, "type"), fm_value(fm, "status"), fm_value(fm, "id")
-
-            if t not in TYPES:
-                errors.append(f"{rel}: type 非法 -> {t!r}")
+        if is_object:
+            if fm is None:
+                errors.append(f"{rel}: 知识对象缺 front-matter")
             else:
-                if st not in ALLOWED_STATUS[t]:
-                    errors.append(f"{rel}: type={t} 不允许 status={st!r}")
-                for sec in REQUIRED_SECTIONS[t]:
-                    if f"## {sec}" not in text:
-                        errors.append(f"{rel}: 缺必备小节「{sec}」")
-                # FORMAT.md §5：所有类型都必须有 ## 论证（草案下可留空）
-                if "## 论证" not in text:
-                    errors.append(f"{rel}: 缺必备小节「论证」（所有类型都必须有）")
+                keys = front_matter_keys(fm)
+                dup = [k for k, c in collections.Counter(keys).items() if c > 1]
+                if dup:
+                    errors.append(f"{rel}: front-matter 顶层键重复 {dup}")
 
-            if i in ids:
-                errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}")
-            elif i:
-                ids[i] = rel
+                missing = [k for k in REQUIRED_FIELDS if k not in keys]
+                if missing:
+                    errors.append(f"{rel}: front-matter 缺字段 {missing}")
 
-            # 只有「命题」可以用「已确证」
-            if ONLY_CLAIMS_CAN_BE_CONFIRMED and t != "命题" and st == "已确证":
-                errors.append(
-                    f"{rel}: 只有「命题」可以用「已确证」（{t} 不存在唯一正确）")
+                t, st, i = fm_value(fm, "type"), fm_value(fm, "status"), fm_value(fm, "id")
 
-            if t in TYPES:
-                objects[rel] = {"type": t, "fm": fm, "text": text, "path": path}
+                if t not in TYPES:
+                    errors.append(f"{rel}: type 非法 -> {t!r}")
+                else:
+                    if st not in ALLOWED_STATUS[t]:
+                        errors.append(f"{rel}: type={t} 不允许 status={st!r}")
+                    for sec in REQUIRED_SECTIONS[t]:
+                        if f"## {sec}" not in text:
+                            errors.append(f"{rel}: 缺必备小节「{sec}」")
+                    # FORMAT.md §5：所有类型都必须有 ## 论证（草案下可留空）
+                    if "## 论证" not in text:
+                        errors.append(f"{rel}: 缺必备小节「论证」（所有类型都必须有）")
 
-        elif is_object:
-            errors.append(f"{rel}: 知识对象缺 front-matter")
+                if i in ids:
+                    errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}")
+                elif i:
+                    ids[i] = rel
+
+                # 只有「命题」可以用「已确证」
+                if ONLY_CLAIMS_CAN_BE_CONFIRMED and t != "命题" and st == "已确证":
+                    errors.append(
+                        f"{rel}: 只有「命题」可以用「已确证」（{t} 不存在唯一正确）")
+
+                if t in TYPES:
+                    objects[rel] = {"type": t, "fm": fm, "text": text, "path": path}
 
         # 代码围栏必须成对
         if text.count("```") % 2 != 0:
