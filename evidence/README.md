@@ -14,26 +14,8 @@
 
 ### 定位必须**可核验**，不能是「看起来像定位」的东西
 
-> [!CAUTION]
-> **本库犯过一次，而且犯得很系统：节号是编的。**
->
-> 40 个文件里写着 `§16.1` / `§7.2` / `§22.1` 这类节号。
-> 实测 OpenStax 仓库：
->
-> | 检查 | 结果 |
-> |---|---|
-> | `collections/physics.collection.xml` 里的 `number=` | **0 次** |
-> | 同上，`label` | **0 次** |
-> | 模块 `index.cnxml` 的 `<title>` | **裸标题**（`Reflection`），无节号 |
->
-> **节号根本不在源文件里。** 那些数字是按**模块顺序**推的，而且**内部约定互相矛盾**：
->
-> | 章 | 模块顺序 | 本库曾写 | 隐含约定 |
-> |---|---|---|---|
-> | 7 | Introduction · Kepler · Newton | Kepler = `§7.2` | Introduction **算** 7.1 |
-> | 16 | Introduction · Reflection · Refraction · Lenses | Reflection = `§16.1` | Introduction **不算** |
->
-> **两处用了相反的约定——这本身就证明它们是猜的。**
+> 完整经过（那些节号为什么是编的、两处约定怎么互相矛盾）见
+> [决策记录：证据事故](../docs/decisions/evidence-history.md)。
 
 **已全部改为可核验的写法**：`第 N 章 · 模块标题`，外加模块 id（可点开原文）。
 
@@ -50,41 +32,8 @@
 
 ## 本库自己犯过的一次：把**构造的数据**登记成「实验数据」
 
-> [!CAUTION]
-> **`ev-002` 已作废。** 它曾是本库**等级最高**的一条证据，而**从来没有发生过任何测量**。
-
-| | ev-002 原样 | 实际 |
-|---|---|---|
-| 类型 | **实验数据** | **本库作者构造** |
-| 等级 | **高** | —— |
-| 定位 | `导体U-I数据.csv`（可复算） | 数值为 `U = 10 × I`，**R 精确等于 10.000** |
-| 时间 | 2026 | 同一年，同一位作者 |
-| 引用它的条目写 | 「对同一导体在不同电压下**测得**电流，**温度 20 °C**」 | **没有测量、没有控温、CSV 里连温度列都没有** |
-
-它当时是用来**替换**更早那批虚构示例（`ev-009`~`ev-012`）的。
-**结果换上去的是同一类东西，只是包装得更像证据。**
-
-### 为什么它骗过了所有人（包括一次对抗审查）
-
-一次 AI 对抗审查确实审过引用它的命题，并**准确地**指出：
-
-> 数据分辨率不足——电流只记到 `0.01 A`，在 `I=0.10` 处就是 **5%**，
-> 因此**无法区分**「欧姆」与「4.4% 漂移」。
-
-**那是症状，不是根因。** 根因是**这份数据根本不是测量**。
-
-> [!IMPORTANT]
-> **而对抗审查没去查这件事，是因为本库要求它不要查。**
->
-> 派发对抗任务时写的指令是：
-> **「你不需要验证引用是否属实（那要联网），可以假定引用属实；
-> 你要攻击的是『即便如此，结论成立吗』。」**
->
-> **是我自己把「核实证据是否真实存在」排除在对抗范围之外的。**
-
-**修正（已写进 `FORMAT.md` §6）**：对抗审查的任务里必须**显式包含**一句
-**「质疑证据是否如其所述地存在」**。逻辑攻击与真实性核验**不是同一件事**，
-不能因为前者成本低就省掉后者。
+> 完整经过见 [决策记录：证据事故](../docs/decisions/evidence-history.md)——
+> 包括「为什么它骗过了一次对抗审查」：**是本库自己把「核实证据是否存在」排除在对抗范围之外的**。
 
 ### 由此立下的两条规矩
 
@@ -99,60 +48,42 @@
 
 
 > [!IMPORTANT]
-> **`ev-043` 是「官方文档条款」这一类的第一条，而它在证据阶梯上有个特殊之处。**
->
-> 本库的阶梯（系统综述 > 随机对照 > 队列 > 病例 > 专家意见 > 教材）**是为经验性命题设计的**。
-> 而「**官方文件规定了什么**」这类主张，**官方原文就是一手来源**——
-> 它不需要在阶梯上排队。
->
-> **所以这条登记为「高」，理由与 `ev-002` 那次不同：**
->
-> | | ev-002（已作废） | **ev-043** |
-> |---|---|---|
-> | 高等级的理由 | 「**可复算**」 | 「**这是官方发布的原文**」 |
-> | 实际是什么 | **本库作者构造的数据** | **可点开的官方页面** |
-> | 谁主张的 | 本库自己 | **北京市交通委员会** |
->
-> **「可复算」解决「我能否验证」，不解决「它是什么」。而「官方原文」解决的正是后者。**
+> **「官方文件规定了什么」这类主张，官方原文就是一手来源——不需要在阶梯上排队。**
+> 所以 `ev-043` 这类登记为「高」，理由与 `ev-002` 那次不同（可复算 ≠ 证据强度）。完整说明见
+> [决策记录：证据事故](../docs/decisions/evidence-history.md)。
 
 
 > [!IMPORTANT]
-> **`ev-048` 是本库第一条**最高档**证据，而它暴露了阶梯的一个问题。**
->
-> 本库的阶梯写的是：
->
-> > 系统综述 / 元分析 > **随机对照试验** > 队列 > 病例 > 专家意见 > 教材
->
-> **这套阶梯是为「关于人群的实证主张」设计的**（医学、社会科学的样子）。
-> 而在它出现之前，本库 **40 条证据里 37 条是教材、3 条是官方文件** ——
-> **顶端四档一次都没用过。**
->
-> **问题不在没人用，在于这套阶梯对物理不公平**：
-> 一本教材里写的「`F = ma`」，按这张表落**最低档**；
-> 而它和「一本教材里说的某个教学建议」**完全不是一回事**。
->
-> **一件物理事实不需要随机对照试验来支撑，而这张表说不出这个区别。**
->
-> **这是已知问题，没在这一轮改**（本库的规矩：不要用一个样本改结构）。
-> **记住它：`物理` 的证据等级需要另一套标准，而不是往这张表上硬套。**
+> **证据阶梯是为「关于人群的实证主张」设计的，对物理不公平**（一本教材里的 `F = ma` 落最低档，
+> 与「教材里的一条教学建议」不是一回事）。这是已知问题，未改。完整讨论见
+> [决策记录：证据事故](../docs/decisions/evidence-history.md)。
 
 ## 索引
 
-| 编号 | 类型 | 等级 | 定位 | 时间 | 许可 | 引用处 |
+> [!NOTE]
+> **表头含义**（机器解析见 `tools/kbcheck.py`）：
+>
+> - **类别**：`教材` · `论文` · `指南` · `官方文件` · `交互式模拟` · `出版社勘误表` · `本库数据`（作废行标 `已作废`）；
+> - **等级**：`高` / `中` / `低`——**对「该类主张」而言**，不是绝对高低（见文末「等级说明」）；
+> - **核验深度**：本库**实际读了什么**——`全文` / `摘要` / `仅定位` / `未核验`。
+>   **这一列让「我们到底核对到什么程度」可见**，不再只靠正文里的一句话。
+
+| 编号 | 类别 | 等级 | 核验深度 | 定位 | 时间 | 许可 | 引用处 |
+|---|---|---|---|---|---|---|---|
 |---|---|---|---|---|---|---|
-| ev-001 | 教材 | 低 | 《义务教育教科书·物理》九年级全一册，人教版，2013，P.79 | 2013 | 外部来源 · 仅引用定位 | 欧姆定律 · 电压符号差异 |
-| ev-002 | ⚠️ **已作废** | — | 原登记为「实验数据」的 `导体U-I数据.csv`。**从未有任何测量发生**——数值由本库作者构造（`U = 10 × I`，R 精确等于 10.000） | — | — | 引用它的条目已重写 |
-| ev-009 | ⚠️ **已作废** | — | 本库**构造的示例数据**（「某校初三 2 个班对照观察」），**从未真实存在** | — | — | 无（原引用条目已重写） |
-| ev-010 | ⚠️ **已作废** | — | 本库**构造的示例数据**（「本科物理课观察」），**从未真实存在** | — | — | 无（原引用条目已重写） |
-| ev-011 | ⚠️ **已作废** | — | 本库**构造的示例数据**（「初三学完后测」），**从未真实存在** | — | — | 无（原引用条目已删除） |
-| ev-012 | ⚠️ **已作废** | — | 本库**构造的示例数据**（「高中生测评」），**从未真实存在** | — | — | 无（原引用条目已删除） |
-| ev-014 | **出版社勘误表** | **高** | OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，[PDF](https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf) | 2024 | 外部来源 · 仅引用定位 | 地理勘误 ×6 |
-| ev-015 | **出版社勘误表** | **高** | 雅集《科學新世紀 1A》勘誤表，[ZIP](https://e-aristo.hk/t/downloads/science/scicent_amendments_2024_c.zip) | 2024 | 外部来源 · 仅引用定位 | 科学勘误 ×1 |
-| ev-016 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.3 Ohm's Law: Resistance and Simple Circuits，[m42344](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42344/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 摩擦类比 · 局限性位置 · 电压符号差异 |
-| ev-017 | 教材（全文） | 低 | OpenStax《College Physics 2e》§20.1 Current，[m42341](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42341/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 电流（备用） |
-| ev-018 | 教材（全文） | 低 | OpenStax《Physics》第 19 章 · Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 欧姆定律 · 水管类比 · 电流方向误解 · 类比选择与学段相关 |
-| ev-019 | 教材（全文） | 低 | OpenStax《Physics》第 19 章 · Series Circuits，[m54435](https://github.com/openstax/osbooks-physics/blob/main/modules/m54435/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 水管类比（做法与禁忌） |
-| ev-020 | 教材（全文）**+ 可复算脚本与明细** | 低 | OpenStax《Physics》**全 23 章 / 98 模块**的 Teacher Support。**脚本** [`os-teacher-markers.py`](os-teacher-markers.py) · **明细** [`os-teacher-markers.csv`](os-teacher-markers.csv) · ref `main` **commit `dfdfd7a5356ecdd42e504de3df50d9153e33ea49`** | 2020 | **CC BY 4.0** · **可自由复用** | 教材内建分组教学变体 |
+| ev-001 | 教材 | 低 | 仅定位 | 《义务教育教科书·物理》九年级全一册，人教版，2013，P.79 | 2013 | 外部来源 · 仅引用定位 | 欧姆定律 · 电压符号差异 |
+| ev-002 | ⚠️ **已作废** | — | — | 原登记为「实验数据」的 `导体U-I数据.csv`。**从未有任何测量发生**——数值由本库作者构造（`U = 10 × I`，R 精确等于 10.000） | — | — | 引用它的条目已重写 |
+| ev-009 | ⚠️ **已作废** | — | — | 本库**构造的示例数据**（「某校初三 2 个班对照观察」），**从未真实存在** | — | — | 无（原引用条目已重写） |
+| ev-010 | ⚠️ **已作废** | — | — | 本库**构造的示例数据**（「本科物理课观察」），**从未真实存在** | — | — | 无（原引用条目已重写） |
+| ev-011 | ⚠️ **已作废** | — | — | 本库**构造的示例数据**（「初三学完后测」），**从未真实存在** | — | — | 无（原引用条目已删除） |
+| ev-012 | ⚠️ **已作废** | — | — | 本库**构造的示例数据**（「高中生测评」），**从未真实存在** | — | — | 无（原引用条目已删除） |
+| ev-014 | 出版社勘误表 | 高 | 全文 | OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，[PDF](https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf) | 2024 | 外部来源 · 仅引用定位 | 地理勘误 ×6 |
+| ev-015 | 出版社勘误表 | 高 | 全文 | 雅集《科學新世紀 1A》勘誤表，[ZIP](https://e-aristo.hk/t/downloads/science/scicent_amendments_2024_c.zip) | 2024 | 外部来源 · 仅引用定位 | 科学勘误 ×1 |
+| ev-016 | 教材 | 低 | 全文 | OpenStax《College Physics 2e》§20.3 Ohm's Law: Resistance and Simple Circuits，[m42344](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42344/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 摩擦类比 · 局限性位置 · 电压符号差异 |
+| ev-017 | 教材 | 低 | 全文 | OpenStax《College Physics 2e》§20.1 Current，[m42341](https://raw.githubusercontent.com/openstax/osbooks-college-physics-bundle/main/modules/m42341/index.cnxml) | 2020 | **CC BY-NC-SA 4.0** · 仅引用定位与短引用 | 电流（备用） |
+| ev-018 | 教材 | 低 | 全文 | OpenStax《Physics》第 19 章 · Ohm's law，[m54437](https://github.com/openstax/osbooks-physics/blob/main/modules/m54437/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 欧姆定律 · 水管类比 · 电流方向误解 · 类比选择与学段相关 |
+| ev-019 | 教材 | 低 | 全文 | OpenStax《Physics》第 19 章 · Series Circuits，[m54435](https://github.com/openstax/osbooks-physics/blob/main/modules/m54435/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 水管类比（做法与禁忌） |
+| ev-020 | 教材 | 低 | 全文 | OpenStax《Physics》**全 23 章 / 98 模块**的 Teacher Support。**脚本** [`os-teacher-markers.py`](os-teacher-markers.py) · **明细** [`os-teacher-markers.csv`](os-teacher-markers.csv) · ref `main` **commit `dfdfd7a5356ecdd42e504de3df50d9153e33ea49`** | 2020 | **CC BY 4.0** · **可自由复用** | 教材内建分组教学变体 |
 
 > [!CAUTION]
 > **ev-020 原先只写「580 条，含 649 个分组标记」，而库里既无脚本也无数据**——
@@ -169,36 +100,36 @@
 > 差的 `EL`(6→5)、合计(649→648)、便签(580→582) 来自 **`main` 前移**。
 >
 > **教训：写死一个会漂移的数字，等于把它变成断言。** 数字要连同**规则 + commit** 一起给。
-| ev-021 | 教材（全文） | 低 | OpenStax《Physics》第 2 章 · Relative Motion, Distance, and Displacement，[m54108](https://github.com/openstax/osbooks-physics/blob/main/modules/m54108/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 参考系教法 ×3 · 参考系误解 |
-| ev-022 | 教材（全文） | 低 | OpenStax《Physics》第 2 章 · Speed and Velocity，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 速度与速率教法 ×2 |
-| ev-023 | 教材（全文） | 低 | OpenStax《Physics》第 2 章 · Position vs. Time Graphs，[m54110](https://github.com/openstax/osbooks-physics/blob/main/modules/m54110/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 位置-时间图教法 ×2 |
-| ev-024 | 教材（全文） | 低 | Utah State Board of Education《7th Grade Science》（SEEd 标准），[PDF](https://www.uen.org/emedia/resources/oer/7thGradeSEEd.pdf)，148 页 | 2020 | **CC BY-NC-SA 3.0** · **仅引用定位与短语** | 力与运动（初中）· 现象探究循环 |
-| ev-025 | 教材（全文） | 低 | OpenStax《Physics》第 4 章 · Newton's First Law of Motion: Inertia，[m54138](https://github.com/openstax/osbooks-physics/blob/main/modules/m54138/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 惯性 · 惯性教法 ×2 · 运动物体自然慢下来 |
-| ev-026 | 教材（全文） | 低 | OpenStax《Physics》第 16 章 · Reflection，[m54357](https://github.com/openstax/osbooks-physics/blob/main/modules/m54357/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 光的反射 · 反射教法 ×2 |
-| ev-027 | 教材（全文） | 低 | OpenStax《Physics》第 14 章 · Speed of Sound, Frequency, and Wavelength，[m54331](https://github.com/openstax/osbooks-physics/blob/main/modules/m54331/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 声速与频率 · 声速教法 ×2 |
-| ev-028 | 教材（全文） | 低 | OpenStax《Physics》第 9 章 · Mechanical Energy and Conservation of Energy，[m54273](https://github.com/openstax/osbooks-physics/blob/main/modules/m54273/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 机械能守恒 · 机械能教法 ×2 · 运动物体自然慢下来 |
-| ev-029 | **交互式模拟（读产物头部）** | 低 | PhET「Forces and Motion: Basics」，[直达链接](https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_en.html)；教材内入口为 OpenStax 短链 `openstax.org/l/forcesandmotion`（实测解析到该直达链接） | 2026 | **CC BY-NC 4.0** · **仅引用定位** | PhET 力与运动基础（本库第一条 `资源`） |
-| ev-030 | 教材（全文） | 低 | OpenStax《Physics》第 15 章 · The Electromagnetic Spectrum，[m54342](https://github.com/openstax/osbooks-physics/blob/main/modules/m54342/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 电磁波谱 · 电磁波谱教法 ×2 · 可见光误解 |
-| ev-031 | 教材（全文） | 低 | OpenStax《Physics》第 7 章 · Kepler's Laws of Planetary Motion，[m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 开普勒定律 · 开普勒教法 ×2 |
-| ev-032 | **交互式模拟（读产物头部）** | 低 | PhET「My Solar System」，[直达链接](https://phet.colorado.edu/sims/html/my-solar-system/latest/my-solar-system_en.html)；教材内入口为 OpenStax 短链 `openstax.org/l/28mysolar` | 2026 | **CC BY-NC 4.0** · **仅引用定位** | PhET 我的太阳系（第二条 `资源`） |
-| ev-033 | 教材（全文） | 低 | OpenStax《Physics》第 13 章 · Types of Waves，[m54314](https://github.com/openstax/osbooks-physics/blob/main/modules/m54314/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 波（知识点）· 波教法 BL · 波把物质一起推走 |
-| ev-034 | 教材（全文） | 低 | OpenStax《Physics》第 13 章 · Wave Properties: Speed, Amplitude, Frequency, and Period，[m54321](https://github.com/openstax/osbooks-physics/blob/main/modules/m54321/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 波（知识点）· 波教法 OL |
-| ev-035 | 教材（全文） | 低 | OpenStax《Physics》第 22 章 · The Structure of the Atom，[m54582](https://github.com/openstax/osbooks-physics/blob/main/modules/m54582/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 原子结构 · 原子结构教法 ×3 |
-| ev-036 | 教材（全文） | 低 | OpenStax《Physics》第 9 章 · Work, Power, and the Work–Energy Theorem，[m54271](https://github.com/openstax/osbooks-physics/blob/main/modules/m54271/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 功与功率 · 功与功率教法 ×2 |
-| ev-037 | 教材（全文） | 低 | OpenStax《Physics》第 7 章 · Newton's Law of Universal Gravitation and Einstein's Theory of General Relativity，[m54189](https://github.com/openstax/osbooks-physics/blob/main/modules/m54189/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 万有引力定律 · 万有引力教法 ×2 · 混淆 G 与 g |
-| ev-038 | 教材（全文） | 低 | OpenStax《Physics》第 16 章 · Refraction，[m54365](https://github.com/openstax/osbooks-physics/blob/main/modules/m54365/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 光的折射 · 折射教法 ×3 |
-| ev-039 | 教材（全文） | 低 | OpenStax《Physics》第 3 章 · Acceleration，[m54123](https://github.com/openstax/osbooks-physics/blob/main/modules/m54123/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 加速度 · 加速度教法 ×2 |
-| ev-040 | 教材（全文） | 低 | OpenStax《Physics》第 4 章 · Newton's Second Law of Motion，[m54142](https://github.com/openstax/osbooks-physics/blob/main/modules/m54142/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 牛顿第二定律 · 牛顿第二定律教法 ×2 |
-| ev-041 | 教材（全文） | 低 | OpenStax《Physics》第 4 章 · Force，[m54135](https://github.com/openstax/osbooks-physics/blob/main/modules/m54135/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 力（高中）· 力教法 ×2 |
-| ev-042 | 教材（全文） | 低 | OpenStax《Physics》第 4 章 · Newton's Third Law of Motion，[m54131](https://github.com/openstax/osbooks-physics/blob/main/modules/m54131/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 牛顿第三定律 · 牛顿第三定律教法 ×2 |
-| ev-043 | **官方文档条款** | **高**（**对该类主张而言**——见下） | 《北京市轨道交通乘客守则》，北京市交通委员会发布，**2021-09-28 施行**，[北京地铁官网「乘车规定」页](https://www.bjsubway.com/support/ccgd/)（同页另列 10 份票务规则文件） | 2021 | 官方公开文件 · **仅引用条款，不上传原文** | 携带物品的尺寸重量上限 |
-| ev-044 | **官方文档条款** | **高**（对该类主张而言） | 《公共航空运输旅客服务管理规定》，**交通运输部令 2021 年第 3 号**，**2021-09-01 施行**（同时废止 1996 年《国内运输规则》等三份旧规则），[交通运输部政府信息公开](https://xxgk.mot.gov.cn/2020/jigou/fgs/202103/t20210315_3530413.html)（索引号 000019713O03/2021-00021） | 2021 | 官方公开规章 · **仅引用条款号与短引用，不上传原文** | 非自愿退票与变更、超售处置 |
-| ev-045 | 教材（全文） | 低 | OpenStax《Physics》第 8 章 · Linear Momentum, Force, and Impulse，[m54215](https://github.com/openstax/osbooks-physics/blob/main/modules/m54215/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 动量和冲量 · 动量和冲量教法 ×1 |
-| ev-046 | 教材（全文） | 低 | OpenStax《Physics》第 8 章 · Conservation of Momentum，[m54202](https://github.com/openstax/osbooks-physics/blob/main/modules/m54202/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 动量守恒定律 · 动量守恒教法 ×2 |
-| ev-047 | 教材（全文） | 低 | OpenStax《Physics》第 8 章 · Elastic and Inelastic Collisions，[m54209](https://github.com/openstax/osbooks-physics/blob/main/modules/m54209/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 弹性碰撞与非弹性碰撞 |
-| ev-048 | **随机对照试验（RCT）** | **高**（本库阶梯的**最高档**） | The Acute Respiratory Distress Syndrome Network. *Ventilation with Lower Tidal Volumes as Compared with Traditional Tidal Volumes for Acute Lung Injury and the Acute Respiratory Distress Syndrome.* **N Engl J Med. 2000 May 4;342(18):1301-8.** **PMID [10793162](https://pubmed.ncbi.nlm.nih.gov/10793162/)** · **DOI [10.1056/NEJM200005043421801](https://doi.org/10.1056/NEJM200005043421801)** | 2000 | 外部文献 · **仅引用摘要与结论，不转载全文** | ARDS 低潮气量通气 |
-| ev-049 | **临床实践指南原文** | **高**（对「指南规定了什么」这类主张——原文即一手来源，同 `ev-043` 逻辑） | Kushida CA, Chediak A, Berry RB, et al. *Clinical guidelines for the manual titration of positive airway pressure in patients with obstructive sleep apnea.* **J Clin Sleep Med. 2008;4(2):157-171.** **PMID [18468315](https://pubmed.ncbi.nlm.nih.gov/18468315/)** · [AASM 官方 PDF](https://aasm.org/resources/clinicalguidelines/040210.pdf)（**本库下载并全文抽取核对**，15 页） | 2008 | 外部文献 · **仅引用条目编号与短引用，不转载全文** | 睡眠呼吸暂停 PAP 调定 |
-| ev-050 | **随机对照试验（RCT）** | **高**（本库阶梯的**最高档**） | Rosen CI, Auckley DH, Benca R, et al. *Multisite Randomized Trial of Portable Sleep Studies and Positive Airway Pressure Autotitration Versus Laboratory-Based Polysomnography for the Diagnosis and Treatment of Obstructive Sleep Apnea: The HomePAP Study.* **SLEEP 2012;35(6):757-766.** [PMC3353048](https://pmc.ncbi.nlm.nih.gov/articles/PMC3353048/)（**开放获取，本库读了摘要与方法部分**） | 2012 | 外部文献 · **仅引用摘要与结论，不转载全文** | 睡眠呼吸暂停 PAP 调定 |
+| ev-021 | 教材 | 低 | 全文 | OpenStax《Physics》第 2 章 · Relative Motion, Distance, and Displacement，[m54108](https://github.com/openstax/osbooks-physics/blob/main/modules/m54108/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 参考系教法 ×3 · 参考系误解 |
+| ev-022 | 教材 | 低 | 全文 | OpenStax《Physics》第 2 章 · Speed and Velocity，[m54104](https://github.com/openstax/osbooks-physics/blob/main/modules/m54104/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 速度与速率教法 ×2 |
+| ev-023 | 教材 | 低 | 全文 | OpenStax《Physics》第 2 章 · Position vs. Time Graphs，[m54110](https://github.com/openstax/osbooks-physics/blob/main/modules/m54110/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 位置-时间图教法 ×2 |
+| ev-024 | 教材 | 低 | 全文 | Utah State Board of Education《7th Grade Science》（SEEd 标准），[PDF](https://www.uen.org/emedia/resources/oer/7thGradeSEEd.pdf)，148 页 | 2020 | **CC BY-NC-SA 3.0** · **仅引用定位与短语** | 力与运动（初中）· 现象探究循环 |
+| ev-025 | 教材 | 低 | 全文 | OpenStax《Physics》第 4 章 · Newton's First Law of Motion: Inertia，[m54138](https://github.com/openstax/osbooks-physics/blob/main/modules/m54138/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 惯性 · 惯性教法 ×2 · 运动物体自然慢下来 |
+| ev-026 | 教材 | 低 | 全文 | OpenStax《Physics》第 16 章 · Reflection，[m54357](https://github.com/openstax/osbooks-physics/blob/main/modules/m54357/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 光的反射 · 反射教法 ×2 |
+| ev-027 | 教材 | 低 | 全文 | OpenStax《Physics》第 14 章 · Speed of Sound, Frequency, and Wavelength，[m54331](https://github.com/openstax/osbooks-physics/blob/main/modules/m54331/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 声速与频率 · 声速教法 ×2 |
+| ev-028 | 教材 | 低 | 全文 | OpenStax《Physics》第 9 章 · Mechanical Energy and Conservation of Energy，[m54273](https://github.com/openstax/osbooks-physics/blob/main/modules/m54273/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 机械能守恒 · 机械能教法 ×2 · 运动物体自然慢下来 |
+| ev-029 | 交互式模拟 | 低 | 仅定位 | PhET「Forces and Motion: Basics」，[直达链接](https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_en.html)；教材内入口为 OpenStax 短链 `openstax.org/l/forcesandmotion`（实测解析到该直达链接） | 2026 | **CC BY-NC 4.0** · **仅引用定位** | PhET 力与运动基础（本库第一条 `资源`） |
+| ev-030 | 教材 | 低 | 全文 | OpenStax《Physics》第 15 章 · The Electromagnetic Spectrum，[m54342](https://github.com/openstax/osbooks-physics/blob/main/modules/m54342/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 电磁波谱 · 电磁波谱教法 ×2 · 可见光误解 |
+| ev-031 | 教材 | 低 | 全文 | OpenStax《Physics》第 7 章 · Kepler's Laws of Planetary Motion，[m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 开普勒定律 · 开普勒教法 ×2 |
+| ev-032 | 交互式模拟 | 低 | 仅定位 | PhET「My Solar System」，[直达链接](https://phet.colorado.edu/sims/html/my-solar-system/latest/my-solar-system_en.html)；教材内入口为 OpenStax 短链 `openstax.org/l/28mysolar` | 2026 | **CC BY-NC 4.0** · **仅引用定位** | PhET 我的太阳系（第二条 `资源`） |
+| ev-033 | 教材 | 低 | 全文 | OpenStax《Physics》第 13 章 · Types of Waves，[m54314](https://github.com/openstax/osbooks-physics/blob/main/modules/m54314/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 波（知识点）· 波教法 BL · 波把物质一起推走 |
+| ev-034 | 教材 | 低 | 全文 | OpenStax《Physics》第 13 章 · Wave Properties: Speed, Amplitude, Frequency, and Period，[m54321](https://github.com/openstax/osbooks-physics/blob/main/modules/m54321/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 波（知识点）· 波教法 OL |
+| ev-035 | 教材 | 低 | 全文 | OpenStax《Physics》第 22 章 · The Structure of the Atom，[m54582](https://github.com/openstax/osbooks-physics/blob/main/modules/m54582/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 原子结构 · 原子结构教法 ×3 |
+| ev-036 | 教材 | 低 | 全文 | OpenStax《Physics》第 9 章 · Work, Power, and the Work–Energy Theorem，[m54271](https://github.com/openstax/osbooks-physics/blob/main/modules/m54271/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 功与功率 · 功与功率教法 ×2 |
+| ev-037 | 教材 | 低 | 全文 | OpenStax《Physics》第 7 章 · Newton's Law of Universal Gravitation and Einstein's Theory of General Relativity，[m54189](https://github.com/openstax/osbooks-physics/blob/main/modules/m54189/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 万有引力定律 · 万有引力教法 ×2 · 混淆 G 与 g |
+| ev-038 | 教材 | 低 | 全文 | OpenStax《Physics》第 16 章 · Refraction，[m54365](https://github.com/openstax/osbooks-physics/blob/main/modules/m54365/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 光的折射 · 折射教法 ×3 |
+| ev-039 | 教材 | 低 | 全文 | OpenStax《Physics》第 3 章 · Acceleration，[m54123](https://github.com/openstax/osbooks-physics/blob/main/modules/m54123/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 加速度 · 加速度教法 ×2 |
+| ev-040 | 教材 | 低 | 全文 | OpenStax《Physics》第 4 章 · Newton's Second Law of Motion，[m54142](https://github.com/openstax/osbooks-physics/blob/main/modules/m54142/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 牛顿第二定律 · 牛顿第二定律教法 ×2 |
+| ev-041 | 教材 | 低 | 全文 | OpenStax《Physics》第 4 章 · Force，[m54135](https://github.com/openstax/osbooks-physics/blob/main/modules/m54135/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 力（高中）· 力教法 ×2 |
+| ev-042 | 教材 | 低 | 全文 | OpenStax《Physics》第 4 章 · Newton's Third Law of Motion，[m54131](https://github.com/openstax/osbooks-physics/blob/main/modules/m54131/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 牛顿第三定律 · 牛顿第三定律教法 ×2 |
+| ev-043 | 官方文件 | 高 | 仅定位 | 《北京市轨道交通乘客守则》，北京市交通委员会发布，**2021-09-28 施行**，[北京地铁官网「乘车规定」页](https://www.bjsubway.com/support/ccgd/)（同页另列 10 份票务规则文件） | 2021 | 官方公开文件 · **仅引用条款，不上传原文** | 携带物品的尺寸重量上限 |
+| ev-044 | 官方文件 | 高 | 仅定位 | 《公共航空运输旅客服务管理规定》，**交通运输部令 2021 年第 3 号**，**2021-09-01 施行**（同时废止 1996 年《国内运输规则》等三份旧规则），[交通运输部政府信息公开](https://xxgk.mot.gov.cn/2020/jigou/fgs/202103/t20210315_3530413.html)（索引号 000019713O03/2021-00021） | 2021 | 官方公开规章 · **仅引用条款号与短引用，不上传原文** | 非自愿退票与变更、超售处置 |
+| ev-045 | 教材 | 低 | 全文 | OpenStax《Physics》第 8 章 · Linear Momentum, Force, and Impulse，[m54215](https://github.com/openstax/osbooks-physics/blob/main/modules/m54215/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 动量和冲量 · 动量和冲量教法 ×1 |
+| ev-046 | 教材 | 低 | 全文 | OpenStax《Physics》第 8 章 · Conservation of Momentum，[m54202](https://github.com/openstax/osbooks-physics/blob/main/modules/m54202/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 动量守恒定律 · 动量守恒教法 ×2 |
+| ev-047 | 教材 | 低 | 全文 | OpenStax《Physics》第 8 章 · Elastic and Inelastic Collisions，[m54209](https://github.com/openstax/osbooks-physics/blob/main/modules/m54209/index.cnxml) | 2020 | **CC BY 4.0** · **可自由复用** | 弹性碰撞与非弹性碰撞 |
+| ev-048 | 论文 | 高 | 摘要 | The Acute Respiratory Distress Syndrome Network. *Ventilation with Lower Tidal Volumes as Compared with Traditional Tidal Volumes for Acute Lung Injury and the Acute Respiratory Distress Syndrome.* **N Engl J Med. 2000 May 4;342(18):1301-8.** **PMID [10793162](https://pubmed.ncbi.nlm.nih.gov/10793162/)** · **DOI [10.1056/NEJM200005043421801](https://doi.org/10.1056/NEJM200005043421801)** | 2000 | 外部文献 · **仅引用摘要与结论，不转载全文** | ARDS 低潮气量通气 |
+| ev-049 | 指南 | 高 | 全文 | Kushida CA, Chediak A, Berry RB, et al. *Clinical guidelines for the manual titration of positive airway pressure in patients with obstructive sleep apnea.* **J Clin Sleep Med. 2008;4(2):157-171.** **PMID [18468315](https://pubmed.ncbi.nlm.nih.gov/18468315/)** · [AASM 官方 PDF](https://aasm.org/resources/clinicalguidelines/040210.pdf)（**本库下载并全文抽取核对**，15 页） | 2008 | 外部文献 · **仅引用条目编号与短引用，不转载全文** | 睡眠呼吸暂停 PAP 调定 |
+| ev-050 | 论文 | 高 | 摘要 | Rosen CI, Auckley DH, Benca R, et al. *Multisite Randomized Trial of Portable Sleep Studies and Positive Airway Pressure Autotitration Versus Laboratory-Based Polysomnography for the Diagnosis and Treatment of Obstructive Sleep Apnea: The HomePAP Study.* **SLEEP 2012;35(6):757-766.** [PMC3353048](https://pmc.ncbi.nlm.nih.gov/articles/PMC3353048/)（**开放获取，本库读了摘要与方法部分**） | 2012 | 外部文献 · **仅引用摘要与结论，不转载全文** | 睡眠呼吸暂停 PAP 调定 |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，

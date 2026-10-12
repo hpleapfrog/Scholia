@@ -1,7 +1,7 @@
 name: 疑似错误
 description: 报告某条知识点可能存在的事实、单位、引用或时效问题
 title: "[疑似错误] "
-labels: ["type:claim", "status:待审"]
+labels: ["type:claim", "triage:待审"]
 body:
   - type: markdown
     attributes:

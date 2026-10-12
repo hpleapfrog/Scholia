@@ -1,7 +1,7 @@
 name: 新增教法
 description: 提交一种教学做法。必须包含适用条件与禁忌
 title: "[教法] "
-labels: ["type:method"]
+labels: ["type:method", "triage:待审"]
 body:
   - type: markdown
     attributes:
@@ -14,7 +14,20 @@ body:
     id: target
     attributes:
       label: 目标知识点
-      placeholder: knowledge/物理/命题/电流.md
+      placeholder: knowledge/物理/知识点/电阻与欧姆定律.md
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: 水平档（教法必须声明）
+      description: 同一知识点会有多个教法；跨全部档位的方法选「不分档」。
+      options:
+        - 低于年级水平（BL）
+        - 年级水平（OL）
+        - 进阶（AL）
+        - 不分档
     validations:
       required: true
 
@@ -38,7 +51,10 @@ body:
     id: contraindications
     attributes:
       label: 对谁不适用？理由是什么？（必填）
-      description: 填不出来就说明证据不足。例如「对物理系本科生不适用：先修过高，类比会固化错误直觉」
+      description: |
+        填不出来就说明证据不足。例如「对物理系本科生不适用：先修过高，类比会固化错误直觉」。
+        **必须标注证据强度**——「教材没提别的档位」**不等于**「别的档位不适用」，
+        拿不出强证据就如实写「弱」。
     validations:
       required: true
 
@@ -65,7 +81,9 @@ body:
       options:
         - label: 我知道教法**不能**标为「已确证」——它只能「有效」或「争议」
           required: true
-        - label: 我填了「禁忌」栏
+        - label: 我填了「水平档」（BL / OL / AL，或「不分档」）
+          required: true
+        - label: 我填了「禁忌」栏，并标注了证据强度
           required: true
         - label: 我理解 👍 点赞不作为判定依据
           required: true

@@ -1,7 +1,7 @@
 name: 先修关系争议
 description: 质疑"必须先学 A 才能学 B"这类断言
 title: "[先修] "
-labels: ["type:path"]
+labels: ["type:path", "triage:待审"]
 body:
   - type: markdown
     attributes:

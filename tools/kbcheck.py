@@ -47,6 +47,19 @@ REQUIRED_SECTIONS = {
     "资源": ["定位", "变更记录"],
 }
 
+# scope.学段 的枚举。组合用「至」连接（如「初中至高中」），不要在值里用 `/`。
+ALLOWED_STAGES = {"小学", "初中", "高中", "大学", "不限"}
+
+# 教法 scope.水平档 允许的档位代码；跨全部档位的方法写「不分档」。
+ALLOWED_LEVEL_CODES = {"BL", "OL", "AL"}
+LEVEL_UNDIVIDED = "不分档"
+LEVEL_ALLOWED = ALLOWED_LEVEL_CODES | {LEVEL_UNDIVIDED}
+
+# 指向本仓库自身的绝对链接（Issue 模板里出现过）。
+# 它们必须和相对链接一样被校验——否则改标题就会悄悄改坏一个链接，而没人发现。
+SELF_URL = re.compile(
+    r"^https?://github\.com/hpleapfrog/Scholia/(?:blob|tree)/[^/]+/(.+)$")
+
 # 只有「命题」可以说是「已确证」——其余都是组织层或条件性的
 ONLY_CLAIMS_CAN_BE_CONFIRMED = True
 
@@ -106,13 +119,14 @@ def parse_evidence_index():
         if not line.strip().startswith("|"):
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) < 7 or not re.fullmatch(r"ev-\d+", cells[0]):
+        if len(cells) < 8 or not re.fullmatch(r"ev-\d+", cells[0]):
             continue
-        _, typ, grade, locator, year, lic, used = cells[:7]
-        void = "作废" in typ or "作废" in grade
+        _, cat, grade, depth, locator, year, lic, used = cells[:8]
+        void = "作废" in cat
         out[cells[0]] = {
-            "类型": typ,
+            "类别": cat,
             "等级": grade,
+            "核验深度": depth,
             "定位": re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", locator),   # 链接只留文字
             "链接": (re.search(r"\]\((http[^)]+)\)", locator) or [None, ""])[1]
                     if re.search(r"\]\((http[^)]+)\)", locator) else "",
@@ -180,6 +194,7 @@ def build_index(objects):
 
     return {
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。运行 `python tools/kbcheck.py --write-index` 重新生成。",
+        "schema_version": 2,
         "repo": "https://github.com/hpleapfrog/Scholia",
         "读到这个文件的 AI 请注意": [
             "**本库是跨学科的**，覆盖程度**按学科差别很大**；它**不只做物理**。",
@@ -273,7 +288,7 @@ def scan_text_files():
     for base, dirs, names in os.walk(ROOT):
         dirs[:] = [d for d in dirs if d not in {".git", "node_modules", "__pycache__"}]
         for n in names:
-            if n.endswith(".md"):
+            if n.endswith((".md", ".yml", ".yaml")):
                 files.append(Path(base) / n)
     for n in EXTRA_TEXT_FILES:
         p = ROOT / n
@@ -712,6 +727,235 @@ def check_readme_coverage(objects, errors):
                 f"（`knowledge/{parts[1]}/README.md` 必须提到 `{o['path'].name}`）")
 
 
+# ── 链接锚点 ──────────────────────────────────────────────────────────────
+_TEXT_CACHE = {}
+
+
+def _repo_text(rel):
+    if rel not in _TEXT_CACHE:
+        p = ROOT / rel
+        _TEXT_CACHE[rel] = (p.read_text(encoding="utf-8").replace("\r\n", "\n")
+                            if p.exists() else "")
+    return _TEXT_CACHE[rel]
+
+
+def slugify(heading):
+    t = re.sub(r"[*`]", "", heading.strip()).lower()
+    t = re.sub(r"[^\w\- ]", "", t)
+    return t.replace(" ", "-")
+
+
+def heading_slugs(text):
+    seen, out = {}, set()
+    for line in text.splitlines():
+        m = re.match(r"^#{1,6}\s+(.*)$", line)
+        if m:
+            s = slugify(m.group(1))
+            n = seen.get(s, 0)
+            out.add(s if n == 0 else f"{s}-{n}")
+            seen[s] = n + 1
+    return out
+
+
+def anchor_ok(rel, anchor):
+    """锚点要么是一个标题 slug，要么是一个论证 ID（如 `a1`）。"""
+    if anchor.lower() in heading_slugs(_repo_text(rel)):
+        return True
+    return anchor.lower() in {a.lower() for a in arg_ids(_repo_text(rel))}
+
+
+# ── 单对象规则（此前只写在 FORMAT.md 里，没有机械检查）─────────────────────
+
+def evidence_ids_of(fm):
+    m = re.search(r"^evidence:\s*(.+)$", fm, re.M)
+    return re.findall(r"ev-\d+", m.group(1)) if m else []
+
+
+def check_evidence_nonempty(objects, errors):
+    """**无来源不入库**。`evidence: []` 不算有来源。"""
+    for rel, o in objects.items():
+        if not evidence_ids_of(o["fm"]):
+            errors.append(
+                f"{rel}: `evidence` 为空 —— 本库「无来源不入库」，"
+                "每个对象至少引一条证据（FORMAT.md §3）")
+
+
+def check_knowledge_tip(objects, errors):
+    """`知识点` 正文第一行必须是「读完你会什么」的 `> [!TIP]`。"""
+    for rel, o in objects.items():
+        if o["type"] != "知识点":
+            continue
+        after = o["text"].split("---\n", 2)[-1]
+        first = next((ln.strip() for ln in after.splitlines() if ln.strip()), "")
+        if not first.startswith("> [!TIP]"):
+            errors.append(
+                f"{rel}: `知识点` 正文第一行必须是 `> [!TIP]`（读完你会什么）")
+
+
+def check_teaching_level(objects, errors):
+    """`教法` 必须有 `scope.水平档`；值是档位代码（可多档）或「不分档」。"""
+    for rel, o in objects.items():
+        if o["type"] != "教法":
+            continue
+        lv = fm_nested(o["fm"], "水平档")
+        if not lv:
+            errors.append(
+                f"{rel}: `教法` 缺 `scope.水平档`（BL / OL / AL 组合，"
+                "或跨全部档位的「不分档」）")
+            continue
+        codes = set(re.findall(r"\b(BL|OL|AL)\b", lv))
+        if LEVEL_UNDIVIDED not in lv and not codes:
+            errors.append(f"{rel}: `水平档` 无法识别 -> {lv!r}")
+
+
+def check_medical(objects, errors):
+    """医学条目必须有 `scope.条件`，且正文开头是免责 `> [!CAUTION]` 块。
+
+    见 `knowledge/医学/README.md`「边界的一次修正（2026-10-12）」：
+    指南原文的规定可以收录，但必须带人群限定与免责，且以「指南规定了 X」表述。
+    """
+    for rel, o in objects.items():
+        if "医学" not in fm_nested(o["fm"], "学科"):
+            continue
+        if not fm_nested(o["fm"], "条件"):
+            errors.append(f"{rel}: 医学条目必须有 `scope.条件`（人群与限定）")
+        head = o["text"].split("\n## ", 1)[0]
+        if "> [!CAUTION]" not in head:
+            errors.append(
+                f"{rel}: 医学条目正文开头必须有 `> [!CAUTION]` 免责块"
+                "（人群限定 + 非医疗建议）")
+
+
+def check_stage(objects, errors):
+    """`scope.学段` 只能用枚举值，组合用「至」。"""
+    for rel, o in objects.items():
+        v = fm_nested(o["fm"], "学段")
+        if not v:
+            errors.append(f"{rel}: 缺 `scope.学段`")
+            continue
+        for part in re.split(r"[至、,，]", v):
+            part = part.strip()
+            if part and part not in ALLOWED_STAGES:
+                errors.append(
+                    f"{rel}: `学段` 取值非法 -> {v!r}"
+                    "（允许 小学/初中/高中/大学/不限，组合用「至」）")
+
+
+def check_dates(objects, errors):
+    for rel, o in objects.items():
+        c, u = fm_value(o["fm"], "created"), fm_value(o["fm"], "updated")
+        ok = True
+        for k, val in (("created", c), ("updated", u)):
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(val or "")):
+                errors.append(f"{rel}: `{k}` 必须是 YYYY-MM-DD -> {val!r}")
+                ok = False
+        if ok and u < c:
+            errors.append(f"{rel}: `updated`（{u}）早于 `created`（{c}）")
+
+
+def check_author(objects, errors):
+    for rel, o in objects.items():
+        a = (fm_value(o["fm"], "author") or "").strip().strip('"')
+        if not a:
+            errors.append(f"{rel}: 缺 `author`（不可匿名）")
+        elif not (a.startswith("@") or a.startswith("AI")):
+            errors.append(
+                f"{rel}: `author` 应形如 `@handle` 或 "
+                f"`AI（模型）· 经 @某人复核 · 日期` -> {a!r}")
+
+
+def check_section_order(objects, errors):
+    """必备小节的**顺序**固定（FORMAT.md §1.3）。此前只查存在，没查顺序。"""
+    for rel, o in objects.items():
+        order = REQUIRED_SECTIONS[o["type"]]
+        pos = []
+        for sec in order:
+            m = re.search(rf"^## {re.escape(sec)}\s*$", o["text"], re.M)
+            pos.append(m.start() if m else -1)
+        if all(p >= 0 for p in pos) and pos != sorted(pos):
+            errors.append(
+                f"{rel}: 必备小节顺序应为 {' · '.join(order)}（FORMAT.md §1.3）")
+
+
+def check_status_docs(errors):
+    """状态词表写了好几处，最容易漏。要求人类文档列全（FORMAT.md §4 + 学科图例）。"""
+    all_status = set()
+    for s in ALLOWED_STATUS.values():
+        all_status |= s
+    for rel in ("FORMAT.md", "knowledge/README.md"):
+        text = _repo_text(rel)
+        missing = sorted(s for s in all_status if s not in text)
+        if missing:
+            errors.append(f"{rel}: 状态图例不全，缺 {missing}")
+
+
+# ── 生成块：人类文档里的统计数字，唯一来源是 index.json ────────────────────
+STATS_BEGIN = "<!-- stats:begin -->"
+STATS_END = "<!-- stats:end -->"
+
+SUBJECT_ORDER = ["物理", "生活", "医学", "地理", "科学"]
+TYPE_ORDER = ["教法", "知识点", "命题", "误解", "资源", "路径"]
+
+
+def render_stats_block(index):
+    s = index["统计"]
+    by, sub = s["按类型"], s["按学科"]
+    types = " · ".join(f"{k} {by[k]}" for k in TYPE_ORDER if by.get(k))
+    subs = " · ".join(f"{k} {sub[k]}" for k in SUBJECT_ORDER if sub.get(k))
+    return "\n".join([
+        "| | |",
+        "|---|---|",
+        f"| 知识对象 | **{s['对象总数']} 条** —— {types} |",
+        f"| 学科 | {subs} |",
+        f"| 证据 | {s['证据条数']} 条（含作废 {s['作废证据条数']} 条） |",
+        f"| 已确证 | **{s['已确证条数']} 条** |",
+    ])
+
+
+def render_subject_block(index):
+    sub = index["统计"]["按学科"]
+    keys = [k for k in SUBJECT_ORDER if k in sub] + \
+           [k for k in sorted(sub) if k not in SUBJECT_ORDER]
+    lines = ["| 学科 | 条目数 |", "|---|---|"]
+    for k in keys:
+        lines.append(f"| [{k}]({k}/README.md) | {sub[k]} |")
+    lines.append(f"| **合计** | **{index['统计']['对象总数']}** |")
+    return "\n".join(lines)
+
+
+def generated_blocks(objects):
+    index = build_index(objects)
+    return {
+        "README.md": render_stats_block(index),
+        "knowledge/README.md": render_subject_block(index),
+    }
+
+
+def sync_generated(objects, write, errors):
+    """人类文档里的统计数字由 index.json 生成——**不手写**（写了就会漂移）。"""
+    for rel, body in generated_blocks(objects).items():
+        p = ROOT / rel
+        if not p.exists():
+            errors.append(f"{rel}: 文件不存在")
+            continue
+        text = p.read_text(encoding="utf-8").replace("\r\n", "\n")
+        if STATS_BEGIN not in text or STATS_END not in text:
+            errors.append(
+                f"{rel}: 缺少生成块标记（{STATS_BEGIN} / {STATS_END}）")
+            continue
+        pre, rest = text.split(STATS_BEGIN, 1)
+        old, post = rest.split(STATS_END, 1)
+        new = f"\n{body}\n"
+        if old != new:
+            if write:
+                p.write_text(pre + STATS_BEGIN + new + STATS_END + post,
+                             encoding="utf-8")
+            else:
+                errors.append(
+                    f"{rel}: 生成块与内容不一致（数字过期）"
+                    " —— 运行 `python tools/kbcheck.py --write-index`")
+
+
 def check_all():
     errors = []
     warnings = []
@@ -771,17 +1015,42 @@ def check_all():
         if text.count("```") % 2 != 0:
             errors.append(f"{rel}: ``` 代码围栏数量为奇数（未闭合）")
 
-        # 相对链接可达（剥掉代码块，模板代码里的链接不检查）
+        # 链接可达 + 锚点存在（剥掉代码块，模板代码里的链接不检查）
         prose = re.sub(r"```.*?```", "", text, flags=re.S)
         prose = re.sub(r"`[^`\n]*`", "", prose)
-        for label, target in re.findall(r"\[([^\]]*)\]\(([^)]+)\)", prose):
-            if re.match(r"^(https?:|mailto:|#)", target):
+        links = re.findall(r"\[([^\]]*)\]\(([^)]+)\)", prose)
+        # YAML 里的 `url:`（Issue 模板的 contact_links 用过）也要查——
+        # 它同样指向本仓库，改标题一样会改坏它。
+        links += [(u, u) for u in re.findall(r"^\s*url:\s*(\S+)", text, re.M)]
+        for label, target in links:
+            if target.startswith("mailto:"):
                 continue
-            tgt = target.split("#")[0].strip()
-            if not tgt:
+            m = SELF_URL.match(target)
+            if m:
+                # 指向本仓库的绝对链接：路径**从仓库根算起**，不是从当前文件。
+                sp, _, anchor = m.group(1).partition("#")
+                cand = ROOT / sp
+                if not cand.exists():
+                    errors.append(f"{rel}: 链接目标不存在 -> [{label}]({target})")
+                    continue
+                target_rel = sp
+            elif target.startswith("http"):
                 continue
-            if not (path.parent / tgt.replace("/", os.sep)).exists():
-                errors.append(f"{rel}: 链接目标不存在 -> [{label}]({target})")
+            else:
+                path_part, _, anchor = target.partition("#")
+                path_part = path_part.strip()
+                if not path_part:
+                    target_rel = rel
+                else:
+                    cand = path.parent / path_part.replace("/", os.sep)
+                    if not cand.exists():
+                        errors.append(
+                            f"{rel}: 链接目标不存在 -> [{label}]({target})")
+                        continue
+                    target_rel = os.path.relpath(cand, ROOT).replace(os.sep, "/")
+            if anchor and target_rel.endswith(".md") \
+                    and not anchor_ok(target_rel, anchor):
+                errors.append(f"{rel}: 锚点不存在 -> [{label}]({target})")
 
     # 图校验：单看一个文件查不出来的那部分
     check_graph(objects, errors, warnings)
@@ -795,6 +1064,18 @@ def check_all():
     argstats = argument_graph(objects)
     check_index(objects, errors)
 
+    # 单对象规则（FORMAT.md 里写了、此前没有机械检查的那些）
+    check_evidence_nonempty(objects, errors)
+    check_knowledge_tip(objects, errors)
+    check_teaching_level(objects, errors)
+    check_medical(objects, errors)
+    check_stage(objects, errors)
+    check_dates(objects, errors)
+    check_author(objects, errors)
+    check_section_order(objects, errors)
+    check_status_docs(errors)
+    sync_generated(objects, False, errors)
+
     return md_files, ids, errors, warnings, stats, argstats, objects
 
 
@@ -807,8 +1088,9 @@ def main():
 
     if write:
         p = write_index(objects)
+        sync_generated(objects, True, [])
         print(f"已生成 {p.relative_to(ROOT).as_posix()}"
-              f"（{len(objects)} 条对象）—— 请与内容一起提交")
+              f"（{len(objects)} 条对象）+ 文档生成块 —— 请与内容一起提交")
         return 0
 
     if warnings:
@@ -829,8 +1111,11 @@ def main():
     print("  · front-matter 完整")
     print("  · type / status 合法（只有「命题」可以用「已确证」）")
     print("  · id 唯一")
-    print("  · 相对链接全部可达")
-    print("  · 必备小节齐全")
+    print("  · 链接与锚点全部可达（含指向本仓库的绝对链接）")
+    print("  · 每个对象都有来源；知识点有 `[!TIP]`；教法有 `水平档`；医学有免责块")
+    print("  · 学段 / 日期 / 署名 取值合法")
+    print("  · 人类文档里的统计数字与 index.json 一致")
+    print("  · 必备小节齐全且顺序正确")
     print("  ── 以下五项是单看一个文件查不出来的 ──")
     print("  · `先修` 边只连「知识点」，且无环")
     print("  · `教法` 都有 `knowledge_point`，且指向「知识点」")
