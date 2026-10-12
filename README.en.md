@@ -99,8 +99,8 @@ this repository satisfies attribution.
 > - **Never upload textbook text or scanned pages** — only locators, short quotes, and original
 >   summaries. Facts are not copyrightable; expression is.
 > - **Medical entries carry a population qualifier and a disclaimer block**; relay them together.
-> - **Sources are vetted too**: registering evidence requires "who publishes it · earliest verifiable date ·
->   can a second source be found outside that publisher" — **a link that opens is not the same as a source that is true**
+> - **Sources are vetted too**: registering evidence requires "who publishes it · which version, and when did it take effect ·
+>   was it made up for this citation" — **a link that opens is not the same as a source that is true**
 >   (see the [evidence threshold](evidence/README.en.md)).
 > - Provided "as is", with no warranty.
 

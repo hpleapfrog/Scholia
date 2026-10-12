@@ -214,7 +214,7 @@ triage and **don't affect conclusions**. (`triage:*` / `type:*` must exist in Se
 - [ ] I changed only what needed changing, without reformatting others' content
 - [ ] `front-matter` has all 11 fields
 - [ ] Every piece of evidence has a verifiable locator, is registered in the [evidence index](evidence/README.md), and states its **verification depth** (full text / abstract / locator-only)
-- [ ] New evidence passed the **three source questions** (see the [evidence threshold](evidence/README.md)): **who publishes it** (an accountable body) · **earliest verifiable date** (a third-party archive predates our citation) · **can a second source be found outside that publisher** —
+- [ ] New evidence passed the **three source questions** (see the [evidence threshold](evidence/README.md)): **who publishes it** (an accountable body) · **which version and when it took effect** (the entry scopes itself in `scope.条件` and claims only that version) · **was it made up for this citation** (it exists for reasons independent of the claim, with a second source at a different publishing body) —
       self-built sites, attribution-free repost pages and identifiers that don't resolve are **not registered**; several same-origin reposts **do not count as independent corroboration**
 - [ ] A new `知识点`'s first body line is `> [!TIP]` (what you'll be able to do)
 - [ ] A new method filled in **水平档** (BL / OL / AL, or `不分档` for cross-level)

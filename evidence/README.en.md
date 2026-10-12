@@ -41,12 +41,21 @@ that page has a well-formed DOI, a plausible document number and a link that ope
 | # | Question | What counts as answered | Not answered |
 |---|---|---|---|
 | 1 | **Who publishes it** | an accountable body: publisher · journal · standards organisation · government agency · university | personal sites, attribution-free repost pages |
-| 2 | **Earliest verifiable date** | a third-party archive (e.g. Wayback) **predates this repo's first citation of it** | the content appeared only after we cited it |
-| 3 | **Can a second source be found outside that publisher** | a different publishing body, **and not a copy of each other** | several same-origin reposts = **still one source** |
+| 2 | **Which version, and when did it take effect** | the publication / effective date and the version (amendment number, document number, issue) are all recorded | the page carries no version; or "was true once" is treated as "is still true" |
+| 3 | **Was it made up for this citation** | it exists for **reasons independent of the claim** (a statute is issued to govern, a standard to interoperate, statistics to be published), and a second source can be found at **a different publishing body** | a page that exists only to assert this one sentence; several same-origin reposts |
 
 > [!IMPORTANT]
-> **Question 3 guards against the illusion of "cross-corroboration".**
-> Three sites copying the same false sentence at each other are still one source.
+> **Question 2 is about *version*, not about *who came first*.**
+> **Knowledge changes** — statutes get amended, standards get revised, pages get rewritten.
+> "This page predates this repo" neither shows the content is true nor that it **still holds now**.
+> So the question answered here is **which version the claim applies to**; the entry scopes itself
+> via `scope.条件` and **claims only that version**.
+
+> [!IMPORTANT]
+> **Question 3 guards against two things at once: fabrication, and the illusion of "cross-corroboration".**
+> It does not ask "does it predate us", but **"would this source still exist if the claim were false"** —
+> a page born only to assert one sentence is exactly the shape of `ev-002`.
+> Separately: three sites copying the same false sentence at each other are still one source.
 > **Independence is counted by publishing body, not by number of domains or links.**
 
 **Identifiers must be reverse-checked**: the title a DOI resolves to, and the name a document number yields on the publisher's official site,

@@ -60,7 +60,7 @@
 > ### 7. When you go **outside** for a source: **opens ≠ true**
 >
 > Registering evidence here requires three questions (see [`evidence/README.en.md`](evidence/README.en.md)):
-> **who publishes it** · **earliest verifiable date** · **can a second source be found outside that publisher**.
+> **who publishes it** · **which version, and when did it take effect** · **was it made up for this citation**.
 >
 > **Do not treat a page as evidence just because the link opens and the format is well-formed** —
 > **a site manufactured for this very citation has entirely legal locators.**
