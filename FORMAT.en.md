@@ -13,20 +13,15 @@
 
 ## 0. Language: bilingual storage
 
-**Every document exists in both Chinese and English** (the README is the exception, see below):
+**Every document exists in both Chinese and English**:
 
-| Document | Chinese (canonical) | English (translation) |
+| Document | Chinese (canonical, primary) | English (translation) |
 |---|---|---|
-| **README** (front door) | `README.zh.md` | **`README.md` (primary)** |
-| Spec / process / evidence / decisions / subject READMEs / rule registry | **`<name>.md` (primary)** | `<name>.en.md` |
-| Knowledge entries (`knowledge/`) | **`<name>.md` (primary)** | `<name>.en.md` |
+| README · spec · process · evidence · decisions · subject READMEs · knowledge entries | **`<name>.md`** | `<name>.en.md` |
 
-- **Chinese is the canonical language for knowledge entries** (terms, `title`, quotations);
-  **English is a translation**, for international readers and AI.
-- **The README is the reverse**: English-first (the public front door), Chinese stored as
-  `README.zh.md`.
-- **The two versions must match**; edit one, sync the other. (Currently manual — see `M-10`
-  in `docs/RULES.md`.)
+- **Chinese is the canonical language** (`title`, terms, quotations); **English is a translation**,
+  for international readers and AI.
+- **The two versions must match**; edit one, sync the other. (Currently manual — see `M-10` in `docs/RULES.md`.)
 
 > [!IMPORTANT]
 > **This library has three readers, all reading the same file.**

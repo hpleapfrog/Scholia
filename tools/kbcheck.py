@@ -1006,7 +1006,7 @@ MANUAL_RULES = [
     ("M-07", "AI 攻击需人复核 + 署名披露（AI 不能当「已确证」的复核者）"),
     ("M-08", "统计数字不手写（交给 `--write-index` 生成）"),
     ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」"),
-    ("M-10", "文档中英成对存放（`<name>.en.md`；README 为 `README.zh.md`），改一份同步另一份"),
+    ("M-10", "文档中英成对存放（`<name>.md` 中文 + `<name>.en.md` 英文），改一份同步另一份"),
 ]
 
 
@@ -1057,7 +1057,7 @@ def generated_blocks(objects):
     index = build_index(objects)
     return {
         "README.md": render_stats_block(index),
-        "README.zh.md": render_stats_block(index),
+        "README.en.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
         "docs/RULES.md": render_rules_block(),
     }
