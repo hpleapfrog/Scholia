@@ -18,8 +18,9 @@
 | [RFC 9110, HTTP Semantics (IETF, STD 97)](资源/RFC-9110-HTTP语义.en.md) | 资源 | 有效 | `ev-054` |
 | [In an RFC, MUST / SHOULD / MAY carry normative meaning only when written in all capitals](命题/RFC要求关键词只有全大写才成立.en.md) | 命题 | 暂定确认 | `ev-052` `ev-053` |
 | [An HTTP method's safety and idempotency are set by the specification, and 'safe' does not mean 'free of side effects'](命题/HTTP方法的安全性与幂等性由规范分类决定.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An unrecognized HTTP status code is handled as the class's x00, a code outside 100–599 as 5xx, and the reason phrase is only a recommendation](命题/未识别的HTTP状态码按该类x00处理.en.md) | 命题 | 暂定确认 | `ev-054` |
 
-**All four come from IETF's public RFCs** (`ev-052` / `ev-053` / `ev-054`; verification depth is stated per entry).
+**All five come from IETF's public RFCs** (`ev-052` / `ev-053` / `ev-054`; verification depth is stated per entry).
 That means this subject's current coverage is **not** the same as the subject "Computing" itself —
 see "What is still missing" below.
 
@@ -27,18 +28,20 @@ see "What is still missing" below.
 
 | Gap | Why it matters | Source needed |
 |---|---|---|
-| **RFC 9110 §15, status codes one by one** | this repo verified §2.2 and §9.2 only — not a single status code, and they are the most-asked-about part | RFC 9110 §15 (already inside `ev-054`, just unchecked) |
-| **Language and platform documentation** | all four entries are network protocols; "the default behaviour of a given API" and "the conditions under which a compatibility rule applies" are entirely absent | official Python / Java documentation, with version number and release date |
+| **The individual codes of RFC 9110 §15.2–§15.6** | the **preamble** to §15 is verified (`ev-054`), but **not one individual code is** — why `204` may not carry content, why `306` is marked Unused, are all answered in the specification and this repo has not read them | RFC 9110 §15.2–§15.6 (already inside `ev-054`, just unchecked) |
+| **The IANA HTTP Status Code Registry** | §15.1 says unrecognized codes are to be registered in this table, and **which codes are registered and which are not, this repo has no idea** | [IANA's status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) |
+| **Language and platform documentation** | all five entries are network protocols; "the default behaviour of a given API" and "the conditions under which a compatibility rule applies" are entirely absent | official Python / Java documentation, with version number and release date |
 | **Format and encoding specifications** | the **constraints and defaults** of things like `JSON` / `UTF-8` / `HTML` are where retellings go wrong most often | RFC 8259 · the Unicode Standard · WHATWG standards |
 | **Version-difference entries** | "what changed for X between v1 and v2" is this subject's most typical checkable content, and the count is currently zero | the version-history pages of each specification |
 
-**The next entry here should take §15 first** — `ev-054` is already registered, so **no new evidence is needed**;
-only the verified range has to be extended.
+**The next entry here should take the IANA registry first** — the preamble to §15 is done, and the registry is its natural landing point;
+`ev-054` is not enough, and **the IANA table has to be registered as new evidence**.
 
 ## Change log
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
+| 2026-10-12 | added the claim "an unrecognized HTTP status code is handled as the class's x00 …"; the verified range of `ev-054` extended from three sections to four (preamble to §15 added); "What is still missing" rewritten to match | ev-054 already registered; §15 preamble extended against the priority named in the row below | @hpleapfrog |
 | 2026-10-12 | first batch of 4 entries registered (2 `资源` + 2 `命题`), sources `ev-052` / `ev-053` / `ev-054`; "Current state" changed from "no entries yet" to an entry table, and "What is still missing" added | topic chosen against the subject boundary after ev-052/053/054 were registered | @hpleapfrog |
 | 2026-10-12 | established the subject; added `computing` to `SUBJECT_SLUGS` | user asked to expand the knowledge domains (transport / computing / medical guidelines / economics) | @hpleapfrog |
 
