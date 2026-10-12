@@ -60,6 +60,19 @@ LEVEL_ALLOWED = ALLOWED_LEVEL_CODES | {LEVEL_UNDIVIDED}
 SELF_URL = re.compile(
     r"^https?://github\.com/hpleapfrog/Scholia/(?:blob|tree)/[^/]+/(.+)$")
 
+# 许可：本库知识内容统一 CC BY-SA 4.0（见 LICENSE）
+ALLOWED_LICENSE = "CC-BY-SA-4.0"
+
+# 学科 → id 前缀（slug）。id 必须与学科一致，防止跨学科编号漂移。
+SUBJECT_SLUGS = {"物理": "physics", "生活": "life", "医学": "med",
+                 "地理": "geog", "科学": "science"}
+
+# 证据表的枚举（见 evidence/README.md 表头图例）
+EVIDENCE_CATEGORIES = {"教材", "论文", "指南", "官方文件", "交互式模拟",
+                       "出版社勘误表", "本库数据"}
+EVIDENCE_GRADES = {"高", "中", "低", "—"}
+EVIDENCE_DEPTHS = {"全文", "摘要", "仅定位", "未核验", "—"}
+
 # 只有「命题」可以说是「已确证」——其余都是组织层或条件性的
 ONLY_CLAIMS_CAN_BE_CONFIRMED = True
 
@@ -889,12 +902,92 @@ def check_status_docs(errors):
             errors.append(f"{rel}: 状态图例不全，缺 {missing}")
 
 
-# ── 生成块：人类文档里的统计数字，唯一来源是 index.json ────────────────────
-STATS_BEGIN = "<!-- stats:begin -->"
-STATS_END = "<!-- stats:end -->"
+def check_license(objects, errors):
+    """知识内容统一 CC BY-SA 4.0（见 LICENSE）。"""
+    for rel, o in objects.items():
+        v = (fm_value(o["fm"], "license") or "").strip()
+        if v != ALLOWED_LICENSE:
+            errors.append(f"{rel}: `license` 必须是 {ALLOWED_LICENSE} -> {v!r}")
+
+
+def check_id_prefix(objects, errors):
+    """`id` 前缀必须与学科一致（防止跨学科编号漂移）。"""
+    for rel, o in objects.items():
+        subj = (fm_nested(o["fm"], "学科") or "").split()
+        subj = subj[0] if subj else ""
+        slug = SUBJECT_SLUGS.get(subj)
+        if not slug:
+            errors.append(f"{rel}: 未知 / 缺失学科 -> {subj!r}（见 SUBJECT_SLUGS）")
+            continue
+        i = fm_value(o["fm"], "id") or ""
+        if not i.startswith(f"kb:{slug}:"):
+            errors.append(
+                f"{rel}: `id` 前缀应与学科一致（`kb:{slug}:…`）-> {i!r}")
+
+
+def check_evidence_table(errors):
+    """证据表的 `类别` / `等级` / `核验深度` 必须是枚举值（作废行除外）。"""
+    for ev, r in parse_evidence_index().items():
+        if r["作废"]:
+            continue
+        if r["类别"] not in EVIDENCE_CATEGORIES:
+            errors.append(f"evidence/README.md: {ev} 类别非法 -> {r['类别']!r}")
+        if r["等级"] not in EVIDENCE_GRADES:
+            errors.append(f"evidence/README.md: {ev} 等级非法 -> {r['等级']!r}")
+        if r["核验深度"] not in EVIDENCE_DEPTHS:
+            errors.append(f"evidence/README.md: {ev} 核验深度非法 -> {r['核验深度']!r}")
+
+
+# ── 生成块：人类文档里的数字/清单，唯一来源是本脚本 ────────────────────────
+GENERATED_BEGIN = "<!-- kbcheck:begin -->"
+GENERATED_END = "<!-- kbcheck:end -->"
 
 SUBJECT_ORDER = ["物理", "生活", "医学", "地理", "科学"]
 TYPE_ORDER = ["教法", "知识点", "命题", "误解", "资源", "路径"]
+
+# ── 规则注册表：每条规则一个 ID，分「机械校验」与「人工复核」──────────────
+# 改了任何一条规则，**必须同时改这里的清单与对应的检查**——否则 R-INDEX-02 会失败。
+# 这就是「规则即代码」：规则不再散在散文里，而是可枚举、可校验的清单。
+MECH_RULES = [
+    ("R-SCHEMA-01", "front-matter 必填 11 字段，顶层键不重复"),
+    ("R-SCHEMA-02", "type 合法；status 受 type 约束；只有「命题」可用「已确证」"),
+    ("R-SCHEMA-03", "id 唯一"),
+    ("R-SCHEMA-04", "`evidence` 非空（无来源不入库）"),
+    ("R-SCHEMA-05", "必备小节齐全，且顺序固定；六种类型都要有 `## 论证`"),
+    ("R-SCHEMA-06", "`知识点` 正文第一行是 `> [!TIP]`（读完你会什么）"),
+    ("R-SCHEMA-07", "`scope.学段` 用枚举（小学/初中/高中/大学/不限，组合用「至」）"),
+    ("R-SCHEMA-08", "`created` / `updated` 为 YYYY-MM-DD，且 updated ≥ created"),
+    ("R-SCHEMA-09", "`author` 形如 `@handle` 或 `AI（模型）· 经 @复核 · 日期`"),
+    ("R-SCHEMA-10", "`license` 必须是 CC-BY-SA-4.0"),
+    ("R-SCHEMA-11", "`id` 前缀与学科一致（物理→physics · 生活→life · 医学→med · 地理→geog · 科学→science）"),
+    ("R-SCHEMA-12", "`教法` 有 `knowledge_point`，且指向「知识点」"),
+    ("R-SCHEMA-13", "`教法` 有 `scope.水平档`，取值 BL / OL / AL（可多档）或「不分档」"),
+    ("R-SCHEMA-14", "医学条目有 `scope.条件`，且正文开头是 `> [!CAUTION]` 免责块"),
+    ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
+    ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
+    ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
+    ("R-GRAPH-02", "`支持` / `攻击` 边的论证锚点存在"),
+    ("R-GRAPH-03", "`路径` 每个成果至少被一个环节覆盖（未声明 outcomes 给警告）"),
+    ("R-GRAPH-04", "`路径` 每个环节至少连到一个库内对象"),
+    ("R-EVID-01", "`evidence` 编号已登记且未作废"),
+    ("R-EVID-02", "证据表 `类别` / `等级` / `核验深度` 取值合法"),
+    ("R-INDEX-01", "`index.json` 与内容一致（改内容必须重生成）"),
+    ("R-INDEX-02", "人类文档的生成块与 `index.json` / 规则表一致"),
+    ("R-README-01", "每个对象都在所属学科 README 里登记"),
+    ("R-DOC-01", "状态图例在 FORMAT.md 与 knowledge/README.md 里列全"),
+]
+
+MANUAL_RULES = [
+    ("M-01", "英文引用附近必须有中文说明（面向学习者可读性三条之一）"),
+    ("M-02", "面向学习者的内容写在前面"),
+    ("M-03", "`支持` 边的**独立性**由人判断（来源是自由文本，算不出）"),
+    ("M-04", "`教法` 的 `禁忌` 标注证据强度（强/弱），且与 `风险` 不混"),
+    ("M-05", "不上传教材原文或扫描页"),
+    ("M-06", "新引用资源逐条核对许可（教材 CC BY ≠ 它嵌的东西也是）"),
+    ("M-07", "AI 攻击需人复核 + 署名披露（AI 不能当「已确证」的复核者）"),
+    ("M-08", "统计数字不手写（交给 `--write-index` 生成）"),
+    ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」"),
+]
 
 
 def render_stats_block(index):
@@ -923,36 +1016,54 @@ def render_subject_block(index):
     return "\n".join(lines)
 
 
+def render_rules_block():
+    lines = [
+        f"**机械校验（{len(MECH_RULES)} 条）** —— 由 `tools/kbcheck.py` 强制；改规则必须同步改检查：",
+        "", "| ID | 规则 |", "|---|---|",
+    ]
+    for rid, text in MECH_RULES:
+        lines.append(f"| `{rid}` | {text} |")
+    lines += [
+        "",
+        f"**人工复核（{len(MANUAL_RULES)} 条）** —— 无法机械化，按 [CONTRIBUTING](../CONTRIBUTING.md) 的自检表执行：",
+        "", "| ID | 规则 |", "|---|---|",
+    ]
+    for rid, text in MANUAL_RULES:
+        lines.append(f"| `{rid}` | {text} |")
+    return "\n".join(lines)
+
+
 def generated_blocks(objects):
     index = build_index(objects)
     return {
         "README.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
+        "docs/RULES.md": render_rules_block(),
     }
 
 
 def sync_generated(objects, write, errors):
-    """人类文档里的统计数字由 index.json 生成——**不手写**（写了就会漂移）。"""
+    """人类文档里的数字/清单由本脚本生成——**不手写**（写了就会漂移）。"""
     for rel, body in generated_blocks(objects).items():
         p = ROOT / rel
         if not p.exists():
-            errors.append(f"{rel}: 文件不存在")
+            errors.append(f"{rel}: 文件不存在（生成块的目标文件）")
             continue
         text = p.read_text(encoding="utf-8").replace("\r\n", "\n")
-        if STATS_BEGIN not in text or STATS_END not in text:
+        if GENERATED_BEGIN not in text or GENERATED_END not in text:
             errors.append(
-                f"{rel}: 缺少生成块标记（{STATS_BEGIN} / {STATS_END}）")
+                f"{rel}: 缺少生成块标记（{GENERATED_BEGIN} / {GENERATED_END}）")
             continue
-        pre, rest = text.split(STATS_BEGIN, 1)
-        old, post = rest.split(STATS_END, 1)
+        pre, rest = text.split(GENERATED_BEGIN, 1)
+        old, post = rest.split(GENERATED_END, 1)
         new = f"\n{body}\n"
         if old != new:
             if write:
-                p.write_text(pre + STATS_BEGIN + new + STATS_END + post,
+                p.write_text(pre + GENERATED_BEGIN + new + GENERATED_END + post,
                              encoding="utf-8")
             else:
                 errors.append(
-                    f"{rel}: 生成块与内容不一致（数字过期）"
+                    f"{rel}: 生成块与来源不一致（数字/清单过期）"
                     " —— 运行 `python tools/kbcheck.py --write-index`")
 
 
@@ -1074,6 +1185,9 @@ def check_all():
     check_author(objects, errors)
     check_section_order(objects, errors)
     check_status_docs(errors)
+    check_license(objects, errors)
+    check_id_prefix(objects, errors)
+    check_evidence_table(errors)
     sync_generated(objects, False, errors)
 
     return md_files, ids, errors, warnings, stats, argstats, objects
