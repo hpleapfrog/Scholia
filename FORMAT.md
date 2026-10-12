@@ -203,6 +203,21 @@ license: CC-BY-SA-4.0
 > 它们是组织层或条件性的，不存在唯一正确。允许教法用「已确证」，就等于承认存在唯一最优教法。
 > 只有 `命题` 可以「已确证」。
 
+**状态中英对照 / Status (bilingual)**（机器版见 `index.json` 的 `状态英文`）：
+
+| 状态 | English | 一句话 |
+|---|---|---|
+| 草案 | draft | 刚写下 |
+| 待审 | pending review | 有内容，没人复核 |
+| 有效 | effective | 无存活攻击（**不等于**已复核） |
+| 争议 | disputed | 存活论证结论冲突 |
+| 暂定确认 | provisionally confirmed | 作者已核对，无独立复核 |
+| 已确证 | confirmed | 有**非作者**独立复核（全库目前 **0 条**） |
+| 需复审 | needs re-review | 刚改过，没人重看 |
+| 失据 | unsupported | 曾有论证，被击倒 |
+| 已推翻 | overturned | 被论证推翻 |
+| 已失效 | expired | 依据过时 / 被取代 |
+
 ### `教法` 的额外必填字段
 
 `教法` **必须**有 `knowledge_point`，指向它所属的 `知识点`：

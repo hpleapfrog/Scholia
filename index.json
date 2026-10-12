@@ -24,6 +24,18 @@
     "失据": "**曾有论证，但被击倒了** —— 主张还在，**当前没有任何支撑它的论证**",
     "已失效": "依据已过时或被取代"
   },
+  "状态英文": {
+    "草案": "draft",
+    "待审": "pending review",
+    "有效": "effective",
+    "争议": "disputed",
+    "暂定确认": "provisionally confirmed",
+    "已确证": "confirmed",
+    "需复审": "needs re-review",
+    "已推翻": "overturned",
+    "失据": "unsupported",
+    "已失效": "expired"
+  },
   "统计": {
     "对象总数": 100,
     "按类型": {
