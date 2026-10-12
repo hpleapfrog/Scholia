@@ -100,7 +100,9 @@ The five class definitions themselves (first digit):
   nor checked the registration procedure in §16.2. The specification says an unrecognized code is handled
   as `x00`, but **which codes are registered and which are not, this repo does not know.**
 - **Attribution**: @hpleapfrog · 2026-10-12
-- **To be added**: a code-by-code check of §15.2–§15.6; the current contents of the IANA registry
+- **To be added**: a code-by-code check of §15.2–§15.6.
+  ~~The current contents of the IANA registry~~ — registered as `ev-057` on 2026-10-12, and used to write
+  [The complete list of HTTP status codes lives in the IANA registry, not in RFC 9110](HTTP状态码的完整清单在IANA注册表不在RFC9110里.en.md)
 
 ## Why this counts as real information rather than noise
 

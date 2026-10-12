@@ -86,9 +86,9 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **117** —— 教法 methods 45 · 知识点 concepts 23 · 命题 claims 34 · 误解 misconceptions 6 · 资源 resources 8 · 路径 paths 1 |
-| 学科 / Subjects | 物理 Physics 86 · 生活 Life 5 · 医学 Medicine 2 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 5 · 经济 Economics 4 · 法律 Law 4 |
-| 证据 / Evidence | 49（含作废 / void 5） |
+| 对象 / Objects | **119** —— 教法 methods 45 · 知识点 concepts 23 · 命题 claims 35 · 误解 misconceptions 7 · 资源 resources 8 · 路径 paths 1 |
+| 学科 / Subjects | 物理 Physics 86 · 生活 Life 5 · 医学 Medicine 2 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 7 · 经济 Economics 4 · 法律 Law 4 |
+| 证据 / Evidence | 50（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
