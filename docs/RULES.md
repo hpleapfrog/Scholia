@@ -42,7 +42,7 @@
 | `R-README-01` | 每个对象都在所属学科 README 里登记 |
 | `R-DOC-01` | 状态图例在 FORMAT.md 与 knowledge/README.md 里列全 |
 
-**人工复核（9 条）** —— 无法机械化，按 [CONTRIBUTING](../CONTRIBUTING.md) 的自检表执行：
+**人工复核（10 条）** —— 无法机械化，按 [CONTRIBUTING](../CONTRIBUTING.md) 的自检表执行：
 
 | ID | 规则 |
 |---|---|
@@ -55,4 +55,5 @@
 | `M-07` | AI 攻击需人复核 + 署名披露（AI 不能当「已确证」的复核者） |
 | `M-08` | 统计数字不手写（交给 `--write-index` 生成） |
 | `M-09` | 对抗任务派发必须包含「质疑证据是否真实存在」 |
+| `M-10` | 文档中英成对存放（`<name>.en.md`；README 为 `README.zh.md`），改一份同步另一份 |
 <!-- kbcheck:end -->
