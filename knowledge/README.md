@@ -9,14 +9,14 @@
 |---|---|
 | [物理](物理/README.md) | 86 |
 | [生活](生活/README.md) | 8 |
-| [医学](医学/README.md) | 2 |
+| [医学](医学/README.md) | 3 |
 | [地理](地理/README.md) | 6 |
 | [科学](科学/README.md) | 1 |
 | [交通](交通/README.md) | 4 |
 | [计算机](计算机/README.md) | 16 |
 | [经济](经济/README.md) | 8 |
 | [法律](法律/README.md) | 4 |
-| **合计** | **135** |
+| **合计** | **136** |
 <!-- kbcheck:end -->
 
 > [!NOTE]

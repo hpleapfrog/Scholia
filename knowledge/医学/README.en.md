@@ -21,8 +21,13 @@
 |---|---|---|---|
 | [对 ARDS 患者，低潮气量通气降低死亡率](命题/ARDS低潮气量通气.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
 | [对阻塞性睡眠呼吸暂停，成人 PAP 调定有指南明文规定的起始压、升级规则与达标判据](命题/睡眠呼吸暂停PAP调定.md) | 命题 | 暂定确认 | **高（指南原文 + 随机对照试验）** |
+| [对住院 COVID-19 患者，地塞米松按随机化时的呼吸支持水平分层：对需通气或吸氧者降低 28 天死亡率，对不需呼吸支持者未见获益且结果与可能有害一致](命题/COVID地塞米松按呼吸支持水平分层.en.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
 
-**2 entries.** Evidence: `ev-048` `ev-049` `ev-050`.
+**3 entries.** Evidence: `ev-048` `ev-049` `ev-050` `ev-063`.
+
+> [!NOTE]
+> **From 2026-10-13, this subject holds its first proposition presenting "the direction of effect flips across subgroups".**
+> "Dexamethasone treats Covid-19" saves lives in the sickest and may harm those not on oxygen — **the direction flips with severity** — and the qualifier is exactly what public transmission drops. This entry writes the direction flip and the time window together.
 
 ## How this subject came about
 
@@ -114,3 +119,4 @@ With "how to adjust" removed, what remains is **exactly what the repo is best at
 |---|---|---|---|
 | 2026-10-05 | established the subject (from a question); also recorded the **third sample** of the #43 boundary and the **new dimension (risk)** | user asked "how is a ventilator adjusted" | @hpleapfrog |
 | 2026-10-12 | added [睡眠呼吸暂停 PAP 调定](命题/睡眠呼吸暂停PAP调定.md) (`ev-049` guideline full-text check + `ev-050` multicenter RCT); **boundary corrected to three layers**: guideline-prescribed operating parameters may be held, with source, population limit, and disclaimer | user asked "how should the ventilator be adjusted in sleep apnea syndrome" and requested "provide sourced clinical operating guidance + references + disclaimer" | @hpleapfrog |
+| 2026-10-13 | added [COVID 地塞米松按呼吸支持水平分层](命题/COVID地塞米松按呼吸支持水平分层.en.md) (`ev-063` RECOVERY trial, PMC open-access full text checked paragraph by paragraph); **this subject's first proposition presenting "the direction of effect flips across subgroups"** | user instruction "continue with the medical category"; topic selected against the subject boundary after the PMC full text was checked | @hpleapfrog |
