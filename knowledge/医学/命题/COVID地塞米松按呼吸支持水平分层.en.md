@@ -122,4 +122,4 @@ Overall 28-day mortality was lower with dexamethasone, but **the direction of ef
 
 | Date | Operation | Basis | Who |
 |---|---|---|---|
-| 2026-10-13 | Entry created; **the repo's second proposition using top-tier evidence (RCT)**, and the first to present "the direction of effect flips across subgroups" | user instruction "continue with the medical category"; topic selected against the subject boundary after this repo opened the PMC open-access full text and checked it paragraph by paragraph | @hpleapfrog |
+| 2026-10-13 | Entry created; **the repo's second proposition using top-tier evidence (RCT)**, and the first to present "the direction of effect flips across subgroups" | ev-063 registered; topic selected against the subject boundary after this repo opened the PMC open-access full text and checked it paragraph by paragraph | @hpleapfrog |

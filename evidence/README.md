@@ -185,6 +185,8 @@
 | ev-064 | 官方文件 | 高 | 全文 | 联合国新闻（UN News）：*Testing and monitoring underway in suspected Russia plague death*，**2026-10-06**，[news.un.org](https://news.un.org/en/story/2026/10/1168533)（WHO 发言人 Christian Lindmeier 日内瓦记者会；**本库通读该报道全文**） | 2026 | 官方公开发布 · **仅引用短句与结论，不转载全文** | 伊尔库茨克反瘟疫研究所事件 |
 | ev-065 | 官方文件 | 高 | 摘要 | 俄罗斯联邦消费者权益及公民平安保护监督局（Rospotrebnadzor）**2026-10-04** 声明，经《俄罗斯报》（rg.ru）报道，[rg.ru](https://rg.ru/2026/10/04/v-rospotrebnadzore-zaiavili-ob-otsutstvii-chumy-v-gorodah-irkutskoj-oblasti.html)（**本库读的是媒体报道，非官方原始发布页**） | 2026 | 官方公开声明（经媒体报道） · **仅引用短句，不转载全文** | 伊尔库茨克反瘟疫研究所事件 |
 | ev-066 | 官方文件 | 高 | 仅定位 | 俄方解除伊尔库茨克隔离（**2026-10-08**，俄国家通讯社），经 [Kyiv Independent](https://kyivindependent.com/russia-lifts-quarantine-in-irkutsk-region-where-lab-worker-allegedly-died-of-plague/) 报道（**本库仅见媒体报道，未打开官方原始发布页**） | 2026 | 官方公开行动（经媒体报道） · **仅引用短句，不转载全文** | 伊尔库茨克反瘟疫研究所事件 |
+| ev-067 | 官方文件 | 高 | 全文 | 世界卫生组织（WHO）《Disease Outbreak News: Pneumonia of undetermined etiology – the Russian Federation》，**2026-10-10 发布**，**2026-DON620**，[who.int](https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON620)（**本库通读该 DON 全文**：Situation at a glance / Description / Public health response / WHO risk assessment / WHO advice） | 2026 | 官方公开发布 · **仅引用短句与结论，不转载全文** | 伊尔库茨克反瘟疫研究所事件 |
+| ev-068 | 官方文件 | 高 | 全文 | 欧洲疾病预防与控制中心（ECDC）《ECDC closely monitoring situation following case of pneumonia of unknown origin in Russia》，**2026-10-06 发布**，[ecdc.europa.eu](https://www.ecdc.europa.eu/en/news-events/ecdc-closely-monitoring-situation-following-case-pneumonia-unknown-origin-russia)（**本库通读该报道全文**；另见 ECDC 周报 CDTR 第 41 周，2026-10-09） | 2026 | 官方公开发布 · **仅引用短句与结论，不转载全文** | 伊尔库茨克反瘟疫研究所事件 |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，
