@@ -38,7 +38,7 @@ see "What is still missing" below.
 
 | Gap | Why it matters | Source needed |
 |---|---|---|
-| **The remaining individual codes of RFC 9110 §15.2–§15.6** | `204`, `301`–`308`, `401`, `403`, `405`, `410` and `503` are now verified (`ev-054`), and so is the registry (`ev-057`), but **not one definition of the other individual codes in the specification is** — the full context around the `418` note, the new names RFC 9110 gives `413`/`422` (the old names need older RFCs), the situations `414` applies to, this repo has only read second-hand | RFC 9110 §15.2–§15.6 (already inside `ev-054`, just unchecked) |
+| **The remaining individual codes of RFC 9110 §15.2–§15.6** | `204`, `301`–`308`, `401`, `403`, `405`, `410` and `503` are now verified (`ev-054`), and so is the registry (`ev-057`), and so is `418`'s full context (including "re-assigned when 4NN is exhausted"), but **not one definition of the other individual codes in the specification is** — the `400` / `422` division, `421`'s retry rule, the situations `414` applies to, this repo has only read second-hand | RFC 9110 §15.2–§15.6 (already inside `ev-054`, just unchecked) |
 | **RFC 8126 §4.8's definition of IETF Review** | §16.2 is now verified (`ev-054`), but that section only writes "require IETF Review" and points to RFC 8126 — **RFC 8126 §4.8 itself has not been read**, so "what bar does IETF Review actually set" remains unanswerable | RFC 8126 §4.8 (new evidence needed) |
 | **Language and platform documentation** | all twelve entries are network protocols; "the default behaviour of a given API" and "the conditions under which a compatibility rule applies" are entirely absent | official Python / Java documentation, with version number and release date |
 | **Format and encoding specifications** | the **constraints and defaults** of things like `JSON` / `UTF-8` / `HTML` are where retellings go wrong most often | RFC 8259 · the Unicode Standard · WHATWG standards |
@@ -74,6 +74,7 @@ tutorials are not repeated. **This repo does not teach how to write code; it rec
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
+| 2026-10-13 | completed the latter half of §15.5.19 in the 418 misconception entry (re-assignable when 4NN is exhausted); the 418-context row removed from "What is still missing" | ev-054 already registered; §15.5.19 re-read in full | @hpleapfrog |
 | 2026-10-13 | added the claim "HTTP 301/302 changing POST to GET is a MAY …", verifying §15.4.2/§15.4.3/§15.4.4/§15.4.8/§15.4.9; the already-verified individual codes in "What is still missing" updated to 204/301–308/401/403/405/410/503 | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
 | 2026-10-13 | added the claim "an HTTP 503's Retry-After is a MAY …", verifying §15.6.4 and §15.6.2; the already-verified individual codes in "What is still missing" updated to 204/304/401/403/405/410/503 | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
 | 2026-10-13 | added the claim "an HTTP 401 response MUST carry a WWW-Authenticate header …", verifying §15.5.2 and §15.5.4; the already-verified individual codes in "What is still missing" updated to 204/304/401/403/405/410 | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
