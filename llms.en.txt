@@ -84,6 +84,8 @@ index.json
 ├── 统计                        ← by type / status / subject / evidence count (**the sole source of numbers**)
 ├── known_limits                ← boundaries the repo admits itself (**written per subject**)
 ├── 证据索引                    ← all sources: category · grade · verification depth · **locator** · link · license · voided
+├── 事件[]                      ← **a second kind of record, parallel to objects** (top-level events/; see below)
+│      id · title · status (持续更新/已封存) · path · 证据 · 来源 · 最后更新
 └── objects[]                   ← all objects, each with:
       id · type · title · status · path · 学科 · 学段
       适用 · 条件               ← **population and condition limits** (give them together with the content when restating)
@@ -157,6 +159,21 @@ The repo also has a **dedicated check**: if `evidence` cites a non-existent numb
 | `误解` | a common misunderstanding | comes with an "occurrence frequency" column, mostly "no quantitative data yet" |
 | `资源` | external material (interactive sims, official documents) | note the **licenses differ** |
 | `路径` | a **learning order** | contains `outcomes` (what you can do after) |
+
+### `事件` is not a seventh type but a **parallel** second kind of record
+
+The top-level `事件[]` in `index.json` and `objects[]` **are two different things**:
+
+| | `objects` | `事件` |
+|---|---|---|
+| answers | "**what is true**" | "**what happened**" |
+| structure | a `## 论证` section, `支持`/`攻击` edges | **only 陈述/依据/变更记录**, no argument, no edges |
+| status | `已确证`/`已推翻`/`失据`… | only **`持续更新`** / **`已封存`** |
+| time | stable | **time-indexed**, extended as it develops |
+
+**An event admits no truth judgement.** When citing one, give its `status` and `来源`,
+and **do not say "the repo confirmed" an event** — it only records what officials published on a given day.
+See [`events/README.en.md`](events/README.en.md).
 
 **The repo does not hold "how to do a thing"** (e.g. the steps of "how to take the subway").
 Reason and criteria: the "what the repo does **not** hold" section of [`FORMAT.en.md`](FORMAT.en.md).

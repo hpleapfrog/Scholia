@@ -47,6 +47,19 @@ REQUIRED_SECTIONS = {
     "资源": ["定位", "变更记录"],
 }
 
+# ── `事件`：与知识对象**并列的另一类记录**，单开顶层 `events/` ──────────────
+# 命题回答「什么是真的」（有真值、可被论证攻防）；事件回答「发生了什么」
+# （时间索引的事实，只有证据、没有可攻击的主张）。
+# 因此：事件**不进** `objects`、不进学科统计、没有「论证」段、没有任何边。
+EVENT_TYPE = "事件"
+EVENT_DIR = "events/"
+EVENT_FIELDS = ["id", "type", "title", "status", "author", "created",
+                "updated", "evidence", "license"]
+EVENT_SECTIONS = ["陈述", "依据", "变更记录"]
+# 状态只回答「这条现在还在更新吗」——不含 已确证/已推翻/失据/已失效。
+EVENT_STATUS = {"持续更新", "已封存"}
+EVENT_ID_PREFIX = "kb:event:"
+
 # scope.学段 的枚举。组合用「至」连接（如「初中至高中」），不要在值里用 `/`。
 ALLOWED_STAGES = {"小学", "初中", "高中", "大学", "不限"}
 
@@ -104,6 +117,12 @@ STATUS_MEANING = {
     "已失效": "依据已过时或被取代",
 }
 
+# `事件` 的状态含义（与知识对象的状态分开）
+EVENT_STATUS_MEANING = {
+    "持续更新": "**事件仍在发展**，本条随新进展增补证据行",
+    "已封存": "**事件已不再发展**，不再增补",
+}
+
 # **不要把它当事实引用**的状态
 NOT_CITABLE = {"失据", "已推翻", "已失效"}
 
@@ -119,6 +138,11 @@ STATUS_EN = {
     "已推翻": "overturned",
     "失据": "unsupported",
     "已失效": "expired",
+}
+
+EVENT_STATUS_EN = {
+    "持续更新": "ongoing",
+    "已封存": "archived",
 }
 
 # 每个学科的覆盖说明（手写；**不写数字**，数字由 objects 自动统计在旁边）
@@ -171,7 +195,7 @@ def parse_evidence_index():
     return out
 
 
-def build_index(objects):
+def build_index(objects, events):
     """生成机器可读索引。
 
     **这是本库给 AI 的入口。** 它要解决两个问题：
@@ -180,6 +204,9 @@ def build_index(objects):
        —— 所以每条都带 `可作事实引用`；
     2. AI 引用时只给一个 `ev-039` 这样的编号，**读者无从核实**
        —— 所以每条都带 `来源`（解析好的真实定位），全局另有一份 `证据索引`。
+
+    `objects` 是知识对象；`事件` 是**并列的另一类记录**（见 EVENT_TYPE 注释），
+    单开一节，不进 `objects`、不计入对象总数。
     """
     evidence = parse_evidence_index()
 
@@ -225,6 +252,20 @@ def build_index(objects):
         by_status[x["status"]] += 1
         by_subject[x["学科"].split(" ")[0]] += 1
 
+    # 事件：与 objects 并列的一节。只有证据，没有论证、没有边。
+    events_list = []
+    for rel, o in sorted(events.items()):
+        ids = re.findall(r"ev-\d+", o["fm"])
+        events_list.append({
+            "id": fm_value(o["fm"], "id"),
+            "title": fm_value(o["fm"], "title"),
+            "status": fm_value(o["fm"], "status"),
+            "path": rel,
+            "证据": ids,
+            "来源": src_list(ids),
+            "最后更新": fm_value(o["fm"], "updated"),
+        })
+
     return {
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。运行 `python tools/kbcheck.py --write-index` 重新生成。",
         "schema_version": 2,
@@ -236,6 +277,10 @@ def build_index(objects):
             "引用任何一条时，**请把它的 `证据` 解析成 `证据索引` 里那条的真实定位**"
             "（书名 / 章节 / 页面 URL），并**连 `status` 一起给出** —— **只写「ev-039」等于没写来源**。",
             "**判断「本库有没有 X」要查本文件的 `objects`，不要凭印象。**",
+            "本文件顶层的 `事件` 与 `objects` **是两回事**：`objects` 是知识对象"
+            "（命题/知识点/…），`事件` 是**按时间记录事实**的另一类记录，"
+            "**不含论证、不可作真值判断**；引用事件时给 `status`（持续更新/已封存）"
+            "与 `来源`，**不要说「本库确认了」某事件**。",
             "本库里**没有**的内容，**不要算作本库的内容** —— "
             "你可以用别的来源回答，**但要说明那不是本库说的**。",
             "教法（type=教法）的证据主要是**一本美国教材**，**不代表在中国课堂实测有效**。",
@@ -246,12 +291,15 @@ def build_index(objects):
         ],
         "状态含义": STATUS_MEANING,
         "状态英文": STATUS_EN,
+        "事件状态含义": EVENT_STATUS_MEANING,
+        "事件状态英文": EVENT_STATUS_EN,
         "统计": {
             "对象总数": len(objs),
             "按类型": dict(sorted(by_type.items())),
             "按状态": dict(sorted(by_status.items())),
             "按学科": dict(sorted(by_subject.items())),
             "已确证条数": by_status.get("已确证", 0),
+            "事件条数": len(events_list),
             "证据条数": len(evidence),
             "作废证据条数": sum(1 for e in evidence.values() if e["作废"]),
         },
@@ -269,15 +317,16 @@ def build_index(objects):
         },
         "证据索引": evidence,
         "objects": objs,
+        "事件": events_list,
     }
 
 
-def check_index(objects, errors):
+def check_index(objects, events, errors):
     """`index.json` 必须与内容一致——不一致就报错，并告诉怎么修。
 
     **这是「防止信息是错的」的机制部分**：索引不能手写、不能过期。
     """
-    want = json.dumps(build_index(objects), ensure_ascii=False, indent=2, sort_keys=False) + "\n"
+    want = json.dumps(build_index(objects, events), ensure_ascii=False, indent=2, sort_keys=False) + "\n"
     if not INDEX_FILE.exists():
         errors.append("index.json 不存在 —— 运行 `python tools/kbcheck.py --write-index` 生成")
         return
@@ -288,9 +337,9 @@ def check_index(objects, errors):
             "运行 `python tools/kbcheck.py --write-index`，然后一起提交")
 
 
-def write_index(objects):
+def write_index(objects, events):
     INDEX_FILE.write_text(
-        json.dumps(build_index(objects), ensure_ascii=False, indent=2, sort_keys=False) + "\n",
+        json.dumps(build_index(objects, events), ensure_ascii=False, indent=2, sort_keys=False) + "\n",
         encoding="utf-8")
     return INDEX_FILE
 
@@ -729,7 +778,7 @@ def argument_graph(objects):
     return sup, atk
 
 
-def check_evidence_ids(objects, errors):
+def check_evidence_ids(objects, events, errors):
     """`evidence:` 里的编号必须真的登记在 `evidence/README.md` 里，且不能是已作废的。
 
     **为什么要有这一条**：本库曾经把 `ev-002`（后来判定为**构造数据**）当作
@@ -740,6 +789,8 @@ def check_evidence_ids(objects, errors):
 
     1. 编号**不在索引里** —— 多半是笔误，也可能是引用了不存在的证据
     2. 编号**已被标为作废** —— 引用作废证据等于把撤回过的东西再拿回来用
+
+    知识对象与 `事件` 都查（事件只有证据，编号写错同样要拦住）。
     """
     index = ROOT / "evidence" / "README.md"
     if not index.exists():
@@ -754,7 +805,7 @@ def check_evidence_ids(objects, errors):
         if "已作废" in m.group(2) or "作废" in m.group(2):
             void.add(m.group(1).lower())
 
-    for rel, o in objects.items():
+    for rel, o in {**objects, **events}.items():
         ids = re.findall(r"ev-\d+", o["fm"], re.I)
         for ev in sorted({x.lower() for x in ids}):
             if ev not in known:
@@ -1054,6 +1105,7 @@ MECH_RULES = [
     ("R-SCHEMA-13", "`教法` 有 `scope.水平档`，取值 BL / OL / AL（可多档）或「不分档」"),
     ("R-SCHEMA-14", "医学条目有 `scope.条件`，且正文开头是 `> [!CAUTION]` 免责块"),
     ("R-SCHEMA-15", "front-matter 的 `key: value` 值不得以 YAML 指示符（`*` `&` `!` `|` `>` `%` `@` `` ` ``）开头而不加引号（否则严格 YAML 解析器报错）"),
+    ("R-EVENT-01", "`事件` 单开顶层 `events/`，与 `objects` **分开**：`type`=事件、`status` 只用持续更新/已封存、必填段 陈述/依据/变更记录、**无论证、无任何边**、`id` 前缀 `kb:event:`、`evidence` 非空；且每个事件须登记在 `events/README.md`"),
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
     ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
@@ -1099,6 +1151,7 @@ MECH_RULES_EN = [
     ("R-SCHEMA-13", "`教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」"),
     ("R-SCHEMA-14", "medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block"),
     ("R-SCHEMA-15", "a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it"),
+    ("R-EVENT-01", "`事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md`"),
     ("R-LINK-01", "link targets exist (relative · repo-absolute · YAML `url:`)"),
     ("R-LINK-02", "anchors exist (heading slug or argument id)"),
     ("R-GRAPH-01", "`先修` connects only 知识点, acyclic"),
@@ -1138,6 +1191,7 @@ def render_stats_block(index):
         "| | |",
         "|---|---|",
         f"| 对象 / Objects | **{s['对象总数']}** —— {types} |",
+        f"| 事件 / Events | **{s.get('事件条数', 0)}** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |",
         f"| 学科 / Subjects | {subs} |",
         f"| 证据 / Evidence | {s['证据条数']}（含作废 / void {s['作废证据条数']}） |",
         f"| 已确证 / Confirmed | **{s['已确证条数']}** |",
@@ -1151,6 +1205,9 @@ def render_subject_block(index):
     lines = ["| 学科 | 条目数 |", "|---|---|"]
     for k in keys:
         lines.append(f"| [{k}]({k}/README.md) | {sub[k]} |")
+    ev = index["统计"].get("事件条数", 0)
+    if ev:
+        lines.append(f"| [事件（顶层）](../events/README.md) | {ev} |")
     lines.append(f"| **合计** | **{index['统计']['对象总数']}** |")
     return "\n".join(lines)
 
@@ -1189,8 +1246,8 @@ def render_rules_block_en():
     return "\n".join(lines)
 
 
-def generated_blocks(objects):
-    index = build_index(objects)
+def generated_blocks(objects, events):
+    index = build_index(objects, events)
     return {
         "README.md": render_stats_block(index),
         "README.en.md": render_stats_block(index),
@@ -1200,9 +1257,9 @@ def generated_blocks(objects):
     }
 
 
-def sync_generated(objects, write, errors):
+def sync_generated(objects, events, write, errors):
     """人类文档里的数字/清单由本脚本生成——**不手写**（写了就会漂移）。"""
-    for rel, body in generated_blocks(objects).items():
+    for rel, body in generated_blocks(objects, events).items():
         p = ROOT / rel
         if not p.exists():
             errors.append(f"{rel}: 文件不存在（生成块的目标文件）")
@@ -1225,11 +1282,73 @@ def sync_generated(objects, write, errors):
                     " —— 运行 `python tools/kbcheck.py --write-index`")
 
 
+def check_event_object(fm, text, rel, ids, events, errors):
+    """校验一个 `事件` 条目（与知识对象分开的另一套规则）。
+
+    事件记录「发生了什么」：只有陈述/依据/变更记录，没有论证、没有边；
+    `evidence` 必须非空（事件只需要证据，证据为空等于没有事件）。
+    """
+    keys = front_matter_keys(fm)
+    dup = [k for k, c in collections.Counter(keys).items() if c > 1]
+    if dup:
+        errors.append(f"{rel}: front-matter 顶层键重复 {dup}")
+    missing = [k for k in EVENT_FIELDS if k not in keys]
+    if missing:
+        errors.append(f"{rel}: 事件 front-matter 缺字段 {missing}")
+    check_front_matter_shape(fm, rel, errors)
+
+    t, st, i = fm_value(fm, "type"), fm_value(fm, "status"), fm_value(fm, "id")
+    if t != EVENT_TYPE:
+        errors.append(f"{rel}: `事件` 的 `type` 必须是 {EVENT_TYPE!r} -> {t!r}")
+    if st not in EVENT_STATUS:
+        errors.append(
+            f"{rel}: `事件` 的 `status` 只能是 {'/'.join(sorted(EVENT_STATUS))} -> {st!r}")
+    for sec in EVENT_SECTIONS:
+        if f"## {sec}" not in text:
+            errors.append(f"{rel}: 事件缺必备小节「{sec}」")
+    if not (i or "").startswith(EVENT_ID_PREFIX):
+        errors.append(f"{rel}: `事件` 的 `id` 前缀必须是 {EVENT_ID_PREFIX!r} -> {i!r}")
+    if i in ids:
+        errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}")
+    elif i:
+        ids[i] = rel
+
+    # 事件没有边：不安全
+    for key in ("edges", "先修", "支持", "攻击"):
+        if re.search(rf"^[ \t]*{key}:", fm, re.M):
+            errors.append(
+                f"{rel}: `事件` 不应有 `{key}`（事件记录事实，不分先修、不支持、不攻击）")
+
+    # 事件只需要证据：证据为空等于没有事件
+    if not re.findall(r"ev-\d+", fm):
+        errors.append(
+            f"{rel}: `事件` 的 `evidence` 为空 —— 事件只需要证据，证据为空等于没有事件")
+
+    events[rel] = {"fm": fm, "text": text}
+
+
+def check_event_readme(events, errors):
+    """每个 `事件` 都必须在 `events/README.md` 里被登记。"""
+    p = ROOT / EVENT_DIR / "README.md"
+    if not p.exists():
+        if events:
+            errors.append(f"{EVENT_DIR}README.md 不存在（事件目录需要索引）")
+        return
+    txt = p.read_text(encoding="utf-8")
+    for rel in events:
+        name = rel.split("/")[-1]
+        if name not in txt:
+            errors.append(
+                f"{rel}: **事件索引里没有登记它**"
+                f"（`{EVENT_DIR}README.md` 必须提到 `{name}`）")
+
+
 def check_all():
     errors = []
     warnings = []
     ids = {}
     objects = {}
+    events = {}
     md_files = scan_text_files()
 
     for path in md_files:
@@ -1237,11 +1356,20 @@ def check_all():
         text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
         fm = parse_front_matter(text)
 
-        # 是否是知识对象（在 knowledge/ 下、不是任何语言的 README、也不是英文译本 .en.md）
+        # knowledge/ 下是知识对象；顶层 events/ 下是「事件」——与对象**分开**的另一类
+        # 记录（不分先修/支持/攻击，没有论证，不并入 objects）。
+        # 两种语言的 README 与英文译本 .en.md 都不是条目。
         _name = rel.split("/")[-1]
-        is_object = ("knowledge/" in rel) and not _name.startswith("README") and not _name.endswith(".en.md")
+        is_readme = _name.startswith("README") or _name.endswith(".en.md")
+        is_event = rel.startswith(EVENT_DIR) and not is_readme
+        is_object = rel.startswith("knowledge/") and not is_readme
 
-        if is_object:
+        if is_event:
+            if fm is None:
+                errors.append(f"{rel}: 事件缺 front-matter")
+            else:
+                check_event_object(fm, text, rel, ids, events, errors)
+        elif is_object:
             if fm is None:
                 errors.append(f"{rel}: 知识对象缺 front-matter")
             else:
@@ -1328,13 +1456,13 @@ def check_all():
     check_graph(objects, errors, warnings)
     check_arguments(objects, errors)
     check_argument_liveness(objects, warnings)
-    check_evidence_ids(objects, errors)
+    check_evidence_ids(objects, events, errors)
     check_readme_coverage(objects, errors)
     check_paths(objects, errors, warnings)
     check_path_steps(objects, errors)
     stats = check_path_outcomes(objects, errors, warnings)
     argstats = argument_graph(objects)
-    check_index(objects, errors)
+    check_index(objects, events, errors)
 
     # 单对象规则（FORMAT.md 里写了、此前没有机械检查的那些）
     check_evidence_nonempty(objects, errors)
@@ -1350,23 +1478,25 @@ def check_all():
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
     check_evidence_verified_support(objects, errors)
-    sync_generated(objects, False, errors)
+    # 事件（与知识对象分开的另一套规则）
+    check_event_readme(events, errors)
+    sync_generated(objects, events, False, errors)
 
-    return md_files, ids, errors, warnings, stats, argstats, objects
+    return md_files, ids, errors, warnings, stats, argstats, objects, events
 
 
 def main():
     write = "--write-index" in sys.argv
-    md_files, ids, errors, warnings, stats, argstats, objects = check_all()
+    md_files, ids, errors, warnings, stats, argstats, objects, events = check_all()
 
-    print(f"扫描 {len(md_files)} 个文档，识别知识对象 {len(ids)} 条")
+    print(f"扫描 {len(md_files)} 个文档，识别知识对象 {len(objects)} 条，事件 {len(events)} 条")
     print()
 
     if write:
-        p = write_index(objects)
-        sync_generated(objects, True, [])
+        p = write_index(objects, events)
+        sync_generated(objects, events, True, [])
         print(f"已生成 {p.relative_to(ROOT).as_posix()}"
-              f"（{len(objects)} 条对象）+ 文档生成块 —— 请与内容一起提交")
+              f"（{len(objects)} 条对象 + {len(events)} 条事件）+ 文档生成块 —— 请与内容一起提交")
         return 0
 
     if warnings:

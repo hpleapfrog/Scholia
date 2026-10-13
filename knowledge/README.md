@@ -16,6 +16,7 @@
 | [计算机](计算机/README.md) | 16 |
 | [经济](经济/README.md) | 8 |
 | [法律](法律/README.md) | 4 |
+| [事件（顶层）](../events/README.md) | 1 |
 | **合计** | **136** |
 <!-- kbcheck:end -->
 

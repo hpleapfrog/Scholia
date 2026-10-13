@@ -16,3 +16,4 @@
 | [status-and-liveness.md](status-and-liveness.en.md) | the introduction of `失据`, "alive" with zero attacks, a deleted check |
 | [support-count-not-strength.md](support-count-not-strength.en.md) | why "15 supporting edges" is the wrong way to write it |
 | [evidence-history.md](evidence-history.en.md) | the evidence incidents: invented section numbers, `ev-002`, the ladder is unfair to physics |
+| [events-are-not-propositions.md](events-are-not-propositions.en.md) | keeping `事件` apart from `命题`: why forcing it into a proposition yields fake argument-free structure |
