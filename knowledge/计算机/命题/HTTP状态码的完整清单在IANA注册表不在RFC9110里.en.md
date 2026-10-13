@@ -107,9 +107,11 @@ RFC 9110 §15.1 concedes as much (short quote):
 - **Attacked by**: **this repo read one version of the registry, 2025-09-15.**
   What earlier versions said, and **whether the registry has been updated since this entry was written**, this repo has no idea.
   Also: **this repo verified only §15.1 and the preamble of §15 of RFC 9110** —
-  the registration procedure in §16.2 **was not read**, so what that section actually says, this repo does not know.
+  the registration procedure in §16.2 was unread at the time of writing; it was verified the same day in
+  [Adding an HTTP status code requires IETF Review, and the specification forbids new codes from disallowing content](新增HTTP状态码须过IETFReview且不能禁止正文.en.md),
+  where "IETF Review"'s source and the three hard constraints are now traceable.
 - **Attribution**: @hpleapfrog · 2026-10-12
-- **To be added**: the text of RFC 9110 §16.2 on the registration procedure; any registry update after 2025-09-15
+- **To be added**: any registry update after 2025-09-15; RFC 8126 §4.8's definition of IETF Review
 
 ## Why this counts as real information rather than noise
 
@@ -130,3 +132,4 @@ RFC 9110 §15.1 concedes as much (short quote):
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-12 | Entry created; the subject's fourth `命题` | topic chosen against the subject boundary after ev-057 was registered | @hpleapfrog |
+| 2026-10-12 | The "§16.2 registration procedure" item under **To be added** has been filled by a new entry written the same day; **Attacked by** updated in step | ev-054 registered; topic chosen against the subject boundary | @hpleapfrog |

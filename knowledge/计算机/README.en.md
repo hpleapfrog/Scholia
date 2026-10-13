@@ -20,9 +20,12 @@
 | [An HTTP method's safety and idempotency are set by the specification, and 'safe' does not mean 'free of side effects'](命题/HTTP方法的安全性与幂等性由规范分类决定.en.md) | 命题 | 暂定确认 | `ev-054` |
 | [An unrecognized HTTP status code is handled as the class's x00, a code outside 100–599 as 5xx, and the reason phrase is only a recommendation](命题/未识别的HTTP状态码按该类x00处理.en.md) | 命题 | 暂定确认 | `ev-054` |
 | [The complete list of HTTP status codes lives in the IANA registry, not in RFC 9110](命题/HTTP状态码的完整清单在IANA注册表不在RFC9110里.en.md) | 命题 | 暂定确认 | `ev-054` `ev-057` |
+| [Adding an HTTP status code requires IETF Review, and the specification forbids new codes from disallowing content](命题/新增HTTP状态码须过IETFReview且不能禁止正文.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An HTTP 204 response may contain neither content nor trailers, and is heuristically cacheable by default](命题/HTTP204响应不能含正文也不能含trailer且默认可缓存.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An HTTP 405 response MUST carry an Allow header, and is heuristically cacheable by default](命题/HTTP405响应必须带Allow头部且默认可缓存.en.md) | 命题 | 暂定确认 | `ev-054` |
 | [Treating 418 as a normative HTTP status code](误解/418不是规范里的状态码.en.md) | 误解 | 有效 | `ev-054` `ev-057` |
 
-**All seven come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057`; verification depth is stated per entry).
+**All ten come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057`; verification depth is stated per entry).
 That means this subject's current coverage is **not** the same as the subject "Computing" itself —
 see "What is still missing" below.
 
@@ -30,23 +33,17 @@ see "What is still missing" below.
 
 | Gap | Why it matters | Source needed |
 |---|---|---|
-| **The individual codes of RFC 9110 §15.2–§15.6** | the **preamble** to §15 is verified (`ev-054`) and so is the registry (`ev-057`), but **not one definition of an individual code in the specification is** — why `204` may not carry content, the full context around the `418` note, this repo has only read second-hand | RFC 9110 §15.2–§15.6 (already inside `ev-054`, just unchecked) |
-| **RFC 9110 §16.2, the registration procedure** | the registry says the reference is RFC 9110 §16.2.1, and **what that section says, this repo has not read** — what bar "IETF Review" actually sets, is currently only the registry's one-line retelling | RFC 9110 §16.2 (already inside `ev-054`, just unchecked) |
-| **Language and platform documentation** | all seven entries are network protocols; "the default behaviour of a given API" and "the conditions under which a compatibility rule applies" are entirely absent | official Python / Java documentation, with version number and release date |
+| **The remaining individual codes of RFC 9110 §15.2–§15.6** | `204` and `405` are now verified (`ev-054`), and so is the registry (`ev-057`), but **not one definition of the other individual codes in the specification is** — the full context around the `418` note, why `304` may not carry content, whether RFC 9110 renamed `413`/`422`, this repo has only read second-hand | RFC 9110 §15.2–§15.6 (already inside `ev-054`, just unchecked) |
+| **RFC 8126 §4.8's definition of IETF Review** | §16.2 is now verified (`ev-054`), but that section only writes "require IETF Review" and points to RFC 8126 — **RFC 8126 §4.8 itself has not been read**, so "what bar does IETF Review actually set" remains unanswerable | RFC 8126 §4.8 (new evidence needed) |
+| **Language and platform documentation** | all ten entries are network protocols; "the default behaviour of a given API" and "the conditions under which a compatibility rule applies" are entirely absent | official Python / Java documentation, with version number and release date |
 | **Format and encoding specifications** | the **constraints and defaults** of things like `JSON` / `UTF-8` / `HTML` are where retellings go wrong most often | RFC 8259 · the Unicode Standard · WHATWG standards |
 | **Version-difference entries** | "what changed for X between v1 and v2" is this subject's most typical checkable content, and the count is currently zero | the version-history pages of each specification |
 
-**The next entry here should take §16.2 first** — the registry has pointed the way (Reference = RFC 9110 §16.2.1),
-while this repo has read only the registry's one-line retelling, **not the specification's own text**. `ev-054` is already registered, so **no new evidence is needed**.
+**The next entry here should take the remaining individual codes** — `204` and `405` are already verified (`ev-054`) and so is the registry (`ev-057`),
+but **not one definition of the other individual codes has been checked**.
+`ev-054` is already registered, so **no new evidence is needed**.
 
-## Change log
-
-| Date | Action | Basis | Who |
-|---|---|---|---|
-| 2026-10-12 | added the claim "the complete list of HTTP status codes lives in the IANA registry…" and the misconception "treating 418 as a normative HTTP status code"; `ev-057` registered; the IANA row in "What is still missing" filled in and replaced by the §16.2 registration procedure | topic chosen against the subject boundary after ev-057 was registered | @hpleapfrog |
-| 2026-10-12 | added the claim "an unrecognized HTTP status code is handled as the class's x00 …"; the verified range of `ev-054` extended from three sections to four (preamble to §15 added); "What is still missing" rewritten to match | ev-054 already registered; §15 preamble extended against the priority named in the row below | @hpleapfrog |
-| 2026-10-12 | first batch of 4 entries registered (2 `资源` + 2 `命题`), sources `ev-052` / `ev-053` / `ev-054`; "Current state" changed from "no entries yet" to an entry table, and "What is still missing" added | topic chosen against the subject boundary after ev-052/053/054 were registered | @hpleapfrog |
-| 2026-10-12 | established the subject; added `computing` to `SUBJECT_SLUGS` | user asked to expand the knowledge domains (transport / computing / medical guidelines / economics) | @hpleapfrog |
+## Boundary
 
 | | Holds | Does not hold |
 |---|---|---|
@@ -72,4 +69,9 @@ tutorials are not repeated. **This repo does not teach how to write code; it rec
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
+| 2026-10-12 | added the claims "an HTTP 204 response may contain neither content nor trailers …" and "an HTTP 405 response MUST carry an Allow header …", verifying §15.3.5 and §15.5.6; the individual-codes row in "What is still missing" rewritten to "the remaining individual codes" | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
+| 2026-10-12 | added the claim "adding an HTTP status code requires IETF Review…", verifying RFC 9110 §16.2; the §16.2 row in "What is still missing" filled in and replaced by RFC 8126 §4.8 | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
+| 2026-10-12 | added the claim "the complete list of HTTP status codes lives in the IANA registry…" and the misconception "treating 418 as a normative HTTP status code"; `ev-057` registered; the IANA row in "What is still missing" filled in and replaced by the §16.2 registration procedure | topic chosen against the subject boundary after ev-057 was registered | @hpleapfrog |
+| 2026-10-12 | added the claim "an unrecognized HTTP status code is handled as the class's x00 …"; the verified range of `ev-054` extended from three sections to four (preamble to §15 added); "What is still missing" rewritten to match | ev-054 already registered; §15 preamble extended against the priority named in the row below | @hpleapfrog |
+| 2026-10-12 | first batch of 4 entries registered (2 `资源` + 2 `命题`), sources `ev-052` / `ev-053` / `ev-054`; "Current state" changed from "no entries yet" to an entry table, and "What is still missing" added | topic chosen against the subject boundary after ev-052/053/054 were registered | @hpleapfrog |
 | 2026-10-12 | established the subject; added `computing` to `SUBJECT_SLUGS` | user asked to expand the knowledge domains (transport / computing / medical guidelines / economics) | @hpleapfrog |
