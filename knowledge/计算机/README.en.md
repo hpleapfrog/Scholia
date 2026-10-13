@@ -27,9 +27,10 @@
 | [An HTTP 304 response MUST carry the cache headers a 200 would have sent, and may contain neither content nor trailers](命题/HTTP304响应必须带上原200会发的缓存头部且不能含正文或trailer.en.md) | 命题 | 暂定确认 | `ev-054` |
 | [An HTTP 401 response MUST carry a WWW-Authenticate header, and the 401 / 403 division is not 'logged out vs no permission'](命题/HTTP401必须带WWW-Authenticate头部且401与403的分工不是没登录对没权限.en.md) | 命题 | 暂定确认 | `ev-054` |
 | [An HTTP 503's Retry-After is a MAY, not a MUST, and the specification does not require 503 when a server is overloaded](命题/HTTP503的Retry-After是MAY而非MUST且过载时不必用503.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [HTTP 301/302 changing POST to GET is a MAY 'for historical reasons'; to preserve the method use 307/308](命题/HTTP301与302把POST改成GET是历史原因下的MAY且保留方法应用307与308.en.md) | 命题 | 暂定确认 | `ev-054` |
 | [Treating 418 as a normative HTTP status code](误解/418不是规范里的状态码.en.md) | 误解 | 有效 | `ev-054` `ev-057` |
 
-**All fourteen come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057`; verification depth is stated per entry).
+**All fifteen come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057`; verification depth is stated per entry).
 That means this subject's current coverage is **not** the same as the subject "Computing" itself —
 see "What is still missing" below.
 
@@ -37,13 +38,13 @@ see "What is still missing" below.
 
 | Gap | Why it matters | Source needed |
 |---|---|---|
-| **The remaining individual codes of RFC 9110 §15.2–§15.6** | `204`, `304`, `401`, `403`, `405`, `410` and `503` are now verified (`ev-054`), and so is the registry (`ev-057`), but **not one definition of the other individual codes in the specification is** — the full context around the `418` note, whether RFC 9110 renamed `413`/`422`, how `301`/`302`/`303` change the method, this repo has only read second-hand | RFC 9110 §15.2–§15.6 (already inside `ev-054`, just unchecked) |
+| **The remaining individual codes of RFC 9110 §15.2–§15.6** | `204`, `301`–`308`, `401`, `403`, `405`, `410` and `503` are now verified (`ev-054`), and so is the registry (`ev-057`), but **not one definition of the other individual codes in the specification is** — the full context around the `418` note, the new names RFC 9110 gives `413`/`422` (the old names need older RFCs), the situations `414` applies to, this repo has only read second-hand | RFC 9110 §15.2–§15.6 (already inside `ev-054`, just unchecked) |
 | **RFC 8126 §4.8's definition of IETF Review** | §16.2 is now verified (`ev-054`), but that section only writes "require IETF Review" and points to RFC 8126 — **RFC 8126 §4.8 itself has not been read**, so "what bar does IETF Review actually set" remains unanswerable | RFC 8126 §4.8 (new evidence needed) |
 | **Language and platform documentation** | all twelve entries are network protocols; "the default behaviour of a given API" and "the conditions under which a compatibility rule applies" are entirely absent | official Python / Java documentation, with version number and release date |
 | **Format and encoding specifications** | the **constraints and defaults** of things like `JSON` / `UTF-8` / `HTML` are where retellings go wrong most often | RFC 8259 · the Unicode Standard · WHATWG standards |
 | **Version-difference entries** | "what changed for X between v1 and v2" is this subject's most typical checkable content, and the count is currently zero | the version-history pages of each specification |
 
-**The next entry here should take the remaining individual codes** — `204`, `304`, `401`, `403`, `405`, `410` and `503` are already verified (`ev-054`) and so is the registry (`ev-057`),
+**The next entry here should take the remaining individual codes** — `204`, `301`–`308`, `401`, `403`, `405`, `410` and `503` are already verified (`ev-054`) and so is the registry (`ev-057`),
 but **not one definition of the other individual codes has been checked**.
 `ev-054` is already registered, so **no new evidence is needed**.
 
@@ -73,6 +74,7 @@ tutorials are not repeated. **This repo does not teach how to write code; it rec
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
+| 2026-10-13 | added the claim "HTTP 301/302 changing POST to GET is a MAY …", verifying §15.4.2/§15.4.3/§15.4.4/§15.4.8/§15.4.9; the already-verified individual codes in "What is still missing" updated to 204/301–308/401/403/405/410/503 | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
 | 2026-10-13 | added the claim "an HTTP 503's Retry-After is a MAY …", verifying §15.6.4 and §15.6.2; the already-verified individual codes in "What is still missing" updated to 204/304/401/403/405/410/503 | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
 | 2026-10-13 | added the claim "an HTTP 401 response MUST carry a WWW-Authenticate header …", verifying §15.5.2 and §15.5.4; the already-verified individual codes in "What is still missing" updated to 204/304/401/403/405/410 | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
 | 2026-10-13 | added the claims "HTTP 410 means 'likely permanent' …" and "an HTTP 304 response MUST carry the cache headers …", verifying §15.5.11 and §15.4.5; the already-verified individual codes in "What is still missing" updated to 204/304/405/410 | topic chosen against the subject boundary after ev-054 was registered | @hpleapfrog |
