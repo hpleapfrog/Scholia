@@ -109,9 +109,9 @@ this repository satisfies attribution.
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **125** —— 教法 methods 45 · 知识点 concepts 23 · 命题 claims 40 · 误解 misconceptions 8 · 资源 resources 8 · 路径 paths 1 |
-| 学科 / Subjects | 物理 Physics 86 · 生活 Life 5 · 医学 Medicine 2 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 10 · 经济 Economics 7 · 法律 Law 4 |
-| 证据 / Evidence | 53（含作废 / void 5） |
+| 对象 / Objects | **126** —— 教法 methods 45 · 知识点 concepts 23 · 命题 claims 41 · 误解 misconceptions 8 · 资源 resources 8 · 路径 paths 1 |
+| 学科 / Subjects | 物理 Physics 86 · 生活 Life 5 · 医学 Medicine 2 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 10 · 经济 Economics 8 · 法律 Law 4 |
+| 证据 / Evidence | 55（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
