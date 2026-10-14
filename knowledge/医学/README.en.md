@@ -19,12 +19,12 @@
 
 | Entry | Type | Status | Evidence grade |
 |---|---|---|---|
-| [对 ARDS 患者，低潮气量通气降低死亡率](命题/ARDS低潮气量通气.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
-| [对阻塞性睡眠呼吸暂停，成人 PAP 调定有指南明文规定的起始压、升级规则与达标判据](命题/睡眠呼吸暂停PAP调定.md) | 命题 | 暂定确认 | **高（指南原文 + 随机对照试验）** |
-| [对住院 COVID-19 患者，地塞米松按随机化时的呼吸支持水平分层：对需通气或吸氧者降低 28 天死亡率，对不需呼吸支持者未见获益且结果与可能有害一致](命题/COVID地塞米松按呼吸支持水平分层.en.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
-| [对重度 ARDS 患者，早期俯卧位通气降低死亡率](命题/ARDS俯卧位通气.en.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
-| [对高心血管风险（无糖尿病）成人，强化降压降低主要心血管事件与全因死亡，但增加部分不良事件](命题/强化降压SPRINT.en.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
-| [对疑似鼠疫，WHO/CDC 指南规定不等确诊即开始治疗，并明确用药、隔离与接触者预防的时限](命题/疑似鼠疫不等确诊即治疗.en.md) | 命题 | 暂定确认 | **高（指南原文）** |
+| [For ARDS patients, low-tidal-volume ventilation reduces mortality](命题/ARDS低潮气量通气.en.md) | Proposition | Provisionally confirmed | **High (randomized controlled trial)** |
+| [For obstructive sleep apnea, adult PAP titration has guideline-prescribed starting pressures, escalation rules, and target criteria](命题/睡眠呼吸暂停PAP调定.en.md) | Proposition | Provisionally confirmed | **High (guideline primary text + randomized controlled trial)** |
+| [In hospitalized patients with Covid-19, dexamethasone stratified by respiratory-support level at randomization: lower 28-day mortality among those receiving invasive ventilation or oxygen, no benefit and possible harm among those needing no respiratory support](命题/COVID地塞米松按呼吸支持水平分层.en.md) | Proposition | Provisionally confirmed | **High (randomized controlled trial)** |
+| [In severe ARDS, early prone positioning reduces mortality](命题/ARDS俯卧位通气.en.md) | Proposition | Provisionally confirmed | **High (randomized controlled trial)** |
+| [In high-cardiovascular-risk adults without diabetes, intensive BP lowering reduces major CV events and all-cause death, but raises some adverse events](命题/强化降压SPRINT.en.md) | Proposition | Provisionally confirmed | **High (randomized controlled trial)** |
+| [For suspected plague, WHO/CDC guidelines prescribe starting treatment without waiting for confirmation, and set explicit time limits for medication, isolation, and contact prophylaxis](命题/疑似鼠疫不等确诊即治疗.en.md) | Proposition | Provisionally confirmed | **High (guideline primary text)** |
 
 **6 entries.** Evidence: `ev-048` `ev-049` `ev-050` `ev-063` `ev-069` `ev-070` `ev-071` `ev-072` `ev-073`.
 
@@ -88,7 +88,7 @@ This exposed that "no clinical operating guidance at all" was **too broad a cut*
 > The reader gets **a list of sourced regulations**, not a prescription.
 
 **This correction would not have happened without the second question** — it came from a real information need,
-and surfaced the three-layer structure inside "operating guidance". It is written into the change log of [睡眠呼吸暂停 PAP 调定](命题/睡眠呼吸暂停PAP调定.md).
+and surfaced the three-layer structure inside "operating guidance". It is written into the change log of [OSA PAP titration](命题/睡眠呼吸暂停PAP调定.en.md).
 
 > [!NOTE]
 > This boundary, together with the overall criterion for "not holding procedures" (scarcity + risk), is in
@@ -114,15 +114,15 @@ With "how to adjust" removed, what remains is **exactly what the repo is best at
 > **And it exposed a problem with the ladder**: this ladder is designed for "empirical propositions about populations",
 > **unfair to physics** — an `F = ma` in a textbook falls to the lowest tier,
 > which is nothing like "a teaching suggestion in a textbook".
-> Recorded in [`evidence/README.md`](../../evidence/README.md).
+> Recorded in [`evidence/README.en.md`](../../evidence/README.en.md).
 
 ## Change log
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the subject (from a question); also recorded the **third sample** of the #43 boundary and the **new dimension (risk)** | user asked "how is a ventilator adjusted" | @hpleapfrog |
-| 2026-10-12 | added [睡眠呼吸暂停 PAP 调定](命题/睡眠呼吸暂停PAP调定.md) (`ev-049` guideline full-text check + `ev-050` multicenter RCT); **boundary corrected to three layers**: guideline-prescribed operating parameters may be held, with source, population limit, and disclaimer | user asked "how should the ventilator be adjusted in sleep apnea syndrome" and requested "provide sourced clinical operating guidance + references + disclaimer" | @hpleapfrog |
-| 2026-10-13 | added [COVID 地塞米松按呼吸支持水平分层](命题/COVID地塞米松按呼吸支持水平分层.en.md) (`ev-063` RECOVERY trial, PMC open-access full text checked paragraph by paragraph); **this subject's first proposition presenting "the direction of effect flips across subgroups"** | ev-063 registered; topic selected against the subject boundary after the PMC full text was checked | @hpleapfrog |
-| 2026-10-14 | added [ARDS 俯卧位通气](命题/ARDS俯卧位通气.en.md) (`ev-069` PROSEVA trial, abstract checked); filled the "prone positioning" gap named in the body of [ARDS 低潮气量通气](命题/ARDS低潮气量通气.en.md) | ev-069 registered; topic selected against the subject boundary | @hpleapfrog |
-| 2026-10-14 | added [强化降压 SPRINT](命题/强化降压SPRINT.en.md) (`ev-070` SPRINT trial, abstract checked); **the subject's first cardiovascular proposition**, broadening beyond the earlier four that were all respiratory/critical-care | ev-070 registered; topic selected against the subject boundary | @hpleapfrog |
-| 2026-10-14 | added [疑似鼠疫不等确诊即治疗](命题/疑似鼠疫不等确诊即治疗.en.md) (`ev-071` WHO manual, `ev-072` CDC emergency guidance, `ev-073` CDC MMWR recommendation report - all checked at abstract level); originating question: "when plague comes back, what is needed?"; **the discipline's 6th proposition and its first one led by guideline text rather than trials** | `ev-071` · `ev-072` · `ev-073` registered, then topic selected within the discipline boundary | @hpleapfrog |
+| 2026-10-12 | added [OSA PAP titration](命题/睡眠呼吸暂停PAP调定.en.md) (`ev-049` guideline full-text check + `ev-050` multicenter RCT); **boundary corrected to three layers**: guideline-prescribed operating parameters may be held, with source, population limit, and disclaimer | user asked "how should the ventilator be adjusted in sleep apnea syndrome" and requested "provide sourced clinical operating guidance + references + disclaimer" | @hpleapfrog |
+| 2026-10-13 | added [Covid-19 dexamethasone by respiratory-support level](命题/COVID地塞米松按呼吸支持水平分层.en.md) (`ev-063` RECOVERY trial, PMC open-access full text checked paragraph by paragraph); **this subject's first proposition presenting "the direction of effect flips across subgroups"** | ev-063 registered; topic selected against the subject boundary after the PMC full text was checked | @hpleapfrog |
+| 2026-10-14 | added [ARDS prone positioning](命题/ARDS俯卧位通气.en.md) (`ev-069` PROSEVA trial, abstract checked); filled the "prone positioning" gap named in the body of [ARDS low-tidal-volume ventilation](命题/ARDS低潮气量通气.en.md) | ev-069 registered; topic selected against the subject boundary | @hpleapfrog |
+| 2026-10-14 | added [intensive BP lowering (SPRINT)](命题/强化降压SPRINT.en.md) (`ev-070` SPRINT trial, abstract checked); **the subject's first cardiovascular proposition**, broadening beyond the earlier four that were all respiratory/critical-care | ev-070 registered; topic selected against the subject boundary | @hpleapfrog |
+| 2026-10-14 | added [treat before confirming plague](命题/疑似鼠疫不等确诊即治疗.en.md) (`ev-071` WHO manual, `ev-072` CDC emergency guidance, `ev-073` CDC MMWR recommendation report - all checked at abstract level); originating question: "when plague comes back, what is needed?"; **the discipline's 6th proposition and its first one led by guideline text rather than trials** | `ev-071` · `ev-072` · `ev-073` registered, then topic selected within the discipline boundary | @hpleapfrog |
