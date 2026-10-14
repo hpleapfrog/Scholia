@@ -24,8 +24,9 @@
 | [对住院 COVID-19 患者，地塞米松按随机化时的呼吸支持水平分层：对需通气或吸氧者降低 28 天死亡率，对不需呼吸支持者未见获益且结果与可能有害一致](命题/COVID地塞米松按呼吸支持水平分层.en.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
 | [对重度 ARDS 患者，早期俯卧位通气降低死亡率](命题/ARDS俯卧位通气.en.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
 | [对高心血管风险（无糖尿病）成人，强化降压降低主要心血管事件与全因死亡，但增加部分不良事件](命题/强化降压SPRINT.en.md) | 命题 | 暂定确认 | **高（随机对照试验）** |
+| [对疑似鼠疫，WHO/CDC 指南规定不等确诊即开始治疗，并明确用药、隔离与接触者预防的时限](命题/疑似鼠疫不等确诊即治疗.en.md) | 命题 | 暂定确认 | **高（指南原文）** |
 
-**5 entries.** Evidence: `ev-048` `ev-049` `ev-050` `ev-063` `ev-069` `ev-070`.
+**6 entries.** Evidence: `ev-048` `ev-049` `ev-050` `ev-063` `ev-069` `ev-070` `ev-071` `ev-072` `ev-073`.
 
 > [!NOTE]
 > **From 2026-10-13, this subject holds its first proposition presenting "the direction of effect flips across subgroups".**
@@ -124,3 +125,4 @@ With "how to adjust" removed, what remains is **exactly what the repo is best at
 | 2026-10-13 | added [COVID 地塞米松按呼吸支持水平分层](命题/COVID地塞米松按呼吸支持水平分层.en.md) (`ev-063` RECOVERY trial, PMC open-access full text checked paragraph by paragraph); **this subject's first proposition presenting "the direction of effect flips across subgroups"** | ev-063 registered; topic selected against the subject boundary after the PMC full text was checked | @hpleapfrog |
 | 2026-10-14 | added [ARDS 俯卧位通气](命题/ARDS俯卧位通气.en.md) (`ev-069` PROSEVA trial, abstract checked); filled the "prone positioning" gap named in the body of [ARDS 低潮气量通气](命题/ARDS低潮气量通气.en.md) | ev-069 registered; topic selected against the subject boundary | @hpleapfrog |
 | 2026-10-14 | added [强化降压 SPRINT](命题/强化降压SPRINT.en.md) (`ev-070` SPRINT trial, abstract checked); **the subject's first cardiovascular proposition**, broadening beyond the earlier four that were all respiratory/critical-care | ev-070 registered; topic selected against the subject boundary | @hpleapfrog |
+| 2026-10-14 | added [疑似鼠疫不等确诊即治疗](命题/疑似鼠疫不等确诊即治疗.en.md) (`ev-071` WHO manual, `ev-072` CDC emergency guidance, `ev-073` CDC MMWR recommendation report - all checked at abstract level); originating question: "when plague comes back, what is needed?"; **the discipline's 6th proposition and its first one led by guideline text rather than trials** | `ev-071` · `ev-072` · `ev-073` registered, then topic selected within the discipline boundary | @hpleapfrog |

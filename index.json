@@ -46,9 +46,9 @@
     "已封存": "archived"
   },
   "统计": {
-    "对象总数": 138,
+    "对象总数": 139,
     "按类型": {
-      "命题": 53,
+      "命题": 54,
       "教法": 45,
       "知识点": 23,
       "误解": 8,
@@ -58,13 +58,13 @@
     "按状态": {
       "失据": 2,
       "待审": 13,
-      "暂定确认": 37,
+      "暂定确认": 38,
       "有效": 83,
       "需复审": 3
     },
     "按学科": {
       "交通": 4,
-      "医学": 5,
+      "医学": 6,
       "地理": 6,
       "法律": 4,
       "物理": 86,
@@ -75,7 +75,7 @@
     },
     "已确证条数": 0,
     "事件条数": 1,
-    "证据条数": 63,
+    "证据条数": 66,
     "作废证据条数": 5
   },
   "known_limits": {
@@ -86,7 +86,7 @@
         "说明": "道路交通与轨道交通：只收**官方文件**能核验的结论，不收办事流程。"
       },
       "医学": {
-        "条数": 5,
+        "条数": 6,
         "说明": "本学科尚无覆盖说明 —— **不要假设它覆盖了什么**，请看 objects。"
       },
       "地理": {
@@ -814,6 +814,39 @@
       "许可": "外部文献 · **仅引用摘要与结论，不转载全文**",
       "作废": false,
       "引用处": "强化降压（SPRINT）"
+    },
+    "ev-071": {
+      "类别": "指南",
+      "等级": "高",
+      "核验深度": "摘要",
+      "定位": "世界卫生组织（WHO）《*Manual for plague surveillance, diagnosis, prevention and control*》，**2024-09-25 发布**，ISBN 978-92-4-009042-2，who.int（**本库经检索读取关键段落原文**：F1RDT 一线、疑似即治不依赖阳性检测、氟喹诺酮一线；**手册共 92 页，本库未通读全文**）",
+      "链接": "https://www.who.int/publications/i/item/9789240090422",
+      "时间": "2024",
+      "许可": "官方公开发布 · **仅引用短句与结论，不转载全文**",
+      "作废": false,
+      "引用处": "鼠疫不等确诊即治疗"
+    },
+    "ev-072": {
+      "类别": "指南",
+      "等级": "高",
+      "核验深度": "摘要",
+      "定位": "美国疾病控制与预防中心（CDC）《*Guidance for Responding to a Plague Bioterrorism Event*》，cdc.gov（**本库经检索读取关键段落原文**：24 小时内给药、10–14 天、飞沫隔离 48 小时、接触者 7 天预防；**CDC 页面对本库直接抓取返回 403，未通读全文**）",
+      "链接": "https://www.cdc.gov/plague/hcp/emergency-guidance/index.html",
+      "时间": "2021",
+      "许可": "官方公开发布 · **仅引用短句与结论，不转载全文**",
+      "作废": false,
+      "引用处": "鼠疫不等确诊即治疗"
+    },
+    "ev-073": {
+      "类别": "指南",
+      "等级": "高",
+      "核验深度": "摘要",
+      "定位": "Nelson CA, Kessel SM, Staley D, et al. *Antimicrobial Treatment and Prophylaxis of Plague: Recommendations for Naturally Acquired Infections and Bioterrorism Response.* **MMWR Recomm Rep. 2021;70(3):1-11.** **PMID 34264565** · CDC 官方 PDF（**本库经检索读取关键段落原文**：FDA 批准药物清单；**PDF 对本库直接抓取返回 403，未通读全文**）",
+      "链接": "https://pubmed.ncbi.nlm.nih.gov/34264565/",
+      "时间": "2021",
+      "许可": "官方公开发布 · **仅引用短句与结论，不转载全文**",
+      "作废": false,
+      "引用处": "鼠疫不等确诊即治疗"
     }
   },
   "objects": [
@@ -1009,6 +1042,35 @@
       ],
       "来源": [
         "ev-070：SPRINT Research Group. *A Randomized Trial of Intensive versus Standard Blood-Pressure Control.* **N Engl J Med. 2015 Nov 26;373(22):2103-16.** **PMID 26551272** · **DOI 10.1056/NEJMoa1511939** · **PMC 4689591**（开放获取；**本库只读了摘要**：`陈述` 只写摘要给出的风险比、P 值与 1 年时平均收缩压）"
+      ],
+      "先修": [],
+      "论证": [
+        "a1",
+        "a2"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=暂定确认"
+    },
+    {
+      "id": "kb:med:prop-plague-treat-on-suspicion",
+      "type": "命题",
+      "title": "对疑似鼠疫，WHO/CDC 指南规定不等确诊即开始治疗，并明确用药、隔离与接触者预防的时限",
+      "status": "暂定确认",
+      "path": "knowledge/医学/命题/疑似鼠疫不等确诊即治疗.md",
+      "学科": "医学 · 临床指南",
+      "学段": "不限",
+      "适用": "疑似或确诊鼠疫（腺鼠疫、肺鼠疫、败血症型）患者的临床处置，及其接触者的预防",
+      "条件": "\"**仅记录 WHO/CDC 指南原文的规定**；**不是针对任何具体病人的操作指导**，见下方免责\"",
+      "免责块在正文最前": true,
+      "证据": [
+        "ev-071",
+        "ev-072",
+        "ev-073"
+      ],
+      "来源": [
+        "ev-071：世界卫生组织（WHO）《*Manual for plague surveillance, diagnosis, prevention and control*》，**2024-09-25 发布**，ISBN 978-92-4-009042-2，who.int（**本库经检索读取关键段落原文**：F1RDT 一线、疑似即治不依赖阳性检测、氟喹诺酮一线；**手册共 92 页，本库未通读全文**）",
+        "ev-072：美国疾病控制与预防中心（CDC）《*Guidance for Responding to a Plague Bioterrorism Event*》，cdc.gov（**本库经检索读取关键段落原文**：24 小时内给药、10–14 天、飞沫隔离 48 小时、接触者 7 天预防；**CDC 页面对本库直接抓取返回 403，未通读全文**）",
+        "ev-073：Nelson CA, Kessel SM, Staley D, et al. *Antimicrobial Treatment and Prophylaxis of Plague: Recommendations for Naturally Acquired Infections and Bioterrorism Response.* **MMWR Recomm Rep. 2021;70(3):1-11.** **PMID 34264565** · CDC 官方 PDF（**本库经检索读取关键段落原文**：FDA 批准药物清单；**PDF 对本库直接抓取返回 403，未通读全文**）"
       ],
       "先修": [],
       "论证": [
