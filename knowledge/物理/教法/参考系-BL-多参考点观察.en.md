@@ -2,7 +2,7 @@
 id: kb:physics:method-frame-bl-multi-viewpoint
 type: 教法
 title: "Reference frame · below grade level: observing from multiple reference points side by side"
-knowledge_point: ["[Reference frame](../知识点/参考系.md)"]
+knowledge_point: ["[Reference frame](../知识点/参考系.en.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
@@ -15,7 +15,7 @@ scope:
   条件: manipulable physical objects are at hand
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
 evidence: [ev-021]
 license: CC-BY-SA-4.0

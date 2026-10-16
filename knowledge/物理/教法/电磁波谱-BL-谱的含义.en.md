@@ -14,9 +14,9 @@ scope:
   条件: frequency, wavelength and amplitude need to be reviewed first
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Electromagnetic spectrum](../知识点/电磁波谱.md)"]
+knowledge_point: ["[Electromagnetic spectrum](../知识点/电磁波谱.en.md)"]
 evidence: [ev-030]
 license: CC-BY-SA-4.0
 ---

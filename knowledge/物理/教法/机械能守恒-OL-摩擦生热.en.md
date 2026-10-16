@@ -14,9 +14,9 @@ scope:
   条件: none
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Conservation of mechanical energy](../知识点/机械能守恒.md)"]
+knowledge_point: ["[Conservation of mechanical energy](../知识点/机械能守恒.en.md)"]
 evidence: [ev-028]
 license: CC-BY-SA-4.0
 ---

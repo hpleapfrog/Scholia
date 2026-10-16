@@ -1,6 +1,6 @@
 # Evidence: a few incidents and inferences
 
-> Policy and index: [`evidence/README.md`](../../evidence/README.md).
+> Policy and index: [`evidence/README.md`](../../evidence/README.en.md).
 > This file holds only the **full account of the incidents and inferences** — the rules stay in evidence/README, the reasons stay here (**moved, not deleted**).
 
 ## I. The locator must be verifiable: the section numbers were invented

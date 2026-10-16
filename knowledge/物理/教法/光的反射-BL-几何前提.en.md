@@ -14,9 +14,9 @@ scope:
   条件: students have learned the concept of an angle
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Reflection of light](../知识点/光的反射.md)"]
+knowledge_point: ["[Reflection of light](../知识点/光的反射.en.md)"]
 evidence: [ev-026]
 license: CC-BY-SA-4.0
 ---

@@ -2,7 +2,7 @@
 id: kb:physics:method-speed-al-socratic
 type: 教法
 title: "Speed and velocity · Advanced: Socratic questioning + a counterexample on average speed"
-knowledge_point: ["[Speed and velocity](../知识点/速度与速率.md)"]
+knowledge_point: ["[Speed and velocity](../知识点/速度与速率.en.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
@@ -15,7 +15,7 @@ scope:
   条件: students are willing to guess first and then check
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
 evidence: [ev-022]
 license: CC-BY-SA-4.0

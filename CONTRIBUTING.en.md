@@ -2,7 +2,7 @@
 
 > 中文 → [**CONTRIBUTING.md**](CONTRIBUTING.md)
 
-> Read [README](README.md) and [FORMAT.md](FORMAT.md) first.
+> Read [README](README.en.md) and [FORMAT.md](FORMAT.en.md) first.
 
 ---
 
@@ -10,12 +10,12 @@
 
 | Layer | File | Answers | Enforced by |
 |---|---|---|---|
-| Entry | [README](README.md) | what this is, who it's for | people |
-| Spec | [FORMAT.md](FORMAT.md) | how to write a file, how status is set | `kbcheck.py` |
-| Evidence | [evidence/README.md](evidence/README.md) | what may be cited, grades & licenses | `kbcheck.py` |
+| Entry | [README](README.en.md) | what this is, who it's for | people |
+| Spec | [FORMAT.md](FORMAT.en.md) | how to write a file, how status is set | `kbcheck.py` |
+| Evidence | [evidence/README.md](evidence/README.en.md) | what may be cited, grades & licenses | `kbcheck.py` |
 | Process | this file + `.github/` templates | how to submit, who may change status | template checkboxes · people |
-| Decisions | [`docs/decisions/`](docs/decisions/README.md) | **why** a rule is set this way (cases · incidents · inferences) | people (append-only) |
-| Rule registry | [`docs/RULES.md`](docs/RULES.md) (**generated**) | which rules exist, mechanical or manual | `--write-index` |
+| Decisions | [`docs/decisions/`](docs/decisions/README.en.md) | **why** a rule is set this way (cases · incidents · inferences) | people (append-only) |
+| Rule registry | [`docs/RULES.md`](docs/RULES.en.md) (**generated**) | which rules exist, mechanical or manual | `--write-index` |
 | AI contract | [llms.txt](llms.txt) + [index.json](index.json) (**generated**) | how machines read and cite | `--write-index` |
 | Enforcement | [tools/kbcheck.py](tools/kbcheck.py) | violate → fail | local / CI |
 
@@ -66,7 +66,7 @@ git push origin fix/ohm-law-temperature
 # then open a PR on GitHub
 ```
 
-Format rules: see [FORMAT.md](FORMAT.md). Four key points:
+Format rules: see [FORMAT.md](FORMAT.en.md). Four key points:
 
 1. **One concept = one `.md` file** (don't merge or split)
 2. **Never write the same fact twice**
@@ -109,7 +109,7 @@ conditional and transfer poorly. Don't impose medical standards here.
 
 ### Rules (dead)
 
-See [FORMAT.md §6](FORMAT.md). The core asymmetry:
+See [FORMAT.md §6](FORMAT.en.md). The core asymmetry:
 
 > **Make "disputed" easy and "confirmed" hard.**
 
@@ -213,8 +213,8 @@ triage and **don't affect conclusions**. (`triage:*` / `type:*` must exist in Se
 - [ ] I ran `python tools/kbcheck.py` and it **passes**
 - [ ] I changed only what needed changing, without reformatting others' content
 - [ ] `front-matter` has all 11 fields
-- [ ] Every piece of evidence has a verifiable locator, is registered in the [evidence index](evidence/README.md), and states its **verification depth** (full text / abstract / locator-only)
-- [ ] New evidence passed the **three source questions** (see the [evidence threshold](evidence/README.md)): **who publishes it** (an accountable body) · **which version and when it took effect** (the entry scopes itself in `scope.条件` and claims only that version) · **was it made up for this citation** (it exists for reasons independent of the claim, with a second source at a different publishing body) —
+- [ ] Every piece of evidence has a verifiable locator, is registered in the [evidence index](evidence/README.en.md), and states its **verification depth** (full text / abstract / locator-only)
+- [ ] New evidence passed the **three source questions** (see the [evidence threshold](evidence/README.en.md)): **who publishes it** (an accountable body) · **which version and when it took effect** (the entry scopes itself in `scope.条件` and claims only that version) · **was it made up for this citation** (it exists for reasons independent of the claim, with a second source at a different publishing body) —
       self-built sites, attribution-free repost pages and identifiers that don't resolve are **not registered**; several same-origin reposts **do not count as independent corroboration**
 - [ ] A new `知识点`'s first body line is `> [!TIP]` (what you'll be able to do)
 - [ ] A new method filled in **水平档** (BL / OL / AL, or `不分档` for cross-level)

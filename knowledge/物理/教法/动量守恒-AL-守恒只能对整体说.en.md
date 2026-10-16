@@ -14,9 +14,9 @@ scope:
   条件: the definition of momentum has already been taught
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Conservation of momentum](../知识点/动量守恒定律.md)"]
+knowledge_point: ["[Conservation of momentum](../知识点/动量守恒定律.en.md)"]
 evidence: [ev-046]
 license: CC-BY-SA-4.0
 ---

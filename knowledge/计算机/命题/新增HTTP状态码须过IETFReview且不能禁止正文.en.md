@@ -66,7 +66,7 @@ That is: **even after registration, clients are not obliged to treat a new code 
 - **Claim**: to add a number to the HTTP status-code namespace, **you must pass IETF Review**; this is not "registration is recommended" but a requirement the specification writes in **MUST** and **require**
 - **Premise**: §16.2.1 states "A registration **MUST** include…" and "Values … **require** IETF Review" (ev-054)
 - **Reasoning**:
-  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.md) discipline collects
+  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.en.md) discipline collects
   2. The registry's line "Registration procedure: IETF Review" **is not the registry's own rule**; it **quotes RFC 9110 §16.2.1** — the two are one requirement, not two independent gates
   3. This also explains why `104` went through the **temporary** registration path: it did not pass IETF Review, so it carries an `expires` date (see [The complete list of HTTP status codes lives in the IANA registry, not in RFC 9110](HTTP状态码的完整清单在IANA注册表不在RFC9110里.en.md))
 - **Evidence**: ev-054

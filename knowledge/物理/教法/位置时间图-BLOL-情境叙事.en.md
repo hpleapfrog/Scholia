@@ -2,7 +2,7 @@
 id: kb:physics:method-ptgraph-bl-ol-narrative
 type: 教法
 title: "Position-time graph · below / at grade level: situational narrative → students draw the graph"
-knowledge_point: ["[Position-time graph](../知识点/位置-时间图.md)"]
+knowledge_point: ["[Position-time graph](../知识点/位置-时间图.en.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
@@ -15,7 +15,7 @@ scope:
   条件: there is a concrete, imaginable motion scenario
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
 evidence: [ev-023]
 license: CC-BY-SA-4.0

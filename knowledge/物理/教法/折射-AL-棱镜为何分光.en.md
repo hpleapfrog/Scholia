@@ -14,9 +14,9 @@ scope:
   条件: can already compute with sine / arcsine
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[refraction of light](../知识点/光的折射.md)"]
+knowledge_point: ["[refraction of light](../知识点/光的折射.en.md)"]
 evidence: [ev-038]
 license: CC-BY-SA-4.0
 ---

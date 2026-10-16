@@ -14,9 +14,9 @@ scope:
   条件: has already studied [conservation of mechanical energy]
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Conservation of momentum](../知识点/动量守恒定律.md)"]
+knowledge_point: ["[Conservation of momentum](../知识点/动量守恒定律.en.md)"]
 evidence: [ev-046]
 license: CC-BY-SA-4.0
 ---
@@ -33,7 +33,7 @@ The textbook's `[OL]` hint for this section **is one sentence long, and it teach
 ### Why it is done "before reading"
 
 **Before students read this section, they have already met "conservation"** — this very repo has a
-[Conservation of mechanical energy](../知识点/机械能守恒.md) node, earlier in this chapter.
+[Conservation of mechanical energy](../知识点/机械能守恒.en.md) node, earlier in this chapter.
 
 **What the textbook wants is to call the old word back out, not to give a new definition.** The order is:
 
@@ -57,7 +57,7 @@ it assumes students **can state the meaning from the two or three examples they 
 | Dimension | Value |
 |---|---|
 | Level tier | **OL** (textbook tag `[OL]`) |
-| Prerequisites | **has already studied at least one other conservation law** (this repo has [Conservation of mechanical energy](../知识点/机械能守恒.md)) |
+| Prerequisites | **has already studied at least one other conservation law** (this repo has [Conservation of mechanical energy](../知识点/机械能守恒.en.md)) |
 | Duration | 3–5 minutes, **must be before reading the main text** |
 | Cognitive load | low — **it introduces nothing new** |
 

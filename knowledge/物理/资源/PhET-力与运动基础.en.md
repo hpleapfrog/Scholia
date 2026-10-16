@@ -31,7 +31,7 @@ license: CC-BY-SA-4.0
 | Entry inside the textbook | `https://openstax.org/l/forcesandmotion` (short link, verified to resolve to the direct link above) |
 | Textbook source | OpenStax《Physics》 Chapter 4 · Newton's First Law: Inertia, module [m54138](https://github.com/openstax/osbooks-physics/blob/main/modules/m54138/index.cnxml) |
 | Runs | in the browser, **no installation** |
-| Belongs to | [惯性](../知识点/惯性.md) |
+| Belongs to | [惯性](../知识点/惯性.en.md) |
 
 ### License (**important**)
 
@@ -84,7 +84,7 @@ Drag the applied force's magnitude, observe **the friction arrow change with the
 > [!TIP]
 > **Screen 2 maps directly onto a repo misconception.**
 >
-> The crux of [objects in motion naturally slow down](../误解/运动物体自然慢下来.md) is:
+> The crux of [objects in motion naturally slow down](../误解/运动物体自然慢下来.en.md) is:
 > students **treat friction's effect as a property of the object itself**.
 >
 > This simulation lets students **treat friction as a quantity you can turn up and down**, not a background condition —

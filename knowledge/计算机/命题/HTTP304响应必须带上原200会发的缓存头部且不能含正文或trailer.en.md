@@ -70,7 +70,7 @@ The closing paragraph of the same section (short quote):
 - **Claim**: a server generating a 304 **MUST** carry the headers `Content-Location`, `Date`, `ETag`, `Vary`, `Cache-Control` and `Expires` that a 200 would have sent
 - **Premise**: §15.4.5 states "**MUST** generate any of the following header fields" (ev-054)
 - **Reasoning**:
-  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.md) discipline collects
+  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.en.md) discipline collects
   2. **MUST is the strongest requirement level in RFC 2119** — this is not "it is recommended to include them" but "omitting them is a violation of the specification"
   3. Practical consequence: **a 304 without `ETag` or `Cache-Control` leaves the client unable to tell how long the cache stays valid** — that is the implementation violating the specification
   4. The specification also imposes the **opposite** constraint (SHOULD NOT): beyond that list and fields that "guide cache updates", **nothing else should be sent** — **the design goal of 304 is to minimise what is transferred**

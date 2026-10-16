@@ -17,7 +17,7 @@ The adversarial task was dispatched with:
 > what you attack is 'even so, does the conclusion hold'."
 
 **Result**: one adversarial review accurately pointed out that a piece of evidence had **insufficient resolution**, but **did not discover it was not a measurement at all** —
-because **the task excluded truth verification**. (See the `ev-002` section in [`evidence/README.md`](../../evidence/README.md).)
+because **the task excluded truth verification**. (See the `ev-002` section in [`evidence/README.md`](../../evidence/README.en.md).)
 
 **A logic attack and truth verification are not the same thing.** The former is cheap, but that is no reason to skip the latter.
 So the dispatch template must now contain "**before attacking the logic, first question the evidence itself**".

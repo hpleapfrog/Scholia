@@ -14,9 +14,9 @@ scope:
   条件: none
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Refraction of light](../知识点/光的折射.md)"]
+knowledge_point: ["[Refraction of light](../知识点/光的折射.en.md)"]
 evidence: [ev-038]
 license: CC-BY-SA-4.0
 ---
@@ -44,7 +44,7 @@ The textbook singles this out and denies it.
 > | **Refraction (m54365)** | `An angle is the measure of the separation of two lines or rays originating from a single point` |
 >
 > **The textbook told the same thing once in each of two places.** This is evidence that "the geometric angle" is a **real and recurring prerequisite**
-> (and also evidence that this repo lacks that node, see [refraction of light](../知识点/光的折射.md)).
+> (and also evidence that this repo lacks that node, see [refraction of light](../知识点/光的折射.en.md)).
 
 ### 2 · `n > 1` must be **derived**, not memorized
 

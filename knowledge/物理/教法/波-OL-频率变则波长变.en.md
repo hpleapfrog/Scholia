@@ -14,9 +14,9 @@ scope:
   条件: "`v = f λ` must already be established"
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Waves](../知识点/波.md)"]
+knowledge_point: ["[Waves](../知识点/波.en.md)"]
 evidence: [ev-034]
 license: CC-BY-SA-4.0
 ---
@@ -78,7 +78,7 @@ The same section's `[BL]` also gives a correspondence set for sound (tagged by t
 | "a change in frequency means a change in wavelength" generalized to **changing the medium** | the premise of that sentence is **the same medium** (`in air`). Change the medium and the wave speed changes too, so the conclusion does not apply |
 | students treat both f and λ as independent variables | this is exactly what must be prevented. **It must be stressed that v is determined by the medium**, otherwise the formula is just a pile of letters |
 | the tweeter example taken with the causal arrow reversed | it is not "the wavelength is short so a small cone must be used", but **a small cone suits reproducing short wavelengths**. Reverse the direction and it becomes a strange physics conclusion |
-| confusion with "the speed of sound does not depend on frequency" | this knowledge point is about **the speed of sound being independent of frequency** (within the same medium), which is exactly what [Speed of sound and frequency](../知识点/声速与频率.md) covers. **The two must be consistent** |
+| confusion with "the speed of sound does not depend on frequency" | this knowledge point is about **the speed of sound being independent of frequency** (within the same medium), which is exactly what [Speed of sound and frequency](../知识点/声速与频率.en.md) covers. **The two must be consistent** |
 
 ## Evidence
 

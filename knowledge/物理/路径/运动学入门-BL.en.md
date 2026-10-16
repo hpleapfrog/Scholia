@@ -31,10 +31,10 @@ license: CC-BY-SA-4.0
 
 | # | Step | Entry | Covers | Time |
 |---|---|---|---|---|
-| 1 | Establish a reference frame | [参考系 · BL：多参考点观察](../教法/参考系-BL-多参考点观察.md) | o1 | 15 min |
-| 2 | **Diagnose**: is a frame "the background"? | [误解：参考系当成背景](../误解/参考系当成背景.md) | o1 | 5 min |
-| 3 | Everyday usage of speed vs velocity | [速度与速率 · BL/OL：日常用语切入](../教法/速度与速率-BLOL-日常用语切入.md) | o2 | 15 min |
-| 4 | From situation to position-time graph | [位置-时间图 · BL/OL：情境叙事](../教法/位置时间图-BLOL-情境叙事.md) | o3, o4 | 20 min |
+| 1 | Establish a reference frame | [参考系 · BL：多参考点观察](../教法/参考系-BL-多参考点观察.en.md) | o1 | 15 min |
+| 2 | **Diagnose**: is a frame "the background"? | [误解：参考系当成背景](../误解/参考系当成背景.en.md) | o1 | 5 min |
+| 3 | Everyday usage of speed vs velocity | [速度与速率 · BL/OL：日常用语切入](../教法/速度与速率-BLOL-日常用语切入.en.md) | o2 | 15 min |
+| 4 | From situation to position-time graph | [位置-时间图 · BL/OL：情境叙事](../教法/位置时间图-BLOL-情境叙事.en.md) | o3, o4 | 20 min |
 
 **Total 55 min.**
 
@@ -116,9 +116,9 @@ After splitting `禁忌` from `风险`, this item went **from "cannot fill" to "
 
 | Teaching method used by the path | Its `禁忌`'s marked inapplicable audience | Hits the BL profile? |
 |---|---|---|
-| [参考系 · BL](../教法/参考系-BL-多参考点观察.md) | students outside this level (**weak**) | ❌ not hit |
-| [速度与速率 · BL/OL](../教法/速度与速率-BLOL-日常用语切入.md) | students outside this level (**weak**) | ❌ not hit |
-| [位置-时间图 · BL/OL](../教法/位置时间图-BLOL-情境叙事.md) | students outside this level (**weak**) | ❌ not hit |
+| [参考系 · BL](../教法/参考系-BL-多参考点观察.en.md) | students outside this level (**weak**) | ❌ not hit |
+| [速度与速率 · BL/OL](../教法/速度与速率-BLOL-日常用语切入.en.md) | students outside this level (**weak**) | ❌ not hit |
+| [位置-时间图 · BL/OL](../教法/位置时间图-BLOL-情境叙事.en.md) | students outside this level (**weak**) | ❌ not hit |
 
 **Conclusion: no 禁忌 conflict.**
 

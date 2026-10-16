@@ -2,7 +2,7 @@
 
 > **中文: [events-are-not-propositions.md](events-are-not-propositions.md)**
 
-**The rule lives in [FORMAT.md §4 "事件"](../../FORMAT.md)**; this file records the **why**.
+**The rule lives in [FORMAT.md §4 "事件"](../../FORMAT.en.md)**; this file records the **why**.
 
 ## Origin
 
@@ -57,7 +57,7 @@ Filing one under a subject would force it to pick a side and detach it from the 
 - carrying `edges` → fails
 - `id` prefix not `kb:event:` → fails
 
-Samples are verified in a **temp copy**, not committed (see [CONTRIBUTING "rule admission threshold"](../../CONTRIBUTING.md)).
+Samples are verified in a **temp copy**, not committed (see [CONTRIBUTING "rule admission threshold"](../../CONTRIBUTING.en.md)).
 
 ## Unavoidable costs
 

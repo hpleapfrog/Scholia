@@ -14,9 +14,9 @@ scope:
   条件: already introduced to vectors and their representation
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[force (high school)](../知识点/力-高中.md)"]
+knowledge_point: ["[force (high school)](../知识点/力-高中.en.md)"]
 evidence: [ev-041]
 license: CC-BY-SA-4.0
 ---

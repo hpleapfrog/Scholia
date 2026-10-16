@@ -12,7 +12,7 @@
 >
 > So events live **top-level**, **do not enter `index.json`'s `objects`**, are not counted in the
 > object total, and have **no `## 论证` section and no `先修`/`支持`/`攻击` edges**.
-> Rules: [FORMAT.md §4 "事件"](../FORMAT.md).
+> Rules: [FORMAT.md §4 "事件"](../FORMAT.en.md).
 
 ## Index
 
@@ -38,7 +38,7 @@ An event's status answers one question only: **is this record still being update
 ## Maintenance protocol (on each new development)
 
 1. **Add a row** to the timeline in `陈述`
-2. If it is a new source, add a row to the `依据` table and to [`evidence/README.md`](../evidence/README.md)
+2. If it is a new source, add a row to the `依据` table and to [`evidence/README.md`](../evidence/README.en.md)
 3. Add a `变更记录` row
 4. Set `updated:` to today; keep `status` at `持续更新`
 5. Run `python tools/kbcheck.py --write-index` (updates `index.json`)
