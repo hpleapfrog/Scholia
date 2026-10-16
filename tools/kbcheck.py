@@ -461,8 +461,12 @@ ARG_ID = re.compile(r"^###\s+([A-Z]+\d+)\s*[·:：]", re.M)
 
 
 def arg_ids(text):
-    """取条目 `## 论证` 下的论证 ID 集合（小写）。"""
-    body = section_body(text, "论证")
+    """取条目 `## 论证` 下的论证 ID 集合（小写）。
+
+    英文译本用 `## Argument`（.en.md 不受 `REQUIRED_SECTIONS` 约束，章节名是英文），
+    这里一并认——否则指向 .en.md 的 `#a1` 类锚点会误报「锚点不存在」。
+    """
+    body = section_body(text, "论证") or section_body(text, "Argument")
     return {x.lower() for x in ARG_ID.findall(body or "")}
 
 
@@ -1108,6 +1112,7 @@ MECH_RULES = [
     ("R-EVENT-01", "`事件` 单开顶层 `events/`，与 `objects` **分开**：`type`=事件、`status` 只用持续更新/已封存、必填段 陈述/依据/变更记录、**无论证、无任何边**、`id` 前缀 `kb:event:`、`evidence` 非空；且每个事件须登记在 `events/README.md`"),
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
+    ("R-LINK-03", "`.en.md` 的站内链接指向同名 `.en.md` 正本（该正本存在时）；例外：`English version of` 行、以及指向本文件自己的 `.md`"),
     ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
     ("R-GRAPH-02", "`支持` / `攻击` 边的论证锚点存在"),
     ("R-GRAPH-03", "`路径` 每个成果至少被一个环节覆盖（未声明 outcomes 给警告）"),
@@ -1154,6 +1159,7 @@ MECH_RULES_EN = [
     ("R-EVENT-01", "`事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md`"),
     ("R-LINK-01", "link targets exist (relative · repo-absolute · YAML `url:`)"),
     ("R-LINK-02", "anchors exist (heading slug or argument id)"),
+    ("R-LINK-03", "links inside a `.en.md` point at the same-named `.en.md` original (when it exists); exempt: `English version of` lines and pointers to the file's own `.md`"),
     ("R-GRAPH-01", "`先修` connects only 知识点, acyclic"),
     ("R-GRAPH-02", "`支持` / `攻击` edge argument anchors exist"),
     ("R-GRAPH-03", "`路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning)"),
@@ -1422,6 +1428,12 @@ def check_all():
         # YAML 里的 `url:`（Issue 模板的 contact_links 用过）也要查——
         # 它同样指向本仓库，改标题一样会改坏它。
         links += [(u, u) for u in re.findall(r"^\s*url:\s*(\S+)", text, re.M)]
+        # R-LINK-03 的豁免：`English version of …` 行是有意指向中文正本的约定行
+        en_pointer = set()
+        for _ln in prose.splitlines():
+            if "English version of" in _ln:
+                en_pointer.update(t for _, t in
+                                  re.findall(r"\[([^\]]*)\]\(([^)]+)\)", _ln))
         for label, target in links:
             if target.startswith("mailto:"):
                 continue
@@ -1448,6 +1460,17 @@ def check_all():
                             f"{rel}: 链接目标不存在 -> [{label}]({target})")
                         continue
                     target_rel = os.path.relpath(cand, ROOT).replace(os.sep, "/")
+            # R-LINK-03：英文文档的站内链接应落在英文正本上
+            if rel.endswith(".en.md") and target_rel.endswith(".md") \
+                    and not target_rel.endswith(".en.md") \
+                    and target not in en_pointer \
+                    and target_rel != rel[:-6] + ".md" \
+                    and (ROOT / (target_rel[:-3] + ".en.md")).exists():
+                alt_rel = target_rel[:-3] + ".en.md"
+                errors.append(
+                    f"{rel}: R-LINK-03 英文文档链接指向了中文正本 -> "
+                    f"[{label}]({target}) 应为 {alt_rel}"
+                    "（确需指向中文正本时，把该链接写在 `English version of` 行里）")
             if anchor and target_rel.endswith(".md") \
                     and not anchor_ok(target_rel, anchor):
                 errors.append(f"{rel}: 锚点不存在 -> [{label}]({target})")

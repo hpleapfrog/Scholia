@@ -55,7 +55,7 @@ Both concern a method being rejected, but **the responsible party differs** — 
 - **Claim**: when an origin server generates a 405 response, it **MUST** generate an `Allow` header, and that header **MUST** list the methods the target resource currently supports
 - **Premise**: §15.5.6 states "The origin server **MUST** generate an **Allow** header field" (ev-054)
 - **Reasoning**:
-  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.md) discipline collects
+  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.en.md) discipline collects
   2. **MUST is the strongest requirement level in RFC 2119** (see [MUST / SHOULD / MAY in an RFC carry normative meaning only when written in all capitals](RFC要求关键词只有全大写才成立.en.md)) — this is not "it is recommended to include it" but "omitting it is a violation of the specification"
   3. Practical consequence: **many servers return 405 without `Allow`**, leaving the client **no way to learn which methods the resource does support** — that is the implementation violating the specification, not the specification permitting the omission
 - **Evidence**: ev-054

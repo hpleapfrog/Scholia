@@ -14,9 +14,9 @@ scope:
   条件: already introduced to the distinction between vectors and scalars
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[acceleration](../知识点/加速度.md)"]
+knowledge_point: ["[acceleration](../知识点/加速度.en.md)"]
 evidence: [ev-039]
 license: CC-BY-SA-4.0
 ---

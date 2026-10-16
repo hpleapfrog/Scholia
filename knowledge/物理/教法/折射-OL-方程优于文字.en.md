@@ -14,9 +14,9 @@ scope:
   条件: has already met the sine function
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Refraction of light](../知识点/光的折射.md)"]
+knowledge_point: ["[Refraction of light](../知识点/光的折射.en.md)"]
 evidence: [ev-038]
 license: CC-BY-SA-4.0
 ---
@@ -112,4 +112,4 @@ the wheels on one side enter the grass first and slow down, and the whole machin
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
-| 2026-10-05 | established the entry (#8 batch conversion · batch 4); also answered the merge question in [reflection of light](../知识点/光的反射.md) `K7` | Issue #8 | @hpleapfrog |
+| 2026-10-05 | established the entry (#8 batch conversion · batch 4); also answered the merge question in [reflection of light](../知识点/光的反射.en.md) `K7` | Issue #8 | @hpleapfrog |

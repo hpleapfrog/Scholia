@@ -14,9 +14,9 @@ scope:
   条件: has studied unit conversion; knows the concept of gravity
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Newton's second law](../知识点/牛顿第二定律.md)"]
+knowledge_point: ["[Newton's second law](../知识点/牛顿第二定律.en.md)"]
 evidence: [ev-040]
 license: CC-BY-SA-4.0
 ---
@@ -94,7 +94,7 @@ license: CC-BY-SA-4.0
 | "`a` is proportional to `F`" stated without the condition | **this is exactly the confusion the textbook names**. `a ∝ F` must hang on "`m` unchanged" |
 | weight and mass explained only once | the textbook **appears twice within the same section at the AL tier** (the confusion hint plus the astronaut follow-up), showing it expects students to confuse them |
 | solving for the three variables turning into three separate formulas | the textbook's landing point is `Ask students how the other two variables would behave if one quantity is held constant` — **the relation among the variables**, not three isolated equations |
-| also muddling `g` together with `G` | this entry handles **weight (a force) and `g` (an acceleration)**; `G` (the gravitational constant) is another matter (see [confusing G with g](../误解/混淆G与g.md)). **Teaching both together easily gets blended into one pot by students** |
+| also muddling `g` together with `G` | this entry handles **weight (a force) and `g` (an acceleration)**; `G` (the gravitational constant) is another matter (see [confusing G with g](../误解/混淆G与g.en.md)). **Teaching both together easily gets blended into one pot by students** |
 
 ## Evidence
 

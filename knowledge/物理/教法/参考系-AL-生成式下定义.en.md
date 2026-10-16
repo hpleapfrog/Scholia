@@ -2,7 +2,7 @@
 id: kb:physics:method-frame-al-generative-definition
 type: 教法
 title: "Reference frame · Advanced: let students define it themselves and check each other's definitions"
-knowledge_point: ["[reference frame](../知识点/参考系.md)"]
+knowledge_point: ["[reference frame](../知识点/参考系.en.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
@@ -15,7 +15,7 @@ scope:
   条件: conditions for peer discussion are available; the teacher only does the converging
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
 evidence: [ev-021]
 license: CC-BY-SA-4.0

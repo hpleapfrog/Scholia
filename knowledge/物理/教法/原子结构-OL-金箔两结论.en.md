@@ -14,9 +14,9 @@ scope:
   条件: none
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Atomic structure](../知识点/原子结构.md)"]
+knowledge_point: ["[Atomic structure](../知识点/原子结构.en.md)"]
 evidence: [ev-035]
 license: CC-BY-SA-4.0
 ---

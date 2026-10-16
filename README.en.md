@@ -11,7 +11,7 @@
 
 | You are | Start |
 |---|---|
-| Someone who wants to learn | [**START.md**](START.md) — topic index · how to read an entry · what's here and what's not |
+| Someone who wants to learn | [**START.md**](START.en.md) — topic index · how to read an entry · what's here and what's not |
 | **An AI agent** working in this repo | [**AGENTS.md**](AGENTS.md) — hard rules · how to edit · how to run checks |
 | **An AI / program** reading content | [**llms.txt**](llms.txt) + parse [**index.json**](index.json) — what must not be quoted, each entry's real source |
 | Wiring it into an agent | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) — zero-dependency read-only MCP server |
@@ -57,7 +57,7 @@ Not "backing up human knowledge."
 
 **One concept = one `.md` file**: `front-matter` holds what machines need, the body what
 humans need; GitHub renders it natively, and argument graphs are drawn with Mermaid.
-Full spec in [FORMAT.md](FORMAT.md); the rule registry is [docs/RULES.md](docs/RULES.md).
+Full spec in [FORMAT.md](FORMAT.en.md); the rule registry is [docs/RULES.md](docs/RULES.en.md).
 
 ```bash
 python tools/kbcheck.py     # zero-dependency, offline; run once before committing

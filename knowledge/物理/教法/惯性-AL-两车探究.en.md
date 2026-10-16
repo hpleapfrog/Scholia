@@ -14,9 +14,9 @@ scope:
   条件: two similar carts + one heavy weight
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Inertia](../知识点/惯性.md)"]
+knowledge_point: ["[Inertia](../知识点/惯性.en.md)"]
 evidence: [ev-025]
 license: CC-BY-SA-4.0
 ---

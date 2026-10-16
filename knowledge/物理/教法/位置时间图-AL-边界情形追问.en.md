@@ -2,7 +2,7 @@
 id: kb:physics:method-ptgraph-al-boundary-cases
 type: 教法
 title: "Position-time graph · Advanced: forcing the issue of idealization with boundary cases"
-knowledge_point: ["[Position-time graph](../知识点/位置-时间图.md)"]
+knowledge_point: ["[Position-time graph](../知识点/位置-时间图.en.md)"]
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
@@ -15,7 +15,7 @@ scope:
   条件: students have already analysed at least one ready-made position-time graph
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
 evidence: [ev-023]
 license: CC-BY-SA-4.0

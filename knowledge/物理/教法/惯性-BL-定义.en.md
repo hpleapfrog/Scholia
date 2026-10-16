@@ -14,9 +14,9 @@ scope:
   条件: students have already encountered Newton's first law
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Inertia](../知识点/惯性.md)"]
+knowledge_point: ["[Inertia](../知识点/惯性.en.md)"]
 evidence: [ev-025]
 license: CC-BY-SA-4.0
 ---
@@ -62,7 +62,7 @@ the later question of "what does inertia depend on" is handed to the AL tier.
 | Where it can go wrong | Why |
 |---|---|
 | giving only the name without explaining what "maintain state of motion" means | students remember the word "inertia" but cannot connect it to the first law, and the naming falls flat |
-| being taken as "the reason objects stop by themselves" | everyday experience is precisely the opposite. Without drawing the distinction, students may understand inertia as "the thing that makes objects stop" — **the direction is exactly reversed** (see [related misconception](../误解/运动物体自然慢下来.md)) |
+| being taken as "the reason objects stop by themselves" | everyday experience is precisely the opposite. Without drawing the distinction, students may understand inertia as "the thing that makes objects stop" — **the direction is exactly reversed** (see [related misconception](../误解/运动物体自然慢下来.en.md)) |
 
 ## Evidence
 

@@ -14,9 +14,9 @@ scope:
   条件: none
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[work and power](../知识点/功与功率.md)"]
+knowledge_point: ["[work and power](../知识点/功与功率.en.md)"]
 evidence: [ev-036]
 license: CC-BY-SA-4.0
 ---

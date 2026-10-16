@@ -25,7 +25,7 @@ page, which clause).
 |---|---|
 | **A student** wanting to understand a concept | find the entry in the **topic index** below, then read its `## 定义` / `## 陈述` |
 | **A teacher** looking for a way to teach it | under each concept hang several **`教法` (methods)** — different ways to teach the same concept, by audience |
-| **Someone who found an error** | go straight to [Contributing](CONTRIBUTING.md). **"You're wrong" is the most welcome thing here** |
+| **Someone who found an error** | go straight to [Contributing](CONTRIBUTING.en.md). **"You're wrong" is the most welcome thing here** |
 | **Someone who wants to reuse it** | knowledge content is [CC BY-SA 4.0](LICENSE) — **free to reuse, attribution required** |
 
 ## 2. Topic index: what to learn, click here
@@ -34,47 +34,47 @@ page, which clause).
 
 | Topic | Entries (in suggested order) |
 |---|---|
-| **Intro kinematics** | [Reference frames](knowledge/物理/知识点/参考系.md) → [Speed & velocity](knowledge/物理/知识点/速度与速率.md) → [Position–time graphs](knowledge/物理/知识点/位置-时间图.md) → [Acceleration](knowledge/物理/知识点/加速度.md) |
-| **Force & Newton's laws** | [Force (HS)](knowledge/物理/知识点/力-高中.md) → [Inertia](knowledge/物理/知识点/惯性.md) → [Newton's 2nd](knowledge/物理/知识点/牛顿第二定律.md) → [Newton's 3rd](knowledge/物理/知识点/牛顿第三定律.md) |
-| **Gravitation & the sky** | [Kepler's laws](knowledge/物理/知识点/开普勒定律.md) → [Law of universal gravitation](knowledge/物理/知识点/万有引力定律.md) |
-| **Energy** | [Work & power](knowledge/物理/知识点/功与功率.md) → [Conservation of mechanical energy](knowledge/物理/知识点/机械能守恒.md) |
-| **Waves & sound** | [Waves](knowledge/物理/知识点/波.md) → [Speed of sound & frequency](knowledge/物理/知识点/声速与频率.md) |
-| **Light** | [Reflection](knowledge/物理/知识点/光的反射.md) · [Refraction](knowledge/物理/知识点/光的折射.md) · [EM spectrum](knowledge/物理/知识点/电磁波谱.md) |
-| **Electricity** | [Resistance & Ohm's law](knowledge/物理/知识点/电阻与欧姆定律.md) |
-| **Atoms** | [Atomic structure](knowledge/物理/知识点/原子结构.md) |
-| **Middle school** | [Force & motion (MS)](knowledge/物理/知识点/力与运动-初中.md) |
+| **Intro kinematics** | [Reference frames](knowledge/物理/知识点/参考系.en.md) → [Speed & velocity](knowledge/物理/知识点/速度与速率.en.md) → [Position–time graphs](knowledge/物理/知识点/位置-时间图.en.md) → [Acceleration](knowledge/物理/知识点/加速度.en.md) |
+| **Force & Newton's laws** | [Force (HS)](knowledge/物理/知识点/力-高中.en.md) → [Inertia](knowledge/物理/知识点/惯性.en.md) → [Newton's 2nd](knowledge/物理/知识点/牛顿第二定律.en.md) → [Newton's 3rd](knowledge/物理/知识点/牛顿第三定律.en.md) |
+| **Gravitation & the sky** | [Kepler's laws](knowledge/物理/知识点/开普勒定律.en.md) → [Law of universal gravitation](knowledge/物理/知识点/万有引力定律.en.md) |
+| **Energy** | [Work & power](knowledge/物理/知识点/功与功率.en.md) → [Conservation of mechanical energy](knowledge/物理/知识点/机械能守恒.en.md) |
+| **Waves & sound** | [Waves](knowledge/物理/知识点/波.en.md) → [Speed of sound & frequency](knowledge/物理/知识点/声速与频率.en.md) |
+| **Light** | [Reflection](knowledge/物理/知识点/光的反射.en.md) · [Refraction](knowledge/物理/知识点/光的折射.en.md) · [EM spectrum](knowledge/物理/知识点/电磁波谱.en.md) |
+| **Electricity** | [Resistance & Ohm's law](knowledge/物理/知识点/电阻与欧姆定律.en.md) |
+| **Atoms** | [Atomic structure](knowledge/物理/知识点/原子结构.en.md) |
+| **Middle school** | [Force & motion (MS)](knowledge/物理/知识点/力与运动-初中.en.md) |
 
 **Common mistakes**, collected in one place (6 of them):
 
-[Current vs. electron flow](knowledge/物理/误解/电流方向与电子流向混淆.md) ·
-[Frame of reference as "background"](knowledge/物理/误解/参考系当成背景.md) ·
-[Moving objects naturally slow down](knowledge/物理/误解/运动物体自然慢下来.md) ·
-[Visible vs. invisible radiation](knowledge/物理/误解/可见光与不可见辐射有本质不同.md) ·
-[Waves push matter along](knowledge/物理/误解/波把物质一起推走.md) ·
-[Confusing G and g](knowledge/物理/误解/混淆G与g.md)
+[Current vs. electron flow](knowledge/物理/误解/电流方向与电子流向混淆.en.md) ·
+[Frame of reference as "background"](knowledge/物理/误解/参考系当成背景.en.md) ·
+[Moving objects naturally slow down](knowledge/物理/误解/运动物体自然慢下来.en.md) ·
+[Visible vs. invisible radiation](knowledge/物理/误解/可见光与不可见辐射有本质不同.en.md) ·
+[Waves push matter along](knowledge/物理/误解/波把物质一起推走.en.md) ·
+[Confusing G and g](knowledge/物理/误解/混淆G与g.en.md)
 
-**Want a full learning path**: [Intro kinematics (BL)](knowledge/物理/路径/运动学入门-BL.md) —
+**Want a full learning path**: [Intro kinematics (BL)](knowledge/物理/路径/运动学入门-BL.en.md) —
 it tells you **which things you'll be able to do** and the material for each step.
 
-> Other subjects ([Geography](knowledge/地理/README.md) · [Science](knowledge/科学/README.md) ·
-> [Life · travel rules](knowledge/生活/README.md)) still have very little.
+> Other subjects ([Geography](knowledge/地理/README.en.md) · [Science](knowledge/科学/README.en.md) ·
+> [Life · travel rules](knowledge/生活/README.en.md)) still have very little.
 
 **Geography (6, all errata from Hong Kong textbooks)** —
-[Map provenance / missing approval number](knowledge/地理/命题/勘误-关于本书地图出处.md) ·
-[Systematic contour-labeling error](knowledge/地理/命题/勘误-等高线标注系统性错误.md) ·
-[Road length typo](knowledge/地理/命题/勘误-道路长度漏字.md) ·
-[River basin vs. river](knowledge/地理/命题/勘误-河盆应为河流.md) ·
-[Cross-section terminology](knowledge/地理/命题/勘误-横切面术语.md) ·
-[Tsing Wan map excerpt misreference](knowledge/地理/命题/勘误-清水湾地图摘录.md)
+[Map provenance / missing approval number](knowledge/地理/命题/勘误-关于本书地图出处.en.md) ·
+[Systematic contour-labeling error](knowledge/地理/命题/勘误-等高线标注系统性错误.en.md) ·
+[Road length typo](knowledge/地理/命题/勘误-道路长度漏字.en.md) ·
+[River basin vs. river](knowledge/地理/命题/勘误-河盆应为河流.en.md) ·
+[Cross-section terminology](knowledge/地理/命题/勘误-横切面术语.en.md) ·
+[Tsing Wan map excerpt misreference](knowledge/地理/命题/勘误-清水湾地图摘录.en.md)
 
-**Science (1)** — [Unreliable data source on an earthquake map](knowledge/科学/命题/勘误-地震分布图数据来源.md)
+**Science (1)** — [Unreliable data source on an earthquake map](knowledge/科学/命题/勘误-地震分布图数据来源.en.md)
 
 **Life · travel rules (5)** —
-[Beijing metro carry-on size/weight limits](knowledge/生活/命题/携带物品的尺寸与重量上限.md) ·
-[Involuntary refunds & changes must be free](knowledge/生活/命题/非自愿退票与变更不得收费.md) ·
-[Overbooking: volunteers first](knowledge/生活/命题/超售必须先征集自愿者.md) ·
-Official docs: [Beijing metro passenger rules](knowledge/生活/资源/北京市轨道交通乘客守则.md) ·
-[Air passenger service regulations](knowledge/生活/资源/公共航空运输旅客服务管理规定.md)
+[Beijing metro carry-on size/weight limits](knowledge/生活/命题/携带物品的尺寸与重量上限.en.md) ·
+[Involuntary refunds & changes must be free](knowledge/生活/命题/非自愿退票与变更不得收费.en.md) ·
+[Overbooking: volunteers first](knowledge/生活/命题/超售必须先征集自愿者.en.md) ·
+Official docs: [Beijing metro passenger rules](knowledge/生活/资源/北京市轨道交通乘客守则.en.md) ·
+[Air passenger service regulations](knowledge/生活/资源/公共航空运输旅客服务管理规定.en.md)
 
 > These three subjects have **very little** (12 entries together), listed only so you know they exist.
 
@@ -82,8 +82,8 @@ Official docs: [Beijing metro passenger rules](knowledge/生活/资源/北京市
 
 | Entry | Evidence |
 |---|---|
-| [For ARDS patients, low tidal volume lowers mortality](knowledge/医学/命题/ARDS低潮气量通气.md) | an N=861 randomized trial |
-| [For OSA, adult PAP titration has guideline-specified start/step/target rules](knowledge/医学/命题/睡眠呼吸暂停PAP调定.md) | AASM 2008 guideline text (checked clause by clause) + a multicenter RCT (HomePAP) |
+| [For ARDS patients, low tidal volume lowers mortality](knowledge/医学/命题/ARDS低潮气量通气.en.md) | an N=861 randomized trial |
+| [For OSA, adult PAP titration has guideline-specified start/step/target rules](knowledge/医学/命题/睡眠呼吸暂停PAP调定.en.md) | AASM 2008 guideline text (checked clause by clause) + a multicenter RCT (HomePAP) |
 
 > [!CAUTION]
 > **These two say "what a study/guideline concluded or specified", not "what you should do".**
@@ -91,7 +91,7 @@ Official docs: [Beijing metro passenger rules](knowledge/生活/资源/北京市
 > particular patient needs diagnostic data and qualified staff, beyond what it can answer.
 > The OSA entry **does record the guideline's operational parameters**, but always phrased as
 > **"the guideline specifies X"**, with a disclaimer block at the very top of the body.
-> See the [medicine subject note](knowledge/医学/README.md).
+> See the [medicine subject note](knowledge/医学/README.en.md).
 
 ## 3. What this library **has** and **doesn't**
 
@@ -150,7 +150,7 @@ works in a Chinese classroom**.
 
 | You see | It means |
 |---|---|
-| an id like `(ev-039)` | a **source id** — a row in [`evidence/README.md`](evidence/README.md); **click to see which book, which page** |
+| an id like `(ev-039)` | a **source id** — a row in [`evidence/README.md`](evidence/README.en.md); **click to see which book, which page** |
 | `[BL]` / `[OL]` / `[AL]` | textbook **level markers**: Below Level / On Level / Advanced |
 | "prerequisite" | what you should already know **before** this |
 
@@ -160,7 +160,7 @@ after). **If you find a passage without one, report it.**
 
 ## 5. A complete example
 
-Say you want to understand **why "deceleration" isn't used in physics**. Open [Acceleration](knowledge/物理/知识点/加速度.md):
+Say you want to understand **why "deceleration" isn't used in physics**. Open [Acceleration](knowledge/物理/知识点/加速度.en.md):
 
 1. **Above `## 定义` is a table** (GitHub auto-renders the top of the file as a table) reading
    "**Goal**: compute acceleration with `a = Δv/Δt` and explain the sign–direction relation" —
@@ -168,7 +168,7 @@ Say you want to understand **why "deceleration" isn't used in physics**. Open [A
 2. Read `## 定义`: the formula, units, and **why "deceleration" isn't used**
 3. In that `[!IMPORTANT]` box is an **English original**, immediately followed by a Chinese gloss —
    **the Chinese is for you; the English is the source**
-4. In `## 关联` you can click [Speed & velocity](knowledge/物理/知识点/速度与速率.md) (its prerequisite)
+4. In `## 关联` you can click [Speed & velocity](knowledge/物理/知识点/速度与速率.en.md) (its prerequisite)
 5. From `## 论证` down **you can skip everything**, unless you want to know who attacked it
 
 **That's a complete reading path.** Other entries have the same structure.
@@ -180,7 +180,7 @@ Say you want to understand **why "deceleration" isn't used in physics**. Open [A
 | Your skill | What to do |
 |---|---|
 | You can type | open an [Issue](https://github.com/hpleapfrog/Scholia/issues/new) saying **which file, which sentence, why it's wrong** |
-| You can edit files | open a [Pull Request](CONTRIBUTING.md) |
+| You can edit files | open a [Pull Request](CONTRIBUTING.en.md) |
 | You're just unsure | open a [Discussion](https://github.com/hpleapfrog/Scholia/discussions) (**changes no conclusions**, just talk) |
 
 > [!IMPORTANT]
@@ -191,5 +191,5 @@ Say you want to understand **why "deceleration" isn't used in physics**. Open [A
 
 ## Curious how this library works
 
-That's another track, for contributors: [README](README.md) (mission & status) ·
-[FORMAT](FORMAT.md) (format spec) · [CONTRIBUTING](CONTRIBUTING.md) (how to take part).
+That's another track, for contributors: [README](README.en.md) (mission & status) ·
+[FORMAT](FORMAT.en.md) (format spec) · [CONTRIBUTING](CONTRIBUTING.en.md) (how to take part).

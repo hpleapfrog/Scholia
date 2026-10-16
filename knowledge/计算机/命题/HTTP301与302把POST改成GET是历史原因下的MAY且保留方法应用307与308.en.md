@@ -80,7 +80,7 @@ The substitutions the two notes offer are **paired**: **do not want 301 to turn 
 - **Claim**: **301/302 changing the method is a MAY, and the specification itself labels it "for historical reasons"**; **to guarantee the method is preserved, use 307/308**
 - **Premise**: both notes in §15.4.2 and §15.4.3 open with "**For historical reasons**" and use "**MAY** change" and "**If this behavior is undesired** … can be used instead" (ev-054)
 - **Reasoning**:
-  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.md) discipline collects
+  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.en.md) discipline collects
   2. **The retelling "301/302 turn POST into GET" turns a MAY into a certainty** — the specification says it is **permitted**, and permitted **because of historical baggage**
   3. The stronger criterion: **the specification names the alternatives outright** — **if you do not want the method changed, use 307 (temporary) or 308 (permanent)**
   4. Same shape as [503's `Retry-After` being a MAY](HTTP503的Retry-After是MAY而非MUST且过载时不必用503.en.md): **the specification uses MAY to mean "permitted", and retellings turn it into an obligation or a certainty**

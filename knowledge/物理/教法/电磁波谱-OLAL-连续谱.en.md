@@ -14,9 +14,9 @@ scope:
   条件: none
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[electromagnetic spectrum](../知识点/电磁波谱.md)"]
+knowledge_point: ["[electromagnetic spectrum](../知识点/电磁波谱.en.md)"]
 evidence: [ev-030]
 license: CC-BY-SA-4.0
 ---

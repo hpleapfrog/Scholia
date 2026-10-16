@@ -79,7 +79,7 @@ What the 2021 rotation actually changed (ev-062):
 - **Claim**: the CPI basket **explicitly excludes luxuries, investment goods and the like** — this is not the CPI missing them; the survey plan simply defines them out
 - **Premise**: ev-061 §2(2) states "**Luxuries, investment goods and the like are not included**"
 - **Reasoning**:
-  1. This is "what an indicator's scope is" — exactly what the [economics](../README.md) discipline collects
+  1. This is "what an indicator's scope is" — exactly what the [economics](../README.en.md) discipline collects
   2. It forms a **second, distinct layer of limitation** alongside [treating the CPI as the inflation rate](../误解/把CPI当成通货膨胀率.en.md): that entry says "the CPI covers only the resident-consumption domain and does not stand for the whole of society"; this one says "**even within resident consumption, luxuries and investment goods are struck out**"
   3. So "my cost of living rose faster than the CPI" has **two separately checkable causes**: your spending mix differs from the basket's weights, **and** you bought things the basket never held
 - **Evidence**: ev-061
@@ -92,7 +92,7 @@ What the 2021 rotation actually changed (ev-062):
 - **Reasoning**:
   1. By ev-062's own rule, **the next base year is 2025**, so the rotation should have occurred in early 2026
   2. **This repo read only the page dated 2024-11-29** — whether the page has since replaced "fixed at 2020" with "fixed at 2025", this repo does not know
-  3. This is another instance of the [economics](../README.md) rule that **timeliness is the main point of attack**: **a sentence that hard-codes "the current round" has a five-year shelf life**
+  3. This is another instance of the [economics](../README.en.md) rule that **timeliness is the main point of attack**: **a sentence that hard-codes "the current round" has a five-year shelf life**
 - **Evidence**: ev-061, ev-062
 - **Attacked by**: **the publication date printed on ev-061 (2024-11-29) does not match the date in its URL path (`t20241127`)** — this repo cannot determine the real publication date, nor whether the page has been republished; this is the same problem as `ev-058`. Also: **this repo has not checked any base-year rotation after 2024-11-29** — by ev-062's rule 2025 ought to be the new base year, but **whether the rotation has happened, and what the new basket's classes and weights are, this repo has not read in any official source**. **This entry cannot be used to claim that "the basket is still the 2020 version as of today".**
 - **Author**: @hpleapfrog · 2026-10-13

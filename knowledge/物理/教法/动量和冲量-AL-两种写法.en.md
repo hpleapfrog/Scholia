@@ -14,9 +14,9 @@ scope:
   条件: have already studied Newton's three laws
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Momentum and impulse](../知识点/动量和冲量.md)"]
+knowledge_point: ["[Momentum and impulse](../知识点/动量和冲量.en.md)"]
 evidence: [ev-045]
 license: CC-BY-SA-4.0
 ---
@@ -90,7 +90,7 @@ a = Δv / Δt        (the definition of acceleration, from this repo's existing 
 | Who or situation it does not apply to | Basis | Strength |
 |---|---|---|
 | students who **are not yet fluent with `F = ma`** | this method is built on "the old form is already familiar"; the first sentence of the textbook's `[OL]` hint is `Review the equation` | **strong** (the textbook lists it first) |
-| students who do not know `a = Δv/Δt` | the second step of the derivation uses it directly — that is the content of this repo's [acceleration](../知识点/加速度.md) | **strong** — follows from the nature of the derivation |
+| students who do not know `a = Δv/Δt` | the second step of the derivation uses it directly — that is the content of this repo's [acceleration](../知识点/加速度.en.md) | **strong** — follows from the nature of the derivation |
 | students **outside** this tier (AL) | the textbook tags exactly that passage `[AL]`; the `[OL]` tier only asks to "point out that there are two forms" and **does not require the derivation** | **medium** — the tag clearly draws the scope, but "not tagged" still ≠ "does not apply", it is merely **untested** |
 
 ## Risks

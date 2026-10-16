@@ -58,7 +58,7 @@ That is: **a 204 carries no body, but it may carry header fields describing the 
 - **Claim**: a 204 response may contain **neither content nor trailers** — both halves are written in one sentence
 - **Premise**: §15.3.5 states "it **cannot contain content or trailers**" (ev-054)
 - **Reasoning**:
-  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.md) discipline collects
+  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.en.md) discipline collects
   2. "A 204 may not carry a body" is common knowledge; tutorials all say it. **"A 204 may not carry trailers either" is almost never mentioned** — trailers are HTTP/1.1 chunked-trailer fields; many implementations have never handled them, so **the sender attaches a trailer and the receiver silently drops it, neither side reporting an error**
   3. This sits in contrast with §16.2.2's "new codes cannot disallow content" (see [Adding an HTTP status code requires IETF Review](新增HTTP状态码须过IETFReview且不能禁止正文.en.md)): **§16.2.2 forbids a new code from saying "I forbid a body", while 204 is an existing code whose own specification says "it cannot contain content"** — the two rules govern different things and do not conflict
 - **Evidence**: ev-054

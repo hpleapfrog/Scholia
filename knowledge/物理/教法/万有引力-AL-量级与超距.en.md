@@ -14,9 +14,9 @@ scope:
   条件: can already multiply and divide using scientific notation
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[law of universal gravitation](../知识点/万有引力定律.md)"]
+knowledge_point: ["[law of universal gravitation](../知识点/万有引力定律.en.md)"]
 evidence: [ev-037]
 license: CC-BY-SA-4.0
 ---
@@ -115,7 +115,7 @@ weak that two 10 kg balls **could never be felt** between them.
 - **Evidence**: ev-037
 - **Attacked**: **"textbook-designated" ≠ "measured to be effective"**;
   and the textbook puts "relativity" into this `[AL]` hint, **but it belongs to a knowledge point this
-  repo has not yet built** (see the gap section of [law of universal gravitation](../知识点/万有引力定律.md))
+  repo has not yet built** (see the gap section of [law of universal gravitation](../知识点/万有引力定律.en.md))
 - **Attribution**: @hpleapfrog · 2026-10-05
 
 ## Change log

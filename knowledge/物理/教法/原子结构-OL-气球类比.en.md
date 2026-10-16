@@ -14,9 +14,9 @@ scope:
   条件: students first need to accept that "measurement disturbs the object being measured"
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Atomic structure](../知识点/原子结构.md)"]
+knowledge_point: ["[Atomic structure](../知识点/原子结构.en.md)"]
 evidence: [ev-035]
 license: CC-BY-SA-4.0
 ---
@@ -72,7 +72,7 @@ Textbook original (short quotation):
 | swapping the balloon for a solid ball | the balloon's crucial features are **lightness and easy displacement**. Swap in a heavy object and the disturbance effect is gone; the analogy fails |
 
 > [!WARNING]
-> **The failure mode of this analogy is of the same kind as the [water-pipe analogy](../教法/水管类比.md), but the consequence is heavier.**
+> **The failure mode of this analogy is of the same kind as the [water-pipe analogy](../教法/水管类比.en.md), but the consequence is heavier.**
 >
 > The water-pipe analogy going wrong merely skews students' understanding of the circuit mechanism; **this analogy going wrong makes students understand it as "quantum mechanics is just about not being able to measure"** —
 > that is **a wrong conclusion about the nature of physics**, not a detail-level deviation.

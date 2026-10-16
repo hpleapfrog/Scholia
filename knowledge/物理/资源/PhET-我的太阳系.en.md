@@ -16,7 +16,7 @@ edges:
   先修: []
   支持: []
   攻击: []
-knowledge_point: ["[开普勒定律](../知识点/开普勒定律.md)"]
+knowledge_point: ["[开普勒定律](../知识点/开普勒定律.en.md)"]
 evidence: [ev-032]
 license: CC-BY-SA-4.0
 ---
@@ -32,7 +32,7 @@ license: CC-BY-SA-4.0
 | Entry inside the textbook | `https://openstax.org/l/28mysolar` (short link, verified to resolve to PhET's legacy page) |
 | Textbook source | OpenStax《Physics》 Chapter 7 · Kepler's Laws of Planetary Motion, module [m54192](https://github.com/openstax/osbooks-physics/blob/main/modules/m54192/index.cnxml) |
 | Runs | in the browser, **no installation** |
-| Belongs to | [开普勒定律](../知识点/开普勒定律.md) |
+| Belongs to | [开普勒定律](../知识点/开普勒定律.en.md) |
 
 ### License (**important**)
 

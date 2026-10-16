@@ -10,7 +10,7 @@
 > **中文：** 由 [`tools/kbcheck.py`](../tools/kbcheck.py) 生成的规则注册表——**请勿手改**。
 
 <!-- kbcheck:begin -->
-**Mechanically enforced (29)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
+**Mechanically enforced (30)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
 
 | ID | Rule |
 |---|---|
@@ -32,6 +32,7 @@
 | `R-EVENT-01` | `事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md` |
 | `R-LINK-01` | link targets exist (relative · repo-absolute · YAML `url:`) |
 | `R-LINK-02` | anchors exist (heading slug or argument id) |
+| `R-LINK-03` | links inside a `.en.md` point at the same-named `.en.md` original (when it exists); exempt: `English version of` lines and pointers to the file's own `.md` |
 | `R-GRAPH-01` | `先修` connects only 知识点, acyclic |
 | `R-GRAPH-02` | `支持` / `攻击` edge argument anchors exist |
 | `R-GRAPH-03` | `路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning) |

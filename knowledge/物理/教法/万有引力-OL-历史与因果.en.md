@@ -14,9 +14,9 @@ scope:
   条件: none
 edges:
   先修: []
-  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.md#a3)"]
+  支持: ["[命题：教材内建分组教学变体](../命题/教材内建分组教学变体.en.md#a3)"]
   攻击: []
-knowledge_point: ["[Law of universal gravitation](../知识点/万有引力定律.md)"]
+knowledge_point: ["[Law of universal gravitation](../知识点/万有引力定律.en.md)"]
 evidence: [ev-037]
 license: CC-BY-SA-4.0
 ---
@@ -108,4 +108,4 @@ The whole module's `[OL]` hint about `G` vs `g` is only one sentence:
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
-| 2026-10-05 | established the entry (#8 batch conversion · batch 4); at the same time it answered the question about causal direction in `K11` of [Kepler's laws](../知识点/开普勒定律.md) | Issue #8 | @hpleapfrog |
+| 2026-10-05 | established the entry (#8 batch conversion · batch 4); at the same time it answered the question about causal direction in `K11` of [Kepler's laws](../知识点/开普勒定律.en.md) | Issue #8 | @hpleapfrog |

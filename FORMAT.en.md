@@ -5,11 +5,11 @@
 > One concept = one `.md` file. `front-matter` holds what machines need; the body holds
 > what humans need. **A rule has only two homes**: **mechanically enforced** (by
 > [`tools/kbcheck.py`](tools/kbcheck.py)) or **convention / human review** (listed in the
-> self-check in [`CONTRIBUTING.md`](CONTRIBUTING.md)). **If it can't be mechanized, say so
+> self-check in [`CONTRIBUTING.md`](CONTRIBUTING.en.md)). **If it can't be mechanized, say so
 > — never pretend it is enforced.**
 >
 > The *why* behind the rules (cases, incidents, inferences) lives in
-> [`docs/decisions/`](docs/decisions/README.md); this document holds only the **rules**.
+> [`docs/decisions/`](docs/decisions/README.en.md); this document holds only the **rules**.
 
 ## 0. Language: bilingual storage
 
@@ -28,7 +28,7 @@
 
 | Reader | What they want | Where to start |
 |---|---|---|
-| **Learner** (student / teacher) | what the concept **is**, how to teach it | [`START.md`](START.md) |
+| **Learner** (student / teacher) | what the concept **is**, how to teach it | [`START.md`](START.en.md) |
 | **Reviewer** (contributor) | **why it holds**, who has attacked it | this document |
 | **AI / program** | what must not be quoted, each entry's real source | [`llms.txt`](llms.txt) + [`index.json`](index.json) |
 
@@ -61,7 +61,7 @@
 > line one. **Only `知识点` is "formula first, meaning after".**
 
 > The history (`scope.目标` was misplaced; a measurement that nearly became an assertion) is
-> in [readability-rules](docs/decisions/readability-rules.md).
+> in [readability-rules](docs/decisions/readability-rules.en.md).
 
 ---
 
@@ -118,6 +118,16 @@ entries Chinese (`欧姆定律.md`). `evidence/` lives at the repo root, shared 
 - Internal links use **relative-path Markdown**: `[电流](../命题/电流.md)`
 - **No `[[wikilinks]]`** — an Obsidian extension GitHub won't render
 - **Absolute links back to this repo are validated too** (anchors must exist)
+- **Links inside a `.en.md` point at the same-named `.en.md` original** (`R-LINK-03`) — an English
+  reader should land on an English page, not get bounced back to Chinese. **Two exemptions:**
+  1. the conventional line pointing at the Chinese original, written as `English version of [x.md](x.md)`
+     (the line at the top of each `.en.md`);
+  2. a pointer to **this file's own** `.md` original.
+  **False-positive handling**: when you genuinely need to cite the Chinese original from an English
+  document, put that link on a line containing the phrase `English version of` and it is exempt;
+  **conversely, do not** send English readers to a Chinese page just to silence the check — that is
+  exactly what this rule exists to remove. If the `.en.md` does not exist the link is left alone
+  (changing it would break it), and the check only fires when it does exist.
 
 ### What this library does NOT store: procedural knowledge
 
@@ -132,12 +142,12 @@ entries Chinese (`欧姆定律.md`). `evidence/` lives at the repo root, shared 
 | 2 | **Risk** | flows whose mistakes are irreversible **and** whose applicability this library cannot bound |
 
 > **Criterion 2 excludes "flows", not "conclusions".** The *conclusion* of a low-tidal-volume
-> trial is still admitted (see [`knowledge/医学/`](knowledge/医学/README.md)) — **a sourced
+> trial is still admitted (see [`knowledge/医学/`](knowledge/医学/README.en.md)) — **a sourced
 > conclusion can be checked; an operating instruction gets followed.**
 
 > The three probes (metro / flight / ventilator), the full rationale, and "what it would take
 > to change this boundary" are in
-> [procedural-knowledge-boundary](docs/decisions/procedural-knowledge-boundary.md).
+> [procedural-knowledge-boundary](docs/decisions/procedural-knowledge-boundary.en.md).
 
 ## 3. `front-matter`
 
@@ -224,7 +234,7 @@ was tagged for.
 
 > The abbreviations are an **inference, not a quotation**; `[EL]` is a language identity, not a
 > level; and the counting rules — see
-> [level-marker-inference](docs/decisions/level-marker-inference.md).
+> [level-marker-inference](docs/decisions/level-marker-inference.en.md).
 
 ### Extra required field for `路径`: `outcomes`
 
@@ -282,7 +292,7 @@ relation:
 
 > [!IMPORTANT]
 > **`## 论证` is required for all six types** (may be empty under draft). Why —
-> [argument-required-for-all-types](docs/decisions/argument-required-for-all-types.md).
+> [argument-required-for-all-types](docs/decisions/argument-required-for-all-types.en.md).
 
 ### The two sections of `教法` must be kept apart
 
@@ -326,7 +336,7 @@ Rules are dead; people execute them:
 | **Argued, then defeated** | **`失据`** | the claim stands, but nothing currently supports it; not refuted either |
 
 > `失据` was added only after running the rules for real (see
-> [status-and-liveness](docs/decisions/status-and-liveness.md)) — collapsing both causes into one
+> [status-and-liveness](docs/decisions/status-and-liveness.en.md)) — collapsing both causes into one
 > status made an attack **invisible in `status`**.
 
 ### Arguments must have IDs; attacks must land on an argument
@@ -368,7 +378,7 @@ edges:
 **Logical attack and truth-checking are not the same thing**; the former is cheap but does not
 replace the latter (this library once missed an "it was never a measurement" evidence because the
 dispatch excluded truth-checking — see
-[status-and-liveness](docs/decisions/status-and-liveness.md)). The dispatch template must contain:
+[status-and-liveness](docs/decisions/status-and-liveness.en.md)). The dispatch template must contain:
 
 > "**Before attacking the logic, question the evidence itself**: does it exist as described?
 > Does its claimed type (measured / quoted / statistical / reproducible) match its actual form?
@@ -386,7 +396,7 @@ dispatch excluded truth-checking — see
 **Don't write counts into an entry** — `kbcheck.py` reports edge counts live; **hard-coding drifts**.
 **Independence turns on the source, not the count**; sources are free text, so `kbcheck.py` **cannot
 compute independence** — that's a human judgement. (On the "15 supporting edges" mistake, see
-[support-count-not-strength](docs/decisions/support-count-not-strength.md).)
+[support-count-not-strength](docs/decisions/support-count-not-strength.en.md).)
 
 ### "Survived" cannot self-assert — write "not yet attacked" when there are zero attacks
 
@@ -399,7 +409,7 @@ compute independence** — that's a human judgement. (On the "15 supporting edge
 `kbcheck.py` mechanically lists "claims survival with zero attacks" (`check_argument_liveness`),
 and also "a `支持` edge points to a defeated argument". **A deleted check** ("an `攻击` edge points
 to a defeated argument" — it gave wrong advice) is in
-[status-and-liveness](docs/decisions/status-and-liveness.md).
+[status-and-liveness](docs/decisions/status-and-liveness.en.md).
 
 ## 7. GitHub-native features
 

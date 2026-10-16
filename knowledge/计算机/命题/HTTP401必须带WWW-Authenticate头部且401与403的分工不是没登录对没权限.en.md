@@ -81,7 +81,7 @@ The specification also offers an option other than 403 (short quote):
 - **Claim**: the 401 / 403 division is **not "have you logged in"** — **401 is "authentication credentials missing or invalid", 403 is "the server refuses to carry it out"**, and **403 explicitly allows reasons unrelated to credentials**
 - **Premise**: §15.5.2 defines 401 as "lacks valid authentication credentials"; §15.5.4 defines 403 as "**understood** the request but **refuses** to fulfill it", and states outright "might be forbidden for reasons **unrelated to the credentials**" (ev-054)
 - **Reasoning**:
-  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.md) discipline collects
+  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.en.md) discipline collects
   2. The retelling "401 = logged out, 403 = logged in but no permission" **makes authentication versus authorisation the boundary between the two codes**; the specification's boundary is "**whether the server's reason for refusing has anything to do with credentials**"
   3. So "**403 = you lack permission**" is the most common misreading: a 403 can be because **the IP is on a denylist, the method is disallowed, the resource is under maintenance, or the server simply will not show you** — **unrelated to who you are or what credentials you presented**
   4. The converse also holds: **a 401 can arrive when you have already sent credentials** — the specification's own words: "If the request included authentication credentials, then the 401 response indicates that authorization has been refused for those credentials"

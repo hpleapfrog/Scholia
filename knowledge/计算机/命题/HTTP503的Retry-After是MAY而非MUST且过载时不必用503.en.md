@@ -66,7 +66,7 @@ delay". **"Any old server error" is not inside 503's definition** — that is 50
 - **Claim**: **`Retry-After` is a MAY for 503, not a MUST** — **a 503 without `Retry-After` does not violate the specification**
 - **Premise**: §15.6.4 says "The server **MAY** send a `Retry-After` header field … **to suggest** an appropriate amount of time" (ev-054)
 - **Reasoning**:
-  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.md) discipline collects
+  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.en.md) discipline collects
   2. **MAY is the weakest permission level in RFC 2119** — the specification says the server **may** send one **to suggest** a wait, not that it must
   3. Exactly opposite to [401's MUST for `WWW-Authenticate`](HTTP401必须带WWW-Authenticate头部且401与403的分工不是没登录对没权限.en.md) and [304's MUST for the `ETag`-class list](HTTP304响应必须带上原200会发的缓存头部且不能含正文或trailer.en.md): **those use MUST, this one uses MAY**
   4. Criterion: **"a 503 must carry `Retry-After`" is a common misretelling**; the specification says MAY, and the purpose is "**suggest**", not obligation
