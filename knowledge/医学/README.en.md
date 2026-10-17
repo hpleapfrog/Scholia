@@ -25,8 +25,24 @@
 | [In severe ARDS, early prone positioning reduces mortality](命题/ARDS俯卧位通气.en.md) | Proposition | Provisionally confirmed | **High (randomized controlled trial)** |
 | [In high-cardiovascular-risk adults without diabetes, intensive BP lowering reduces major CV events and all-cause death, but raises some adverse events](命题/强化降压SPRINT.en.md) | Proposition | Provisionally confirmed | **High (randomized controlled trial)** |
 | [For suspected plague, WHO/CDC guidelines prescribe starting treatment without waiting for confirmation, and set explicit time limits for medication, isolation, and contact prophylaxis](命题/疑似鼠疫不等确诊即治疗.en.md) | Proposition | Provisionally confirmed | **High (guideline primary text)** |
+| [The 2024 Chinese hypertension guideline prescribes ≥140/90 mmHg in the clinic for diagnosis, and <140/90 mmHg (further to <130/80 mmHg if tolerated) for general patients](命题/中国高血压指南2024降压目标.en.md) | Proposition | Provisionally confirmed | **High (guideline primary text)** |
+| [GOLD 2026 prescribes post-bronchodilator FEV1/FVC < 0.7 to confirm COPD, and sets "≥1 moderate or severe exacerbation in the previous year" as the E-group and treatment-escalation threshold](命题/GOLD2026慢阻肺诊疗.en.md) | Proposition | Provisionally confirmed | **High (guideline primary text)** |
 
-**6 entries.** Evidence: `ev-048` `ev-049` `ev-050` `ev-063` `ev-069` `ev-070` `ev-071` `ev-072` `ev-073`.
+**8 entries.** Evidence: `ev-048` `ev-049` `ev-050` `ev-063` `ev-069` `ev-070` `ev-071` `ev-072` `ev-073` `ev-074` `ev-075` `ev-077` `ev-078` `ev-079`.
+(`ev-076` *Williams Hematology* is registered but **cited by no proposition yet** — a haematology claim will follow once the book is in hand.)
+
+> [!NOTE]
+> **From 2026-10-16, this subject registers a batch of textbooks and Chinese/foreign treatment guidelines for the first time.**
+>
+> `ev-074` *Harrison's* (22nd ed.) · `ev-075` *Robbins and Cotran* (10th ed.) ·
+> `ev-076` *Williams Hematology* (10th ed.) · `ev-077` *Practical Internal Medicine* (16th ed.) —
+> **four textbooks** — entered together with `ev-078` (Chinese hypertension guideline, 2024 revision)
+> and `ev-079` (GOLD 2026).
+>
+> **All four textbooks are at `仅定位` (locator only) — this repo owns no copy and has checked no chapter or page number.**
+> In propositions they serve **only as background pointers**, **supporting no claim**; making them carry
+> verification weight requires obtaining the books and upgrading the depth (to be added).
+> **Both guidelines are at `摘要` (key passages)**: the key passages were read sentence by sentence, the full text was not.
 
 > [!NOTE]
 > **From 2026-10-13, this subject holds its first proposition presenting "the direction of effect flips across subgroups".**
@@ -126,3 +142,4 @@ With "how to adjust" removed, what remains is **exactly what the repo is best at
 | 2026-10-14 | added [ARDS prone positioning](命题/ARDS俯卧位通气.en.md) (`ev-069` PROSEVA trial, abstract checked); filled the "prone positioning" gap named in the body of [ARDS low-tidal-volume ventilation](命题/ARDS低潮气量通气.en.md) | ev-069 registered; topic selected against the subject boundary | @hpleapfrog |
 | 2026-10-14 | added [intensive BP lowering (SPRINT)](命题/强化降压SPRINT.en.md) (`ev-070` SPRINT trial, abstract checked); **the subject's first cardiovascular proposition**, broadening beyond the earlier four that were all respiratory/critical-care | ev-070 registered; topic selected against the subject boundary | @hpleapfrog |
 | 2026-10-14 | added [treat before confirming plague](命题/疑似鼠疫不等确诊即治疗.en.md) (`ev-071` WHO manual, `ev-072` CDC emergency guidance, `ev-073` CDC MMWR recommendation report - all checked at abstract level); originating question: "when plague comes back, what is needed?"; **the discipline's 6th proposition and its first one led by guideline text rather than trials** | `ev-071` · `ev-072` · `ev-073` registered, then topic selected within the discipline boundary | @hpleapfrog |
+| 2026-10-16 | registered `ev-074`–`ev-077`, **four standard textbooks** (all `仅定位`: no copy in hand), and `ev-078` · `ev-079`, **one Chinese and one foreign treatment guideline** (both `摘要`); added [blood-pressure targets in the 2024 Chinese hypertension guideline](命题/中国高血压指南2024降压目标.en.md) (`ev-078` guideline text + existing `ev-070` SPRINT + two textbook backgrounds) and [COPD diagnosis and treatment in GOLD 2026](命题/GOLD2026慢阻肺诊疗.en.md) (`ev-079` pocket guide and key-changes summary + two textbook backgrounds); **the discipline's 7th and 8th propositions, extending coverage from respiratory/critical-care/cardiovascular to hypertension and COPD, and the first time textbook evidence enters the ledger** | arose from the task of collecting foreign and Chinese medical treatment guidelines and four standard textbooks; `ev-074`–`ev-079` registered, then topic selected within the discipline boundary; key passages of the guidelines read and checked sentence by sentence | @hpleapfrog |
