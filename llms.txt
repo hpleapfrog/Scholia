@@ -69,33 +69,59 @@
 
 ---
 
-## 机器入口
+## 机器入口：三份文件，各装一件事
 
-**唯一需要解析的文件是 [`index.json`](index.json)。** 它由 `tools/kbcheck.py` 生成，
-**不手写**，并且**校验器会检查它是否与内容一致**（改内容不重新生成索引 = 校验失败）。
+**不要整读。** 这里有三份生成物，拆开是为了让「只想知道有没有这条」的调用**不必先吃下全部定位**：
+
+| 文件 | 体积 | 什么时候读 |
+|---|---|---|
+| [`index.json`](index.json) | ≈14k tokens | **每次都先读**：导航 + 能不能引用 |
+| [`citations.json`](citations.json) | ≈18k tokens | **只在要引用时**，按 `id` 取**那一条**（约 160 tokens） |
+| [`evidence.json`](evidence.json) | ≈9k tokens | 需要核实出处、或解释「这条为什么失据」时 |
+
+> [!IMPORTANT]
+> **`citations.json` 千万不要整份读。** 它装的是 145 条引用材料，
+> 而你一次只引用一两条。**按 id 取。**
+
+三份都由 `tools/kbcheck.py` 生成、**不手写**，且校验器会检查它们是否与内容一致
+（改内容不重新生成 = 校验失败）。
+
+**挂在 MCP 上时不用自己拼 JSON**：`settings → MCP` 里接 `tools/scholia_mcp.py`，
+用 `scholia_search`（只回导航字段，默认 5 条）→ `scholia_cite`（取引用材料）→
+`scholia_get_object`（取正文）。
+
+### `index.json` 结构
 
 ```
 index.json
 ├── $comment / schema_version   ← 生成标记与格式版本号
 ├── 读到这个文件的 AI 请注意   ← 上面几条的机器可读版本
-├── 状态含义                    ← 每个状态是什么意思（中文）
-├── 状态英文                    ← 每个状态的英文名（draft / pending review / … / confirmed）
+├── 状态含义 / 状态英文         ← 每个状态是什么意思、英文名
 ├── 统计                        ← 按类型 / 状态 / 学科 / 证据条数（**数字的唯一来源**）
 ├── known_limits                ← 本库自己承认的边界（**按学科分别写**）
-├── 证据索引                    ← 全部来源：类别 · 等级 · 核验深度 · **定位** · 链接 · 许可 · 是否作废
-├── 事件[]                      ← **与 objects 并列的另一类记录**（顶层 events/，见下）
-│      id · title · status（持续更新/已封存）· path · path_en · 证据 · 来源 · 最后更新
-└── objects[]                   ← 全部对象，每条含：
-      id · type · title · status · path · path_en · 学科 · 学段
-      ↑ `path` 是**中文正本**，`path_en` 是**英文译本**（文件名由 `id` 派生，无译文为 null）
-        **给英文读者引用时用 `path_en`，不要把中文文件名发给对方**
-      适用 · 条件               ← **人群与条件限定**（转述必须连同内容一起给出）
-      免责块在正文最前 (bool)    ← true = 转述前必须读文件正文开头的免责块
-      证据 (["ev-039"])           ← 编号
-      来源 (["ev-039：OpenStax《Physics》第 3 章 · Acceleration，m54123"])
-                                  ← **已解析好的真实定位**
-      先修 · 论证
-      可作事实引用 (bool) · 引用时须写明 (str)
+├── 事件[]                      ← 与 objects 并列的另一类记录（顶层 events/，见下）
+│      id · title · status（持续更新/已封存）· path · path_en · 最后更新
+└── objects[]                   ← 全部对象，每条只装**导航与判定**：
+      id · type · title · status
+      path        ← **中文正本**
+      path_en     ← **英文译本**（文件名由 id 派生，无译文为 null）
+                    **给英文读者引用时用 `path_en`，不要把中文文件名发给对方**
+      学科 · 学段
+      可作事实引用 (bool)   ← false 的（失据/已推翻/已失效）**不要引用**
+      先修 · 论证           ← 图关系（谁的论证 ID 是什么）
+```
+
+### `citations.json` 结构（按 id 取一条）
+
+```
+citations.json → by_id.<id>
+├── status                 ← 引用时必须一起给出
+├── 证据 (["ev-081"])      ← 编号
+├── 来源 (["ev-081：OpenStax《Physics》第 6 章 · Uniform Circular Motion，m54181"])
+│                          ← **已解析好的真实定位**，引用时给这个，不要只给编号
+├── 适用 · 条件            ← **人群与条件限定**（转述必须连同内容一起给出）
+├── 免责块在正文最前 (bool) ← true = 转述前必须读 `path` 那篇正文开头的免责块
+└── 引用时须写明 (str)     ← 直接可用的一句「state=…」
 ```
 
 ### **引用时请用 `来源`，不要只写编号**
@@ -114,7 +140,7 @@ index.json
 }
 ```
 
-**`证据索引` 里 `作废: true` 的几条**（如 `ev-002` · `ev-009` … `ev-012`）**是本库自己撤回的**：
+**`evidence.json` 里 `作废: true` 的几条**（如 `ev-002` · `ev-009` … `ev-012`）**是本库自己撤回的**：
 其中一条曾被登记为「实验数据 · 等级高」，**其实是作者自己构造的数据**。
 **不要引用它们。**
 
@@ -135,7 +161,9 @@ index.json
 
 | 路径 | 内容 | 给谁 |
 |---|---|---|
-| [`index.json`](index.json) | **机器可读的全部对象** | **AI 首先读这个** |
+| [`index.json`](index.json) | **导航与「能不能引用」**（三份机器文件之一） | **AI 首先读这个** |
+| [`citations.json`](citations.json) | **引用材料**（定位 / 限定 / 免责块）：**按 id 取一条** | 要引用时 |
+| [`evidence.json`](evidence.json) | **证据登记**（等级 · 核验深度 · 定位 · 许可 · 是否作废） | 核出处时 |
 | [`START.md`](START.md) | 人类入口：主题索引 · 怎么读一个条目 · 现在有什么没什么 | 学习者 |
 | [`README.md`](README.md) | 库的使命、现状、未决问题（**中文，主**） | 想了解项目的人 |
 | [`README.en.md`](README.en.md) | README 英文版 | English readers |

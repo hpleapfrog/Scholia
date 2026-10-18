@@ -48,7 +48,7 @@
 | `R-EVID-02` | 证据表 `类别` / `等级` / `核验深度` 取值合法 |
 | `R-EVID-03` | `暂定确认` / `已确证` 必须至少有一条 `核验深度` 为 `全文` / `摘要` 的证据（没读过不能说确认） |
 | `R-EVID-04` | 正文里出现的 `ev-###` 必须在证据索引登记（防笔误与幽灵引用；不要求属于本条） |
-| `R-INDEX-01` | `index.json` 与内容一致（改内容必须重生成） |
+| `R-INDEX-01` | 三份机器文件（`index.json` / `citations.json` / `evidence.json`）与内容一致（改内容必须重生成） |
 | `R-INDEX-02` | 人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表） |
 | `R-README-01` | 每个对象都在所属学科 README 里登记 |
 | `R-README-02` | 学科 README 里手写的状态列与 front-matter 一致 |

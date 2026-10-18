@@ -47,7 +47,7 @@
 | `R-EVID-02` | evidence table `类别` / `等级` / `核验深度` values valid |
 | `R-EVID-03` | `暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed) |
 | `R-EVID-04` | every `ev-###` mentioned in the body is registered in the evidence index (catches typos and ghost citations; need not belong to that entry) |
-| `R-INDEX-01` | `index.json` consistent with content (regenerate on change) |
+| `R-INDEX-01` | the three machine files (`index.json` / `citations.json` / `evidence.json`) match content (regenerate on change) |
 | `R-INDEX-02` | human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table) |
 | `R-README-01` | every object registered in its subject README |
 | `R-README-02` | the hand-written status column in a subject README matches the front-matter |
