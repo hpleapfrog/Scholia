@@ -646,20 +646,20 @@ def check_arguments(objects, errors):
                 r = resolve_link(o["path"], tgt)
                 dest = objects.get(r) if r else None
                 if dest is None:
-                    errors.append(f"{rel}: `{key}` 指向的不是知识对象 -> {tgt}")
+                    errors.append(f"{rel}: `{key}` 指向的不是知识对象 -> {tgt}（R-GRAPH-02）")
                     continue
                 if not anchor:
                     errors.append(
                         f"{rel}: `{key}` 必须带论证锚点（如 `#a1`）-> {tgt}"
-                        f"；只指向条目无法定位被攻击的是哪条论证")
+                        f"；只指向条目无法定位被攻击的是哪条论证（R-GRAPH-02）")
                     continue
                 ids = arg_ids(dest["text"])
                 if not ids:
-                    errors.append(f"{rel}: `{key}` 指向的条目里没有可定位的论证 ID -> {tgt}")
+                    errors.append(f"{rel}: `{key}` 指向的条目里没有可定位的论证 ID -> {tgt}（R-GRAPH-02）")
                 elif anchor not in ids:
                     errors.append(
                         f"{rel}: `{key}` 的锚点 `#{anchor}` 在目标条目里不存在"
-                        f"（该条目可用: {', '.join('#' + x for x in sorted(ids))}）")
+                        f"（该条目可用: {', '.join('#' + x for x in sorted(ids))}）（R-GRAPH-02）")
 
         # 同一条目内论证 ID 必须唯一
         raw = [x.lower() for x in ARG_ID.findall(section_body(o["text"], "论证") or "")]
@@ -681,12 +681,12 @@ def check_graph(objects, errors, warnings):
             dest = objects.get(r) if r else None
             if t != "知识点":
                 errors.append(
-                    f"{rel}: 只有「知识点」可以有 `先修` 边（FORMAT.md §2），本条 type={t}")
+                    f"{rel}: 只有「知识点」可以有 `先修` 边（FORMAT.md §2），本条 type={t}（R-GRAPH-01）")
             if dest is None:
-                errors.append(f"{rel}: `先修` 指向的不是知识对象 -> {tgt}")
+                errors.append(f"{rel}: `先修` 指向的不是知识对象 -> {tgt}（R-GRAPH-01）")
             elif dest["type"] != "知识点":
                 errors.append(
-                    f"{rel}: `先修` 必须指向「知识点」，实际指向 type={dest['type']} -> {tgt}")
+                    f"{rel}: `先修` 必须指向「知识点」，实际指向 type={dest['type']} -> {tgt}（R-GRAPH-01）")
             else:
                 prereq.setdefault(rel, []).append(r)
                 # 跨学段先修边：允许，但要求作者显式认领（警告，不阻塞）
@@ -723,7 +723,7 @@ def check_graph(objects, errors, warnings):
             if color.get(m) == 1:
                 i = stack.index(m)
                 errors.append("先修图存在环: " + " → ".join(
-                    Path(x).stem for x in stack[i:] + [m]))
+                    Path(x).stem for x in stack[i:] + [m]) + "（R-GRAPH-01）")
             elif color.get(m, 0) == 0:
                 dfs(m)
         stack.pop()
@@ -821,7 +821,7 @@ def check_path_steps(objects, errors):
                 errors.append(
                     f"{rel}: 第 {step} 步「{name}」**没有连到任何知识对象**"
                     f"（`条目` 列必须指向库里存在的条目）"
-                    f"—— 路径是「知识点的编排」，指不出对象的步骤不是环节")
+                    f"—— 路径是「知识点的编排」，指不出对象的步骤不是环节（R-GRAPH-04）")
 
 
 def check_path_outcomes(objects, errors, warnings):
@@ -853,7 +853,7 @@ def check_path_outcomes(objects, errors, warnings):
 
         if missing:
             errors.append(
-                f"{rel}: 目标覆盖度不足 —— 以下学习成果没有任何环节覆盖: {missing}")
+                f"{rel}: 目标覆盖度不足 —— 以下学习成果没有任何环节覆盖: {missing}（R-GRAPH-03）")
         extra = covered - set(declared)
         if extra:
             errors.append(
