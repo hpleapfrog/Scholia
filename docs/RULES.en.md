@@ -10,7 +10,7 @@
 > **中文：** 由 [`tools/kbcheck.py`](../tools/kbcheck.py) 生成的规则注册表——**请勿手改**。
 
 <!-- kbcheck:begin -->
-**Mechanically enforced (38)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
+**Mechanically enforced (39)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
 
 | ID | Rule |
 |---|---|
@@ -36,6 +36,7 @@
 | `R-LINK-01` | link targets exist (relative · repo-absolute · YAML `url:`) |
 | `R-LINK-02` | anchors exist (heading slug or argument id) |
 | `R-BILING-01` | an English edition's filename is derived from its `id` (`<id-tail minus type prefix>.en.md`, same folder as the Chinese original); a missing translation is a notice, not a failure |
+| `R-BILING-03` | documents (root / subject READMEs / coverage / docs) must have a same-named `.en.md`; `templates/` and `.github/` exempt |
 | `R-BILING-02` | an English edition's `type` / `status` / `evidence` match the Chinese original (the mechanisable half of `M-10`) |
 | `R-LINK-03` | links inside an English page point at the English page (when it exists); exempt: `English version of` lines and links to files that have no translation |
 | `R-GRAPH-01` | `先修` connects only 知识点, acyclic |
