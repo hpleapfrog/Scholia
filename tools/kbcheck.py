@@ -528,6 +528,16 @@ def stages_of(obj):
     return {s for s in STAGES if s in v}
 
 
+def has_section(text, name):
+    """是否存在**独立的** `## name` 标题（整行匹配）。
+
+    **为什么不能用子串**：`## 变更记录X` 里包含 `## 变更记录`，
+    于是把标题改个名就能让「必备小节」检查通过——注入样本实测过，确实拦不住。
+    标题必须整行相等，后缀、加字、夹空格都不算。
+    """
+    return re.search(rf"^## {re.escape(name)}\s*$", text, re.M) is not None
+
+
 def section_body(text, name):
     """取 `## name` 到下一个 `##` 之间的正文。"""
     m = re.search(rf"^##\s+{re.escape(name)}\s*$", text, re.M)
@@ -1711,7 +1721,7 @@ def check_event_object(fm, text, rel, ids, events, errors):
         errors.append(
             f"{rel}: `事件` 的 `status` 只能是 {'/'.join(sorted(EVENT_STATUS))} -> {st!r}")
     for sec in EVENT_SECTIONS:
-        if f"## {sec}" not in text:
+        if not has_section(text, sec):
             errors.append(f"{rel}: 事件缺必备小节「{sec}」（R-SCHEMA-05）")
     if not (i or "").startswith(EVENT_ID_PREFIX):
         errors.append(f"{rel}: `事件` 的 `id` 前缀必须是 {EVENT_ID_PREFIX!r} -> {i!r}")
@@ -1901,10 +1911,10 @@ def check_all():
                     if st not in ALLOWED_STATUS[t]:
                         errors.append(f"{rel}: type={t} 不允许 status={st!r}")
                     for sec in REQUIRED_SECTIONS[t]:
-                        if f"## {sec}" not in text:
+                        if not has_section(text, sec):
                             errors.append(f"{rel}: 缺必备小节「{sec}」（R-SCHEMA-05）")
                     # FORMAT.md §5：所有类型都必须有 ## 论证（草案下可留空）
-                    if "## 论证" not in text:
+                    if not has_section(text, "论证"):
                         errors.append(f"{rel}: 缺必备小节「论证」（所有类型都必须有）（R-SCHEMA-05）")
 
                 if i in ids:

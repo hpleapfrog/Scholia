@@ -99,6 +99,73 @@ def read_template(tpl_name):
     return m.group(1)
 
 
+def register_in_readme(readme, target, title, kind, status):
+    """把新条目登记进学科 README 的表格。
+
+    **为什么值得自动做**：忘登记是 `kbcheck` 最常报的错（`R-README-01`），
+    而它纯粹是抄写劳动——**结构交给脚本**这条原则在这里同样成立。
+
+    学科 README 有两种形态，都要认：
+    - 物理式：`## 命题` 下面一张表（按类型分节）
+    - 医学/计算机式：`## 现状` 下面一张总表，列里带「类型」
+
+    所以先找出所有表格，再按「小节标题是否以类型开头」「表头里有没有类型列」打分挑一张。
+
+    **不臆造**：状态列取自新文件、类型列取自 `type`，其余列填 `—`，
+    并把「哪几列要你补」返回给调用方。宁可留白，不要编一个看起来合理的值。
+    """
+    if not readme.exists():
+        return None
+    lines = readme.read_text(encoding="utf-8").split(chr(10))
+
+    tables, cur_section = [], ""
+    for i, line in enumerate(lines):
+        s = line.strip()
+        if s.startswith("## "):
+            cur_section = s[3:]
+            continue
+        if s.startswith("|") and i + 1 < len(lines) and lines[i + 1].strip().startswith("|---"):
+            header = [c.strip() for c in s.strip("|").split("|")]
+            last = i + 1
+            for j in range(i + 2, len(lines)):
+                if not lines[j].strip().startswith("|"):
+                    break
+                last = j
+            tables.append((cur_section, i, last, header))
+    if not tables:
+        return None
+
+    def score(tb):
+        sec, _head, _last, header = tb
+        s = 0
+        if sec.startswith(kind):
+            s += 2
+        if any(c.strip("*` ") in ("类型", "type") for c in header):
+            s += 1
+        return s
+
+    sec, head, last, header = max(tables, key=score)
+    if score((sec, head, last, header)) == 0:
+        return None
+
+    rel_link = os.path.relpath(str(target), str(readme.parent)).replace(os.sep, "/")
+    row, todo = [], []
+    for j, col in enumerate(header):
+        c = col.strip("*` ")
+        if j == 0:
+            row.append(f"[{title}]({rel_link})")
+        elif c in ("状态", "status"):
+            row.append(status)
+        elif c in ("类型", "type"):
+            row.append(kind)
+        else:
+            row.append("—")
+            todo.append(c or f"第{j+1}列")
+    lines.insert(last + 1, "| " + " | ".join(row) + " |")
+    readme.write_text(chr(10).join(lines), encoding="utf-8")
+    return todo
+
+
 def safe_name(title):
     out = "".join(_UNSAFE.get(ch, ch) for ch in title)
     return re.sub(r"\s+", " ", out).strip()
@@ -118,7 +185,7 @@ def main():
     ap.add_argument("--author", default=DEFAULT_AUTHOR, help=f"署名（默认 {DEFAULT_AUTHOR}）")
     ap.add_argument("--stage", default="不限", help="学段：小学/初中/高中/大学/不限（默认 不限）")
     ap.add_argument("--level", help="教法专用：BL / OL / AL / 不分档")
-    ap.add_argument("--kp", help="教法专用：指回知识点的相对路径，如 知识点/力-高中.md")
+    ap.add_argument("--kp", help="教法专用：指回知识点的相对路径，如 concepts/力-高中.md")
     ap.add_argument("--evidence", default="ev-000",
                     help="证据编号（默认 ev-000 是占位符；必须先在 evidence/README.md 登记真来源）")
     ap.add_argument("--force", action="store_true", help="允许覆盖已存在的文件")
@@ -150,9 +217,9 @@ def main():
         oid = prefix + args.slug
         subject = args.subject
         if kind == "教法" and not args.kp:
-            return fail("教法必须用 --kp 指回一个知识点（如 --kp 知识点/力-高中.md）")
-        # `--kp` 可以写成「相对学科目录」（知识点/力-高中.md）或「相对教法目录」
-        # （../知识点/力-高中.md）；统一换算成**相对目标文件**的路径——
+            return fail("教法必须用 --kp 指回一个知识点（如 --kp concepts/力-高中.md）")
+        # `--kp` 可以写成「相对学科目录」（concepts/力-高中.md）或「相对教法目录」
+        # （../concepts/力-高中.md）；统一换算成**相对目标文件**的路径——
         # 写错方向是这里最常见的失败，而它只会表现为一条「链接目标不存在」。
         kp_rel = ""
         if args.kp:
@@ -190,13 +257,24 @@ def main():
     rel = out.relative_to(ROOT).as_posix()
 
     readme = (ROOT / "events" / "README.md") if is_event \
-        else (ROOT / "knowledge" / subject / "README.md")
+        else (ROOT / "knowledge" / SUBJECT_DIRS[args.subject] / "README.md")
 
     # 英文译本的文件名由 id 派生（R-BILING-01），这里替用户算好直接给。
     en_slug = EN_SLUG_PREFIX.sub("", args.slug)
     en_rel = (target_dir / f"{en_slug}.en.md").relative_to(ROOT).as_posix()
 
     print(f"已生成 {rel}")
+    if is_event:
+        todo = None
+    else:
+        todo = register_in_readme(readme, out, args.title, kind, "草案")
+        if todo is None:
+            print(f"! 没找到 README 里「## {kind}」下的表格，请手工登记（R-README-01）")
+        elif todo:
+            print(f"已自动登记进 {readme.relative_to(ROOT).as_posix()}"
+                  f"（其余列留 `—`，请补：{'、'.join(todo)}）")
+        else:
+            print(f"已自动登记进 {readme.relative_to(ROOT).as_posix()}")
     print(f"英文译本应放在 {en_rel}（文件名由 id 派生；第一行写 "
           f"`> **English version of [`{out.name}`]({out.name}).**`）")
     print()
@@ -204,7 +282,7 @@ def main():
     print(f"  1. 填 front-matter 的 `适用` / `条件` —— 缺了它，结论会被误用")
     print(f"  2. 把 `{args.evidence}` 换成真实编号，并在 "
           f"{(ROOT / 'evidence' / 'README.md').relative_to(ROOT).as_posix()} 登记（来源三问）")
-    print(f"  3. 在 {readme.relative_to(ROOT).as_posix()} 里登记这一条（R-README-01）")
+    print(f"  3. 核对 {readme.relative_to(ROOT).as_posix()} 里刚登记的那一行（状态/来源等列）")
     if kind == "教法":
         print(f"  4. 核对 `knowledge_point` 是否指对了知识点（当前 {kp_rel}）")
     if kind == "路径":
