@@ -86,6 +86,28 @@
 三份都由 `tools/kbcheck.py` 生成、**不手写**，且校验器会检查它们是否与内容一致
 （改内容不重新生成 = 校验失败）。
 
+### 省 token 的读法（四条硬规则）
+
+| # | 规则 | 为什么 |
+|---|---|---|
+| 1 | **不要整读 `citations.json` / `evidence.json`** | 一次只引一两条；整读等于为两条付 145 条的账 |
+| 2 | **一次会话最多整读 `index.json` 一次** | 回答「有没有 X」用 `scholia_search`（≈150）就够，别为一次查表读 14k |
+| 3 | **回答「这条讲什么」用 `part="content"`**（默认） | 每条本库条目本来就分两半：前半给学习者（≈460 tokens），后半（依据/证据/论证）给复核者。**判断论证是否成立才用 `part="full"`**（≈1125） |
+| 4 | **引用只取 `scholia_cite` 那一条**（≈160） | 定位、限定、免责块都在里面；不要再回正文里扒 |
+
+> [!IMPORTANT]
+> **下面是对一条真实条目的实测**（`kb:physics:prop-centripetal-is-not-a-new-force`）：
+>
+> | 步骤 | tokens |
+> |---|---|
+> | `scholia_search`（5 条上限） | 103 |
+> | `scholia_get_object`（默认 `content`） | 578 |
+> | `scholia_cite` | 165 |
+> | **合计：一次完整问答（定位 → 讲什么 → 引用）** | **846** |
+>
+> 同样的问答在改造前（20 条搜索 + 读全文）是 **≈7147**。**约 8 倍。**
+> 省下来的不是内容，是**重复搬运**。
+
 **挂在 MCP 上时不用自己拼 JSON**：`settings → MCP` 里接 `tools/scholia_mcp.py`，
 用 `scholia_search`（只回导航字段，默认 5 条）→ `scholia_cite`（取引用材料）→
 `scholia_get_object`（取正文）。

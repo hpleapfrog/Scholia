@@ -87,12 +87,17 @@ TOOLS = [
     },
     {
         "name": "scholia_get_object",
-        "description": "取某个对象的完整 Markdown（给 id 或 path）。/ Get an object's full markdown.",
+        "description": "取一条条目的 Markdown。`part=\"content\"`（默认）只给**学习者半**"
+                       "（读完你会什么 · 定义/陈述/做法 · 关联 · 禁忌/风险），约 460 tokens；"
+                       "要判断这条论证是否成立时才用 `part=\"full\"`（约 1125）。"
+                       "/ Get an entry. Default returns only the reader-facing half.",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "id": {"type": "string", "description": "如 kb:med:prop-osa-pap-titration"},
                 "path": {"type": "string", "description": "仓库内路径"},
+                "part": {"type": "string", "enum": ["content", "full"],
+                         "description": "content（默认，学习者半）| full（连论证与变更记录）"},
             },
         },
     },
@@ -137,6 +142,25 @@ def _brief(o):
     }
 
 
+# 复核者半的小节。FORMAT §0：每个条目分成两半——前半给学习者，后半给复核者。
+_REVIEW_SECTIONS = ("依据", "证据", "论证", "变更记录", "变更记录 ")
+
+
+def _content_half(md):
+    """截到第一个「复核者半」小节之前。
+
+    这不是摘要，是**原文的一部分**：本库的条目本来就分成两半
+    （前半答「它是什么」，后半答「我凭什么这么说」）。回答「这条讲什么」只要前半，
+    平均 461 tokens，比全文 1125 省 59%——而且不会像自动摘要那样把片段说成结论。
+    """
+    cut = len(md)
+    for sec in _REVIEW_SECTIONS:
+        i = md.find("\n## " + sec)
+        if 0 < i < cut:
+            cut = i
+    return md[:cut].rstrip() + "\n"
+
+
 def tool_call(name, args):
     idx = load_index()
     objs = idx.get("objects", [])
@@ -178,7 +202,14 @@ def tool_call(name, args):
         p = ROOT / target["path"]
         if not p.exists():
             return {"error": "file missing", "path": target["path"]}
-        return {"meta": _brief(target), "markdown": p.read_text(encoding="utf-8")}
+        md = p.read_text(encoding="utf-8")
+        part = args.get("part", "content")
+        if part == "full":
+            return {"meta": _brief(target), "part": "full", "markdown": md}
+        return {"meta": _brief(target), "part": "content",
+                "markdown": _content_half(md),
+                "note": "只给学习者半（定义/陈述/做法 + 关联/禁忌）。"
+                        "要判断论证是否成立，用 part=\"full\"。"}
 
     if name == "scholia_cite":
         oid = args.get("id", "")

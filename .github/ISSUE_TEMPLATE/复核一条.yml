@@ -1,0 +1,90 @@
+name: 复核一条
+description: 花 3 分钟，回答三个「是 / 否」——把一个待审条目往前推一格
+title: "[复核] "
+labels: ["triage:待审"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **这是本库最需要的一种贡献，也是最省力的一种。**
+
+        不需要懂 Git，不需要读规范，不需要写新内容——只要**打开来源看一眼**，回答三个问题。
+        答完三个「是」，这条就能从 `待审` 变成 `暂定确认`（署名复核，非作者本人）。
+
+        > [!IMPORTANT]
+        > **三个问题只问「原文有没有这么说」，不问「这个结论对不对」。**
+        > 结论对不对要靠论证攻防，那是另一件更重的事。
+
+  - type: input
+    id: node
+    attributes:
+      label: 要复核哪一条（路径或 id）
+      placeholder: knowledge/physics/claims/向心力不是一种新的力.md
+    validations:
+      required: true
+
+  - type: dropdown
+    id: q1
+    attributes:
+      label: 问题一 · 它引用的来源，你打得开吗？
+      description: 打开条目 `## 依据` 里那个链接 / 找到那本书那一页。打不开、404、要付费看不到，都算「否」。
+      options:
+        - 是（打开了）
+        - 否（打不开 / 链接失效 / 需要付费）
+        - 打不开，但我在别处找到了同一份文本
+    validations:
+      required: true
+
+  - type: dropdown
+    id: q2
+    attributes:
+      label: 问题二 · 那一页上，真的有这句话吗？
+      description: 对照条目里的「原文短引用」。措辞不同、意思更宽、原文根本没这句，都算「否」。
+      options:
+        - 是（逐字或实质一致）
+        - 否（原文没有这句话）
+        - 否（原文有，但意思不同 / 更窄 / 更宽）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: q3
+    attributes:
+      label: 问题三 · 它的结论有没有超出那一页？
+      description: 原文说「在某人群 / 某版本 / 某条件下成立」，而条目写成普遍成立——那就是超出了。
+      options:
+        - 没有超出
+        - 超出了（原文的范围更窄）
+        - 不好判断
+    validations:
+      required: true
+
+  - type: textarea
+    id: quote
+    attributes:
+      label: 你看到的原文（短引用 + 位置）
+      description: 一两句原文，加页码 / 条款号 / 模块号。这段会直接进该条目的复核记录。
+      placeholder: |
+        "……原文这一句……"
+        —— 书名 · 版次 · 第 123 页（或 §15.3.5 / m54181）
+    validations:
+      required: true
+
+  - type: input
+    id: who
+    attributes:
+      label: 你的署名
+      description: 会写进条目的复核记录（`暂定确认` 要求**非作者**的复核者，所以必须留名）。
+      placeholder: "@your-handle"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: conflicts
+    attributes:
+      label: 最后确认
+      options:
+        - label: 我不是这一条的作者（`暂定确认` 要求非作者复核）
+          required: true
+        - label: 我确实打开了来源，而不是凭印象回答
+          required: true
