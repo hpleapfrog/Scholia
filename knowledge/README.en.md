@@ -15,11 +15,11 @@
 | [Geography](geography/README.en.md) | 6 |
 | [Science](science/README.en.md) | 1 |
 | [Transport](transport/README.en.md) | 4 |
-| [Computing](computing/README.en.md) | 20 |
+| [Computing](computing/README.en.md) | 26 |
 | [Economics](economics/README.en.md) | 8 |
 | [Law](law/README.en.md) | 4 |
 | [Events (top level)](../events/README.en.md) | 2 |
-| **Total** | **158** |
+| **Total** | **164** |
 <!-- kbcheck:end -->
 
 > [!NOTE]
