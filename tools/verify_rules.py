@@ -346,6 +346,78 @@ def sample_link02(root, _v):
             return True
     return False
 
+def sample_schema02(root, _v):
+    """status 写成不受 type 约束的值。"""
+    for p, t in _objects(root):
+        if field_of(t, "type") == "知识点" and field_of(t, "status") == "有效":
+            write(p, set_field(t, "status", "已确证"))
+            return True
+    return False
+
+
+def sample_schema09(root, _v):
+    """author 写成没有 @ 的名字。"""
+    for p, t in _objects(root):
+        t2 = set_field(t, "author", "张三")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_schema10(root, _v):
+    """license 写成 MIT。"""
+    for p, t in _objects(root):
+        t2 = set_field(t, "license", "MIT")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_schema11(root, _v):
+    """id 前缀换成别的学科的 slug。"""
+    for p, t in _objects(root):
+        i = field_of(t, "id") or ""
+        if i.count(":") >= 2:
+            t2 = set_field(t, "id", "kb:wrong:" + i.split(":")[-1])
+            if t2:
+                write(p, t2)
+                return True
+    return False
+
+
+def sample_schema12(root, _v):
+    """教法的 knowledge_point 指到命题上。"""
+    for p, t in _objects(root):
+        if field_of(t, "type") != "教法":
+            continue
+        fm, body = front_matter_of(t)
+        out, done = [], False
+        for line in fm.split(chr(10)):
+            if not done and line.strip().startswith("knowledge_point:"):
+                out.append("knowledge_point: [\"../claims/" + "x" + ".md\"]".replace(
+                    chr(92) + '"', '"'))
+                done = True
+            else:
+                out.append(line)
+        if done:
+            write(p, chr(10).join(out) + body)
+            return True
+    return False
+
+
+def sample_schema13(root, _v):
+    """教法的 `水平档` 写成无法识别的值。"""
+    for p, t in _objects(root):
+        if field_of(t, "type") != "教法":
+            continue
+        t2 = set_field(t, "水平档", "ZZ")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
 
 SAMPLES = [
     ("R-SCHEMA-17", "命题写「暂定确认」但 ## 论证 为空", sample_schema17),
@@ -365,6 +437,12 @@ SAMPLES = [
     ("R-EVID-01", "evidence 指向 ev-999", sample_evid01),
     ("R-LINK-01", "正文加了指向不存在文件的链接", sample_link01),
     ("R-LINK-02", "链接目标存在但锚点不存在", sample_link02),
+    ("R-SCHEMA-02", "知识点写成「已确证」", sample_schema02),
+    ("R-SCHEMA-09", "author 写成「张三」", sample_schema09),
+    ("R-SCHEMA-10", "license 写成 MIT", sample_schema10),
+    ("R-SCHEMA-11", "id 前缀换成别的学科", sample_schema11),
+    ("R-SCHEMA-12", "教法的 knowledge_point 指向不存在的文件", sample_schema12),
+    ("R-SCHEMA-13", "教法的水平档写成 ZZ", sample_schema13),
 ]
 
 
