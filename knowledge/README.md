@@ -13,11 +13,11 @@
 | [地理](geography/README.md) | 6 |
 | [科学](science/README.md) | 1 |
 | [交通](transport/README.md) | 4 |
-| [计算机](computing/README.md) | 20 |
+| [计算机](computing/README.md) | 26 |
 | [经济](economics/README.md) | 8 |
 | [法律](law/README.md) | 4 |
 | [事件（顶层）](../events/README.md) | 2 |
-| **合计** | **158** |
+| **合计** | **164** |
 <!-- kbcheck:end -->
 
 > [!NOTE]

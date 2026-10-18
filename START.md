@@ -52,10 +52,10 @@
 | [地理](knowledge/geography/README.md) | 6 | 命题 6 | 全部是同一本香港教材的勘误。 |
 | [科学](knowledge/science/README.md) | 1 | 命题 1 | 一条勘误。 |
 | [交通](knowledge/transport/README.md) | 4 | 命题 4 | 道路交通与轨道交通：只收**官方文件**能核验的结论，不收办事流程。 |
-| [计算机](knowledge/computing/README.md) | 20 | 命题 17 · 误解 1 · 资源 2 | 标准与官方文档能定位的结论；**不收教程式步骤**。 |
+| [计算机](knowledge/computing/README.md) | 26 | 命题 23 · 误解 1 · 资源 2 | 标准与官方文档能定位的结论；**不收教程式步骤**。 |
 | [经济](knowledge/economics/README.md) | 8 | 命题 6 · 误解 1 · 资源 1 | 统计数据与权威文本能定位的结论；**不收预测与建议**。 |
 | [法律](knowledge/law/README.md) | 4 | 命题 3 · 资源 1 | 成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。 |
-| **合计** | **158** | — | — |
+| **合计** | **164** | — | — |
 <!-- kbcheck:end -->
 
 > 上表由 [`tools/kbcheck.py`](tools/kbcheck.py) 从 [`index.json`](index.json) 生成，**不手写**。
