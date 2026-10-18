@@ -111,10 +111,10 @@ this repository satisfies attribution.
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **141** —— 教法 methods 45 · 知识点 concepts 23 · 命题 claims 56 · 误解 misconceptions 8 · 资源 resources 8 · 路径 paths 1 |
+| 对象 / Objects | **145** —— 教法 methods 46 · 知识点 concepts 24 · 命题 claims 57 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 1 |
 | 事件 / Events | **1** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 86 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 16 · 经济 Economics 8 · 法律 Law 4 |
-| 证据 / Evidence | 72（含作废 / void 5） |
+| 学科 / Subjects | 物理 Physics 90 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 16 · 经济 Economics 8 · 法律 Law 4 |
+| 证据 / Evidence | 75（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 

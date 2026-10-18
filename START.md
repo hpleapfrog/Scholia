@@ -46,7 +46,7 @@
 <!-- kbcheck:begin -->
 | 学科 | 条数 | 里面有什么 | 收什么 |
 |---|---|---|---|
-| [物理](knowledge/physics/README.md) | 86 | 教法 45 · 知识点 23 · 命题 9 · 误解 6 · 资源 2 · 路径 1 | 覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题一条概念都没有（缺口清单见 `knowledge/physics/coverage/`）。 |
+| [物理](knowledge/physics/README.md) | 90 | 教法 46 · 知识点 24 · 命题 10 · 误解 7 · 资源 2 · 路径 1 | 覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题一条概念都没有（缺口清单见 `knowledge/physics/coverage/`）。 |
 | [生活](knowledge/life/README.md) | 8 | 命题 6 · 资源 2 | 出行规则：北京地铁与民航的官方规定（含两份官方文件）。 |
 | [医学](knowledge/medicine/README.md) | 8 | 命题 8 | 临床指南与随机试验的结论；一律以「指南 / 研究规定了 X」表述，**不提供诊疗建议**。 |
 | [地理](knowledge/geography/README.md) | 6 | 命题 6 | 全部是同一本香港教材的勘误。 |
@@ -55,7 +55,7 @@
 | [计算机](knowledge/computing/README.md) | 16 | 命题 13 · 误解 1 · 资源 2 | 标准与官方文档能定位的结论；**不收教程式步骤**。 |
 | [经济](knowledge/economics/README.md) | 8 | 命题 6 · 误解 1 · 资源 1 | 统计数据与权威文本能定位的结论；**不收预测与建议**。 |
 | [法律](knowledge/law/README.md) | 4 | 命题 3 · 资源 1 | 成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。 |
-| **合计** | **141** | — | — |
+| **合计** | **145** | — | — |
 <!-- kbcheck:end -->
 
 > 上表由 [`tools/kbcheck.py`](tools/kbcheck.py) 从 [`index.json`](index.json) 生成，**不手写**。

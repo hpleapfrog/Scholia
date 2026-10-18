@@ -47,20 +47,20 @@
     "已封存": "archived"
   },
   "统计": {
-    "对象总数": 141,
+    "对象总数": 145,
     "按类型": {
-      "命题": 56,
-      "教法": 45,
-      "知识点": 23,
-      "误解": 8,
+      "命题": 57,
+      "教法": 46,
+      "知识点": 24,
+      "误解": 9,
       "资源": 8,
       "路径": 1
     },
     "按状态": {
       "失据": 2,
       "待审": 13,
-      "暂定确认": 40,
-      "有效": 83,
+      "暂定确认": 41,
+      "有效": 86,
       "需复审": 3
     },
     "按学科": {
@@ -68,7 +68,7 @@
       "医学": 8,
       "地理": 6,
       "法律": 4,
-      "物理": 86,
+      "物理": 90,
       "生活": 8,
       "科学": 1,
       "经济": 8,
@@ -76,7 +76,7 @@
     },
     "已确证条数": 0,
     "事件条数": 1,
-    "证据条数": 72,
+    "证据条数": 75,
     "作废证据条数": 5
   },
   "known_limits": {
@@ -99,7 +99,7 @@
         "说明": "成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。"
       },
       "物理": {
-        "条数": 86,
+        "条数": 90,
         "说明": "覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题一条概念都没有（缺口清单见 `knowledge/physics/coverage/`）。"
       },
       "生活": {
@@ -914,6 +914,39 @@
       "许可": "官方公开发布 · **仅引用短句与结论，不转载全文**",
       "作废": false,
       "引用处": "GOLD2026 慢阻肺诊疗"
+    },
+    "ev-080": {
+      "类别": "教材",
+      "等级": "低",
+      "核验深度": "全文",
+      "定位": "OpenStax《Physics》第 6 章 · Angle of Rotation and Angular Velocity，m54176（**抓取该模块 cnxml 源文件通读**：转角 Δθ = Δs/r、角速度 ω = Δθ/Δt、切向速度 v = rω、单位换算与 Teacher Support）",
+      "链接": "https://github.com/openstax/osbooks-physics/blob/main/modules/m54176/index.cnxml",
+      "时间": "2020",
+      "许可": "**CC BY 4.0** · **可自由复用**",
+      "作废": false,
+      "引用处": "匀速圆周运动"
+    },
+    "ev-081": {
+      "类别": "教材",
+      "等级": "低",
+      "核验深度": "全文",
+      "定位": "OpenStax《Physics》第 6 章 · Uniform Circular Motion，m54181（**抓取该模块 cnxml 源文件通读**：向心加速度 a_c = v²/r = rω²、向心力 F_c = mv²/r、Key Terms 对向心力与离心力的定义、Teacher Support 的 `[BL][OL][AL]` 演示建议与离心力混淆说明）",
+      "链接": "https://github.com/openstax/osbooks-physics/blob/main/modules/m54181/index.cnxml",
+      "时间": "2020",
+      "许可": "**CC BY 4.0** · **可自由复用**",
+      "作废": false,
+      "引用处": "匀速圆周运动 · 向心力不是一种新的力 · 离心力误解 · 剪断绳子教法"
+    },
+    "ev-082": {
+      "类别": "教材",
+      "等级": "低",
+      "核验深度": "全文",
+      "定位": "OpenStax《Physics》第 6 章 · Introduction（章首导言），m54173（**抓取该模块 cnxml 源文件通读**：Teacher Support 要求教师 `Address any misconceptions about centrifugal force`，并指出圆周运动是本章入口）",
+      "链接": "https://github.com/openstax/osbooks-physics/blob/main/modules/m54173/index.cnxml",
+      "时间": "2020",
+      "许可": "**CC BY 4.0** · **可自由复用**",
+      "作废": false,
+      "引用处": "离心力误解（「教材预期会出现」这一条的出处）"
     }
   },
   "objects": [
@@ -2353,6 +2386,32 @@
       "引用时须写明": "state=待审"
     },
     {
+      "id": "kb:physics:prop-centripetal-is-not-a-new-force",
+      "type": "命题",
+      "title": "向心力不是一种新的力，而是合力垂直于速度的分量",
+      "status": "暂定确认",
+      "path": "knowledge/physics/claims/向心力不是一种新的力.md",
+      "path_en": "knowledge/physics/claims/centripetal-is-not-a-new-force.en.md",
+      "学科": "物理",
+      "学段": "高中",
+      "适用": "学完匀速圆周运动、开始做题找「向心力是谁」的学生",
+      "条件": "\"**仅陈述教材的表述方式**；在非惯性系里把惯性力写成「离心力」是另一套记账方式，本条不否认那套写法在特定语境下的用途\"",
+      "免责块在正文最前": false,
+      "证据": [
+        "ev-081"
+      ],
+      "来源": [
+        "ev-081：OpenStax《Physics》第 6 章 · Uniform Circular Motion，m54181（**抓取该模块 cnxml 源文件通读**：向心加速度 a_c = v²/r = rω²、向心力 F_c = mv²/r、Key Terms 对向心力与离心力的定义、Teacher Support 的 `[BL][OL][AL]` 演示建议与离心力混淆说明）"
+      ],
+      "先修": [],
+      "论证": [
+        "a1",
+        "a2"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=暂定确认"
+    },
+    {
       "id": "kb:physics:ohm-law-scope-placement",
       "type": "命题",
       "title": "欧姆定律局限性的呈现位置差异",
@@ -2746,6 +2805,36 @@
       ],
       "论证": [
         "k23"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
+      "id": "kb:physics:kp-uniform-circular-motion",
+      "type": "知识点",
+      "title": "匀速圆周运动",
+      "status": "有效",
+      "path": "knowledge/physics/concepts/匀速圆周运动.md",
+      "path_en": "knowledge/physics/concepts/uniform-circular-motion.en.md",
+      "学科": "物理",
+      "学段": "高中",
+      "适用": "已学过加速度、正在学分速度方向为什么一直在变的学生",
+      "条件": "只涉及圆周运动的**描述**与向心加速度/向心力的关系；不含角加速度与力矩（另立条目）",
+      "免责块在正文最前": false,
+      "证据": [
+        "ev-080",
+        "ev-081"
+      ],
+      "来源": [
+        "ev-080：OpenStax《Physics》第 6 章 · Angle of Rotation and Angular Velocity，m54176（**抓取该模块 cnxml 源文件通读**：转角 Δθ = Δs/r、角速度 ω = Δθ/Δt、切向速度 v = rω、单位换算与 Teacher Support）",
+        "ev-081：OpenStax《Physics》第 6 章 · Uniform Circular Motion，m54181（**抓取该模块 cnxml 源文件通读**：向心加速度 a_c = v²/r = rω²、向心力 F_c = mv²/r、Key Terms 对向心力与离心力的定义、Teacher Support 的 `[BL][OL][AL]` 演示建议与离心力混淆说明）"
+      ],
+      "先修": [
+        "加速度.md"
+      ],
+      "论证": [
+        "k1",
+        "k2"
       ],
       "可作事实引用": true,
       "引用时须写明": "state=有效"
@@ -3461,6 +3550,31 @@
       ],
       "来源": [
         "ev-046：OpenStax《Physics》第 8 章 · Conservation of Momentum，m54202"
+      ],
+      "先修": [],
+      "论证": [
+        "m1"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
+      "id": "kb:physics:method-ucm-cut-string",
+      "type": "教法",
+      "title": "匀速圆周运动 · 不分档：把绳子剪断，问它往哪走",
+      "status": "有效",
+      "path": "knowledge/physics/methods/匀速圆周运动-不分档-剪断绳子.md",
+      "path_en": "knowledge/physics/methods/ucm-cut-string.en.md",
+      "学科": "物理",
+      "学段": "高中",
+      "适用": "刚建立圆周运动描述、需要「加速度指向圆心」这一结论的学生",
+      "条件": "讲台可做演示（系重物的绳子、可剪断）；若无法演示，需至少能用示意图替代",
+      "免责块在正文最前": false,
+      "证据": [
+        "ev-081"
+      ],
+      "来源": [
+        "ev-081：OpenStax《Physics》第 6 章 · Uniform Circular Motion，m54181（**抓取该模块 cnxml 源文件通读**：向心加速度 a_c = v²/r = rω²、向心力 F_c = mv²/r、Key Terms 对向心力与离心力的定义、Teacher Support 的 `[BL][OL][AL]` 演示建议与离心力混淆说明）"
       ],
       "先修": [],
       "论证": [
@@ -4340,6 +4454,34 @@
       "先修": [],
       "论证": [
         "m1"
+      ],
+      "可作事实引用": true,
+      "引用时须写明": "state=有效"
+    },
+    {
+      "id": "kb:physics:mis-centrifugal-force-is-real",
+      "type": "误解",
+      "title": "离心力是一个真实存在的力",
+      "status": "有效",
+      "path": "knowledge/physics/misconceptions/离心力是一个真实的力.md",
+      "path_en": "knowledge/physics/misconceptions/centrifugal-force-is-real.en.md",
+      "学科": "物理",
+      "学段": "高中",
+      "适用": "坐车转弯时感到被「甩向车门」并据此认为存在离心力的学生",
+      "条件": "指惯性系（地面参考系）里的受力分析；非惯性系里引入惯性力是另一套记账方式",
+      "免责块在正文最前": false,
+      "证据": [
+        "ev-081",
+        "ev-082"
+      ],
+      "来源": [
+        "ev-081：OpenStax《Physics》第 6 章 · Uniform Circular Motion，m54181（**抓取该模块 cnxml 源文件通读**：向心加速度 a_c = v²/r = rω²、向心力 F_c = mv²/r、Key Terms 对向心力与离心力的定义、Teacher Support 的 `[BL][OL][AL]` 演示建议与离心力混淆说明）",
+        "ev-082：OpenStax《Physics》第 6 章 · Introduction（章首导言），m54173（**抓取该模块 cnxml 源文件通读**：Teacher Support 要求教师 `Address any misconceptions about centrifugal force`，并指出圆周运动是本章入口）"
+      ],
+      "先修": [],
+      "论证": [
+        "a1",
+        "a2"
       ],
       "可作事实引用": true,
       "引用时须写明": "state=有效"
