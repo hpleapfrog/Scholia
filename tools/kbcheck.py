@@ -1150,6 +1150,133 @@ SUBJECT_EN = {"物理": "Physics", "生活": "Life", "医学": "Medicine",
 # ── 规则注册表：每条规则一个 ID，分「机械校验」与「人工复核」──────────────
 # 改了任何一条规则，**必须同时改这里的清单与对应的检查**——否则 R-INDEX-02 会失败。
 # 这就是「规则即代码」：规则不再散在散文里，而是可枚举、可校验的清单。
+def check_status_has_argument(objects, errors):
+    """R-SCHEMA-17：说了「核对过」的状态，必须有论证撑着。
+
+    FORMAT §6 把状态定义为「存活论证集合算出来的结果」。但在此之前，**空集也能算出状态**：
+    一条命题写上 `暂定确认`、`## 论证` 里（尚无论证），校验全绿。
+    那等于把整套「证据 + 反驳」的机制留了一个后门——**状态可以宣称一件没发生的事**。
+    空集只能对应「待审」（从未论证）或「失据」（曾有论证被击倒），而后者本身也必须有论证。
+    """
+    need = {"暂定确认", "已确证", "失据", "已推翻"}
+    for rel, o in sorted(objects.items()):
+        st = fm_value(o["fm"], "status")
+        if st in need and not arg_ids(o["text"]):
+            errors.append(
+                f"{rel}: status=「{st}」，但 `## 论证` 里一条论证都没有 —— "
+                f"「{st}」必须由存活（或被击倒）的论证算出来；空集请写「待审」（R-SCHEMA-17）")
+
+
+def check_updated_matches_changelog(objects, errors):
+    """R-SCHEMA-18：`updated` 与「变更记录」里最后一行日期必须一致。
+
+    两个时间戳说的是同一件事。不一致时，读者没法判断「这条最后改于什么时候」——
+    而 `updated` 已经进了 `index.json` 与生成块。
+    """
+    for rel, o in sorted(objects.items()):
+        body = section_body(o["text"], "变更记录") or ""
+        dates = re.findall(r"\|\s*(20\d\d-\d\d-\d\d)\s*\|", body)
+        upd = fm_value(o["fm"], "updated")
+        if dates and upd and max(dates) != upd:
+            errors.append(
+                f"{rel}: `updated`={upd}，但「变更记录」最后一行是 {max(dates)}（R-SCHEMA-18）")
+
+
+def check_bilingual_fields(objects, events, en_fm, errors):
+    """R-BILING-02：英译本的 `type` / `status` / `evidence` 必须与中文原件一致。
+
+    `M-10`（改一份同步另一份）里，**语义**只能人判，但**这三个字段是结构**。
+    在此之前，把英译本的 `status` 改掉、中文不动，两边都「合法」——
+    于是同一个 `id` 在两种语言里有两套状态，而读者只会看到自己那一份。
+    """
+    zh = {}
+    for bucket in (objects, events):
+        for rel, o in bucket.items():
+            oid = fm_value(o["fm"], "id")
+            if oid:
+                zh[oid] = o
+    for rel, fm in sorted(en_fm.items()):
+        oid = fm_value(fm, "id") if fm else None
+        if not oid or oid not in zh:
+            continue
+        z = zh[oid]
+        zt = z.get("type") or fm_value(z["fm"], "type")
+        if fm_value(fm, "type") != zt:
+            errors.append(f"{rel}: 英译本 type={fm_value(fm, 'type')!r} "
+                          f"与中文原件 {zt!r} 不一致（R-BILING-02）")
+        if fm_value(fm, "status") != fm_value(z["fm"], "status"):
+            errors.append(f"{rel}: 英译本 status=「{fm_value(fm, 'status')}」"
+                          f"与中文原件「{fm_value(z['fm'], 'status')}」不一致（R-BILING-02）")
+        en_ev = sorted(set(re.findall(r"ev-\d+", fm or "")))
+        zh_ev = sorted(set(re.findall(r"ev-\d+", z["fm"])))
+        if en_ev != zh_ev:
+            errors.append(f"{rel}: 英译本 evidence={en_ev} 与中文原件 {zh_ev} 不一致"
+                          f"（R-BILING-02）")
+
+
+def check_attack_has_edge(objects, errors):
+    """R-GRAPH-05：攻击条目自己必须有一条 `攻击` 边。
+
+    「攻击」在本库是**落到某个论证上的主张**（`攻击: ["[X](x.md#a1)"]`）。
+    一个放在 `attacks/` 里、却不指向任何论证的文件，只是一条评论——
+    它拿走了「独立条目、独立状态」的全部形式，却不承担「击倒某条论证」的功能。
+    """
+    for rel, o in sorted(objects.items()):
+        if "/attacks/" not in rel:
+            continue
+        if not fm_links(o["fm"], "攻击"):
+            errors.append(f"{rel}: 攻击条目没有任何 `攻击` 边 —— "
+                          f"攻击必须落到**具体某个论证**上，否则它只是一条评论（R-GRAPH-05）")
+
+
+def check_readme_status(objects, errors):
+    """R-README-02：学科 README 里手写的状态列，必须与 front-matter 一致。
+
+    学科 README 是读者进库后的第一张表，而它的「状态」列是**手写的**。
+    手写的状态会漂移：条目从 `有效` 改成 `需复审`，README 还写着 `有效`——
+    读者看到的是旧的，而且没有任何检查会告诉他。
+    """
+    statuses = set(STATUS_MEANING)
+    for subj_dir in sorted(set(SUBJECT_DIRS.values())):
+        rp = ROOT / "knowledge" / subj_dir / "README.md"
+        if not rp.exists():
+            continue
+        for line in rp.read_text(encoding="utf-8").replace("\r\n", "\n").splitlines():
+            if not line.startswith("|"):
+                continue
+            m = re.search(r"\]\(([^)#]+)", line)
+            if not m:
+                continue
+            tgt = os.path.normpath(os.path.join(str(rp.parent), m.group(1)))
+            rel = os.path.relpath(tgt, str(ROOT)).replace(os.sep, "/")
+            o = objects.get(rel)
+            if not o:
+                continue
+            cells = [c.strip().strip("*").strip("`") for c in line.strip().strip("|").split("|")]
+            shown = [c for c in cells if c in statuses]
+            real = fm_value(o["fm"], "status")
+            if shown and shown[0] != real:
+                errors.append(
+                    f"{rp.relative_to(ROOT).as_posix()}: 表里写的状态是「{shown[0]}」，"
+                    f"但 `{Path(rel).name}` 的 front-matter 是「{real}」（R-README-02）")
+
+
+def check_body_evidence_ids(objects, errors):
+    """R-EVID-04：正文里出现的 `ev-###` 必须已在证据索引登记。
+
+    front-matter 的 `evidence` 会被校验（R-EVID-01），但**正文里写的编号没有**——
+    写错一位、或者引一个不存在的编号，全库都不会有反应。
+    **这条只查「编号是否存在」，不要求它属于本条**：正文引用别人的证据、
+    讨论一条已作废的证据，都是合法的写法（前者如 RFC 条目互引，后者如欧姆定律讨论 ev-002）。
+    """
+    idx = parse_evidence_index()
+    for rel, o in sorted(objects.items()):
+        body = re.sub(r"\A---.*?\n---", "", o["text"], count=1, flags=re.S)
+        for e in sorted(set(re.findall(r"ev-\d+", body))):
+            if e not in idx:
+                errors.append(f"{rel}: 正文引用了 `{e}`，但它不在证据索引里（R-EVID-04）")
+
+
 MECH_RULES = [
     ("R-SCHEMA-01", "front-matter 必填 11 字段，顶层键不重复"),
     ("R-SCHEMA-02", "type 合法；status 受 type 约束；只有「命题」可用「已确证」"),
@@ -1167,21 +1294,27 @@ MECH_RULES = [
     ("R-SCHEMA-14", "医学条目有 `scope.条件`，且正文开头是 `> [!CAUTION]` 免责块"),
     ("R-SCHEMA-15", "front-matter 的 `key: value` 值不得以 YAML 指示符（`*` `&` `!` `|` `>` `%` `@` `` ` ``）开头而不加引号（否则严格 YAML 解析器报错）"),
     ("R-SCHEMA-16", "文件所在目录与 `type` 对应（concepts / claims / methods / misconceptions / paths / resources）"),
+    ("R-SCHEMA-17", "「暂定确认 / 已确证 / 失据 / 已推翻」必须有 ≥1 条论证（空集只能写「待审」）"),
+    ("R-SCHEMA-18", "`updated` 与「变更记录」最后一行的日期一致"),
     ("R-EVENT-01", "`事件` 单开顶层 `events/`，与 `objects` **分开**：`type`=事件、`status` 只用持续更新/已封存、必填段 陈述/依据/变更记录、**无论证、无任何边**、`id` 前缀 `kb:event:`、`evidence` 非空；且每个事件须登记在 `events/README.md`"),
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
     ("R-BILING-01", "英译本文件名由 `id` 派生（`<id 末段去类型前缀>.en.md`，与中文原件同目录）；缺译本给提示、不判失败"),
+    ("R-BILING-02", "英译本的 `type` / `status` / `evidence` 与中文原件一致（`M-10` 里可机械化的那一半）"),
     ("R-LINK-03", "英文页面的站内链接指向英文页（该页存在时）；例外：`English version of` 行、指向无译本文件的链接"),
     ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
     ("R-GRAPH-02", "`支持` / `攻击` 边的论证锚点存在"),
     ("R-GRAPH-03", "`路径` 每个成果至少被一个环节覆盖（未声明 outcomes 给警告）"),
     ("R-GRAPH-04", "`路径` 每个环节至少连到一个库内对象"),
+    ("R-GRAPH-05", "攻击条目（`claims/attacks/`）必须有一条 `攻击` 边，落到具体论证上"),
     ("R-EVID-01", "`evidence` 编号已登记且未作废"),
     ("R-EVID-02", "证据表 `类别` / `等级` / `核验深度` 取值合法"),
     ("R-EVID-03", "`暂定确认` / `已确证` 必须至少有一条 `核验深度` 为 `全文` / `摘要` 的证据（没读过不能说确认）"),
+    ("R-EVID-04", "正文里出现的 `ev-###` 必须在证据索引登记（防笔误与幽灵引用；不要求属于本条）"),
     ("R-INDEX-01", "`index.json` 与内容一致（改内容必须重生成）"),
     ("R-INDEX-02", "人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表）"),
     ("R-README-01", "每个对象都在所属学科 README 里登记"),
+    ("R-README-02", "学科 README 里手写的状态列与 front-matter 一致"),
     ("R-DOC-01", "状态图例在 FORMAT.md 与 knowledge/README.md 里列全"),
 ]
 
@@ -1216,21 +1349,27 @@ MECH_RULES_EN = [
     ("R-SCHEMA-14", "medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block"),
     ("R-SCHEMA-15", "a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it"),
     ("R-SCHEMA-16", "a file sits in the folder its `type` maps to (concepts / claims / methods / misconceptions / paths / resources)"),
+    ("R-SCHEMA-17", "「暂定确认 / 已确证 / 失据 / 已推翻」requires ≥1 argument (an empty set may only be 「待审」)"),
+    ("R-SCHEMA-18", "`updated` matches the last date row in 「变更记录」"),
     ("R-EVENT-01", "`事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md`"),
     ("R-LINK-01", "link targets exist (relative · repo-absolute · YAML `url:`)"),
     ("R-LINK-02", "anchors exist (heading slug or argument id)"),
     ("R-BILING-01", "an English edition's filename is derived from its `id` (`<id-tail minus type prefix>.en.md`, same folder as the Chinese original); a missing translation is a notice, not a failure"),
+    ("R-BILING-02", "an English edition's `type` / `status` / `evidence` match the Chinese original (the mechanisable half of `M-10`)"),
     ("R-LINK-03", "links inside an English page point at the English page (when it exists); exempt: `English version of` lines and links to files that have no translation"),
     ("R-GRAPH-01", "`先修` connects only 知识点, acyclic"),
     ("R-GRAPH-02", "`支持` / `攻击` edge argument anchors exist"),
     ("R-GRAPH-03", "`路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning)"),
     ("R-GRAPH-04", "`路径` each 环节 connects to ≥1 in-repo object"),
+    ("R-GRAPH-05", "attack entries in `claims/attacks/` carry at least one `攻击` edge to a specific argument"),
     ("R-EVID-01", "`evidence` id registered and not voided"),
     ("R-EVID-02", "evidence table `类别` / `等级` / `核验深度` values valid"),
     ("R-EVID-03", "`暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed)"),
+    ("R-EVID-04", "every `ev-###` mentioned in the body is registered in the evidence index (catches typos and ghost citations; need not belong to that entry)"),
     ("R-INDEX-01", "`index.json` consistent with content (regenerate on change)"),
     ("R-INDEX-02", "human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table)"),
     ("R-README-01", "every object registered in its subject README"),
+    ("R-README-02", "the hand-written status column in a subject README matches the front-matter"),
     ("R-DOC-01", "status legend listed in FORMAT.md and knowledge/README.md"),
 ]
 
@@ -1590,6 +1729,7 @@ def check_all():
     objects = {}
     events = {}
     en_docs = {}          # 英文译本：rel -> 它的 id（None = 缺 id）
+    en_fm = {}            # 英文译本：rel -> 它的 front-matter（R-BILING-02 要比字段）
     link_records = []     # 供 R-LINK-03 二次判定：语言是否落错
     md_files = scan_text_files()
 
@@ -1608,6 +1748,7 @@ def check_all():
 
         if _name.endswith(".en.md"):
             en_docs[rel] = fm_value(fm, "id") if fm else None
+            en_fm[rel] = fm
 
         if is_event:
             if fm is None:
@@ -1733,6 +1874,12 @@ def check_all():
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
     check_type_dir(objects, errors)
+    check_status_has_argument(objects, errors)
+    check_updated_matches_changelog(objects, errors)
+    check_bilingual_fields(objects, events, en_fm, errors)
+    check_attack_has_edge(objects, errors)
+    check_readme_status(objects, errors)
+    check_body_evidence_ids(objects, errors)
     check_evidence_verified_support(objects, errors)
     # 事件（与知识对象分开的另一套规则）
     check_event_readme(events, errors)

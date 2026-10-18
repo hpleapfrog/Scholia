@@ -10,7 +10,7 @@
 > **中文：** 由 [`tools/kbcheck.py`](../tools/kbcheck.py) 生成的规则注册表——**请勿手改**。
 
 <!-- kbcheck:begin -->
-**Mechanically enforced (32)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
+**Mechanically enforced (38)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
 
 | ID | Rule |
 |---|---|
@@ -30,21 +30,27 @@
 | `R-SCHEMA-14` | medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block |
 | `R-SCHEMA-15` | a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it |
 | `R-SCHEMA-16` | a file sits in the folder its `type` maps to (concepts / claims / methods / misconceptions / paths / resources) |
+| `R-SCHEMA-17` | 「暂定确认 / 已确证 / 失据 / 已推翻」requires ≥1 argument (an empty set may only be 「待审」) |
+| `R-SCHEMA-18` | `updated` matches the last date row in 「变更记录」 |
 | `R-EVENT-01` | `事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md` |
 | `R-LINK-01` | link targets exist (relative · repo-absolute · YAML `url:`) |
 | `R-LINK-02` | anchors exist (heading slug or argument id) |
 | `R-BILING-01` | an English edition's filename is derived from its `id` (`<id-tail minus type prefix>.en.md`, same folder as the Chinese original); a missing translation is a notice, not a failure |
+| `R-BILING-02` | an English edition's `type` / `status` / `evidence` match the Chinese original (the mechanisable half of `M-10`) |
 | `R-LINK-03` | links inside an English page point at the English page (when it exists); exempt: `English version of` lines and links to files that have no translation |
 | `R-GRAPH-01` | `先修` connects only 知识点, acyclic |
 | `R-GRAPH-02` | `支持` / `攻击` edge argument anchors exist |
 | `R-GRAPH-03` | `路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning) |
 | `R-GRAPH-04` | `路径` each 环节 connects to ≥1 in-repo object |
+| `R-GRAPH-05` | attack entries in `claims/attacks/` carry at least one `攻击` edge to a specific argument |
 | `R-EVID-01` | `evidence` id registered and not voided |
 | `R-EVID-02` | evidence table `类别` / `等级` / `核验深度` values valid |
 | `R-EVID-03` | `暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed) |
+| `R-EVID-04` | every `ev-###` mentioned in the body is registered in the evidence index (catches typos and ghost citations; need not belong to that entry) |
 | `R-INDEX-01` | `index.json` consistent with content (regenerate on change) |
 | `R-INDEX-02` | human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table) |
 | `R-README-01` | every object registered in its subject README |
+| `R-README-02` | the hand-written status column in a subject README matches the front-matter |
 | `R-DOC-01` | status legend listed in FORMAT.md and knowledge/README.md |
 
 **Human-reviewed (11)** — not mechanizable; run the checklist in [CONTRIBUTING](../CONTRIBUTING.en.md):
