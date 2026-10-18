@@ -17,4 +17,5 @@
 | [support-count-not-strength.md](support-count-not-strength.en.md) | why "15 supporting edges" is the wrong way to write it |
 | [evidence-history.md](evidence-history.en.md) | the evidence incidents: invented section numbers, `ev-002`, the ladder is unfair to physics |
 | [events-are-not-propositions.md](events-are-not-propositions.en.md) | keeping `事件` apart from `命题`: why forcing it into a proposition yields fake argument-free structure |
+| [three-machine-files.md](three-machine-files.en.md) | splitting the machine entry into three: tokens are saved by *not reading*, not by a smaller sum |
 | [english-filenames-from-id.md](english-filenames-from-id.en.md) | English filenames moved from "same name" to "derived from `id`": "same name" both gave English pages Chinese filenames and made pairing uncheckable |

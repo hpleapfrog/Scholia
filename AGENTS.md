@@ -21,7 +21,7 @@ rebuttal structure by rules, never by vote.
 
 | 方式 / How | 入口 / Entry |
 |---|---|
-| 机器可读的全部对象 | [index.json](index.json)（**生成物，勿手改**） |
+| 机器可读的三份文件 | [index.json](index.json)（导航）· [citations.json](citations.json)（按 id 取引用材料）· [evidence.json](evidence.json)（证据登记）——**均为生成物，勿手改** |
 | AI 读取约定（状态、能不能引用） | [llms.txt](llms.txt) |
 | **MCP server**（可直接挂到 agent） | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) |
 
@@ -52,7 +52,8 @@ python tools/kbcheck.py --write-index   # 若改了内容：重生成 index.json
 
 铁律 / hard rules:
 
-1. **`index.json` 与文档里的 `<!-- kbcheck:begin --> … <!-- kbcheck:end -->` 是生成物**——手改会被校验判失败。改它们只能靠 `--write-index`。
+1. **`index.json` / `citations.json` / `evidence.json` 与文档里的 `<!-- kbcheck:begin --> … <!-- kbcheck:end -->` 是生成物**——手改会被校验判失败。改它们只能靠 `--write-index`。
+   **三份各管一件事，别整读**：`index.json` 导航 · `citations.json` 按 id 取一条 · `evidence.json` 核出处。
 2. **一个知识点 = 一个 `.md`**；`front-matter` 11 个字段必填（**知识对象**；`事件` 单开顶层 `events/`，用另一套 9 字段、**无论证、无任何边**，见 [FORMAT.md](FORMAT.md) §4「`事件`」）；正文第一行、状态、水平档、医学免责块等见 [FORMAT.md](FORMAT.md)。
    **英文译本的文件名由 `id` 派生**（`frame-of-reference.en.md`），**不要**写成「中文名 + `.en.md`」——
    那会让英文页顶着中文文件名（`R-BILING-01`，见 [FORMAT.md](FORMAT.md) §0）。

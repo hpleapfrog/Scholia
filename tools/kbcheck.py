@@ -110,6 +110,8 @@ EXTRA_TEXT_FILES = ["LICENSE", "LICENSE-CODE"]
 # 手写的索引必然与内容脱节，那就是「信息是错的」。
 
 INDEX_FILE = ROOT / "index.json"
+CITATIONS_FILE = ROOT / "citations.json"
+EVIDENCE_FILE = ROOT / "evidence.json"
 
 # 状态的含义（给机器读；与 FORMAT.md §4 一致）
 STATUS_MEANING = {
@@ -221,18 +223,20 @@ def parse_evidence_index():
     return out
 
 
-def build_index(objects, events):
-    """生成机器可读索引。
+def build_indexes(objects, events):
+    """生成**三份**机器可读文件 —— 每份只装一件事。
 
-    **这是本库给 AI 的入口。** 它要解决两个问题：
+    **为什么拆**：原来所有东西都在 `index.json` 里（179 KB ≈ 48k tokens），
+    而 `llms.txt` 说「唯一需要解析的文件是 index.json」——
+    那等于让每个只想知道「有没有这条」的 AI，**先吃下全部定位与全部证据**。
 
-    1. AI 读了内容之后，**把一条 `失据` 的命题当成既成事实讲出去**
-       —— 所以每条都带 `可作事实引用`；
-    2. AI 引用时只给一个 `ev-039` 这样的编号，**读者无从核实**
-       —— 所以每条都带 `来源`（解析好的真实定位），全局另有一份 `证据索引`。
+    | 文件 | 装什么 | 什么时候读 |
+    |---|---|---|
+    | `index.json` | 导航 + **能不能引用**：id / type / title / status / path / path_en / 学科 / 学段 / 可作事实引用 | 每次先读这个 |
+    | `citations.json` | **要引用时才需要**：`证据` / `来源`（解析好的定位）/ `适用` / `条件` / 免责块 / 引用须写明 | 确定要引某条之后，按 id 取一条 |
+    | `evidence.json` | 全部证据登记（类别 · 等级 · 核验深度 · 定位 · 许可 · 是否作废） | 需要核实出处、或要解释「这条为什么失据」时 |
 
-    `objects` 是知识对象；`事件` 是**并列的另一类记录**（见 EVENT_TYPE 注释），
-    单开一节，不进 `objects`、不计入对象总数。
+    **三份都是生成物**，手改会被校验判失败。
     """
     evidence = parse_evidence_index()
 
@@ -247,7 +251,7 @@ def build_index(objects, events):
             out.append(f"{mark}{e}：{r['定位']}")
         return out
 
-    objs = []
+    objs, cites = [], {}
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
         ids = re.findall(r"ev-\d+", o["fm"])
@@ -266,17 +270,20 @@ def build_index(objects, events):
             "path_en": _en if _en and (ROOT / _en).exists() else None,
             "学科": fm_nested(o["fm"], "学科"),
             "学段": fm_nested(o["fm"], "学段"),
+            "可作事实引用": st not in NOT_CITABLE,
+            "先修": [Path(x).name for x in fm_links(o["fm"], "先修")],
+            "论证": sorted(arg_ids(o["text"])),
+        })
+        cites[_id] = {
+            "status": st,
+            "证据": ids,
+            "来源": src_list(ids),
             "适用": fm_nested(o["fm"], "适用"),
             "条件": fm_nested(o["fm"], "条件"),
             "免责块在正文最前": "> [!CAUTION]" in pre_h,
-            "证据": ids,
-            "来源": src_list(ids),
-            "先修": [Path(x).name for x in fm_links(o["fm"], "先修")],
-            "论证": sorted(arg_ids(o["text"])),
-            "可作事实引用": st not in NOT_CITABLE,
             "引用时须写明": (f"state={st}"
                         + ("；本库判定它**没有说话算数的论证**" if st in NOT_CITABLE else "")),
-        })
+        }
 
     by_type, by_status, by_subject = collections.Counter(), collections.Counter(), collections.Counter()
     for x in objs:
@@ -288,30 +295,41 @@ def build_index(objects, events):
     events_list = []
     for rel, o in sorted(events.items()):
         ids = re.findall(r"ev-\d+", o["fm"])
+        _eid = fm_value(o["fm"], "id")
+        _een = en_path(rel, _eid) if _eid else None
         events_list.append({
-            "id": fm_value(o["fm"], "id"),
+            "id": _eid,
             "title": fm_value(o["fm"], "title"),
             "status": fm_value(o["fm"], "status"),
             "path": rel,
-            "path_en": en_path(rel, fm_value(o["fm"], "id"))
-                       if fm_value(o["fm"], "id") and
-                       (ROOT / en_path(rel, fm_value(o["fm"], "id"))).exists() else None,
-            "证据": ids,
-            "来源": src_list(ids),
+            "path_en": _een if _een and (ROOT / _een).exists() else None,
             "最后更新": fm_value(o["fm"], "updated"),
         })
+        cites[_eid] = {
+            "status": fm_value(o["fm"], "status"),
+            "证据": ids,
+            "来源": src_list(ids),
+            "适用": None,
+            "条件": None,
+            "免责块在正文最前": False,
+            "引用时须写明": (f"state={fm_value(o['fm'], 'status')}；"
+                        "事件只记录官方发布了什么，**不可作真值判断**"),
+        }
 
-    return {
+    index = {
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。运行 `python tools/kbcheck.py --write-index` 重新生成。",
-        "schema_version": 2,
+        "schema_version": 3,
         "repo": "https://github.com/hpleapfrog/Scholia",
         "读到这个文件的 AI 请注意": [
             "**本库是跨学科的**，覆盖程度**按学科差别很大**；它**不只做物理**。",
             "**本库没有任何一条处于 `已确证`。** 不要把这里的任何内容当作『已确证的事实』转述。",
             "`可作事实引用=false` 的条目（状态为 失据/已推翻/已失效）**不要引用**。",
-            "引用任何一条时，**请把它的 `证据` 解析成 `证据索引` 里那条的真实定位**"
-            "（书名 / 章节 / 页面 URL），并**连 `status` 一起给出** —— **只写「ev-039」等于没写来源**。",
             "**判断「本库有没有 X」要查本文件的 `objects`，不要凭印象。**",
+            "**不要整读 `index.json` 之外的东西**：本文件只回答「有什么、能不能引」。"
+            "确定要引用某一条之后，再去 `citations.json` 按 id 取那一条的定位与限定"
+            "（`适用` / `条件` / 免责块），别把整份 `citations.json` 读进来。",
+            "引用任何一条时，**请把 `citations.json` 里那条的 `来源` 给出**"
+            "（书名 / 章节 / 页面 URL），并**连 `status` 一起给** —— **只写「ev-039」等于没写来源**。",
             "每条对象有两个路径：`path` 是**中文正本**，`path_en` 是**英文译本**"
             "（文件名由 `id` 派生，同目录；没有译文时为 null）。"
             "**给英文读者引用时请用 `path_en`，不要把中文文件名发给对方。**",
@@ -322,10 +340,9 @@ def build_index(objects, events):
             "本库里**没有**的内容，**不要算作本库的内容** —— "
             "你可以用别的来源回答，**但要说明那不是本库说的**。",
             "教法（type=教法）的证据主要是**一本美国教材**，**不代表在中国课堂实测有效**。",
-            "**转述任何对象前，先看它的 `适用` / `条件` / `免责块在正文最前`** —— "
+            "**转述任何对象前，先去 `citations.json` 取它的 `适用` / `条件` / `免责块在正文最前`** —— "
             "限定不是免责声明的装饰：医学条目的操作参数**只在该人群与条件下成立**，"
-            "转述时**必须把限定连同数字一起给出**；`免责块在正文最前=true` 的条目，"
-            "**转述前必须读 `path` 指向的文件正文开头**。",
+            "转述时**必须把限定连同数字一起给出**。",
         ],
         "状态含义": STATUS_MEANING,
         "状态英文": STATUS_EN,
@@ -333,13 +350,13 @@ def build_index(objects, events):
         "事件状态英文": EVENT_STATUS_EN,
         "统计": {
             "对象总数": len(objs),
-            "按类型": dict(sorted(by_type.items())),
-            "按状态": dict(sorted(by_status.items())),
-            "按学科": dict(sorted(by_subject.items())),
+            "按类型": dict(by_type),
+            "按状态": dict(by_status),
+            "按学科": dict(by_subject),
             "已确证条数": by_status.get("已确证", 0),
             "事件条数": len(events_list),
             "证据条数": len(evidence),
-            "作废证据条数": sum(1 for e in evidence.values() if e["作废"]),
+            "作废证据条数": sum(1 for r in evidence.values() if r["作废"]),
         },
         "known_limits": {
             "总览": "本库是**跨学科**的，**各学科覆盖程度差别很大**。"
@@ -353,33 +370,60 @@ def build_index(objects, events):
                     "记录的是「这本教材建议怎么教」，**不是**「这样教有效」。",
             "程序性知识": "本库**不装**「怎么做一件事」的流程（见 FORMAT.md「本库不装什么」）。",
         },
-        "证据索引": evidence,
         "objects": objs,
         "事件": events_list,
     }
 
+    citations = {
+        "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。**按 id 取一条**，不要整份读。"
+                    "这里装的是引用时要写进去的东西：定位、限定、免责块位置。",
+        "schema_version": 1,
+        "by_id": cites,
+    }
+
+    evid = {
+        "$comment": "由 tools/kbcheck.py 从 evidence/README.md 生成，**请勿手改**。"
+                    "`核验深度` 是「本库读过多少」：全文 / 摘要 / 仅定位 / 未核验。",
+        "schema_version": 1,
+        "entries": evidence,
+    }
+
+    return {"index.json": index, "citations.json": citations, "evidence.json": evid}
+
+
+def build_index(objects, events):
+    """兼容层：返回 `index.json` 那部分（生成块与统计只需要它）。"""
+    return build_indexes(objects, events)["index.json"]
+
 
 def check_index(objects, events, errors):
-    """`index.json` 必须与内容一致——不一致就报错，并告诉怎么修。
+    """三份机器文件都必须与内容一致——不一致就报错，并告诉怎么修。
 
     **这是「防止信息是错的」的机制部分**：索引不能手写、不能过期。
     """
-    want = json.dumps(build_index(objects, events), ensure_ascii=False, indent=2, sort_keys=False) + "\n"
-    if not INDEX_FILE.exists():
-        errors.append("index.json 不存在 —— 运行 `python tools/kbcheck.py --write-index` 生成")
-        return
-    have = INDEX_FILE.read_text(encoding="utf-8").replace("\r\n", "\n")
-    if have != want:
-        errors.append(
-            "index.json **与内容不一致**（内容改过但索引没重新生成）—— "
-            "运行 `python tools/kbcheck.py --write-index`，然后一起提交")
+    for name, want_obj in build_indexes(objects, events).items():
+        p = ROOT / name
+        want = json.dumps(want_obj, ensure_ascii=False, separators=(",", ":")) + "\n"
+        if not p.exists():
+            errors.append(f"{name} 不存在 —— 运行 `python tools/kbcheck.py --write-index` 生成")
+            continue
+        have = p.read_text(encoding="utf-8").replace("\r\n", "\n")
+        if have != want:
+            errors.append(
+                f"{name} **与内容不一致**（内容改过但索引没重新生成）—— "
+                "运行 `python tools/kbcheck.py --write-index`，然后一起提交")
 
 
 def write_index(objects, events):
-    INDEX_FILE.write_text(
-        json.dumps(build_index(objects, events), ensure_ascii=False, indent=2, sort_keys=False) + "\n",
-        encoding="utf-8")
-    return INDEX_FILE
+    """写三份：`index.json`（导航）· `citations.json`（引用时才取）· `evidence.json`（证据登记）。"""
+    paths = []
+    for name, payload in build_indexes(objects, events).items():
+        p = ROOT / name
+        p.write_text(
+            json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n",
+            encoding="utf-8")
+        paths.append(p)
+    return paths
 
 
 def parse_front_matter(text):
@@ -1311,7 +1355,7 @@ MECH_RULES = [
     ("R-EVID-02", "证据表 `类别` / `等级` / `核验深度` 取值合法"),
     ("R-EVID-03", "`暂定确认` / `已确证` 必须至少有一条 `核验深度` 为 `全文` / `摘要` 的证据（没读过不能说确认）"),
     ("R-EVID-04", "正文里出现的 `ev-###` 必须在证据索引登记（防笔误与幽灵引用；不要求属于本条）"),
-    ("R-INDEX-01", "`index.json` 与内容一致（改内容必须重生成）"),
+    ("R-INDEX-01", "三份机器文件（`index.json` / `citations.json` / `evidence.json`）与内容一致（改内容必须重生成）"),
     ("R-INDEX-02", "人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表）"),
     ("R-README-01", "每个对象都在所属学科 README 里登记"),
     ("R-README-02", "学科 README 里手写的状态列与 front-matter 一致"),
@@ -1366,7 +1410,7 @@ MECH_RULES_EN = [
     ("R-EVID-02", "evidence table `类别` / `等级` / `核验深度` values valid"),
     ("R-EVID-03", "`暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed)"),
     ("R-EVID-04", "every `ev-###` mentioned in the body is registered in the evidence index (catches typos and ghost citations; need not belong to that entry)"),
-    ("R-INDEX-01", "`index.json` consistent with content (regenerate on change)"),
+    ("R-INDEX-01", "the three machine files (`index.json` / `citations.json` / `evidence.json`) match content (regenerate on change)"),
     ("R-INDEX-02", "human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table)"),
     ("R-README-01", "every object registered in its subject README"),
     ("R-README-02", "the hand-written status column in a subject README matches the front-matter"),
@@ -1896,10 +1940,10 @@ def main():
     print()
 
     if write:
-        p = write_index(objects, events)
+        paths = write_index(objects, events)
         sync_generated(objects, events, True, [])
-        print(f"已生成 {p.relative_to(ROOT).as_posix()}"
-              f"（{len(objects)} 条对象 + {len(events)} 条事件）+ 文档生成块 —— 请与内容一起提交")
+        print("已生成 " + " · ".join(p.name for p in paths)
+              + f"（{len(objects)} 条对象 + {len(events)} 条事件）+ 文档生成块 —— 请与内容一起提交")
         return 0
 
     if warnings:

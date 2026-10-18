@@ -13,7 +13,7 @@
 |---|---|
 | 想学东西的人 | [**START.md**](START.md) —— 按学科索引 · 怎么读一条 · 现在有什么、没什么 |
 | **AI agent**（在本仓库工作） | [**AGENTS.md**](AGENTS.md) —— 铁律 · 怎么改 · 怎么跑校验 |
-| **AI / 程序**（读内容） | [**llms.txt**](llms.txt) + 解析 [**index.json**](index.json) —— 哪些不能引用、每条的真实来源 |
+| **AI / 程序**（读内容） | [**llms.txt**](llms.txt) + [**index.json**](index.json)（导航）· [**citations.json**](citations.json)（按 id 取引用材料）· [**evidence.json**](evidence.json)（证据登记） |
 | 想把这个库**挂到 agent** | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) —— 零依赖 MCP server（只读） |
 | 想**加一条**（贡献者） | [`templates/`](templates/README.md) + `python tools/new_entry.py` —— 一条命令出骨架 |
 | 想**建自己的一份**（个人） | [`templates/`](templates/README.md) —— 复制骨架即可，不用 fork、不用联网 |
@@ -119,6 +119,9 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 
 ```
 knowledge/        知识对象：知识点 · 命题 · 教法 · 误解 · 路径 · 资源
+index.json        机器入口（导航 + 能不能引用）
+citations.json    引用材料（按 id 取：定位 · 限定 · 免责块）
+evidence.json     证据登记（等级 · 核验深度 · 定位 · 许可）
 evidence/         证据索引与可复算的原始数据
 docs/RULES.md     规则注册表（机械校验 / 人工复核）
 docs/decisions/   规则的「为什么」——案例 · 事故 · 推断（从规范里搬出，不删）
