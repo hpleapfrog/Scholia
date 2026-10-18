@@ -46,7 +46,7 @@
 <!-- kbcheck:begin -->
 | 学科 | 条数 | 里面有什么 | 收什么 |
 |---|---|---|---|
-| [物理](knowledge/physics/README.md) | 90 | 教法 46 · 知识点 24 · 命题 10 · 误解 7 · 资源 2 · 路径 1 | 覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题一条概念都没有（缺口清单见 `knowledge/physics/coverage/`）。 |
+| [物理](knowledge/physics/README.md) | 93 | 教法 46 · 知识点 24 · 命题 10 · 误解 7 · 资源 2 · 路径 4 | 覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题一条概念都没有（缺口清单见 `knowledge/physics/coverage/`）。 |
 | [生活](knowledge/life/README.md) | 8 | 命题 6 · 资源 2 | 出行规则：北京地铁与民航的官方规定（含两份官方文件）。 |
 | [医学](knowledge/medicine/README.md) | 8 | 命题 8 | 临床指南与随机试验的结论；一律以「指南 / 研究规定了 X」表述，**不提供诊疗建议**。 |
 | [地理](knowledge/geography/README.md) | 6 | 命题 6 | 全部是同一本香港教材的勘误。 |
@@ -55,40 +55,31 @@
 | [计算机](knowledge/computing/README.md) | 16 | 命题 13 · 误解 1 · 资源 2 | 标准与官方文档能定位的结论；**不收教程式步骤**。 |
 | [经济](knowledge/economics/README.md) | 8 | 命题 6 · 误解 1 · 资源 1 | 统计数据与权威文本能定位的结论；**不收预测与建议**。 |
 | [法律](knowledge/law/README.md) | 4 | 命题 3 · 资源 1 | 成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。 |
-| **合计** | **145** | — | — |
+| **合计** | **148** | — | — |
 <!-- kbcheck:end -->
 
 > 上表由 [`tools/kbcheck.py`](tools/kbcheck.py) 从 [`index.json`](index.json) 生成，**不手写**。
 > **手写的目录比没有目录更糟**：它是有依据的错误——内容涨到一百多条时，手写表还停在十几条，
 > 读者按它判断「这里没有我要的东西」，然后离开。
 
-## 三、物理：想按顺序学，从这里点
+## 三、物理：按**路径**学
 
-物理有 20 多个**知识点**，彼此有先修关系。下面是一条**建议顺序**（不是唯一顺序）：
+物理有 20 多个知识点，彼此有先修关系。**路径**把「顺序」和「每一步用什么材料」写成一条条目，
+还把「学完你会做什么」写在开头——**先看产出，再决定要不要走**。
 
-| 主题 | 条目（按建议顺序） |
+| 路径 | 学完你会 |
 |---|---|
-| **运动学入门** | [参考系](knowledge/physics/concepts/参考系.md) → [速度与速率](knowledge/physics/concepts/速度与速率.md) → [位置-时间图](knowledge/physics/concepts/位置-时间图.md) → [加速度](knowledge/physics/concepts/加速度.md) |
-| **力与牛顿定律** | [力（高中）](knowledge/physics/concepts/力-高中.md) → [惯性](knowledge/physics/concepts/惯性.md) → [牛顿第二定律](knowledge/physics/concepts/牛顿第二定律.md) → [牛顿第三定律](knowledge/physics/concepts/牛顿第三定律.md) |
-| **动量** | [动量和冲量](knowledge/physics/concepts/动量和冲量.md) → [动量守恒定律](knowledge/physics/concepts/动量守恒定律.md) → [弹性碰撞与非弹性碰撞](knowledge/physics/concepts/弹性碰撞与非弹性碰撞.md) |
-| **万有引力与天体** | [开普勒定律](knowledge/physics/concepts/开普勒定律.md) → [万有引力定律](knowledge/physics/concepts/万有引力定律.md) |
-| **能量** | [功与功率](knowledge/physics/concepts/功与功率.md) → [机械能守恒](knowledge/physics/concepts/机械能守恒.md) |
-| **波与声** | [波](knowledge/physics/concepts/波.md) → [声速与频率](knowledge/physics/concepts/声速与频率.md) |
-| **光** | [光的反射](knowledge/physics/concepts/光的反射.md) · [光的折射](knowledge/physics/concepts/光的折射.md) · [电磁波谱](knowledge/physics/concepts/电磁波谱.md) |
-| **电** | [电阻与欧姆定律](knowledge/physics/concepts/电阻与欧姆定律.md) |
-| **原子** | [原子结构](knowledge/physics/concepts/原子结构.md) |
-| **初中** | [力与运动（初中）](knowledge/physics/concepts/力与运动-初中.md) |
+| [运动学入门](knowledge/physics/paths/运动学入门-BL.md) | 用位置-时间图描述一个运动 |
+| [力与运动](knowledge/physics/paths/力与运动-高中.md) | 用牛顿三条定律解释力如何改变运动 |
+| [万有引力与天体](knowledge/physics/paths/万有引力与天体-高中.md) | 说出开普勒三定律，并用 GmM/r² 估算 |
+| [功、功率与机械能](knowledge/physics/paths/功功率与机械能-高中.md) | 判断力是否做功，用机械能守恒算下落 |
 
-**做题常错的地方**单独收着（物理 6 条）：
-[电流方向与电子流向](knowledge/physics/misconceptions/电流方向与电子流向混淆.md) ·
-[参考系当成背景](knowledge/physics/misconceptions/参考系当成背景.md) ·
-[运动物体自然慢下来](knowledge/physics/misconceptions/运动物体自然慢下来.md) ·
-[可见光与不可见辐射](knowledge/physics/misconceptions/可见光与不可见辐射有本质不同.md) ·
-[波把物质一起推走](knowledge/physics/misconceptions/波把物质一起推走.md) ·
-[混淆 G 与 g](knowledge/physics/misconceptions/混淆G与g.md)
+**其余主题**（动量 · 波与声 · 光 · 电 · 原子 · 初中）见
+[物理索引](knowledge/physics/README.md)——那里按学段列了全部条目、先修关系，以及**做题常错的 6 条**。
 
-**想按完整流程学一段**：[运动学入门（BL 档）](knowledge/physics/paths/运动学入门-BL.md)——
-它写明「**学完你会做哪几件事**」，每一步用什么材料。
+> [!NOTE]
+> **这里不再手抄条目清单。** 手写的清单会漂移（它曾经漂到只写 12 条、而库里已有 145 条）。
+> 上面四行是**条目的标题**，不是统计数字；条目数由 [START 的生成块](#二现在有什么)给出。
 
 ## 四、怎么读一个条目（这一节最有用）
 
