@@ -7,6 +7,8 @@
 ```mermaid
 graph LR
   W["波"] --> A["声速与频率"]
+  AC["加速度"] --> UCM["匀速圆周运动"]
+  UCM --> RA["角加速度与转动运动学"] --> TQ["力矩"]
   W --> M["电磁波谱"]
   F["参考系"] --> S["速度与速率"] --> P["位置-时间图"]
   R["电阻与欧姆定律"]
@@ -17,6 +19,8 @@ graph LR
   K["开普勒定律"]
   AT["原子结构"]
   WP["功与功率"]
+  CH["电荷"] --> CL["库仑定律"] --> EF["电场强度"] --> EP["电势能与电势"]
+  E --> EP
 ```
 
 | 知识点 | 学段 | 先修 | 挂在其下的教法 | 误解 |
@@ -44,6 +48,13 @@ graph LR
 | [动量守恒定律](concepts/conservation-of-momentum.en.md) | 高中 | **动量和冲量** | OL · AL 共 2 条 | — |
 | [弹性碰撞与非弹性碰撞](concepts/elastic-inelastic-collisions.en.md) | 高中 | **动量守恒定律** · **机械能守恒** | — | — |
 | [电阻与欧姆定律](concepts/resistance-and-ohms-law.en.md) | 初中至高中 | — | 水管类比 · 摩擦类比 共 2 条 | 混淆电流方向 |
+| [匀速圆周运动](concepts/uniform-circular-motion.en.md) | 高中 | **加速度**（「速度变化」含方向变化） | 剪断绳子 · 共 1 条 | 离心力是一个真实的力 |
+| [角加速度与转动运动学](concepts/rotational-kinematics.en.md) | 高中 | **加速度** · **匀速圆周运动**（`ω` 不再恒定） | — | — |
+| [力矩](concepts/torque.en.md) | 高中 | **力（高中）** · **角加速度与转动运动学**（依据是定义句与节内位置——见条目 K1） | — | — |
+| [电荷](concepts/electric-charge.en.md) | 高中 | —（本章入口；「万有引力」「矢量」是复习提示，非先修） | — | — |
+| [库仑定律](concepts/coulombs-law.en.md) | 高中 | **电荷**（教材未写「Review electric charge」，依据是定律定义——见条目 K1） | — | — |
+| [电场强度](concepts/electric-field.en.md) | 高中 | **库仑定律** | — | — |
+| [电势能与电势](concepts/electric-potential-energy.en.md) | 高中 | **电场强度** · **机械能守恒**（势能只在差值上记账） | — | — |
 
 > [!IMPORTANT]
 > **Batch 7 (2026-10-05) added the whole "momentum" chapter — the repo's first "force × time" thread.**
@@ -147,6 +158,7 @@ graph LR
 
 | Entry | Status | Source |
 |---|---|---|
+| [向心力不是一种新的力，而是合力垂直于速度的分量](claims/centripetal-is-not-a-new-force.en.md) | 待审 | OpenStax《Physics》§6（`ev-081`，**逐句核过全文**） |
 | [欧姆定律](claims/ohm-law.en.md) | **失据** ⚠️ | ~~可复算实验数据~~（**`ev-002` 已作废** — it is constructed data）+ CC BY textbook · **A1 knocked down** |
 | [电压符号 U 与 V 的中英文教材差异](claims/voltage-symbol-u-v.en.md) | 待审 | cross-textbook comparison |
 | [欧姆定律局限性的呈现位置差异](claims/ohm-law-scope-placement.en.md) | 待审 | cross-textbook comparison |
@@ -192,6 +204,7 @@ graph LR
 
 | Entry | Status | Target audience | `禁忌` (who it does not apply to) |
 |---|---|---|---|
+| [匀速圆周运动 · 剪断绳子](methods/ucm-cut-string.en.md) | 待审 | 不分档（教材标 `[BL][OL][AL]`） | 未学惯性者（强）；只想进计算题者（中） |
 | [现象探究循环](methods/phenomenon-inquiry-cycle.en.md) | 有效 | 初中 | 无可呈现现象（中）；本档以外（弱） |
 | [水管类比](methods/water-pipe.en.md) | 有效 | 有水流生活经验、未学电磁场 | 本档以外（弱） |
 | [摩擦类比](methods/friction-analogy.en.md) | 有效 | 已建立力与能量概念 | 未建立「电阻是材料属性」者；学超导者 |
@@ -274,6 +287,7 @@ For **the same 知识点** the textbook gives different levels' practices; the d
 
 | Entry | Status | Source |
 |---|---|---|
+| [离心力是一个真实存在的力](misconceptions/centrifugal-force-is-real.en.md) | 待审 | 教材 Teacher Support 点名 `Some students might be confused…` + 章首要求教师处理该误解 |
 | [把电流方向当成电子实际移动方向](misconceptions/conventional-current.en.md) | 有效 | 教材明确标注为需强调项 |
 | [把参考系当成「背景」而不是「观察视角」](misconceptions/frame-as-background.en.md) | 有效 | 教材 Misconception 标注 + **自带可当场诊断的演示** |
 | [运动物体会「自然地」慢下来](misconceptions/objects-slow-naturally.en.md) | 有效 | 教材明确点名需破除 |
@@ -314,6 +328,9 @@ For **the same 知识点** the textbook gives different levels' practices; the d
 |---|---|---|---|
 | [运动学入门（低于年级水平）](paths/kinematics-intro-bl.en.md) | 有效 | 能用位置-时间图描述一个简单运动 | ✅ **3 项机械校验 + 1 项人工判定** |
 | | | | 先修缺口 ✅ · 循环依赖 ✅ · **目标覆盖度 4/4 ✅** · 禁忌冲突 ✅（弱） |
+| [力与运动（高中）](paths/forces-and-motion-hs.en.md) | 有效 | 用牛顿三条定律解释力如何改变运动 | 先修缺口 ✅ · **覆盖度 4/4 ✅** · 禁忌冲突 ✅（弱） |
+| [万有引力与天体（高中）](paths/gravitation.en.md) | 有效 | 说出开普勒三定律，并用 GmM/r² 估算 | 先修缺口 ✅ · **覆盖度 3/3 ✅** · 禁忌冲突 ✅（弱） |
+| [功、功率与机械能（高中）](paths/energy-work.en.md) | 有效 | 判断力是否做功，用机械能守恒算下落 | 先修缺口 ✅（两节点无先修）· **覆盖度 4/4 ✅** · 「不分档」故禁忌检查近乎空转 |
 
 > [!NOTE]
 > This path's `自检` exposed three schema problems, **all now resolved** (plan A + Issue #13 + the outcomes mechanism):

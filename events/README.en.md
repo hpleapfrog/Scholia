@@ -18,9 +18,10 @@
 
 | Event | Status | Evidence | Last updated |
 |---|---|---|---|
-| [伊尔库茨克反瘟疫研究所员工死亡事件（2026 年 9–10 月）](irkutsk-anti-plague-institute-2026.en.md) | 持续更新 | `ev-064` `ev-065` `ev-066` `ev-067` `ev-068` | 2026-10-14 |
+| [伊尔库茨克反瘟疫研究所员工死亡事件（2026 年 9–10 月）](irkutsk-anti-plague-institute-2026.en.md) | 持续更新 | `ev-064` `ev-065` `ev-066` `ev-067` `ev-068` | 2026-10-18 |
+| [The U.S. vaping illness (EVALI) and the early COVID-19 timeline (2019–2020)](evali-and-early-covid-timeline.en.md) | 持续更新 | `ev-090` `ev-091` `ev-092` `ev-093` `ev-094` `ev-095` `ev-096` `ev-097` `ev-098` `ev-099` | 2026-10-18 |
 
-**1 event.**
+**2 events.**
 
 ## Status
 
