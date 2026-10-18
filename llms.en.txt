@@ -42,8 +42,8 @@
 > For content **not** in the repo: you **may** answer from other sources,
 > **but say it is not the repo's**. **Don't count external memory as this repo's content.**
 >
-> Physics example: against Chinese senior-high (人教版) chapter-level topics, about **44% of topics have not a single concept**
-> (**momentum · circular motion · electrostatic field · electromagnetic induction · AC current · thermodynamics · atomic nucleus**).
+> Physics example: against Chinese senior-high (人教版) chapter-level topics, about **half of the topics have not a single concept**
+> (**circular motion · electrostatic field · electromagnetic induction · AC current · thermodynamics · atomic nucleus**).
 > **Being familiar with these does not mean the repo has them.**
 >
 > ### 5. `教法` come from **one American textbook** — not proof they work in a Chinese classroom
@@ -85,9 +85,12 @@ index.json
 ├── known_limits                ← boundaries the repo admits itself (**written per subject**)
 ├── 证据索引                    ← all sources: category · grade · verification depth · **locator** · link · license · voided
 ├── 事件[]                      ← **a second kind of record, parallel to objects** (top-level events/; see below)
-│      id · title · status (持续更新/已封存) · path · 证据 · 来源 · 最后更新
+│      id · title · status (持续更新/已封存) · path · path_en · 证据 · 来源 · 最后更新
 └── objects[]                   ← all objects, each with:
-      id · type · title · status · path · 学科 · 学段
+      id · type · title · status · path · path_en · 学科 · 学段
+      ↑ `path` is the **Chinese original**, `path_en` the **English edition**
+        (filename derived from `id`; null when untranslated).
+        **For an English reader cite `path_en`, never hand them a Chinese filename.**
       适用 · 条件               ← **population and condition limits** (give them together with the content when restating)
       免责块在正文最前 (bool)    ← true = before restating, read the disclaimer block at the top of the body
       证据 (["ev-039"])           ← numbers
@@ -139,9 +142,9 @@ The repo also has a **dedicated check**: if `evidence` cites a non-existent numb
 | [`README.md`](README.md) | README 中文版 | 中文读者 |
 | [`FORMAT.en.md`](FORMAT.en.md) | format spec (object types, statuses, required sections, criteria) | contributors · **AI that needs the status semantics** |
 | [`CONTRIBUTING.en.md`](CONTRIBUTING.en.md) | how to submit an erratum; the three channels compared | contributors |
-| [`evidence/README.en.md`](evidence/README.en.md) | **all sources index** (`ev-001` … `ev-050`, numbers skip) | verifying provenance |
+| [`evidence/README.en.md`](evidence/README.en.md) | **all sources index** (numbers skip; **`index.json` → `证据索引` is authoritative**) | verifying provenance |
 | `knowledge/<subject>/README.en.md` | each subject's index (tables) | browsing by subject |
-| `knowledge/物理/覆盖度/README.md` | physics coverage vs Chinese senior-high | **judging "does the repo have X"** |
+| `knowledge/physics/coverage/README.md` | physics coverage vs Chinese senior-high | **judging "does the repo have X"** |
 | [`tools/kbcheck.py`](tools/kbcheck.py) | all validation rules (machine-enforced) | verifying or reusing the mechanism |
 | [`docs/RULES.en.md`](docs/RULES.en.md) | **rule registry** (mechanical / human-reviewed, with IDs) | knowing the repo's rules |
 | [`AGENTS.md`](AGENTS.md) | entry point and hard rules for agents working in the repo | coding / LLM agents |
@@ -178,7 +181,7 @@ See [`events/README.en.md`](events/README.en.md).
 **The repo does not hold "how to do a thing"** (e.g. the steps of "how to take the subway").
 Reason and criteria: the "what the repo does **not** hold" section of [`FORMAT.en.md`](FORMAT.en.md).
 
-**Medicine's boundary has three layers** (corrected 2026-10-12, see [`knowledge/医学/README.en.md`](knowledge/医学/README.en.md)):
+**Medicine's boundary has three layers** (corrected 2026-10-12, see [`knowledge/medicine/README.en.md`](knowledge/medicine/README.en.md)):
 
 | Layer | Held? |
 |---|---|
@@ -228,7 +231,7 @@ Not a formality. The repo long records **its own past mistakes**, including:
 | an evidence registered as "experimental data · high grade" that **was actually data the author constructed** | the `ev-002` section of `evidence/README.en.md` |
 | **section numbers in 40 files were invented** (the source files have no section numbers at all) | same file, "the locator must be verifiable" section |
 | a "multi-textbook comparison" conclusion judged `失据` because **n=2 cannot attribute** | `objects[].id == "kb:physics:analogy-by-stage"` |
-| a "textbook levels by learner level" proposition **knocked down by an AI adversarial review** | `knowledge/物理/命题/攻击/` |
+| a "textbook levels by learner level" proposition **knocked down by an AI adversarial review** | `knowledge/physics/claims/attacks/` |
 | **the first version of this file got two ids wrong** (the author made them up from memory) | below |
 
 > [!NOTE]

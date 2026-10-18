@@ -16,17 +16,41 @@
 
 | 文档 | 中文（规范，主） | 英文（译本） |
 |---|---|---|
-| README · 规范 · 流程 · 证据 · 决策 · 学科 README · 知识条目 | **`<name>.md`** | `<name>.en.md` |
+| 规格 · 流程 · 决策 · 索引 · README | **`<name>.md`** | `<name>.en.md` |
+| **知识条目 · 事件** | **`<中文名>.md`** | **`<由 id 派生>.en.md`** |
+
+- **条目的英文文件名由 `id` 派生**：取 `id` 的最后一段，去掉类型前缀
+  （`kp-` `prop-` `method-` `mis-` `path-` `res-` `attack-`），加 `.en.md`，放在**与中文原件同一个目录**。
+
+  ```
+  id:   kb:physics:kp-frame-of-reference
+  中文： knowledge/physics/concepts/参考系.md
+  英文： knowledge/physics/concepts/frame-of-reference.en.md
+  ```
+
+  > [!IMPORTANT]
+  > **为什么不是「同名 `.en.md`」**（本库最初就是这么定的，2026-10-18 改掉）：
+  > 「同名」会让英文页**继承中文文件名**——英文读者点开的是
+  > `.../physics/concepts/参考系.en.md`，**英文内容的文件名是中文**。
+  > 而且「同名」只是**字符上的巧合**，机器判断不了谁和谁是一对；
+  > `id` 才是配对键：唯一、稳定、重命名文件也不变。
+  > 来历见[决策记录](docs/decisions/english-filenames-from-id.md)。
 
 - **中文是规范语言**（`title`、术语、引用以中文为准）；**英文是译本**，供国际读者与 AI。
-- 两份内容**必须一致**；改一份就同步另一份。（目前靠人工，见 `docs/RULES.md` 的 `M-10`。）
+- **配对是机械校验的**（`R-BILING-01`：缺译本、文件名不由 `id` 派生、英文页链到中文页，都算失败）；
+  **内容是否同步**仍是人工项（`M-10`）。
+- 英文页面**指回中文原件**的那一行固定写成：
 
-> **English:** Every document exists in both Chinese and English. `<name>.md` is the
-> canonical Chinese; `<name>.en.md` is the translation. The two versions must be kept in sync.
+  ```markdown
+  > **English version of [`参考系.md`](参考系.md).**
+  ```
 
-> [!IMPORTANT]
-> **本库有三个读者，看的是同一个文件。**
+  `R-LINK-03` 只对这一行豁免——其余站内链接必须落在英文页上。
 
+> **English:** Every document exists in both Chinese and English. Documents use `<name>.md` /
+> `<name>.en.md`; **knowledge entries derive the English filename from the `id`**
+> (`<id-tail minus type prefix>.en.md`, same folder as the Chinese original).
+> Pairing is machine-checked (`R-BILING-01`); content sync is still manual (`M-10`).
 
 > [!IMPORTANT]
 > **本库有三个读者，看的是同一个文件。**
@@ -81,20 +105,22 @@
 
 ```
 knowledge/
-└─ <学科>/
-   ├─ README.md         学科索引
-   ├─ 知识点/           **概念节点**：承载先修关系；教法挂在其下
-   ├─ 命题/             有真假、需要收敛的知识主张
-   │  └─ 攻击/          攻击条目（type 仍是「命题」，见 §6）
-   ├─ 教法/             教学做法，条件性有效，**不收敛**，必填禁忌
-   ├─ 误解/             常见错误概念，是教学资产
-   ├─ 路径/             知识点的编排，含先修约束与目标
-   └─ 资源/             图示、动画、例题、习题
+└─ <subject>/                    目录名用英文（physics · life · medicine · geography · science
+   │                             · transport · computing · economics · law）
+   ├─ README.md                  学科索引
+   ├─ concepts/                  知识点：**概念节点**，承载先修关系；教法挂在其下
+   ├─ claims/                    命题：有真假、需要收敛的知识主张
+   │  └─ attacks/                攻击条目（type 仍是「命题」，见 §6）
+   ├─ methods/                   教法：教学做法，条件性有效，**不收敛**，必填禁忌
+   ├─ misconceptions/            误解：常见错误概念，是教学资产
+   ├─ paths/                     路径：知识点的编排，含先修约束与目标
+   ├─ resources/                 资源：图示、动画、例题、习题
+   └─ coverage/                  覆盖度页（索引，不是知识对象）
 events/
-├─ README.md           事件索引
-└─ <事件>.md           **事件**：与知识对象并列的另一类记录（见下）
+├─ README.md                    事件索引
+└─ <事件>.md                    **事件**：与知识对象并列的另一类记录（见下）
 evidence/
-├─ README.md           证据索引
+├─ README.md                    证据索引
 └─ <原始数据文件>
 ```
 
@@ -107,8 +133,8 @@ evidence/
 
 > [!NOTE]
 > 两个常被忽略但**真实存在**的约定：
-> **攻击条目**放在 `命题/攻击/`，但 `type` 仍是 `命题`（它自己也应能被攻击，见 §6）；
-> **覆盖度页**（如 `物理/覆盖度/README.md`）是索引，不是知识对象。
+> **攻击条目**放在 `claims/attacks/`，但 `type` 仍是 `命题`（它自己也应能被攻击，见 §6）；
+> **覆盖度页**（如 `physics/coverage/README.md`）是索引，不是知识对象。
 
 ### 为什么先修挂在 `知识点` 上，不挂在教法上
 
@@ -119,25 +145,36 @@ evidence/
 > [!IMPORTANT]
 > **先修边只连 `知识点`。** 这是硬规则，由 `tools/kbcheck.py` 校验（背景见 [Issue #11](https://github.com/hpleapfrog/Scholia/issues/11)）。
 
-### 命名约定：系统目录用英文，内容目录用中文
+### 命名约定：目录全英文，中文条目用中文文件名
 
-`knowledge/` `evidence/` `tools/` 用英文（机器要稳定引用）；`物理/` `命题/` `教法/` 用中文（给人看）。
-文件名同理：系统文件用英文（`README.md`），知识条目用中文（`欧姆定律.md`）。
+**目录名一律英文**（`knowledge/` `physics/` `claims/` `evidence/` `tools/`）——
+路径会被复制、贴进终端、被工具当作 URL 解析，**中文目录会变成百分号编码**。
+**内容仍以中文为规范**（见 §0），只是不再体现在路径上。
+
+| 层 | 用什么 | 例 |
+|---|---|---|
+| 目录 | **英文，可读全词** | `knowledge/physics/claims/` |
+| 中文条目文件名 | **中文可读名** | `欧姆定律.md` |
+| 英文译本文件名 | **由 `id` 派生的英文名**（§0） | `ohm-law.en.md` |
+| 系统文件 | 英文 | `README.md` · `FORMAT.md` |
+
+> **学科目录名与 `id` 前缀是两套名字**：目录要能读（`medicine/`），`id` 前缀要短（`kb:med:`）。
+> 两套都登记在 `tools/kbcheck.py`（`SUBJECT_DIRS` / `SUBJECT_SLUGS`），**不在别处另写一份**。
+
 `evidence/` 在仓库根目录，为全库共享。
 
 ### 命名与链接
 
 - 文件名用**中文可读名**；稳定标识放在 `id` 字段里（如 `kb:physics:ohm-law`）
-- 内部链接用**相对路径 Markdown 链接**：`[电流](../命题/电流.md)`
+- 内部链接用**相对路径 Markdown 链接**：`[电流](../claims/电流.md)`
 - **不要用 `[[双链]]`**——那是 Obsidian 的私有扩展，GitHub 不渲染
 - **指向本仓库的绝对链接也会被校验**（锚点必须存在）
-- **`.en.md` 里的站内链接指向同名 `.en.md` 正本**（`R-LINK-03`）——英文读者点进去该落在英文页，
+- **英文页面里的站内链接必须落在英文页**（`R-LINK-03`）——英文读者点进去该落在英文页，
   而不是被弹回中文页。**两条豁免**：
-  1. 指向中文正本的约定行，写成 `English version of [x.md](x.md)`（各 `.en.md` 顶部那一行）；
-  2. 指向**本文件自己**的 `.md` 正本。
-  **误报处理**：确需在英文文档里引中文正本时，把该链接放进带 `English version of` 字样的行里即可豁免；
+  1. 指回中文原件的那一行，固定写成 `English version of [x.md](x.md)`（各 `.en.md` 顶部那一行）；
+  2. 指向**没有译本的文件**（README、`docs/`、模板）——它们本来就只有一份。
+  **误报处理**：确需在英文文档里引中文原件时，把该链接放进带 `English version of` 字样的行里即可豁免；
   **反过来不要**为了绕过检查把英文读者送去中文页——那正是本条要消除的东西。
-  该 `.en.md` 不存在时链接不改（改了就是断链），这条检查也只在它存在时报错。
 
 ### 本库**不**装什么：程序性知识
 
@@ -152,7 +189,7 @@ evidence/
 | 2 | **风险** | **弄错了后果不可逆、且本库无法限定适用对象的流程** |
 
 > **判据 2 只排除「流程」，不排除「结论」。**「低潮气量降低死亡率」这一项试验的**结论**仍然收进来了
-> （见 [`knowledge/医学/`](knowledge/医学/README.md)）——**因为一条带出处的结论可以被核实，而一条操作指令会被照做。**
+> （见 [`knowledge/medicine/`](knowledge/medicine/README.md)）——**因为一条带出处的结论可以被核实，而一条操作指令会被照做。**
 
 > 三次探针（乘地铁 / 坐飞机 / 呼吸机）、两条判据的完整来历、以及「日后要改这条边界需要什么」，
 > 见 [决策记录：程序性知识的边界](docs/decisions/procedural-knowledge-boundary.md)。
@@ -263,7 +300,7 @@ license: CC-BY-SA-4.0
 
 ```yaml
 type: 教法
-knowledge_point: ["[参考系](../知识点/参考系.md)"]
+knowledge_point: ["[参考系](../concepts/参考系.md)"]
 ```
 
 `tools/kbcheck.py` 会校验该链接**必须指向一个 `知识点` 类型的条目**。
@@ -391,7 +428,7 @@ outcomes:
 
 ```yaml
 edges:
-  攻击: ["[命题：n=2 无法归因](../命题/两个样本无法归因.md#a1)"]
+  攻击: ["[命题：n=2 无法归因](../claims/两个样本无法归因.md#a1)"]
 ```
 
 - 只指向条目**是无效的**——无法定位被攻击的是哪条论证

@@ -1,0 +1,139 @@
+---
+id: kb:physics:kp-force
+type: 知识点
+title: "Force (high school)"
+status: 有效
+author: "@hpleapfrog"
+created: 2026-10-05
+updated: 2026-10-05
+scope:
+  学科: 物理
+  学段: 高中
+  范围: interaction — forces
+
+edges:
+  先修: []
+  支持: []
+  攻击: []
+evidence: [ev-041]
+license: CC-BY-SA-4.0
+---
+
+> **English version of [`力-高中.md`](力-高中.md).**
+
+> [!TIP]
+> **After reading this entry you should** be able to state that force is an interaction between objects, to represent multiple forces with a force diagram, and to distinguish forces inside a system from forces outside it
+
+## Definition
+
+**Force** is **the interaction between one object and another**. It always comes with two things:
+
+- **magnitude** (measured in newtons `N`)
+- **direction** — so **a force is a vector**; giving the magnitude without the direction says nothing
+
+A force produces one of two effects on an object: **changing its state of motion**, **deforming the object**.
+
+**Resultant (net) force**: when several forces act at the same time, their **vector sum**.
+
+> [!IMPORTANT]
+> **The three sets of concepts the textbook names at this node are the foundation of all the mechanics content that follows (ev-041):**
+>
+> | Concept | Why the textbook points it out |
+> |---|---|
+> | **`dynamics` is singular** | `Explain that the word dynamics comes from a Greek word meaning power. Also point out that the word dynamics is singular, like the word physics.` |
+> | **system · external force · internal force** | `You may want to introduce the terms system, external force, and internal force.` |
+> | **`acting on` vs `being acted on`** | a force is always "A acts on B" — **these two must be told apart** |
+>
+> **The first is not a linguistic curiosity.** "Dynamics" is **the name of a discipline**, not "several forces" —
+> the textbook points it out specifically, probably because it has seen students treat it as a plural.
+
+> [!WARNING]
+> **The textbook's `[BL]` tier here does exactly one thing: review vectors.**
+>
+> > `Review vectors and how they are represented. Review vector addition.`
+>
+> **This shows that "vectors" is a prerequisite of this section, and it does not belong to physics — it belongs to mathematics.**
+> This repo currently **has no** "vector" node (see below).
+
+## Relations
+
+| Object | Entry | Note |
+|---|---|---|
+| teaching method · OL | [force · OL: at rest stays at rest, and a singular word](../methods/force-ol-push-pull.en.md) | start from pushing and pulling, then point out `dynamics` |
+| teaching method · AL | [force · AL: two students push a table](../methods/force-al-desk.en.md) | use one physical setup to introduce the composition of forces and the force diagram |
+| related · knowledge point | [forces and motion (junior high)](forces-and-motion-jhs.en.md) | **its relation with this node is "advancement", not "prerequisite"** — see below |
+| downstream · knowledge point | [inertia](inertia.en.md) | right after this node, the textbook teaches the first law |
+
+> [!IMPORTANT]
+> **This node closes a real break in this repo's `先修` graph.**
+>
+> [Newton's second law](newtons-second-law.en.md)'s `K19` reads:
+>
+> > **To be added: force (high school)** — this repo has only the **junior-high** "forces and motion", **no high-school "force" node**,
+> > yet `F_net` needs it. **This is a real break in this repo's `先修` graph.**
+>
+> **Now it is closed.** The order of Chapter 4's modules is
+> **`Force → first law → second law → third law`** (see the method used in the [coverage comparison](../coverage/README.md)),
+> so this repo's chain is now:
+>
+> ```
+> force → inertia → Newton's second law → Newton's third law
+> ```
+>
+> **This chain corresponds in full to the four modules of textbook Chapter 4**, and every link's `先修` has a textbook basis
+> (the next link's `[OL]` hint says things like `Review Newton's first and second laws`).
+
+> [!NOTE]
+> **The relation between [forces and motion (junior high)](forces-and-motion-jhs.en.md) and this node is still "advancement", not "prerequisite".**
+>
+> This repo already has a recorded judgment (see the Relations section of [inertia](inertia.en.md)): what the junior-high section teaches is
+> **the relation between force and motion (qualitative)**, while the high-school **force analysis (quantitative)** is not a before-and-after on the same line.
+>
+> **This repo currently has no means of expressing an "advancement" relation** (`FORMAT.md` §4 records this; Issue #17 is tracking it).
+> So this relation **is stated in the body text only, with no edge created**.
+
+## Recorded gap
+
+> [!WARNING]
+> **This repo lacks a "vector" node, and this section explicitly needs it.**
+>
+> | Evidence | Content |
+> |---|---|
+> | `m54135`'s `[BL]` | `Review vectors and how they are represented. Review vector addition.` |
+> | `m54135`'s `[AL]` | `both magnitude and direction must be considered when talking about forces` |
+> | `m54123` (acceleration)'s `[AL]` | `See how much memory students remember about vectors` |
+>
+> **It is already treated as a prerequisite in the hints of three modules.** And it belongs to **mathematics**, not physics —
+> this is exactly the situation of [Issue #17](https://github.com/hpleapfrog/Scholia/issues/17) ("`先修` cannot express a prerequisite that lies outside the discipline").
+>
+> **The reason this repo has not built it, stated honestly**: OpenStax《Physics》**has no** section on vectors
+> (it puts vectors in Chapter 5 "two-dimensional motion" and assumes students already know them),
+> so **the repo's current collection method cannot obtain its `教法`**.
+> **This is a gap, not a judgment.**
+
+## Argument
+
+### K20 · Why listed separately (no attack yet)
+
+- **Claim**: force deserves to be a separate knowledge point
+- **Premise**: the textbook gives it a section, containing **4** teaching hints (4 of them tiered) and **17 terms** (ev-041)
+- **Reasoning**:
+  1. it is **the entrance to the whole chapter**: the textbook's order is `force → first law → second law → third law`,
+     and the three laws that follow all take it as a prerequisite
+  2. it introduces **three sets of concepts used repeatedly afterwards** (system / internal and external forces, `acting on` / `being acted on`, force diagrams)
+  3. **17 terms** is among the highest counts of any node built in this repo, showing the concept density of this section
+- **Evidence**: ev-041
+- **Attacked**: **its teaching hints number only 4**, which is on the low side; and
+  [forces and motion (junior high)](forces-and-motion-jhs.en.md) already exists, **splitting it into two "forces" may confuse readers**
+- **Response**: do not merge. **The objects are different**: the junior-high section teaches **the relation between force and motion** (qualitative conclusions),
+  while this node teaches **what force itself is and how it is represented** (force analysis and vectors).
+  **But the risk of confusing readers is real** — so this entry's `关联` **states explicitly its relation to the junior-high one**,
+  and the title carries "(high school)".
+- **Attribution**: @hpleapfrog · 2026-10-05
+- **To be added**: **vectors** (missing from this repo, and not part of physics); **composition and resolution of forces** (the textbook has a separate section for it; this repo has not built it)
+
+## Change log
+
+| Date | Action | Basis | Who |
+|---|---|---|---|
+| 2026-10-05 | established the entry (#8 batch conversion · batch 6); **closed the break in the `先修` graph where "`F_net` has no upstream"** | user request · Issue #8 | @hpleapfrog |

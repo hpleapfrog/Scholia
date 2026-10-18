@@ -59,7 +59,7 @@ enforced** (FORMAT's header now says exactly this).
 git clone https://github.com/hpleapfrog/Scholia.git
 cd Scholia
 git checkout -b fix/ohm-law-temperature
-# edit knowledge/物理/命题/欧姆定律.md
+# edit knowledge/physics/claims/欧姆定律.md
 python tools/kbcheck.py          # ← must pass
 git commit -am "补充温度条件与实验证据"
 git push origin fix/ohm-law-temperature

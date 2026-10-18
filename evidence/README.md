@@ -126,7 +126,7 @@
 
 > [!CAUTION]
 > **ev-020 原先只写「580 条，含 649 个分组标记」，而库里既无脚本也无数据**——
-> 那一栏因此被一次对抗审查击中（[攻击条目](../knowledge/物理/命题/攻击/攻击-教材内建分组教学变体.md) 的 `A4`）。
+> 那一栏因此被一次对抗审查击中（[攻击条目](../knowledge/physics/claims/attacks/攻击-教材内建分组教学变体.md) 的 `A4`）。
 >
 > **现已补上脚本 + 明细 + commit 哈希。** 现行数字：
 >
@@ -198,6 +198,10 @@
 | ev-077 | 教材 | 低 | 仅定位 | 王吉耀、葛均波、邹和建主编《**实用内科学**》**第 16 版**，人民卫生出版社，2022-06，ISBN 9787117324823，全 2 册，606.1 万字，[人卫商城书目页](https://www.pmphmall.com/gdsdetail/645494-323091)（**本库未取得原书，未核对任何章节页码**） | 2022 | 外部来源 · 仅引用定位 | 中国高血压指南命题的教材背景（**未核验，不作核验证据**） |
 | ev-078 | 指南 | 高 | 摘要 | 中国高血压防治指南修订委员会、高血压联盟（中国）、中国医疗保健国际交流促进会高血压病学分会等《**中国高血压防治指南（2024年修订版）**》，《中华高血压杂志（中英文）》2024, 32(7): 603-700，**DOI [10.16439/j.issn.1673-7245.2024.07.002](https://doi.org/10.16439/j.issn.1673-7245.2024.07.002)**；英文版 *Clinical practice guideline for the management of hypertension in China*，**Chin Med J. 2024;137(24):2907-2952**，**DOI [10.1097/CM9.0000000000003431](https://doi.org/10.1097/CM9.0000000000003431)** · **PMID [39289992](https://pubmed.ncbi.nlm.nih.gov/39289992/)**（开放获取）（**本库经检索读取关键段落原文**：要点 4 定义与表 6 血压分类、要点 5C 降压目标、起始与维持药物治疗的推荐级别；英文版 LWW 页面对本库返回 403，**指南全文 98 页未通读**） | 2024 | 官方公开发布 · **仅引用短句与结论，不转载全文** | 中国高血压指南 2024 降压目标 |
 | ev-079 | 指南 | 高 | 摘要 | Global Initiative for Chronic Obstructive Lung Disease（GOLD）《**Global Strategy for the Diagnosis, Management, and Prevention of COPD — GOLD 2026 Report**》（v1.2，2025-11-20）·《**GOLD 2026 Pocket Guide**》（2025-11-11）·《**GOLD REPORT 2026 KEY CHANGES SUMMARY**》（2025-11-10），[goldcopd.org](https://goldcopd.org/2026-gold-report-and-pocket-guide/)（**本库经检索读取关键段落原文**：口袋指南的诊断标准与急性加重期用药、关键变化摘要的 ABE 分组标准调整说明；**报告 PDF 自标 `COPYRIGHT MATERIAL - DO NOT COPY OR DISTRIBUTE`，未通读全文**） | 2026 | 官方公开发布 · **仅引用短句与结论，不转载全文** | GOLD2026 慢阻肺诊疗 |
+
+| ev-080 | 教材 | 低 | 全文 | OpenStax《Physics》第 6 章 · Angle of Rotation and Angular Velocity，[m54176](https://github.com/openstax/osbooks-physics/blob/main/modules/m54176/index.cnxml)（**抓取该模块 cnxml 源文件通读**：转角 Δθ = Δs/r、角速度 ω = Δθ/Δt、切向速度 v = rω、单位换算与 Teacher Support） | 2020 | **CC BY 4.0** · **可自由复用** | 匀速圆周运动 |
+| ev-081 | 教材 | 低 | 全文 | OpenStax《Physics》第 6 章 · Uniform Circular Motion，[m54181](https://github.com/openstax/osbooks-physics/blob/main/modules/m54181/index.cnxml)（**抓取该模块 cnxml 源文件通读**：向心加速度 a_c = v²/r = rω²、向心力 F_c = mv²/r、Key Terms 对向心力与离心力的定义、Teacher Support 的 `[BL][OL][AL]` 演示建议与离心力混淆说明） | 2020 | **CC BY 4.0** · **可自由复用** | 匀速圆周运动 · 向心力不是一种新的力 · 离心力误解 · 剪断绳子教法 |
+| ev-082 | 教材 | 低 | 全文 | OpenStax《Physics》第 6 章 · Introduction（章首导言），[m54173](https://github.com/openstax/osbooks-physics/blob/main/modules/m54173/index.cnxml)（**抓取该模块 cnxml 源文件通读**：Teacher Support 要求教师 `Address any misconceptions about centrifugal force`，并指出圆周运动是本章入口） | 2020 | **CC BY 4.0** · **可自由复用** | 离心力误解（「教材预期会出现」这一条的出处） |
 
 > [!CAUTION]
 > **`ev-009` ~ `ev-012` 已作废。** 它们是本库早期为了演示格式而**构造的示例数据**，

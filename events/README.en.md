@@ -4,7 +4,7 @@
 
 > [!IMPORTANT]
 > **This directory holds "events" — a second kind of record, **parallel to** the knowledge
-> objects in [`knowledge/`](../knowledge/).**
+> objects in [`knowledge/`](../knowledge).**
 >
 > A proposition answers "**what is true**" (it has a truth value, is attacked and defended,
 > and converges to `已确证`/`已推翻`/`失据`); an event answers "**what happened**"
@@ -18,7 +18,7 @@
 
 | Event | Status | Evidence | Last updated |
 |---|---|---|---|
-| [伊尔库茨克反瘟疫研究所员工死亡事件（2026 年 9–10 月）](伊尔库茨克反瘟疫研究所事件.en.md) | 持续更新 | `ev-064` `ev-065` `ev-066` `ev-067` `ev-068` | 2026-10-14 |
+| [伊尔库茨克反瘟疫研究所员工死亡事件（2026 年 9–10 月）](irkutsk-anti-plague-institute-2026.en.md) | 持续更新 | `ev-064` `ev-065` `ev-066` `ev-067` `ev-068` | 2026-10-14 |
 
 **1 event.**
 

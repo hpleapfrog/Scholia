@@ -20,3 +20,4 @@
 | [support-count-not-strength.md](support-count-not-strength.md) | 为什么「15 条支持」是错误写法 |
 | [evidence-history.md](evidence-history.md) | 证据的事故：编出来的节号、`ev-002`、阶梯对物理不公平 |
 | [events-are-not-propositions.md](events-are-not-propositions.md) | `事件` 与 `命题` 分开：为什么塞进命题会产生没有攻击点的假论证 |
+| [english-filenames-from-id.md](english-filenames-from-id.md) | 英文文件名从「同名」改成「由 `id` 派生」：为什么「同名」既让英文页用中文名、又让配对无法机械校验 |

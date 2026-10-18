@@ -17,6 +17,7 @@
 import collections
 import json
 import os
+import posixpath
 import re
 import sys
 from pathlib import Path
@@ -81,6 +82,13 @@ SUBJECT_SLUGS = {"物理": "physics", "生活": "life", "医学": "med",
                  "地理": "geog", "科学": "science",
                  "交通": "transport", "计算机": "computing", "经济": "econ",
                  "法律": "law"}
+
+# 学科目录名（`knowledge/<subject>/`）。**与 id 前缀（SUBJECT_SLUGS）是两套名字**：
+# id 前缀要短（`kb:med:`），目录名要能读（`knowledge/medicine/`）。
+# 目录名是给人和 URL 看的——路径里出现中文会在复制链接、跨工具处理时变成百分号编码。
+SUBJECT_DIRS = {"物理": "physics", "生活": "life", "医学": "medicine",
+                "地理": "geography", "科学": "science", "交通": "transport",
+                "计算机": "computing", "经济": "economics", "法律": "law"}
 
 # 证据表的枚举（见 evidence/README.md 表头图例）
 EVIDENCE_CATEGORIES = {"教材", "论文", "指南", "官方文件", "交互式模拟",
@@ -147,17 +155,35 @@ EVENT_STATUS_EN = {
 
 # 每个学科的覆盖说明（手写；**不写数字**，数字由 objects 自动统计在旁边）
 SUBJECT_NOTES = {
-    "物理": "覆盖中国高中物理的一部分。按人教版章级主题对照，约 44% 的主题一条概念都没有"
-            "（见 knowledge/物理/覆盖度/README.md）。",
+    "物理": "覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题"
+            "一条概念都没有（缺口清单见 `knowledge/physics/coverage/`）。",
     "地理": "全部是同一本香港教材的勘误。",
     "生活": "出行规则：北京地铁与民航的官方规定（含两份官方文件）。",
     "科学": "一条勘误。",
+    "医学": "临床指南与随机试验的结论；一律以「指南 / 研究规定了 X」表述，**不提供诊疗建议**。",
     "交通": "道路交通与轨道交通：只收**官方文件**能核验的结论，不收办事流程。",
     "计算机": "标准与官方文档能定位的结论；**不收教程式步骤**。",
     "经济": "统计数据与权威文本能定位的结论；**不收预测与建议**。",
     "法律": "成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。",
 }
 SUBJECTS_FALLBACK = "本学科尚无覆盖说明 —— **不要假设它覆盖了什么**，请看 objects。"
+
+# 学科说明的英文版（给 START.en.md 的生成块用）
+SUBJECT_NOTES_EN = {
+    "物理": "Part of Chinese senior-high physics. Against the PEP chapter-level topics, "
+            "about half the chapters have not a single concept here (gap list in `knowledge/physics/coverage/`).",
+    "地理": "All errata from one Hong Kong textbook.",
+    "生活": "Travel rules: official Beijing metro and civil-aviation provisions (two official documents).",
+    "科学": "One erratum.",
+    "医学": "Conclusions from clinical guidelines and randomized trials; always phrased as "
+            "\"the guideline specifies X\" — **no treatment advice**.",
+    "交通": "Road and rail: only conclusions verifiable in **official documents**; no how-to procedures.",
+    "计算机": "Conclusions locatable in standards and official docs; **no tutorial steps**.",
+    "经济": "Conclusions locatable in statistical releases and authoritative texts; **no forecasts or advice**.",
+    "法律": "Institutional provisions of statute law (elements · deadlines · legal effect); "
+            "**no case rulings or legal advice**.",
+}
+SUBJECTS_FALLBACK_EN = "No coverage note yet — **do not assume what it covers**; read `objects`."
 
 EVIDENCE_INDEX = ROOT / "evidence" / "README.md"
 
@@ -226,12 +252,18 @@ def build_index(objects, events):
         st = fm_value(o["fm"], "status")
         ids = re.findall(r"ev-\d+", o["fm"])
         pre_h = o["text"].split("\n## ", 1)[0]
+        _id = fm_value(o["fm"], "id")
+        _en = en_path(rel, _id) if _id else None
         objs.append({
-            "id": fm_value(o["fm"], "id"),
+            "id": _id,
             "type": o["type"],
             "title": fm_value(o["fm"], "title"),
             "status": st,
             "path": rel,
+            # 英文译本的路径（文件名由 id 派生）；没有译本时为 null。
+            # **AI 引用时说中文页还是英文页要说得出来**——只给一个 path，
+            # 英文读者会被送去中文文件。
+            "path_en": _en if _en and (ROOT / _en).exists() else None,
             "学科": fm_nested(o["fm"], "学科"),
             "学段": fm_nested(o["fm"], "学段"),
             "适用": fm_nested(o["fm"], "适用"),
@@ -261,6 +293,9 @@ def build_index(objects, events):
             "title": fm_value(o["fm"], "title"),
             "status": fm_value(o["fm"], "status"),
             "path": rel,
+            "path_en": en_path(rel, fm_value(o["fm"], "id"))
+                       if fm_value(o["fm"], "id") and
+                       (ROOT / en_path(rel, fm_value(o["fm"], "id"))).exists() else None,
             "证据": ids,
             "来源": src_list(ids),
             "最后更新": fm_value(o["fm"], "updated"),
@@ -277,6 +312,9 @@ def build_index(objects, events):
             "引用任何一条时，**请把它的 `证据` 解析成 `证据索引` 里那条的真实定位**"
             "（书名 / 章节 / 页面 URL），并**连 `status` 一起给出** —— **只写「ev-039」等于没写来源**。",
             "**判断「本库有没有 X」要查本文件的 `objects`，不要凭印象。**",
+            "每条对象有两个路径：`path` 是**中文正本**，`path_en` 是**英文译本**"
+            "（文件名由 `id` 派生，同目录；没有译文时为 null）。"
+            "**给英文读者引用时请用 `path_en`，不要把中文文件名发给对方。**",
             "本文件顶层的 `事件` 与 `objects` **是两回事**：`objects` 是知识对象"
             "（命题/知识点/…），`事件` 是**按时间记录事实**的另一类记录，"
             "**不含论证、不可作真值判断**；引用事件时给 `status`（持续更新/已封存）"
@@ -305,7 +343,7 @@ def build_index(objects, events):
         },
         "known_limits": {
             "总览": "本库是**跨学科**的，**各学科覆盖程度差别很大**。"
-                    "判断「有没有 X」请查 `objects`（或该学科的 `knowledge/<学科>/README.md`），"
+                    "判断「有没有 X」请查 `objects`（或该学科的 `knowledge/<subject>/README.md`），"
                     "**不要假设它覆盖了什么**。",
             "按学科": {
                 s: {"条数": n, "说明": SUBJECT_NOTES.get(s, SUBJECTS_FALLBACK)}
@@ -828,7 +866,7 @@ def check_readme_coverage(objects, errors):
     一次是 9 条（第 4 批 5 条 + 第 5 批 4 条，**我自己写完忘了登记**）。
 
     **索引不会自己追上内容。** 这一条把它变成机械可查的：
-    文件名（`<name>.md`）必须出现在 `knowledge/<学科>/README.md` 里。
+    文件名（`<name>.md`）必须出现在 `knowledge/<subject>/README.md` 里。
     """
     for rel, o in objects.items():
         parts = Path(rel).parts
@@ -928,7 +966,7 @@ def check_teaching_level(objects, errors):
 def check_medical(objects, errors):
     """医学条目必须有 `scope.条件`，且正文开头是免责 `> [!CAUTION]` 块。
 
-    见 `knowledge/医学/README.md`「边界的一次修正（2026-10-12）」：
+    见 `knowledge/medicine/README.md`「边界的一次修正（2026-10-12）」：
     指南原文的规定可以收录，但必须带人群限定与免责，且以「指南规定了 X」表述。
     """
     for rel, o in objects.items():
@@ -1029,6 +1067,25 @@ def check_id_prefix(objects, errors):
                 f"{rel}: `id` 前缀应与学科一致（`kb:{slug}:…`）-> {i!r}")
 
 
+def check_type_dir(objects, errors):
+    """R-SCHEMA-16：文件所在目录必须与 `type` 对应。
+
+    目录名是英文之后（`concepts/` `claims/` `methods/` …），**目录和 `type` 是同一件事的两种写法**：
+    一个 `命题` 落在 `methods/` 里，读者按目录找东西就会找错，而单看文件内容完全合法。
+    这条只有在「目录名有语义」的前提下才有意义——中文目录那次改造之前它无法成立。
+    """
+    want = {"知识点": "concepts", "命题": "claims", "教法": "methods",
+            "误解": "misconceptions", "路径": "paths", "资源": "resources"}
+    for rel, o in sorted(objects.items()):
+        parts = Path(rel).parts
+        if len(parts) < 3 or parts[0] != "knowledge":
+            continue
+        expect = want.get(o["type"])
+        if expect and parts[2] != expect:
+            errors.append(f"{rel}: type={o['type']} 应放在 `{expect}/` 下，"
+                          f"实际在 `{parts[2]}/`（R-SCHEMA-16）")
+
+
 def check_evidence_table(errors):
     """证据表的 `类别` / `等级` / `核验深度` 必须是枚举值（作废行除外）。"""
     for ev, r in parse_evidence_index().items():
@@ -1109,10 +1166,12 @@ MECH_RULES = [
     ("R-SCHEMA-13", "`教法` 有 `scope.水平档`，取值 BL / OL / AL（可多档）或「不分档」"),
     ("R-SCHEMA-14", "医学条目有 `scope.条件`，且正文开头是 `> [!CAUTION]` 免责块"),
     ("R-SCHEMA-15", "front-matter 的 `key: value` 值不得以 YAML 指示符（`*` `&` `!` `|` `>` `%` `@` `` ` ``）开头而不加引号（否则严格 YAML 解析器报错）"),
+    ("R-SCHEMA-16", "文件所在目录与 `type` 对应（concepts / claims / methods / misconceptions / paths / resources）"),
     ("R-EVENT-01", "`事件` 单开顶层 `events/`，与 `objects` **分开**：`type`=事件、`status` 只用持续更新/已封存、必填段 陈述/依据/变更记录、**无论证、无任何边**、`id` 前缀 `kb:event:`、`evidence` 非空；且每个事件须登记在 `events/README.md`"),
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
-    ("R-LINK-03", "`.en.md` 的站内链接指向同名 `.en.md` 正本（该正本存在时）；例外：`English version of` 行、以及指向本文件自己的 `.md`"),
+    ("R-BILING-01", "英译本文件名由 `id` 派生（`<id 末段去类型前缀>.en.md`，与中文原件同目录）；缺译本给提示、不判失败"),
+    ("R-LINK-03", "英文页面的站内链接指向英文页（该页存在时）；例外：`English version of` 行、指向无译本文件的链接"),
     ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
     ("R-GRAPH-02", "`支持` / `攻击` 边的论证锚点存在"),
     ("R-GRAPH-03", "`路径` 每个成果至少被一个环节覆盖（未声明 outcomes 给警告）"),
@@ -1121,7 +1180,7 @@ MECH_RULES = [
     ("R-EVID-02", "证据表 `类别` / `等级` / `核验深度` 取值合法"),
     ("R-EVID-03", "`暂定确认` / `已确证` 必须至少有一条 `核验深度` 为 `全文` / `摘要` 的证据（没读过不能说确认）"),
     ("R-INDEX-01", "`index.json` 与内容一致（改内容必须重生成）"),
-    ("R-INDEX-02", "人类文档的生成块与 `index.json` / 规则表一致"),
+    ("R-INDEX-02", "人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表）"),
     ("R-README-01", "每个对象都在所属学科 README 里登记"),
     ("R-DOC-01", "状态图例在 FORMAT.md 与 knowledge/README.md 里列全"),
 ]
@@ -1136,7 +1195,7 @@ MANUAL_RULES = [
     ("M-07", "AI 攻击需人复核 + 署名披露（AI 不能当「已确证」的复核者）"),
     ("M-08", "统计数字不手写（交给 `--write-index` 生成）"),
     ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」与「质疑来源是否为本次引用而伪造」"),
-    ("M-10", "文档中英成对存放（`<name>.md` 中文 + `<name>.en.md` 英文），改一份同步另一份"),
+    ("M-10", "文档中英成对存放（`<name>.md` 中文 + 同目录 `<id 派生>.en.md` 英文），改一份同步另一份"),
     ("M-11", "注册证据过**来源三问**：谁发布的（可问责主体）· 是哪个版本、什么时候生效（条目只声明该版本如此）· 是不是为这次引用现造的（有独立于本主张而存在的理由，且能在不同发布主体处找到第二来源；同源转载不算）；自建站点 / 无主体转载页 / 反查不到的标识符不登记"),
 ]
 
@@ -1156,10 +1215,12 @@ MECH_RULES_EN = [
     ("R-SCHEMA-13", "`教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」"),
     ("R-SCHEMA-14", "medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block"),
     ("R-SCHEMA-15", "a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it"),
+    ("R-SCHEMA-16", "a file sits in the folder its `type` maps to (concepts / claims / methods / misconceptions / paths / resources)"),
     ("R-EVENT-01", "`事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md`"),
     ("R-LINK-01", "link targets exist (relative · repo-absolute · YAML `url:`)"),
     ("R-LINK-02", "anchors exist (heading slug or argument id)"),
-    ("R-LINK-03", "links inside a `.en.md` point at the same-named `.en.md` original (when it exists); exempt: `English version of` lines and pointers to the file's own `.md`"),
+    ("R-BILING-01", "an English edition's filename is derived from its `id` (`<id-tail minus type prefix>.en.md`, same folder as the Chinese original); a missing translation is a notice, not a failure"),
+    ("R-LINK-03", "links inside an English page point at the English page (when it exists); exempt: `English version of` lines and links to files that have no translation"),
     ("R-GRAPH-01", "`先修` connects only 知识点, acyclic"),
     ("R-GRAPH-02", "`支持` / `攻击` edge argument anchors exist"),
     ("R-GRAPH-03", "`路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning)"),
@@ -1168,7 +1229,7 @@ MECH_RULES_EN = [
     ("R-EVID-02", "evidence table `类别` / `等级` / `核验深度` values valid"),
     ("R-EVID-03", "`暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed)"),
     ("R-INDEX-01", "`index.json` consistent with content (regenerate on change)"),
-    ("R-INDEX-02", "human-doc generated blocks match `index.json` / rule table"),
+    ("R-INDEX-02", "human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table)"),
     ("R-README-01", "every object registered in its subject README"),
     ("R-DOC-01", "status legend listed in FORMAT.md and knowledge/README.md"),
 ]
@@ -1183,7 +1244,7 @@ MANUAL_RULES_EN = [
     ("M-07", "AI attack needs human review + author disclosure (AI can't be the reviewer for 已确证)"),
     ("M-08", "statistics not hand-written (generated by `--write-index`)"),
     ("M-09", "adversarial dispatch must include \"question whether the evidence really exists\" and \"question whether the source was fabricated for this citation\""),
-    ("M-10", "documents stored bilingually (`<name>.md` Chinese + `<name>.en.md` English); sync both"),
+    ("M-10", "documents stored bilingually (`<name>.md` Chinese + `<id-derived>.en.md` English in the same folder); sync both"),
     ("M-11", "new evidence passes the **three source questions**: who publishes it (an accountable body) · which version and when it took effect (the entry claims only that version) · was it made up for this citation (it exists for reasons independent of the claim, and a second source can be found at a different publishing body; same-origin reposts don't count); self-built sites, attribution-free repost pages and identifiers that don't resolve are not registered"),
 ]
 
@@ -1204,13 +1265,86 @@ def render_stats_block(index):
     ])
 
 
+def render_subject_overview_block(index, en=False):
+    """`START.md` 的学科总览 —— **全部来自 `index.json`**。
+
+    **为什么必须是生成块**：`START.md` 是唯一面向普通读者的人口页，
+    却曾长期手写「医学 2 条」「生活 5 条」「其他学科内容很少（12 条）」这类枚举。
+    内容涨到 141 条时，那张手写表还停在 12 条 —— **读者按它判断「这里没有我要的东西」，
+    然后离开**。手写的目录比没有目录更糟：它是有依据的错误。
+    """
+    objs = index["objects"]
+    by_subject = collections.defaultdict(collections.Counter)
+    for o in objs:
+        by_subject[o["学科"].split(" ")[0]][o["type"]] += 1
+
+    keys = [k for k in SUBJECT_ORDER if k in by_subject] + \
+           [k for k in sorted(by_subject) if k not in SUBJECT_ORDER]
+    suffix = ".en.md" if en else ".md"
+
+    if en:
+        lines = ["| Subject | Entries | What's in it | What it collects |", "|---|---|---|---|"]
+    else:
+        lines = ["| 学科 | 条数 | 里面有什么 | 收什么 |", "|---|---|---|---|"]
+    for k in keys:
+        c = by_subject[k]
+        if en:
+            bits = " · ".join(f"{TYPE_EN[t]} {c[t]}" for t in TYPE_ORDER if c.get(t))
+            note = SUBJECT_NOTES_EN.get(k, SUBJECTS_FALLBACK_EN)
+            name = SUBJECT_EN.get(k, k)
+        else:
+            bits = " · ".join(f"{t} {c[t]}" for t in TYPE_ORDER if c.get(t))
+            note = SUBJECT_NOTES.get(k, SUBJECTS_FALLBACK)
+            name = k
+        lines.append(f"| [{name}](knowledge/{SUBJECT_DIRS.get(k, k)}/README{suffix}) "
+                     f"| {sum(c.values())} | {bits} | {note} |")
+    lines.append(f"| **{'Total' if en else '合计'}** | **{index['统计']['对象总数']}** "
+                 f"| — | — |")
+    return "\n".join(lines)
+
+
+def render_coverage_block():
+    """`knowledge/physics/coverage/README.md` 的统计表 —— 从**同一页的总览表**数出来。
+
+    **这一条是真事故**：总览表逐行标了 🟢/🟡/🔴，但下面手写的统计写着「6 · 10 · 11」（共 27），
+    而表里只有 25 行、实际是 5 · 7 · 13。**统计与它自己的表对不上，而没有人能一眼看出来。**
+    既然数字能从表里数出来，就不该手写。
+    """
+    p = ROOT / "knowledge" / SUBJECT_DIRS["物理"] / "coverage" / "README.md"
+    if not p.exists():
+        return None
+    text = p.read_text(encoding="utf-8").replace("\r\n", "\n")
+    body = section_body(text, "总览") or ""
+    marks = {"🟢": "有覆盖", "🟡": "部分覆盖", "🔴": "完全缺"}
+    cnt = collections.Counter()
+    for line in body.splitlines():
+        s = line.strip()
+        if not s.startswith("|"):
+            continue
+        cells = [c.strip() for c in s.strip("|").split("|")]
+        if len(cells) < 3:
+            continue
+        for m in marks:
+            if cells[2].startswith(m):
+                cnt[m] += 1
+                break
+    total = sum(cnt.values())
+    if not total:
+        return None
+    lines = ["| | 章级主题数 | 占比 |", "|---|---|---|"]
+    for m in ("🟢", "🟡", "🔴"):
+        lines.append(f"| {m} {marks[m]} | **{cnt[m]}** | {cnt[m] / total:.0%} |")
+    lines.append(f"| **合计** | **{total}** | 100% |")
+    return "\n".join(lines)
+
+
 def render_subject_block(index):
     sub = index["统计"]["按学科"]
     keys = [k for k in SUBJECT_ORDER if k in sub] + \
            [k for k in sorted(sub) if k not in SUBJECT_ORDER]
     lines = ["| 学科 | 条目数 |", "|---|---|"]
     for k in keys:
-        lines.append(f"| [{k}]({k}/README.md) | {sub[k]} |")
+        lines.append(f"| [{k}]({SUBJECT_DIRS.get(k, k)}/README.md) | {sub[k]} |")
     ev = index["统计"].get("事件条数", 0)
     if ev:
         lines.append(f"| [事件（顶层）](../events/README.md) | {ev} |")
@@ -1254,13 +1388,19 @@ def render_rules_block_en():
 
 def generated_blocks(objects, events):
     index = build_index(objects, events)
-    return {
+    blocks = {
         "README.md": render_stats_block(index),
         "README.en.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
+        "START.md": render_subject_overview_block(index),
+        "START.en.md": render_subject_overview_block(index, en=True),
         "docs/RULES.md": render_rules_block(),
         "docs/RULES.en.md": render_rules_block_en(),
     }
+    cov = render_coverage_block()
+    if cov:
+        blocks["knowledge/physics/coverage/README.md"] = cov
+    return blocks
 
 
 def sync_generated(objects, events, write, errors):
@@ -1349,12 +1489,108 @@ def check_event_readme(events, errors):
                 f"（`{EVENT_DIR}README.md` 必须提到 `{name}`）")
 
 
+# 英文译本的文件名由 `id` 派生：取 id 最后一段，去掉类型前缀，加 `.en.md`。
+# **为什么不再用「同名 .en.md」**：那会让英文页继承中文文件名（`参考系.en.md`），
+# 于是英文读者点开的是 `.../物理/知识点/参考系.en.md`——**英文内容的文件名是中文**。
+# 由 id 派生有三个好处：名字是英文、改名不影响、**配对可以机械校验**（R-BILING-01）。
+EN_SLUG_PREFIX = re.compile(r"^(kp|prop|method|mis|miscon|misconception|path|res|resource|attack)-")
+
+
+def en_slug(oid):
+    return EN_SLUG_PREFIX.sub("", (oid or "").split(":")[-1])
+
+
+def en_path(zh_rel, oid):
+    """中文条目 -> 它的英文译本该在哪。**同目录**，文件名由 id 派生。"""
+    d = posixpath.dirname(zh_rel)
+    return (d + "/" if d else "") + en_slug(oid) + ".en.md"
+
+
+def check_bilingual_pairs(objects, events, en_docs, errors, warnings):
+    """R-BILING-01：英译本的文件名必须由 `id` 派生；配对按 `id` 认。
+
+    **这条规则是「配对」从字符巧合变成机械关系的关键。** 原来的约定是「同名 `.en.md`」：
+    既让英文页沿用中文文件名，又让校验器无法判断「谁和谁是一对」——
+    同名只是**字符上的巧合**。`id` 才是配对键：唯一、稳定、重命名文件也不变。
+
+    **缺译本只报 warning，不判失败。** 「双语」是承诺，但把它变成硬门槛
+    等于给每个中文条目加一道翻译工序——那是**另一条政策**，要改得单独决定，
+    不该夹在一次命名修复里悄悄生效。**缺口仍然可见（每次跑都列出来）。**
+    """
+    zh_by_id = {}
+    for bucket in (objects, events):
+        for rel, o in bucket.items():
+            oid = fm_value(o["fm"], "id")
+            if oid:
+                zh_by_id[oid] = rel
+
+    seen = set()
+    for rel, oid in sorted(en_docs.items()):
+        name = rel.split("/")[-1]
+        # README 与规格文档（FORMAT / CONTRIBUTING / docs/…）本来就没有 id，
+        # 它们不是「某个条目的译本」，不参与配对。
+        is_page = (rel.startswith("knowledge/") or rel.startswith(EVENT_DIR + "/")) \
+            and not name.startswith("README")
+        if not is_page and not oid:
+            continue
+        if not oid:
+            errors.append(f"{rel}: 英文译本缺 front-matter `id`（必须与中文原件同一个 id）")
+            continue
+        if oid not in zh_by_id:
+            errors.append(f"{rel}: 英文译本的 `id` 在中文原件里找不到 -> {oid}")
+            continue
+        want = en_path(zh_by_id[oid], oid)
+        if rel != want:
+            errors.append(f"{rel}: 英文文件名必须由 `id` 派生 -> 应为 {want}"
+                          f"（英文文件名里不该出现中文）")
+        seen.add(oid)
+
+    for oid, zh_rel in sorted(zh_by_id.items()):
+        if oid not in seen:
+            want = en_path(zh_rel, oid)
+            if (ROOT / want).exists():
+                warnings.append(f"{zh_rel}: 英文译本的 id 与文件名对不上 -> 应为 {want}")
+            else:
+                warnings.append(f"{zh_rel}: 缺英文译本（M-10 的人工项）-> 应为 {want}")
+
+
+def check_link_language(link_records, en_docs, objects, events, errors):
+    """R-LINK-03：英文页面里的站内链接必须落在英文页上。
+
+    豁免两类：① `English version of` 行（有意指向中文原件的约定行）；
+    ② 指向**没有英文译本**的文件（README、docs、模板）——那些本来就只有一份。
+    """
+    zh_by_id = {}
+    for bucket in (objects, events):
+        for rel, o in bucket.items():
+            oid = fm_value(o["fm"], "id")
+            if oid:
+                zh_by_id[rel] = oid
+
+    for rel, label, target, target_rel, en_pointer in link_records:
+        if rel not in en_docs:
+            continue          # 只看英文页面（含英文 README）
+        if target in en_pointer:
+            continue          # 约定行：指向中文原件
+        oid = zh_by_id.get(target_rel)
+        if not oid:
+            continue          # 目标没有英文译本（README / docs / 模板），不算错
+        alt = en_path(target_rel, oid)
+        if (ROOT / alt).exists():
+            alt_rel = posixpath.relpath(alt, posixpath.dirname(rel))
+            errors.append(f"{rel}: R-LINK-03 英文页面的链接指向了中文页 -> "
+                          f"[{label}]({target}) 应为 {alt_rel}"
+                          "（确需指向中文原件时，把该链接写在 `English version of` 行里）")
+
+
 def check_all():
     errors = []
     warnings = []
     ids = {}
     objects = {}
     events = {}
+    en_docs = {}          # 英文译本：rel -> 它的 id（None = 缺 id）
+    link_records = []     # 供 R-LINK-03 二次判定：语言是否落错
     md_files = scan_text_files()
 
     for path in md_files:
@@ -1369,6 +1605,9 @@ def check_all():
         is_readme = _name.startswith("README") or _name.endswith(".en.md")
         is_event = rel.startswith(EVENT_DIR) and not is_readme
         is_object = rel.startswith("knowledge/") and not is_readme
+
+        if _name.endswith(".en.md"):
+            en_docs[rel] = fm_value(fm, "id") if fm else None
 
         if is_event:
             if fm is None:
@@ -1460,22 +1699,15 @@ def check_all():
                             f"{rel}: 链接目标不存在 -> [{label}]({target})")
                         continue
                     target_rel = os.path.relpath(cand, ROOT).replace(os.sep, "/")
-            # R-LINK-03：英文文档的站内链接应落在英文正本上
-            if rel.endswith(".en.md") and target_rel.endswith(".md") \
-                    and not target_rel.endswith(".en.md") \
-                    and target not in en_pointer \
-                    and target_rel != rel[:-6] + ".md" \
-                    and (ROOT / (target_rel[:-3] + ".en.md")).exists():
-                alt_rel = target_rel[:-3] + ".en.md"
-                errors.append(
-                    f"{rel}: R-LINK-03 英文文档链接指向了中文正本 -> "
-                    f"[{label}]({target}) 应为 {alt_rel}"
-                    "（确需指向中文正本时，把该链接写在 `English version of` 行里）")
+            # R-LINK-03 要等全部对象收齐才能判（目标是不是「有译本的条目」）
+            link_records.append((rel, label, target, target_rel, en_pointer))
             if anchor and target_rel.endswith(".md") \
                     and not anchor_ok(target_rel, anchor):
                 errors.append(f"{rel}: 锚点不存在 -> [{label}]({target})")
 
     # 图校验：单看一个文件查不出来的那部分
+    check_bilingual_pairs(objects, events, en_docs, errors, warnings)
+    check_link_language(link_records, en_docs, objects, events, errors)
     check_graph(objects, errors, warnings)
     check_arguments(objects, errors)
     check_argument_liveness(objects, warnings)
@@ -1500,6 +1732,7 @@ def check_all():
     check_license(objects, errors)
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
+    check_type_dir(objects, errors)
     check_evidence_verified_support(objects, errors)
     # 事件（与知识对象分开的另一套规则）
     check_event_readme(events, errors)
@@ -1545,6 +1778,7 @@ def main():
     print("  · 学段 / 日期 / 署名 取值合法")
     print("  · 人类文档里的统计数字与 index.json 一致")
     print("  · 必备小节齐全且顺序正确")
+    print("  · 英文译本的文件名由 `id` 派生，且与中文原件一一对应")
     print("  ── 以下五项是单看一个文件查不出来的 ──")
     print("  · `先修` 边只连「知识点」，且无环")
     print("  · `教法` 都有 `knowledge_point`，且指向「知识点」")

@@ -17,11 +17,38 @@
 
 | Document | Chinese (canonical, primary) | English (translation) |
 |---|---|---|
-| README · spec · process · evidence · decisions · subject READMEs · knowledge entries | **`<name>.md`** | `<name>.en.md` |
+| Spec · process · decisions · indexes · READMEs | **`<name>.md`** | `<name>.en.md` |
+| **Knowledge entries · events** | **`<Chinese name>.md`** | **`<derived from id>.en.md`** |
+
+- **An entry's English filename is derived from its `id`**: take the last segment of the `id`,
+  drop the type prefix (`kp-` `prop-` `method-` `mis-` `path-` `res-` `attack-`), add `.en.md`,
+  and put it in the **same folder** as the Chinese original.
+
+  ```
+  id:   kb:physics:kp-frame-of-reference
+  zh:   knowledge/physics/concepts/参考系.md
+  en:   knowledge/physics/concepts/frame-of-reference.en.md
+  ```
+
+  > [!IMPORTANT]
+  > **Why not "same-named `.en.md`"** (the original rule, replaced 2026-10-18): "same name" makes the
+  > English page **inherit the Chinese filename** — an English reader lands on
+  > `.../physics/concepts/参考系.en.md`, i.e. **English content under a Chinese name**. Worse, "same name"
+  > is only a **character-level coincidence**; a machine cannot tell which files are a pair.
+  > The `id` is the pairing key: unique, stable, unchanged by renames.
+  > See the [decision record](docs/decisions/english-filenames-from-id.en.md).
 
 - **Chinese is the canonical language** (`title`, terms, quotations); **English is a translation**,
   for international readers and AI.
-- **The two versions must match**; edit one, sync the other. (Currently manual — see `M-10` in `docs/RULES.md`.)
+- **Pairing is machine-checked** (`R-BILING-01`: a missing translation, a filename not derived from
+  the `id`, or an English page linking to a Chinese one all fail); **content sync is still manual** (`M-10`).
+- The line in an English page that points back to the Chinese original is fixed:
+
+  ```markdown
+  > **English version of [`参考系.md`](参考系.md).**
+  ```
+
+  `R-LINK-03` exempts only that line — every other in-repo link must land on an English page.
 
 > [!IMPORTANT]
 > **This library has three readers, all reading the same file.**
@@ -76,24 +103,26 @@
 
 ```
 knowledge/
-└─ <subject>/
-   ├─ README.md         subject index
-   ├─ 知识点/            concept nodes: carry prerequisites; methods hang under them
-   ├─ 命题/              claims: true/false, must converge
-   │  └─ 攻击/           attack entries (type is still 命题, see §6)
-   ├─ 教法/              teaching methods: conditional, non-converging, contraindications required
-   ├─ 误解/              common misconceptions: teaching assets
-   ├─ 路径/              paths: an ordering of concepts, with prerequisites and outcomes
-   └─ 资源/              resources: figures, animations, exercises
+└─ <subject>/                folder names are English (physics · life · medicine · geography
+   │                         · science · transport · computing · economics · law)
+   ├─ README.md              subject index
+   ├─ concepts/              knowledge points: concept nodes carrying prerequisites; methods hang under them
+   ├─ claims/                propositions: true/false, must converge
+   │  └─ attacks/            attack entries (type is still 命题, see §6)
+   ├─ methods/               teaching methods: conditional, non-converging, contraindications required
+   ├─ misconceptions/        common misconceptions: teaching assets
+   ├─ paths/                 paths: an ordering of concepts, with prerequisites and outcomes
+   ├─ resources/             resources: figures, animations, exercises
+   └─ coverage/              coverage pages (indexes, not knowledge objects)
 evidence/
 ├─ README.md           evidence index
 └─ <raw data>
 ```
 
 > [!NOTE]
-> Two easily-missed but **real** conventions: **attack entries** live in `命题/攻击/` but their
+> Two easily-missed but **real** conventions: **attack entries** live in `claims/attacks/` but their
 > `type` is still `命题` (they can themselves be attacked, see §6); **coverage pages** (e.g.
-> `物理/覆盖度/README.md`) are indexes, not knowledge objects.
+> `physics/coverage/README.md`) are indexes, not knowledge objects.
 
 ### Why prerequisites live on `知识点`, not on methods
 
@@ -106,28 +135,42 @@ level into the prerequisite**.
 > **Prerequisite edges connect `知识点` only.** Hard rule, enforced by `tools/kbcheck.py`
 > (background: [Issue #11](https://github.com/hpleapfrog/Scholia/issues/11)).
 
-### Naming: system dirs in English, content dirs in Chinese
+### Naming: every folder in English; Chinese entries keep Chinese filenames
 
-`knowledge/` `evidence/` `tools/` are English (machines reference them stably); `物理/` `命题/`
-`教法/` are Chinese (for people). Same for files: system files English (`README.md`), knowledge
-entries Chinese (`欧姆定律.md`). `evidence/` lives at the repo root, shared library-wide.
+**Folder names are always English** (`knowledge/` `physics/` `claims/` `evidence/` `tools/`) —
+paths get copied, pasted into terminals and parsed as URLs, so **Chinese folders turn into
+percent-encoding**. Content stays Chinese-canonical (see §0); that just no longer shows in the path.
+
+| Layer | Uses | Example |
+|---|---|---|
+| Folder | **English, readable full word** | `knowledge/physics/claims/` |
+| Chinese entry filename | **readable Chinese** | `欧姆定律.md` |
+| English edition filename | **`id`-derived English** (§0) | `ohm-law.en.md` |
+| System file | English | `README.md` · `FORMAT.md` |
+
+> **Subject folder names and `id` prefixes are two different namespaces**: folders must read well
+> (`medicine/`), `id` prefixes must be short (`kb:med:`). Both are registered in `tools/kbcheck.py`
+> (`SUBJECT_DIRS` / `SUBJECT_SLUGS`) and **nowhere else**.
+
+`evidence/` lives at the repo root, shared library-wide.
 
 ### Naming and links
 
-- Filenames use **readable Chinese**; the stable identifier goes in the `id` field (`kb:physics:ohm-law`)
-- Internal links use **relative-path Markdown**: `[电流](../命题/电流.md)`
+- Filenames: system files in English (`README.md`); a **Chinese entry uses a readable Chinese name**;
+  its **English edition uses the `id`-derived English name** (`ohm-law.en.md`, see §0).
+  The stable identifier goes in the `id` field (`kb:physics:ohm-law`)
+- Internal links use **relative-path Markdown**: `[电流](../claims/电流.md)`
 - **No `[[wikilinks]]`** — an Obsidian extension GitHub won't render
 - **Absolute links back to this repo are validated too** (anchors must exist)
-- **Links inside a `.en.md` point at the same-named `.en.md` original** (`R-LINK-03`) — an English
-  reader should land on an English page, not get bounced back to Chinese. **Two exemptions:**
+- **Links inside an English page point at English pages** (`R-LINK-03`) — an English reader should
+  land on an English page, not get bounced back to Chinese. **Two exemptions:**
   1. the conventional line pointing at the Chinese original, written as `English version of [x.md](x.md)`
      (the line at the top of each `.en.md`);
-  2. a pointer to **this file's own** `.md` original.
+  2. a link to **a file that has no translation** (READMEs, `docs/`, templates) — those exist once.
   **False-positive handling**: when you genuinely need to cite the Chinese original from an English
   document, put that link on a line containing the phrase `English version of` and it is exempt;
   **conversely, do not** send English readers to a Chinese page just to silence the check — that is
-  exactly what this rule exists to remove. If the `.en.md` does not exist the link is left alone
-  (changing it would break it), and the check only fires when it does exist.
+  exactly what this rule exists to remove.
 
 ### What this library does NOT store: procedural knowledge
 
@@ -142,7 +185,7 @@ entries Chinese (`欧姆定律.md`). `evidence/` lives at the repo root, shared 
 | 2 | **Risk** | flows whose mistakes are irreversible **and** whose applicability this library cannot bound |
 
 > **Criterion 2 excludes "flows", not "conclusions".** The *conclusion* of a low-tidal-volume
-> trial is still admitted (see [`knowledge/医学/`](knowledge/医学/README.en.md)) — **a sourced
+> trial is still admitted (see [`knowledge/medicine/`](knowledge/medicine/README.en.md)) — **a sourced
 > conclusion can be checked; an operating instruction gets followed.**
 
 > The three probes (metro / flight / ventilator), the full rationale, and "what it would take
@@ -213,7 +256,7 @@ A `教法` **must** have `knowledge_point` pointing to its concept:
 
 ```yaml
 type: 教法
-knowledge_point: ["[参考系](../知识点/参考系.md)"]
+knowledge_point: ["[参考系](../concepts/参考系.md)"]
 ```
 
 `tools/kbcheck.py` checks that this link **points to an object of type `知识点`**.
@@ -346,7 +389,7 @@ unique within a file. `支持` / `攻击` edges **must carry an argument anchor*
 
 ```yaml
 edges:
-  攻击: ["[命题：n=2 无法归因](../命题/两个样本无法归因.md#a1)"]
+  攻击: ["[命题：n=2 无法归因](../claims/两个样本无法归因.md#a1)"]
 ```
 
 - Pointing at an entry only **is invalid** — you can't locate which argument is attacked

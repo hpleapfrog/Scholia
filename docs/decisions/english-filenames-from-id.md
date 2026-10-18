@@ -1,0 +1,96 @@
+# 英文文件名从「同名」改成「由 id 派生」
+
+> **English → [english-filenames-from-id.en.md](english-filenames-from-id.en.md)**
+
+> 定于 **2026-10-18**，改动 142 个文件（由 `tools/kbcheck.py` 的 `R-BILING-01` 机械维持）。
+> 规则本身写在 [FORMAT.md](../../FORMAT.md) §0；这里只记**为什么改**。
+
+## 原来的写法
+
+`FORMAT.md` §0 原来规定：中文正本 `<name>.md`，英文译本 **同名** `<name>.en.md`。
+
+```
+knowledge/physics/concepts/参考系.md
+knowledge/physics/concepts/参考系.en.md   ← 英文页
+```
+
+这个约定有一条隐性假设：**「同名」能表达「这是一对」**。
+
+## 出了什么问题
+
+**一、英文内容的文件名是中文。**
+
+英文页的地址是 `knowledge/physics/concepts/参考系.en.md`。英文读者从 `START.en.md`
+点进来，落在的是一个**中文文件名**的页面上；复制这个链接发出去，收件人看到的也是中文。
+文件内容全是英文，**名字却读不出它是什么**。
+
+**二、「同名」只是字符上的巧合，不是配对关系。**
+
+校验器只能问「`X.en.md` 存在吗」，问不了「`X.en.md` 翻译的是不是 `X.md`」。
+于是：
+
+| 情况 | 旧规则能不能发现 |
+|---|---|
+| 英文页被改名（不再同名） | ❌ 发现不了——检查只在同名那一个候选上生效 |
+| 两份译文翻了同一个条目 | ❌ 发现不了 |
+| 英文页翻了另一个条目，但恰好同名 | ❌ 发现不了（`id` 不同也一样通过） |
+| 条目根本没有译文 | ❌ 发现不了（`M-10` 是人工项，且没人会在 CI 里查） |
+
+**配对键本来就有，而且已经写好了：`front-matter` 的 `id`。** 它唯一、稳定、
+重命名文件也不变（`FORMAT.md` §3 就是这么定义 `id` 的），却一直没被用来配对。
+
+## 改成什么
+
+**英文文件名 = `id` 最后一段，去掉类型前缀，加 `.en.md`，与中文原件同目录。**
+
+```
+id:   kb:physics:kp-frame-of-reference
+中文： knowledge/physics/concepts/参考系.md
+英文： knowledge/physics/concepts/frame-of-reference.en.md
+```
+
+| 好处 | 说明 |
+|---|---|
+| 名字是英文 | `frame-of-reference.en.md` 一看就知道是什么，链接发出去也对 |
+| 改名不影响 | 中文文件随便重命名，英文名不动（它跟 `id` 走） |
+| **配对可机械校验** | `R-BILING-01`：文件名不由 `id` 派生 → **失败**；英文页链到中文页 → **失败** |
+| 一份译文一个位置 | 同一 `id` 只能有一个派生名，重复翻译会被撞名拦下 |
+
+## 代价（写清楚，不粉饰）
+
+1. **中英文件不再相邻同名**，肉眼扫目录看不出配对。补偿：每个英文页第一行是
+   `> **English version of [`参考系.md`](参考系.md).**`，且配对由脚本认，不靠肉眼。
+2. **`id` 一旦定下就不能再改**——它现在是文件名的来源，改 `id` 等于改文件名。
+   这条本来也成立（`id` 就是「重命名不变」的标识），但现在多了一个外部依赖。
+3. **迁移是有成本的**：142 个文件改名、119 个文件的链接被重写。
+   这是**一次性**成本；不改的话，每加一个条目都在继续制造同一个问题。
+
+## 没有顺手做的事
+
+**「缺英文译本」只报提示，不判失败。** 「双语」是承诺，但把它变成硬门槛，
+等于给每个中文条目加一道翻译工序——**那是另一条政策**，要改得单独决定，
+不该夹在一次命名修复里悄悄生效。缺口在每次跑校验时都会列出来。
+
+## 后续（同日）：目录名也英文化
+
+文件名改完，路径里还剩下 `knowledge/物理/命题/`。**同一个理由**（路径会被复制、贴进终端、
+被工具当成 URL 解析）对它一样成立，所以 2026-10-18 当天把 **31 个目录**也改成英文：
+
+```
+knowledge/physics/claims/     knowledge/physics/concepts/   knowledge/physics/methods/
+knowledge/physics/misconceptions/  knowledge/physics/paths/ knowledge/physics/resources/
+knowledge/physics/coverage/   knowledge/physics/claims/attacks/
+```
+
+学科目录：`physics` `life` `medicine` `geography` `science` `transport` `computing`
+`economics` `law`。
+
+**中文文件名保留**——目录要能当 URL 用，名字要给人看，这是两件事。
+
+> **学科目录名与 `id` 前缀是两套名字**：目录要能读（`medicine/`），前缀要短（`kb:med:`）。
+> 两套都只在 `tools/kbcheck.py` 里登记一次（`SUBJECT_DIRS` / `SUBJECT_SLUGS`）。
+
+## 仍然没有做的
+
+**中文条目的文件名仍是中文**（`欧姆定律.md`）。要全英文文件名，按同一套 `id` 派生规则改名即可，
+但那会**再砍掉一层可读性**（中文读者扫目录时认不出条目），不在本次范围。

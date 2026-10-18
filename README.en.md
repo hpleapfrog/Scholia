@@ -15,6 +15,8 @@
 | **An AI agent** working in this repo | [**AGENTS.md**](AGENTS.md) — hard rules · how to edit · how to run checks |
 | **An AI / program** reading content | [**llms.txt**](llms.txt) + parse [**index.json**](index.json) — what must not be quoted, each entry's real source |
 | Wiring it into an agent | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) — zero-dependency read-only MCP server |
+| **Adding an entry** (contributor) | [`templates/`](templates/README.en.md) + `python tools/new_entry.py` — one command gives you a valid skeleton |
+| **Building your own** (personal) | [`templates/`](templates/README.en.md) — copy the skeletons; no fork, no network |
 | Curious how it's built | keep reading |
 
 ---
@@ -109,10 +111,10 @@ this repository satisfies attribution.
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **141** —— 教法 methods 45 · 知识点 concepts 23 · 命题 claims 56 · 误解 misconceptions 8 · 资源 resources 8 · 路径 paths 1 |
+| 对象 / Objects | **145** —— 教法 methods 46 · 知识点 concepts 24 · 命题 claims 57 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 1 |
 | 事件 / Events | **1** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 86 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 16 · 经济 Economics 8 · 法律 Law 4 |
-| 证据 / Evidence | 72（含作废 / void 5） |
+| 学科 / Subjects | 物理 Physics 90 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 16 · 经济 Economics 8 · 法律 Law 4 |
+| 证据 / Evidence | 75（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -130,8 +132,10 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 
 ## Open questions (the important ones)
 
-1. **Can entry cost drop below 5 minutes?** ← **decides the project's survival** (most entries
-   are 30–60-minute full objects, the opposite of the "start from single errata" advice).
+1. **Can entry cost drop below 5 minutes?** ← **decides the project's survival**. [`templates/`](templates/README.en.md)
+   and `tools/new_entry.py` are in place (structure to the script, content to the human), but
+   **whether it really drops to 5 minutes is unverified** — it has to be proven on the next real
+   entry, not claimed by adding templates.
 2. `已确证` / `争议` / `已推翻` **have never been used** — a single contributor cannot produce them
    honestly; this is not a gap code can fill.
 3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17), waiting for 3–5 cases); there is no way to express "advanced".

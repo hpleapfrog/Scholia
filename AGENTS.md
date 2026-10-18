@@ -54,10 +54,15 @@ python tools/kbcheck.py --write-index   # 若改了内容：重生成 index.json
 
 1. **`index.json` 与文档里的 `<!-- kbcheck:begin --> … <!-- kbcheck:end -->` 是生成物**——手改会被校验判失败。改它们只能靠 `--write-index`。
 2. **一个知识点 = 一个 `.md`**；`front-matter` 11 个字段必填（**知识对象**；`事件` 单开顶层 `events/`，用另一套 9 字段、**无论证、无任何边**，见 [FORMAT.md](FORMAT.md) §4「`事件`」）；正文第一行、状态、水平档、医学免责块等见 [FORMAT.md](FORMAT.md)。
+   **英文译本的文件名由 `id` 派生**（`frame-of-reference.en.md`），**不要**写成「中文名 + `.en.md`」——
+   那会让英文页顶着中文文件名（`R-BILING-01`，见 [FORMAT.md](FORMAT.md) §0）。
 3. **改规则要同时改检查**：规则清单在 [`docs/RULES.md`](docs/RULES.md)（由脚本里的 `RULES` 生成）与 [`tools/kbcheck.py`](tools/kbcheck.py) 的检查函数。加规则须有**会失败的注入样本**（见 CONTRIBUTING「新规则入库门槛」）。
 4. **不写死会漂移的数字**（统计数字一律由脚本生成）。
 5. **不上传教材原文或扫描页**——只存定位、短引用、原创摘要。
 6. **AI 可以当攻击方，不能当 `已确证` 的复核者**（见 [FORMAT.md](FORMAT.md) §6）。
+7. **新增条目先用脚手架起手**：`python tools/new_entry.py --type <类型> --subject <学科> --slug <slug> --title "<标题>"`
+   —— 骨架来自 [`templates/`](templates/README.md)。**结构交给脚本，内容留给你**；
+   生完立刻跑 `kbcheck`，它报的错就是待办清单。
 
 **English:** After editing, always run `kbcheck` (and `--write-index` for content
 changes). `index.json` and the marked generated blocks are outputs — never hand-edit.

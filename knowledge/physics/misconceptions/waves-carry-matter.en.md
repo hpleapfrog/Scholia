@@ -1,0 +1,92 @@
+---
+id: kb:physics:miscon-waves-carry-matter
+type: 误解
+title: "Waves carry matter along with them"
+status: 有效
+author: "@hpleapfrog"
+created: 2026-10-05
+updated: 2026-10-05
+scope:
+  学科: 物理
+  学段: 高中
+  适用: students beginning waves
+  条件: 无
+edges:
+  先修: []
+  支持: []
+  攻击: []
+evidence: [ev-033]
+license: CC-BY-SA-4.0
+---
+
+> **English version of [`波把物质一起推走.md`](波把物质一起推走.md).**
+
+## Statement
+
+Students believe a wave **carries the medium along** as it advances —
+
+> "The wave comes, and the water comes with it."
+
+Consequence: cannot understand "a wave transfers energy, not matter", and so errs repeatedly across sound waves (no bulk air movement),
+seismic waves, and electromagnetic waves. **This is the foundation of the concept of a "wave".**
+
+## Basis
+
+The textbook states it directly **from everyday experience** in the main text (short quotation):
+
+> `Many people think that water waves push water from one direction to another. In reality, however,
+> the particles of water tend to stay in one location only, except for moving up and down due to
+> the energy in the wave. The energy moves forward through the water, but the water particles
+> stay in one place.`
+
+The textbook adds a **sensation-based** note:
+
+> `If you feel yourself being pushed in an ocean, what you feel is the energy of the wave, not the ...`
+
+| Number | Type | Grade | Locator | License |
+|---|---|---|---|---|
+| ev-033 | textbook (full text) | low | OpenStax《Physics》 Chapter 13 · Types of Waves, [m54314](https://github.com/openstax/osbooks-physics/blob/main/modules/m54314/index.cnxml) | **CC BY 4.0** |
+
+## Frequency
+
+> [!WARNING]
+> **This entry has no quantitative data yet.**
+>
+> The textbook uses `Many people think` (**most people think**) —
+> that is **the authors' judgment of generality**, **not a measured number**. The two are different.
+
+## Why record it separately
+
+> [!IMPORTANT]
+> **This misconception has the same structure as "objects in motion naturally slow down".**
+>
+> | Misconception | The (correct) observation the senses give | The (wrong) attribution the student adds |
+> |---|---|---|
+> | [objects in motion naturally slow down](objects-slow-naturally.en.md) | the object does stop | "a property of the object itself" |
+> | **waves carry matter along** | the wave does push you | "the water came along with it" |
+>
+> **Both times: the observation is right, the attribution is wrong.**
+> So the correction is the same too — **not denying the observation, but pointing out the ignored item**
+> (for the former, friction; for the latter, "the particles only move up and down in place").
+
+> [!TIP]
+> **The textbook gives a criterion you can verify on the spot**: standing in the sea being pushed, what you feel is **not** a wall of water,
+> but **undulating energy**. Having students recall that sensation is more direct than defining the term.
+
+## Argument
+
+### M1 · The textbook states this is a common misconception (no attack yet)
+
+- **Claim**: this is a misunderstanding students easily form and that needs dedicated intervention
+- **Premise**: the textbook corrects it directly with the pattern `Many people think ... In reality, however, ...` (ev-033)
+- **Reasoning**: the textbook makes this comparison in the main text (not only in a teaching hint), showing the authors consider default reading insufficient to hold it off
+- **Evidence**: ev-033
+- **Attacked**: **`Many people think` is the authors' judgment, not a measured occurrence rate**; this entry has no classroom data
+- **Attribution**: @hpleapfrog · 2026-10-05
+- **To be added**: the measured occurrence rate; the retention rate of the "particles only move in place" correction
+
+## Change log
+
+| Date | Action | Basis | Who |
+|---|---|---|---|
+| 2026-10-05 | established the entry (adding the misconception for the "wave" node) | Issue #8 extension | @hpleapfrog |

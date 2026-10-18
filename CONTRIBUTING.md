@@ -57,7 +57,7 @@
 git clone https://github.com/hpleapfrog/Scholia.git
 cd Scholia
 git checkout -b fix/ohm-law-temperature
-# 编辑 knowledge/物理/命题/欧姆定律.md
+# 编辑 knowledge/physics/claims/欧姆定律.md
 python tools/kbcheck.py          # ← 必须通过
 git commit -am "补充温度条件与实验证据"
 git push origin fix/ohm-law-temperature
@@ -70,6 +70,17 @@ git push origin fix/ohm-law-temperature
 2. **同一个事实不写两处**
 3. **段落顺序固定**，`## 论证` 小节必须存在（草案下可留空）
 4. **内部链接用相对路径**，不要用 `[[双链]]`（GitHub 不渲染）
+
+> [!TIP]
+> **别从空白文件开始写。** 用 [`templates/`](templates/README.md) 起手，或用一条命令生成骨架：
+>
+> ```bash
+> python tools/new_entry.py --type 命题 --subject 物理 --slug ohm-law-temperature \
+>     --title "欧姆定律只在温度不变时成立"
+> ```
+>
+> 它把 11 个 front-matter 字段、齐全的必备小节、状态与许可都填好，**内容仍然要你自己写**。
+> 结构和内容是两件事：**结构交给脚本，内容留给人。**
 
 ---
 

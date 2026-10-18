@@ -56,7 +56,7 @@
 | 2 | **风险** | **弄错了后果不可逆、且本库无法限定适用对象的流程** |
 
 > **判据 2 只排除「流程」，不排除「结论」。**「低潮气量降低死亡率」这一项试验的**结论**仍然收进来了
-> （见 [`knowledge/医学/`](../../knowledge/医学/README.md)）——
+> （见 [`knowledge/medicine/`](../../knowledge/medicine/README.md)）——
 > **因为一条带出处的结论可以被核实，而一条操作指令会被照做。**
 
 ## 如果日后要改这条边界
@@ -71,4 +71,4 @@
 **不接受的改法**：放宽 `路径`，允许环节内联步骤。那会让「路径 = 知识点的编排」这个定义失效，
 而 `check_path_steps` 正是这个定义的机械版本。
 
-> 两次探针的完整失败信息见 [`knowledge/生活/README.md`](../../knowledge/生活/README.md)。
+> 两次探针的完整失败信息见 [`knowledge/生活/README.md`](../../knowledge/life/README.md)。
