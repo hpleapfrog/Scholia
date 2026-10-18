@@ -1,7 +1,7 @@
 ---
-id: kb:event:evali-and-covid19-pandemic
+id: kb:event:covid19-timeline-and-origins
 type: 事件
-title: "The U.S. vaping illness (EVALI) and the COVID-19 pandemic (2019–2025)"
+title: "Timeline and origins of the COVID-19 pandemic (2019–2025)"
 status: 持续更新
 author: "@hpleapfrog"
 created: 2026-10-18
@@ -10,7 +10,7 @@ evidence: [ev-090, ev-091, ev-092, ev-093, ev-094, ev-095, ev-096, ev-097, ev-09
 license: CC-BY-SA-4.0
 ---
 
-> **English version of [`美国电子烟病与新冠大流行事件.md`](美国电子烟病与新冠大流行事件.md).**
+> **English version of [`新冠大流行时间线与溯源事件.md`](新冠大流行时间线与溯源事件.md).**
 
 > [!IMPORTANT]
 > **This is an "event", not a "proposition".** It records **what officials published**, in time order;
@@ -193,3 +193,4 @@ official positions and the open questions side by side, so that every claim can 
 |---|---|---|---|
 | 2026-10-18 | Entry created; **this repo's second `event`** (the first being the [Irkutsk Anti-Plague Institute event](irkutsk-anti-plague-institute-2026.en.md)); ten evidence rows registered, ev-090–ev-099 (CDC health advisory, four MMWR items, the WHO official timeline, the two CDC/Red Cross blood-donation serology studies, and the WHO SAGO origins report) | evidence registered first, then the entry was created | @hpleapfrog |
 | 2026-10-18 | **Rename and merge**: "The U.S. vaping illness (EVALI) and the early COVID-19 timeline (2019–2020)" became "The U.S. vaping illness (EVALI) and the COVID-19 pandemic (2019–2025)"; "retrospective testing and origins assessment" extended with cross-country retrospective studies (Italian blood / wastewater, French ICU retesting, NIH All of Us); two new sections — "U.S. military facilities: public records" and "Global spread and national responses"; **ev-100–ev-115** registered | evidence registered first, then merged in | @hpleapfrog |
+| 2026-10-18 | **Renamed again**: "The U.S. vaping illness (EVALI) and the COVID-19 pandemic (2019–2025)" became "Timeline and origins of the COVID-19 pandemic (2019–2025)" — the name no longer leads with the U.S. vaping illness and now spans the entry's full scope (EVALI timeline, early COVID-19 timeline, retrospective testing and origins, national responses); content and evidence unchanged | rename | @hpleapfrog |
