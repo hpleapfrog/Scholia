@@ -179,6 +179,173 @@ def sample_biling03(root, _v):
     return False
 
 
+def _objects(root):
+    """所有中文知识对象（front-matter 里有 id 的 .md）。
+
+    这里刻意**不用正则**：本仓库的写文件通道会把反斜杠转义吃掉（`\s` 变成 `/s`），
+    所以下面一律用「按行切」的字符串操作，不写任何反斜杠转义。
+    """
+    out = []
+    for p in sorted((root / "knowledge").rglob("*.md")):
+        if p.name.endswith(".en.md"):
+            continue
+        t = read(p)
+        if front_matter_of(t)[0] and field_of(t, "id"):
+            out.append((p, t))
+    return out
+
+
+def field_of(text, key):
+    """取 front-matter 顶层字段的值（按行找，不经正则）。"""
+    fm = front_matter_of(text)[0]
+    for line in fm.split(chr(10)):
+        s = line.strip()
+        if s.startswith(key + ":"):
+            return s[len(key) + 1:].strip().strip('"')
+    return None
+
+
+def set_field(text, key, value):
+    """把 front-matter 里某个字段的值换掉；找不到就返回 None。"""
+    fm, body = front_matter_of(text)
+    out, done = [], False
+    for line in fm.split(chr(10)):
+        s = line.strip()
+        if not done and s.startswith(key + ":"):
+            indent = line[:len(line) - len(line.lstrip())]
+            out.append(indent + key + ": " + value)
+            done = True
+        else:
+            out.append(line)
+    return (chr(10).join(out) + body) if done else None
+
+
+def drop_field(text, key):
+    """删掉 front-matter 里某个字段；找不到就返回 None。"""
+    fm, body = front_matter_of(text)
+    out, done = [], False
+    for line in fm.split(chr(10)):
+        if not done and line.strip().startswith(key + ":"):
+            done = True
+            continue
+        out.append(line)
+    return (chr(10).join(out) + body) if done else None
+
+
+def insert_before_first_section(text, snippet):
+    fm, body = front_matter_of(text)
+    i = body.find(chr(10) + "## ")
+    if i < 0:
+        return None
+    return fm + body[:i + 1] + snippet + chr(10) + body[i + 1:]
+
+
+def sample_schema01(root, _v):
+    """删掉一个必填字段（license）。"""
+    for p, t in _objects(root):
+        t2 = drop_field(t, "license")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_schema03(root, _v):
+    """把最后一条的 id 改成第一条的 id（撞 id）。"""
+    objs = _objects(root)
+    if len(objs) < 2:
+        return False
+    first_id = field_of(objs[0][1], "id")
+    p, t = objs[-1]
+    t2 = set_field(t, "id", first_id)
+    if not t2:
+        return False
+    write(p, t2)
+    return True
+
+
+def sample_schema04(root, _v):
+    """`evidence: []`。"""
+    for p, t in _objects(root):
+        t2 = set_field(t, "evidence", "[]")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_schema05(root, _v):
+    """把「## 变更记录」的 `##` 去掉（必备小节缺失）。
+
+    注意不能只改名：`## 变更记录X` 仍包含 `## 变更记录` 这个子串，校验器按子串找小节，会漏判。
+    """
+    for p, t in _objects(root):
+        t2 = t.replace(chr(10) + "## 变更记录", chr(10) + "变更记录", 1)
+        if t2 != t:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_schema06(root, _v):
+    """把知识点的 `> [!TIP]` 改坏。"""
+    for p, t in _objects(root):
+        if field_of(t, "type") == "知识点" and "> [!TIP]" in t:
+            write(p, t.replace("> [!TIP]", "> TIP", 1))
+            return True
+    return False
+
+
+def sample_schema07(root, _v):
+    """学段写成非法值。"""
+    for p, t in _objects(root):
+        t2 = set_field(t, "学段", "幼儿园")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_schema08(root, _v):
+    """created 写成斜杠日期。"""
+    for p, t in _objects(root):
+        t2 = set_field(t, "created", "2026/10/18")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_evid01(root, _v):
+    """evidence 指向不存在的编号。"""
+    for p, t in _objects(root):
+        t2 = set_field(t, "evidence", "[ev-999]")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_link01(root, _v):
+    """正文加一条指向不存在文件的链接。"""
+    for p, t in _objects(root):
+        t2 = insert_before_first_section(t, "[坏链](does-not-exist-zzz.md)" + chr(10) + chr(10))
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_link02(root, _v):
+    """正文加一条目标存在、锚点不存在的链接。"""
+    for p, t in _objects(root):
+        t2 = insert_before_first_section(t, "[坏锚点](../README.md#nope-zzz)" + chr(10) + chr(10))
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
 SAMPLES = [
     ("R-SCHEMA-17", "命题写「暂定确认」但 ## 论证 为空", sample_schema17),
     ("R-SCHEMA-18", "「变更记录」里有比 updated 更晚的日期", sample_schema18),
@@ -187,6 +354,16 @@ SAMPLES = [
     ("R-README-02", "学科 README 状态列与 front-matter 不一致", sample_readme02),
     ("R-EVID-04", "正文引用了不存在的证据编号", sample_evid04),
     ("R-BILING-03", "文档缺英译本（删掉 knowledge/README.en.md）", sample_biling03),
+    ("R-SCHEMA-01", "front-matter 删掉必填字段 license", sample_schema01),
+    ("R-SCHEMA-03", "两条对象撞同一个 id", sample_schema03),
+    ("R-SCHEMA-04", "evidence 写成空数组", sample_schema04),
+    ("R-SCHEMA-05", "必备小节标题被改坏", sample_schema05),
+    ("R-SCHEMA-06", "知识点首行的 [!TIP] 被改坏", sample_schema06),
+    ("R-SCHEMA-07", "学段写成「幼儿园」", sample_schema07),
+    ("R-SCHEMA-08", "created 写成 2026/10/18", sample_schema08),
+    ("R-EVID-01", "evidence 指向 ev-999", sample_evid01),
+    ("R-LINK-01", "正文加了指向不存在文件的链接", sample_link01),
+    ("R-LINK-02", "链接目标存在但锚点不存在", sample_link02),
 ]
 
 
