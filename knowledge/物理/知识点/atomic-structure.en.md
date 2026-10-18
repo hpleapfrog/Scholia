@@ -1,0 +1,78 @@
+---
+id: kb:physics:kp-atomic-structure
+type: 知识点
+title: "Atomic structure"
+status: 有效
+author: "@hpleapfrog"
+created: 2026-10-05
+updated: 2026-10-05
+scope:
+  学科: 物理
+  学段: 高中
+  范围: atomic physics
+
+edges:
+  先修: []
+  支持: []
+  攻击: []
+evidence: [ev-035]
+license: CC-BY-SA-4.0
+---
+
+> **English version of [`原子结构.md`](原子结构.md).**
+
+> [!TIP]
+> **After reading this entry you should** be able to explain that the nucleus is very small and very dense and that the atom is mostly empty, and to read an energy-level diagram to tell absorption from emission
+
+## Definition
+
+**An atom consists of a very small nucleus and electrons outside the nucleus; most of the inside of an atom is empty.**
+
+The gold-foil experiment (Rutherford) yields **two** independent conclusions — the textbook explicitly requires identifying them separately:
+
+| Conclusion | Experimental phenomenon supporting it |
+|---|---|
+| the nucleus is **extremely dense** | **a few** α particles are **backscattered through large angles** |
+| the atom is **mostly empty** | **the vast majority of** α particles **pass through with almost no deflection** |
+
+> [!IMPORTANT]
+> **These two conclusions come from two sets of observations pointing in opposite directions within the same data.**
+> The textbook specifically requires having students **match each conclusion to its phenomenon** (ev-035) —
+> because looking only at "most pass through" misses all the information carried by "a few bounce back".
+
+Electrons can only occupy **discrete energy levels**. **Jumping up = absorbing energy, jumping down = emitting energy.**
+
+## Relations
+
+| Object | Entry | Note |
+|---|---|---|
+| teaching method · OL | [atomic structure · OL: matching conclusions to phenomena](../教法/atom-ol-gold-foil-two-results.en.md) | the two conclusions of the gold-foil experiment |
+| teaching method · OL | [atomic structure · OL: drawing arrows on the energy-level diagram](../教法/atom-ol-energy-level-quiz.en.md) | an on-the-spot quiz on absorption / emission |
+| teaching method · OL | [atomic structure · OL: a balloon analogy for the uncertainty principle](../教法/atom-ol-balloon-analogy.en.md) | explain the uncertainty principle with a hands-on analogy |
+
+> [!NOTE]
+> **Before entering this section the textbook explicitly requires first reviewing "quantization"** (ev-035, in-text hint):
+> "What is quantization? Give examples of quantum and non-quantum concepts."
+>
+> This repo currently **has no** "energy quantization" knowledge point, so `先修` is left empty.
+> This is again **a case of a missing prerequisite node in the repo** — the same kind as the "wave" case,
+> **but this time it has not been fixed, because that node has not accumulated enough teaching methods.**
+
+## Argument
+
+### K13 · Why listed separately (no attack yet)
+
+- **Claim**: atomic structure deserves to be a separate knowledge point
+- **Premise**: the textbook devotes a separate section to it, giving 17 teaching hints (including 6 tiered groups, with about 3000 characters of tiered content) (ev-035)
+- **Reasoning**: it has two independent experimental conclusions, an independent energy-level reading-and-drawing skill, and an independent teaching difficulty (quantization as a prerequisite)
+- **Evidence**: ev-035
+- **Attacked**: together with "the quantum nature of light" and "de Broglie waves" it belongs to atomic physics, and the boundaries may overlap;
+  and this entry **at the same time** holds two sets of content, "the scale of the nucleus" and "energy-level transitions", **which may be too coarse**
+- **Attribution**: @hpleapfrog · 2026-10-05
+- **To be added**: if enough teaching methods are collected, it should be split into two nodes: "the atomic nucleus and the gold-foil experiment" and "energy levels and spectra"
+
+## Change log
+
+| Date | Action | Basis | Who |
+|---|---|---|---|
+| 2026-10-05 | established the entry (#8 batch conversion · batch 3) | Issue #8 | @hpleapfrog |

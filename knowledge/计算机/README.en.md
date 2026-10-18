@@ -14,22 +14,22 @@
 
 | Entry | Type | Status | Source |
 |---|---|---|---|
-| [RFC 2119, Key words for use in RFCs to Indicate Requirement Levels (IETF, BCP 14)](资源/RFC-2119-需求关键词.en.md) | 资源 | 有效 | `ev-052` |
-| [RFC 9110, HTTP Semantics (IETF, STD 97)](资源/RFC-9110-HTTP语义.en.md) | 资源 | 有效 | `ev-054` |
-| [In an RFC, MUST / SHOULD / MAY carry normative meaning only when written in all capitals](命题/RFC要求关键词只有全大写才成立.en.md) | 命题 | 暂定确认 | `ev-052` `ev-053` |
-| [An HTTP method's safety and idempotency are set by the specification, and 'safe' does not mean 'free of side effects'](命题/HTTP方法的安全性与幂等性由规范分类决定.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [An unrecognized HTTP status code is handled as the class's x00, a code outside 100–599 as 5xx, and the reason phrase is only a recommendation](命题/未识别的HTTP状态码按该类x00处理.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [The complete list of HTTP status codes lives in the IANA registry, not in RFC 9110](命题/HTTP状态码的完整清单在IANA注册表不在RFC9110里.en.md) | 命题 | 暂定确认 | `ev-054` `ev-057` |
-| [Adding an HTTP status code requires IETF Review, and the specification forbids new codes from disallowing content](命题/新增HTTP状态码须过IETFReview且不能禁止正文.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [An HTTP 204 response may contain neither content nor trailers, and is heuristically cacheable by default](命题/HTTP204响应不能含正文也不能含trailer且默认可缓存.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [An HTTP 405 response MUST carry an Allow header, and is heuristically cacheable by default](命题/HTTP405响应必须带Allow头部且默认可缓存.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [HTTP 410 means 'likely permanent'; if permanence is unknown, 404 ought to be used instead](命题/HTTP410表示很可能永久消失拿不准就应当用404.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [An HTTP 304 response MUST carry the cache headers a 200 would have sent, and may contain neither content nor trailers](命题/HTTP304响应必须带上原200会发的缓存头部且不能含正文或trailer.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [An HTTP 401 response MUST carry a WWW-Authenticate header, and the 401 / 403 division is not 'logged out vs no permission'](命题/HTTP401必须带WWW-Authenticate头部且401与403的分工不是没登录对没权限.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [An HTTP 503's Retry-After is a MAY, not a MUST, and the specification does not require 503 when a server is overloaded](命题/HTTP503的Retry-After是MAY而非MUST且过载时不必用503.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [HTTP 301/302 changing POST to GET is a MAY 'for historical reasons'; to preserve the method use 307/308](命题/HTTP301与302把POST改成GET是历史原因下的MAY且保留方法应用307与308.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [An HTTP 400 is a client error at the syntax or routing level; 422 is correct syntax that cannot be processed semantically](命题/HTTP400是语法或路由层面的客户端错误422是语法正确但语义无法处理.en.md) | 命题 | 暂定确认 | `ev-054` |
-| [Treating 418 as a normative HTTP status code](误解/418不是规范里的状态码.en.md) | 误解 | 有效 | `ev-054` `ev-057` |
+| [RFC 2119, Key words for use in RFCs to Indicate Requirement Levels (IETF, BCP 14)](资源/rfc2119.en.md) | 资源 | 有效 | `ev-052` |
+| [RFC 9110, HTTP Semantics (IETF, STD 97)](资源/rfc9110.en.md) | 资源 | 有效 | `ev-054` |
+| [In an RFC, MUST / SHOULD / MAY carry normative meaning only when written in all capitals](命题/rfc-keywords-require-uppercase.en.md) | 命题 | 暂定确认 | `ev-052` `ev-053` |
+| [An HTTP method's safety and idempotency are set by the specification, and 'safe' does not mean 'free of side effects'](命题/http-method-safety-idempotency.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An unrecognized HTTP status code is handled as the class's x00, a code outside 100–599 as 5xx, and the reason phrase is only a recommendation](命题/http-status-code-extensibility.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [The complete list of HTTP status codes lives in the IANA registry, not in RFC 9110](命题/http-status-code-list-lives-in-iana.en.md) | 命题 | 暂定确认 | `ev-054` `ev-057` |
+| [Adding an HTTP status code requires IETF Review, and the specification forbids new codes from disallowing content](命题/http-status-code-registration-requires-ietf-review.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An HTTP 204 response may contain neither content nor trailers, and is heuristically cacheable by default](命题/http-204-cannot-contain-content-or-trailers.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An HTTP 405 response MUST carry an Allow header, and is heuristically cacheable by default](命题/http-405-must-include-allow-header.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [HTTP 410 means 'likely permanent'; if permanence is unknown, 404 ought to be used instead](命题/http-410-vs-404-permanence.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An HTTP 304 response MUST carry the cache headers a 200 would have sent, and may contain neither content nor trailers](命题/http-304-must-carry-cache-headers-and-no-body.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An HTTP 401 response MUST carry a WWW-Authenticate header, and the 401 / 403 division is not 'logged out vs no permission'](命题/http-401-vs-403-must-carry-www-authenticate.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An HTTP 503's Retry-After is a MAY, not a MUST, and the specification does not require 503 when a server is overloaded](命题/http-503-retry-after-is-may-not-must.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [HTTP 301/302 changing POST to GET is a MAY 'for historical reasons'; to preserve the method use 307/308](命题/http-301-302-post-to-get-is-historical-307-forbids-method-change.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [An HTTP 400 is a client error at the syntax or routing level; 422 is correct syntax that cannot be processed semantically](命题/http-400-vs-422-syntax-vs-semantics.en.md) | 命题 | 暂定确认 | `ev-054` |
+| [Treating 418 as a normative HTTP status code](误解/http-418-is-real.en.md) | 误解 | 有效 | `ev-054` `ev-057` |
 
 **All sixteen come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057`; verification depth is stated per entry).
 That means this subject's current coverage is **not** the same as the subject "Computing" itself —

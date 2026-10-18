@@ -70,26 +70,26 @@ Physics has 20+ **concepts** with prerequisite relations. This is **one** sugges
 
 | Topic | Entries (suggested order) |
 |---|---|
-| **Intro kinematics** | [Reference frames](knowledge/物理/知识点/参考系.en.md) → [Speed & velocity](knowledge/物理/知识点/速度与速率.en.md) → [Position–time graphs](knowledge/物理/知识点/位置-时间图.en.md) → [Acceleration](knowledge/物理/知识点/加速度.en.md) |
-| **Force & Newton's laws** | [Force (HS)](knowledge/物理/知识点/力-高中.en.md) → [Inertia](knowledge/物理/知识点/惯性.en.md) → [Newton's 2nd](knowledge/物理/知识点/牛顿第二定律.en.md) → [Newton's 3rd](knowledge/物理/知识点/牛顿第三定律.en.md) |
-| **Momentum** | [Momentum & impulse](knowledge/物理/知识点/动量和冲量.en.md) → [Conservation of momentum](knowledge/物理/知识点/动量守恒定律.en.md) → [Elastic & inelastic collisions](knowledge/物理/知识点/弹性碰撞与非弹性碰撞.en.md) |
-| **Gravitation & the sky** | [Kepler's laws](knowledge/物理/知识点/开普勒定律.en.md) → [Universal gravitation](knowledge/物理/知识点/万有引力定律.en.md) |
-| **Energy** | [Work & power](knowledge/物理/知识点/功与功率.en.md) → [Conservation of mechanical energy](knowledge/物理/知识点/机械能守恒.en.md) |
-| **Waves & sound** | [Waves](knowledge/物理/知识点/波.en.md) → [Speed of sound & frequency](knowledge/物理/知识点/声速与频率.en.md) |
-| **Light** | [Reflection](knowledge/物理/知识点/光的反射.en.md) · [Refraction](knowledge/物理/知识点/光的折射.en.md) · [EM spectrum](knowledge/物理/知识点/电磁波谱.en.md) |
-| **Electricity** | [Resistance & Ohm's law](knowledge/物理/知识点/电阻与欧姆定律.en.md) |
-| **Atoms** | [Atomic structure](knowledge/物理/知识点/原子结构.en.md) |
-| **Middle school** | [Force & motion (MS)](knowledge/物理/知识点/力与运动-初中.en.md) |
+| **Intro kinematics** | [Reference frames](knowledge/物理/知识点/frame-of-reference.en.md) → [Speed & velocity](knowledge/物理/知识点/speed-and-velocity.en.md) → [Position–time graphs](knowledge/物理/知识点/position-time-graph.en.md) → [Acceleration](knowledge/物理/知识点/acceleration.en.md) |
+| **Force & Newton's laws** | [Force (HS)](knowledge/物理/知识点/force.en.md) → [Inertia](knowledge/物理/知识点/inertia.en.md) → [Newton's 2nd](knowledge/物理/知识点/newtons-second-law.en.md) → [Newton's 3rd](knowledge/物理/知识点/newtons-third-law.en.md) |
+| **Momentum** | [Momentum & impulse](knowledge/物理/知识点/momentum-impulse.en.md) → [Conservation of momentum](knowledge/物理/知识点/conservation-of-momentum.en.md) → [Elastic & inelastic collisions](knowledge/物理/知识点/elastic-inelastic-collisions.en.md) |
+| **Gravitation & the sky** | [Kepler's laws](knowledge/物理/知识点/keplers-laws.en.md) → [Universal gravitation](knowledge/物理/知识点/universal-gravitation.en.md) |
+| **Energy** | [Work & power](knowledge/物理/知识点/work-and-power.en.md) → [Conservation of mechanical energy](knowledge/物理/知识点/conservation-of-mechanical-energy.en.md) |
+| **Waves & sound** | [Waves](knowledge/物理/知识点/waves.en.md) → [Speed of sound & frequency](knowledge/物理/知识点/speed-of-sound.en.md) |
+| **Light** | [Reflection](knowledge/物理/知识点/reflection-of-light.en.md) · [Refraction](knowledge/物理/知识点/refraction.en.md) · [EM spectrum](knowledge/物理/知识点/electromagnetic-spectrum.en.md) |
+| **Electricity** | [Resistance & Ohm's law](knowledge/物理/知识点/resistance-and-ohms-law.en.md) |
+| **Atoms** | [Atomic structure](knowledge/物理/知识点/atomic-structure.en.md) |
+| **Middle school** | [Force & motion (MS)](knowledge/物理/知识点/forces-and-motion-jhs.en.md) |
 
 **Common mistakes**, kept in one place (6 in physics):
-[Current vs. electron flow](knowledge/物理/误解/电流方向与电子流向混淆.en.md) ·
-[Frame of reference as "background"](knowledge/物理/误解/参考系当成背景.en.md) ·
-[Moving objects naturally slow down](knowledge/物理/误解/运动物体自然慢下来.en.md) ·
-[Visible vs. invisible radiation](knowledge/物理/误解/可见光与不可见辐射有本质不同.en.md) ·
-[Waves push matter along](knowledge/物理/误解/波把物质一起推走.en.md) ·
-[Confusing G and g](knowledge/物理/误解/混淆G与g.en.md)
+[Current vs. electron flow](knowledge/物理/误解/conventional-current.en.md) ·
+[Frame of reference as "background"](knowledge/物理/误解/frame-as-background.en.md) ·
+[Moving objects naturally slow down](knowledge/物理/误解/objects-slow-naturally.en.md) ·
+[Visible vs. invisible radiation](knowledge/物理/误解/visible-light-is-special.en.md) ·
+[Waves push matter along](knowledge/物理/误解/waves-carry-matter.en.md) ·
+[Confusing G and g](knowledge/物理/误解/g-vs-g.en.md)
 
-**Want a full learning sequence**: [Intro kinematics (BL)](knowledge/物理/路径/运动学入门-BL.en.md) —
+**Want a full learning sequence**: [Intro kinematics (BL)](knowledge/物理/路径/kinematics-intro-bl.en.md) —
 it states **what you'll be able to do** and the material for each step.
 
 ## 4. How to read an entry (the most useful section)

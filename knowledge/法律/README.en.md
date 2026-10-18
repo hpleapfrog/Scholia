@@ -14,10 +14,10 @@
 
 | Entry | Type | Status | Source |
 |---|---|---|---|
-| [《中华人民共和国道路交通安全法》 (official text · third amendment of 2021)](资源/中华人民共和国道路交通安全法.en.md) | 资源 | 有效 | `ev-051` |
-| [The law sets only the range; the specific enforcement standard is set by the provincial standing committee](命题/具体执行标准由省级人大常委会规定.en.md) | 命题 | 暂定确认 | `ev-051` |
-| [Compensation between a motor vehicle and a pedestrian / non-motor vehicle is allocated by fault; when the motor-vehicle side is faultless it still bears up to ten per cent](命题/机动车与行人事故的赔偿责任按过错分配.en.md) | 命题 | 暂定确认 | `ev-051` |
-| [Medical institutions may not delay treatment of traffic-accident casualties because rescue fees have not been paid on time](命题/医疗机构不得因抢救费用未及时支付而拖延救治.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [《中华人民共和国道路交通安全法》 (official text · third amendment of 2021)](资源/road-traffic-safety-law.en.md) | 资源 | 有效 | `ev-051` |
+| [The law sets only the range; the specific enforcement standard is set by the provincial standing committee](命题/provincial-fine-standards.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [Compensation between a motor vehicle and a pedestrian / non-motor vehicle is allocated by fault; when the motor-vehicle side is faultless it still bears up to ten per cent](命题/traffic-accident-liability-allocation.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [Medical institutions may not delay treatment of traffic-accident casualties because rescue fees have not been paid on time](命题/rescue-must-not-be-delayed.en.md) | 命题 | 暂定确认 | `ev-051` |
 
 **All four come from one source** (`ev-051`, verification depth `全文` / full text).
 That means this subject's current coverage is **not** the same as the subject "Law" itself —
@@ -66,7 +66,7 @@ This subject is no longer empty, but **it is nowhere near the subject "Law" itse
 
 | Gap | What exactly | What it blocks |
 |---|---|---|
-| **Lower-level and local rules** | administrative regulations, departmental rules, judicial interpretations, and **provincial standing committees' specific enforcement standards** — not a single one registered | the "To be added" section of [specific enforcement standards are set by provincial standing committees](命题/具体执行标准由省级人大常委会规定.en.md) |
+| **Lower-level and local rules** | administrative regulations, departmental rules, judicial interpretations, and **provincial standing committees' specific enforcement standards** — not a single one registered | the "To be added" section of [specific enforcement standards are set by provincial standing committees](命题/provincial-fine-standards.en.md) |
 | **Legal domains beyond road traffic** | the only source so far is the Road Traffic Safety Law | this subject's coverage |
 
 **Not filled for the sake of filling.** Until the three questions in the

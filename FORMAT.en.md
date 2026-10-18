@@ -17,11 +17,38 @@
 
 | Document | Chinese (canonical, primary) | English (translation) |
 |---|---|---|
-| README · spec · process · evidence · decisions · subject READMEs · knowledge entries | **`<name>.md`** | `<name>.en.md` |
+| Spec · process · decisions · indexes · READMEs | **`<name>.md`** | `<name>.en.md` |
+| **Knowledge entries · events** | **`<Chinese name>.md`** | **`<derived from id>.en.md`** |
+
+- **An entry's English filename is derived from its `id`**: take the last segment of the `id`,
+  drop the type prefix (`kp-` `prop-` `method-` `mis-` `path-` `res-` `attack-`), add `.en.md`,
+  and put it in the **same folder** as the Chinese original.
+
+  ```
+  id:   kb:physics:kp-frame-of-reference
+  zh:   knowledge/物理/知识点/参考系.md
+  en:   knowledge/物理/知识点/frame-of-reference.en.md
+  ```
+
+  > [!IMPORTANT]
+  > **Why not "same-named `.en.md`"** (the original rule, replaced 2026-10-18): "same name" makes the
+  > English page **inherit the Chinese filename** — an English reader lands on
+  > `.../物理/知识点/参考系.en.md`, i.e. **English content under a Chinese name**. Worse, "same name"
+  > is only a **character-level coincidence**; a machine cannot tell which files are a pair.
+  > The `id` is the pairing key: unique, stable, unchanged by renames.
+  > See the [decision record](docs/decisions/english-filenames-from-id.en.md).
 
 - **Chinese is the canonical language** (`title`, terms, quotations); **English is a translation**,
   for international readers and AI.
-- **The two versions must match**; edit one, sync the other. (Currently manual — see `M-10` in `docs/RULES.md`.)
+- **Pairing is machine-checked** (`R-BILING-01`: a missing translation, a filename not derived from
+  the `id`, or an English page linking to a Chinese one all fail); **content sync is still manual** (`M-10`).
+- The line in an English page that points back to the Chinese original is fixed:
+
+  ```markdown
+  > **English version of [`参考系.md`](参考系.md).**
+  ```
+
+  `R-LINK-03` exempts only that line — every other in-repo link must land on an English page.
 
 > [!IMPORTANT]
 > **This library has three readers, all reading the same file.**
@@ -114,20 +141,21 @@ entries Chinese (`欧姆定律.md`). `evidence/` lives at the repo root, shared 
 
 ### Naming and links
 
-- Filenames use **readable Chinese**; the stable identifier goes in the `id` field (`kb:physics:ohm-law`)
+- Filenames: system files in English (`README.md`); a **Chinese entry uses a readable Chinese name**;
+  its **English edition uses the `id`-derived English name** (`ohm-law.en.md`, see §0).
+  The stable identifier goes in the `id` field (`kb:physics:ohm-law`)
 - Internal links use **relative-path Markdown**: `[电流](../命题/电流.md)`
 - **No `[[wikilinks]]`** — an Obsidian extension GitHub won't render
 - **Absolute links back to this repo are validated too** (anchors must exist)
-- **Links inside a `.en.md` point at the same-named `.en.md` original** (`R-LINK-03`) — an English
-  reader should land on an English page, not get bounced back to Chinese. **Two exemptions:**
+- **Links inside an English page point at English pages** (`R-LINK-03`) — an English reader should
+  land on an English page, not get bounced back to Chinese. **Two exemptions:**
   1. the conventional line pointing at the Chinese original, written as `English version of [x.md](x.md)`
      (the line at the top of each `.en.md`);
-  2. a pointer to **this file's own** `.md` original.
+  2. a link to **a file that has no translation** (READMEs, `docs/`, templates) — those exist once.
   **False-positive handling**: when you genuinely need to cite the Chinese original from an English
   document, put that link on a line containing the phrase `English version of` and it is exempt;
   **conversely, do not** send English readers to a Chinese page just to silence the check — that is
-  exactly what this rule exists to remove. If the `.en.md` does not exist the link is left alone
-  (changing it would break it), and the check only fires when it does exist.
+  exactly what this rule exists to remove.
 
 ### What this library does NOT store: procedural knowledge
 

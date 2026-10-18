@@ -16,10 +16,10 @@
 
 | Entry | Type | Status | Source |
 |---|---|---|---|
-| [Electric bicycles and motorised wheelchairs driving in a non-motor-vehicle lane may not exceed fifteen kilometres per hour](命题/电动自行车在非机动车道内最高时速不得超过十五公里.en.md) | 命题 | 暂定确认 | `ev-051` |
-| [Without a fine receipt issued by the provincial-level finance department, the party may refuse to pay](命题/不出具统一罚款收据当事人有权拒绝缴纳.en.md) | 命题 | 暂定确认 | `ev-051` |
-| [On a motorway, the warning triangle for a broken-down vehicle must be placed 150 metres before oncoming traffic](命题/高速公路故障警告标志须设在来车方向一百五十米以外.en.md) | 命题 | 暂定确认 | `ev-051` |
-| [A motor vehicle must slow down when passing a crosswalk, and must stop to give way when a pedestrian is already crossing](命题/机动车行经人行横道应减速并停车让行.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [Electric bicycles and motorised wheelchairs driving in a non-motor-vehicle lane may not exceed fifteen kilometres per hour](命题/ebike-15-kmh.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [Without a fine receipt issued by the provincial-level finance department, the party may refuse to pay](命题/fine-receipt-right.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [On a motorway, the warning triangle for a broken-down vehicle must be placed 150 metres before oncoming traffic](命题/highway-warning-150m.en.md) | 命题 | 暂定确认 | `ev-051` |
+| [A motor vehicle must slow down when passing a crosswalk, and must stop to give way when a pedestrian is already crossing](命题/yield-at-crosswalk.en.md) | 命题 | 暂定确认 | `ev-051` |
 
 **All four come from one source** (`ev-051`, the Road Traffic Safety Law,
 verification depth `全文` / full text), and all are the "invisible on site yet written in law"
@@ -56,9 +56,9 @@ This subject is no longer empty, but **it currently holds only one source**, the
 
 | Gap | What exactly |
 |---|---|
-| **Implementing regulations and national standards** | the law's **implementing regulations**, and the **national standards** for non-motor vehicles, are both unregistered — the "To be added" section of [electric bicycles… fifteen kilometres](命题/电动自行车在非机动车道内最高时速不得超过十五公里.en.md) is blocked here |
+| **Implementing regulations and national standards** | the law's **implementing regulations**, and the **national standards** for non-motor vehicles, are both unregistered — the "To be added" section of [electric bicycles… fifteen kilometres](命题/ebike-15-kmh.en.md) is blocked here |
 | **Rail** | this subject's boundary says it holds rules of movement on roads **and on rail**, but there is **not a single rail entry**; the subway material currently sits in [Daily life](../生活/README.en.md) |
-| **A checkable basis on the enforcement side** | [Without a fine receipt…](命题/不出具统一罚款收据当事人有权拒绝缴纳.en.md) answers only "what the law requires"; **"how to check a receipt" needs a provincial finance department's text**, not yet registered |
+| **A checkable basis on the enforcement side** | [Without a fine receipt…](命题/fine-receipt-right.en.md) answers only "what the law requires"; **"how to check a receipt" needs a provincial finance department's text**, not yet registered |
 
 **Not filled for the sake of filling.** Until the requirements in [CONTRIBUTING](../../CONTRIBUTING.en.md) are met,
 empty is the right state — **the repo's gate is kbcheck all-green, not files in a directory.**

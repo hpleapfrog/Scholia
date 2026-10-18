@@ -4,7 +4,7 @@
 
 The body of the proposition "教材内建分组教学变体" once wrote "A1 **now has 15** supporting edges",
 while the measurement showed **26 and still growing**. **"now has" + a drifting number = writing a snapshot as an assertion.**
-That proposition's A1 was therefore hit by [an attack](../../knowledge/物理/命题/攻击/攻击-教材内建分组教学变体.en.md).
+That proposition's A1 was therefore hit by [an attack](../../knowledge/物理/命题/攻击/tieredguidance.en.md).
 **The spec itself once quoted this number as an example — also fixed.**
 
 | Looks like | Actually |

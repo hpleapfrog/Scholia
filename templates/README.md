@@ -39,8 +39,33 @@ python tools/new_entry.py --type 命题 --subject 物理 --slug deceleration-not
 > **拿不准的时候问一句**：这条东西**能不能被反驳**？
 > 能，就是 `命题`；不能，看它是概念、讲法、误解、顺序还是材料。
 
-## 占位符
+## 英文译本：文件名由 `id` 派生
 
+每个条目还有一份英文译本。**它的文件名不是中文名 + `.en.md`**，而是由 `id` 派生：
+
+```
+id:   kb:physics:kp-frame-of-reference
+中文： knowledge/物理/知识点/参考系.md
+英文： knowledge/物理/知识点/frame-of-reference.en.md
+```
+
+规则：取 `id` 最后一段 → 去掉类型前缀（`kp-` `prop-` `method-` `mis-` `path-` `res-` `attack-`）
+→ 加 `.en.md` → **放在与中文原件同一个目录**。
+
+`python tools/new_entry.py` 生成完会把**这个文件名直接打印出来**，复制就行。
+
+英文页第一行固定写：
+
+```markdown
+> **English version of [`参考系.md`](参考系.md).**
+```
+
+> [!IMPORTANT]
+> **漏建译本不判失败，但每次跑校验都会列出来**；而**文件名不由 `id` 派生**、
+> **英文页链到中文页**，都是**失败**（`R-BILING-01` / `R-LINK-03`）。
+> 为什么这么定，见[决策记录](../docs/decisions/english-filenames-from-id.md)。
+
+## 占位符
 | 占位符 | 填什么 | 谁来填 |
 |---|---|---|
 | `{{ID}}` | 稳定标识，`kb:<学科slug>:<你的slug>`，**重命名文件也不变** | 脚本按 `--slug` 自动填 |

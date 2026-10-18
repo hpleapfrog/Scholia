@@ -85,9 +85,12 @@ index.json
 ├── known_limits                ← boundaries the repo admits itself (**written per subject**)
 ├── 证据索引                    ← all sources: category · grade · verification depth · **locator** · link · license · voided
 ├── 事件[]                      ← **a second kind of record, parallel to objects** (top-level events/; see below)
-│      id · title · status (持续更新/已封存) · path · 证据 · 来源 · 最后更新
+│      id · title · status (持续更新/已封存) · path · path_en · 证据 · 来源 · 最后更新
 └── objects[]                   ← all objects, each with:
-      id · type · title · status · path · 学科 · 学段
+      id · type · title · status · path · path_en · 学科 · 学段
+      ↑ `path` is the **Chinese original**, `path_en` the **English edition**
+        (filename derived from `id`; null when untranslated).
+        **For an English reader cite `path_en`, never hand them a Chinese filename.**
       适用 · 条件               ← **population and condition limits** (give them together with the content when restating)
       免责块在正文最前 (bool)    ← true = before restating, read the disclaimer block at the top of the body
       证据 (["ev-039"])           ← numbers

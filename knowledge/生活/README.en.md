@@ -14,14 +14,14 @@
 
 | Entry | Type | Status | Source |
 |---|---|---|---|
-| [《北京市轨道交通乘客守则》（官方文件）](资源/北京市轨道交通乘客守则.en.md) | 资源 | 有效 | `ev-043` |
-| [北京地铁对乘客携带物品设有硬性尺寸与重量上限](命题/携带物品的尺寸与重量上限.en.md) | 命题 | 待审 | `ev-043` |
-| [《公共航空运输旅客服务管理规定》（交通运输部令 2021 年第 3 号）](资源/公共航空运输旅客服务管理规定.en.md) | 资源 | 有效 | `ev-044` |
-| [非自愿退票与承运人原因的非自愿变更，都不得向旅客收费](命题/非自愿退票与变更不得收费.en.md) | 命题 | 待审 | `ev-044` |
-| [超售时，未经征集自愿者程序不得拒绝旅客登机](命题/超售必须先征集自愿者.en.md) | 命题 | 待审 | `ev-044` |
-| [承运人修改运输总条件后，不得把限制旅客权利的新条款适用于修改前已购票的旅客](命题/修改运输总条件不得追溯适用于已购票旅客.en.md) | 命题 | 暂定确认 | `ev-044` |
-| [承运人等对旅客投诉，须在 10 个工作日内给出含解决方案的处理结果，不予受理须说明理由](命题/投诉须在10个工作日内给出含解决方案的处理结果.en.md) | 命题 | 暂定确认 | `ev-044` |
-| [托运行李应与旅客同机运送；非旅客原因延误时，旅客可要求免费直接送达](命题/托运行李应与旅客同机运送且非旅客原因延误可要求免费直接送达.en.md) | 命题 | 暂定确认 | `ev-044` |
+| [《北京市轨道交通乘客守则》（官方文件）](资源/bj-subway-passenger-rules.en.md) | 资源 | 有效 | `ev-043` |
+| [北京地铁对乘客携带物品设有硬性尺寸与重量上限](命题/carried-item-limits.en.md) | 命题 | 待审 | `ev-043` |
+| [《公共航空运输旅客服务管理规定》（交通运输部令 2021 年第 3 号）](资源/air-passenger-service-rules.en.md) | 资源 | 有效 | `ev-044` |
+| [非自愿退票与承运人原因的非自愿变更，都不得向旅客收费](命题/involuntary-refund-free.en.md) | 命题 | 待审 | `ev-044` |
+| [超售时，未经征集自愿者程序不得拒绝旅客登机](命题/oversale-volunteer-first.en.md) | 命题 | 待审 | `ev-044` |
+| [承运人修改运输总条件后，不得把限制旅客权利的新条款适用于修改前已购票的旅客](命题/carriage-conditions-no-retroactive-restriction.en.md) | 命题 | 暂定确认 | `ev-044` |
+| [承运人等对旅客投诉，须在 10 个工作日内给出含解决方案的处理结果，不予受理须说明理由](命题/complaint-10-working-days-response.en.md) | 命题 | 暂定确认 | `ev-044` |
+| [托运行李应与旅客同机运送；非旅客原因延误时，旅客可要求免费直接送达](命题/checked-baggage-travels-with-passenger-and-free-direct-delivery.en.md) | 命题 | 暂定确认 | `ev-044` |
 
 **8 entries · 2 official documents · 6 rules.**
 
@@ -113,7 +113,7 @@ The reason is written into the "what the repo does **not** hold" section of [`FO
 
 | # | Thing | Status |
 |---|---|---|
-| 1 | **`已失效` has never been triggered** — the repo needs version detection (rules change), **but has no mechanism** | noted in [命题：携带物品的尺寸与重量上限](命题/携带物品的尺寸与重量上限.en.md) |
+| 1 | **`已失效` has never been triggered** — the repo needs version detection (rules change), **but has no mechanism** | noted in [命题：携带物品的尺寸与重量上限](命题/carried-item-limits.en.md) |
 | 2 | **the repo cannot verify whether the source page has been revised** — both documents have **no version number**, only a document number / effective date | noted in the `论证` of the two `资源` |
 
 ## Change log

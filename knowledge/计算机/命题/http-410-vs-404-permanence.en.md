@@ -1,0 +1,105 @@
+---
+id: kb:computing:prop-http-410-vs-404-permanence
+type: 命题
+title: "HTTP 410 means 'likely permanent'; if permanence is unknown, 404 ought to be used instead"
+status: 暂定确认
+author: "@hpleapfrog"
+created: 2026-10-13
+updated: 2026-10-13
+scope:
+  学科: 计算机 · 标准与规范
+  学段: 不限
+  适用: when you need to check "when 410 rather than 404", or "what 410 is for"
+  条件: "**applies to RFC 9110 (STD 97, 2022-06) §15.5.11**; this entry states that section's text only, **and has not checked how any specific server actually uses 410**"
+edges:
+  先修: []
+  支持: []
+  攻击: []
+evidence: [ev-054]
+license: CC-BY-SA-4.0
+---
+
+> **English version of [`HTTP410表示很可能永久消失拿不准就应当用404.md`](HTTP410表示很可能永久消失拿不准就应当用404.md).**
+
+## Statement
+
+**410 (Gone) indicates that access to the target resource is no longer available at the origin server and that this condition is likely to be permanent.**
+**If the origin server does not know, or has no facility to determine, whether the condition is permanent, the specification says to use 404 (Not Found) instead.**
+
+RFC 9110 §15.5.11 states (short quote):
+
+> The 410 (Gone) status code indicates that access to the target resource is **no longer
+> available** at the origin server and that this condition is **likely to be permanent**.
+> **If the origin server does not know, or has no facility to determine, whether or not the
+> condition is permanent, the status code 404 (Not Found) ought to be used instead.**
+
+### What 410 was designed for: getting external links removed
+
+The same section states who 410 is really addressed to (short quote):
+
+> The 410 response is primarily intended to **assist the task of web maintenance**
+> by notifying the recipient that the resource is **intentionally unavailable** and that
+> the server owners **desire that remote links to that resource be removed**.
+
+The specification then adds a boundary (short quote):
+
+> It is **not necessary** to mark all permanently unavailable resources as "gone"
+> or to keep the mark for any length of time — that is left to the discretion of the server owner.
+
+### Caching
+
+§15.5.11 closes with:
+
+> A 410 response is **heuristically cacheable**; i.e., unless otherwise indicated
+> by the method definition or explicit cache controls.
+
+## Basis
+
+| ID | Type | Grade | Locator | Licence |
+|---|---|---|---|---|
+| ev-054 | **Official document** | **High** | [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.txt), STD 97, 2022-06, **§15.5.11** (definition of 410, the division from 404, purpose and caching) | Official public specification · **cites section numbers and short quotations only; does not reproduce the full text** |
+
+## Argument
+
+### A1 · The 410 / 404 division is about permanence, not about whether the resource exists (not yet attacked)
+
+- **Claim**: the difference between 410 and 404 is **not "can the resource be found" but "did it disappear permanently"**; **when permanence is unknown, the specification says to use 404**
+- **Premise**: §15.5.11 states "likely to be permanent" and "does not know … **ought to be used instead**" (ev-054)
+- **Reasoning**:
+  1. This is "what a standard or official document specifies" — exactly what the [computing](../README.en.md) discipline collects
+  2. The common misconception is "410 = a stronger 404" — **the specification is not about strength but about confidence**: 410 is "I know it is gone and probably for good", 404 is "I do not know whether it is there, or it is gone but I am not sure it will stay gone"
+  3. So sending a 410 **is a commitment**: you announce publicly that the resource was **intentionally** taken down and that you want external links removed — **this is a signal to web maintainers, not to end users**
+- **Evidence**: ev-054
+- **Attacked by**: see A2
+
+### A2 · "Likely permanent" is the specification's own modality, not an operable criterion (not yet attacked)
+
+- **Claim**: this entry states **how the specification divides 410 from 404**; **it does not supply an operable test for "how permanent is permanent"**
+- **Premise**: §15.5.11 uses "**likely** to be permanent" and "ought to be used" (ev-054)
+- **Reasoning**:
+  1. "**Likely** permanent" is the specification's own wording — **the specification defines no threshold for "likely"**, and no rule for "how long down counts as permanent"
+  2. The same section says: it is **not necessary** to mark every permanently unavailable resource as gone, and how long to keep the mark is **at the server owner's discretion** — **the specification hands the judgement over**
+  3. Therefore this entry **cannot be used to claim that "a resource down for more than N days must return 410"**
+  4. As with [204 being cacheable by default](http-204-cannot-contain-content-or-trailers.en.md) and [405's mandatory Allow header](http-405-must-include-allow-header.en.md), **"heuristically cacheable" is the specification's default, not an implementation's obligation**
+- **Evidence**: ev-054
+- **Attacked by**: **This entry states the text of RFC 9110 §15.5.11 only; it does not guarantee the behaviour of any specific server.** "Likely permanent" has no threshold; "not necessary to mark all" is a discretion the specification explicitly grants. Also: **this entry has not checked how older RFCs (7230–7235) worded 410.**
+- **Author**: @hpleapfrog · 2026-10-13
+- **To be added**: RFC 7230–7235's wording of 410; measured use of 410 by mainstream servers
+
+## Why this counts as real information rather than noise
+
+> [!IMPORTANT]
+> **Any HTTP tutorial tells you "410 means the resource has been deleted"; none tells you the specification says "if permanence is unknown, use 404 instead".**
+>
+> The latter is a single sentence in the specification, and almost never survives retelling:
+> **it determines whether a 410 is a commitment — you announce publicly that the resource was intentionally taken down, and that you want external links removed.**
+>
+> **This library's mission is to remove noise and store real information.**
+> "410 means the resource has been deleted" is noise — tutorials all cover it.
+> "410 means likely permanently gone; use 404 when unsure; and 410 is a signal addressed to web maintainers" — these sit inside a few long sentences of RFC 9110 §15.5.11, **and are what this library should hold**.
+
+## Change log
+
+| Date | Operation | Basis | Who |
+|---|---|---|---|
+| 2026-10-13 | Entry created; an instance filling the "remaining individual codes of RFC 9110 §15.2–§15.6" gap in "What is still missing" | ev-054 registered; topic selected by discipline boundary | @hpleapfrog |

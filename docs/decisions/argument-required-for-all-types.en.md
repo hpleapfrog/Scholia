@@ -13,4 +13,4 @@ The table above (§5) **previously listed `论证` only for `命题` and `教法
 
 **Why all types need `论证`**: every piece of content in the repo should be able to answer "**why do I say so**".
 `资源` too — "why this resource is worth including" is itself a claim
-(see the `R1` of the [PhET resource](../../knowledge/物理/资源/PhET-力与运动基础.en.md)).
+(see the `R1` of the [PhET resource](../../knowledge/物理/资源/phet-forces-and-motion-basics.en.md)).

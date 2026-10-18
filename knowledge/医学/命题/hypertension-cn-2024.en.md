@@ -1,0 +1,192 @@
+---
+id: kb:med:prop-hypertension-cn-2024
+type: 命题
+title: The 2024 revision of the Chinese Hypertension Guidelines prescribes ≥140/90 mmHg in the clinic for diagnosis, and <140/90 mmHg (further down to <130/80 mmHg if tolerated) as the target for general patients
+status: 暂定确认
+author: "@hpleapfrog"
+created: 2026-10-16
+updated: 2026-10-16
+scope:
+  学科: 医学 · 临床指南
+  学段: 不限
+  适用: Diagnostic thresholds, BP classification and treatment targets for hypertension in adults aged 18 and over — recorded as guideline provisions
+  条件: "**Records only the targets and recommendation classes stated in the guideline; it is not guidance on drugs or target-setting for any individual patient** — see the disclaimer below"
+edges:
+  先修: []
+  支持: []
+  攻击: []
+evidence: [ev-070, ev-074, ev-077, ev-078]
+license: CC-BY-SA-4.0
+---
+
+> **English version of [`中国高血压指南2024降压目标.md`](中国高血压指南2024降压目标.md).**
+
+> [!CAUTION]
+> **Read this block first. This is not medical advice; it is a record of what the *Chinese Guidelines for the Prevention and Treatment of Hypertension (2024 revision)* states verbatim.**
+>
+> 1. **Not addressed to any individual patient.** Whether someone should start medication, how far to lower
+>    their pressure and which drug to add requires diagnostic data, comorbidity context and licensed
+>    clinical judgement — **this repo has no such ability and takes no such responsibility.**
+>    **Anyone with abnormal blood pressure should see a doctor, not act on this text.**
+> 2. **The guideline limits its own populations.** Every target below carries a **population limit**
+>    (general patients / 65–79 years / ≥80 years / high cardiovascular risk or with complications);
+>    **the conclusion changes when the population changes** — this entry **does not extrapolate across
+>    populations** (ev-078).
+> 3. **This entry records "what the guideline prescribes", not "what you should lower yours to".**
+>    Every line carries its recommendation class and source; **no prescriptions, no doses, no judgement
+>    about who should be treated.**
+> 4. **The diagnostic threshold is a threshold *under measurement conditions*** — no antihypertensive
+>    taken, clinic readings on 3 separate days, home readings over 5–7 consecutive days.
+>    **A single out-of-context number is not a diagnosis** (ev-078).
+> 5. **This repo only states what this guideline says.** It does not extrapolate for it, and has not
+>    independently reviewed whether the guideline is still the current version.
+
+## Statement
+
+### 1. Diagnostic thresholds: one line per measurement setting
+
+| Measurement setting | Threshold for hypertension | Source |
+|---|---|---|
+| Clinic blood pressure | **≥140/90 mmHg** | ev-078 |
+| Home self-measured blood pressure | **≥135/85 mmHg** | ev-078 |
+| 24-hour ambulatory blood pressure | **≥130/80 mmHg**; daytime ≥135/85; night-time ≥120/70 | ev-078 |
+
+> [!NOTE]
+> **Preconditions:** all of the above apply **while not taking antihypertensive medication**.
+> For diagnosis, clinic readings require **3 measurements on separate days** and home readings
+> **5–7 consecutive days** — "a clinic reading on a single occasion or a home reading on a single day
+> cannot by itself establish the diagnosis" (ev-078, verbatim).
+
+### 2. Blood-pressure classification and grading (guideline Table 6, clinic, mmHg)
+
+| Category | Systolic | Diastolic |
+|---|---|---|
+| Normal | <120 | and <80 |
+| **High-normal** | 120–139 | and/or 80–89 |
+| **Hypertension** | **≥140** | **and/or ≥90** |
+| Grade 1 (mild) | 140–159 | and/or 90–99 |
+| Grade 2 (moderate) | 160–179 | and/or 100–109 |
+| Grade 3 (severe) | ≥180 | and/or ≥110 |
+| Isolated systolic hypertension | ≥140 | and <90 |
+| Isolated diastolic hypertension | <140 | and ≥90 (**new in the 2024 edition**) |
+
+- Grading and the four-tier cardiovascular risk stratification (low / medium / high / very high)
+  both carry recommendation class **I, C** (ev-078).
+- **The guideline states its own reason for keeping grade 3**: compared with regions controlling BP
+  better, **over 8% of hypertensive patients in China are grade 3**, an estimated **more than 20 million
+  people** (ev-078, verbatim).
+
+### 3. Treatment targets (guideline "Key Point 5C: goals of blood-pressure lowering")
+
+| Population | Clinic blood-pressure target | Class | Source |
+|---|---|---|---|
+| High / very high cardiovascular risk, and patients with complications | **<130/80 mmHg**, if tolerated | **I, A** | ev-078 |
+| **General hypertensive patients** | **<140/90 mmHg**; if tolerated, further to **<130/80 mmHg** | **I, A** / **I, B** | ev-078 |
+| Older adults aged 65–79 | <140/90 mmHg; if tolerated, <130/80 mmHg | I, A / IIa, A | ev-078 |
+| Adults aged 80 and over | <150/90 mmHg; if tolerated, <140/90 mmHg | IIa, B | ev-078 |
+
+**Treatment initiation and how drugs are to be used (also verbatim in the guideline):**
+
+| Provision | Content | Source |
+|---|---|---|
+| When to start | Start drug treatment at **≥140/90** for ages 65–79; at **SBP ≥150** for age ≥80 | ev-078 |
+| Widening the start threshold | May be widened where frailty or other geriatric syndromes coexist; **in frail patients SBP should not go below 130 mmHg** | ev-078 |
+| Drug choice | **Prefer long-acting agents**, for 24-hour control and prevention of cardiovascular events | **I, A** |
+| When to combine | **≥160/100**, or **20/10 above target** in high/very-high-risk patients, or failure of single-agent therapy | **I, A** |
+| Where drugs do not help | **Low- and medium-risk high-normal BP populations** — drug treatment has **no evidence of clinical benefit** | ev-078 |
+
+### 4. Relation to an existing entry in this repo (not a new claim of this entry)
+
+The guideline's preface states that "several recent **intensive blood-pressure-lowering trials have
+further confirmed the 2018 targets**" (ev-078, verbatim). This repo's
+[Intensive BP lowering (SPRINT)](sprint-intensive-bp.en.md) (ev-070) is one such study —
+it records a **trial effect** (intensive lowering reduced major cardiovascular events and all-cause
+mortality while increasing some adverse events), **not** the guideline's target values.
+These are **claims at different levels**: one is "what happened in a population", the other
+"what the guideline prescribes".
+
+## Evidence
+
+| ID | Type | Grade | Locator | License |
+|---|---|---|---|---|
+| ev-078 | **Guideline text** | **High** (for "what does the guideline prescribe" — the text itself is the primary source) | Chinese Hypertension guideline revision committee, Hypertension League (China) et al., *Chinese Guidelines for the Prevention and Treatment of Hypertension (2024 revision)*, *Chin J Hypertension* 2024, 32(7): 603-700, [DOI 10.16439/j.issn.1673-7245.2024.07.002](https://doi.org/10.16439/j.issn.1673-7245.2024.07.002); English version *Chin Med J.* 2024;137(24):2907-2952, [DOI 10.1097/CM9.0000000000003431](https://doi.org/10.1097/CM9.0000000000003431) · [PMID 39289992](https://pubmed.ncbi.nlm.nih.gov/39289992/) (open access) | official public release · **short quotes and conclusions only; no full text reproduced** |
+| ev-070 | Paper (randomised controlled trial) | **High** | SPRINT Research Group. *A Randomized Trial of Intensive versus Standard Blood-Pressure Control.* **N Engl J Med. 2015;373(22):2103-16.** [PMID 26551272](https://pubmed.ncbi.nlm.nih.gov/26551272/) · [PMC 4689591](https://pmc.ncbi.nlm.nih.gov/articles/PMC4689591/) | external literature · **abstract and conclusions only; no full text reproduced** |
+| ev-074 | Textbook (**locator only**) | Low | *Harrison's Principles of Internal Medicine*, 22nd ed., McGraw Hill, 2025, ISBN 9781265979317 | external source · locator only |
+| ev-077 | Textbook (**locator only**) | Low | *Practical Internal Medicine*, 16th ed., People's Medical Publishing House, 2022, ISBN 9787117324823 | external source · locator only |
+
+> [!IMPORTANT]
+> **What this repo did and did not do with these four pieces of evidence:**
+>
+> - **`ev-078` (the main evidence here)**: key passages were **read verbatim via search** —
+>   the definition and Table 6 classification of Key Point 4, all targets of Key Point 5C,
+>   and the recommendation classes for initiation and combination, cross-checked sentence by sentence
+>   against the open-access English version. **The 98-page guideline was not read in full**;
+>   `核验深度` is honestly recorded as `摘要` (key passages).
+> - **`ev-070`**: the abstract only (see that row).
+> - **`ev-074` · `ev-077` (two textbooks)**: **this repo does not own a copy and has checked no chapter
+>   or page number**; their `核验深度` is `仅定位` (locator only). They serve **only as background
+>   pointers to where these topics are treated in standard textbooks** and **do not constitute
+>   verification evidence for any claim here**. Making them actually carry verification weight requires
+>   obtaining the books and upgrading the depth (to be added).
+> - **This repo has not independently reviewed whether this guideline is still the current version**,
+>   and has not checked the rest of the text.
+
+## Arguments
+
+### A1 — Every line in the tables above is verbatim guideline text (no attack yet)
+
+- **Claim**: Each item in sections 1–3 is a threshold, classification or target **written down
+  explicitly** in the *Chinese Guidelines for the Prevention and Treatment of Hypertension (2024
+  revision)*, not this repo's inference or paraphrase
+- **Premise**: The main evidence is the guideline text (ev-078); `ev-070` is used only in section 4
+  to locate an existing entry of this repo
+- **Reasoning**:
+  1. For claims of the form "what does a guideline prescribe", **the guideline text itself is the
+     primary source** — same as `ev-049` (AASM), `ev-071`–`ev-073` (plague) in this repo; no place on
+     the evidence ladder is needed
+  2. Every table row carries a **population limit plus a recommendation class** (I,A / I,B / IIa,A /
+     IIa,B / I,C) — the guideline's own stated strength; **verification means returning to the text**,
+     not trusting this repo's rendering
+  3. **The diagnostic thresholds and targets are cross-confirmed between the Chinese original and the
+     open-access English version** (the 140/90 diagnostic threshold is identical in both) —
+     **not the claim of a single source**
+- **Evidence**: ev-078 · ev-070
+- **Attacked by**: **this repo read only key passages of the 98-page guideline, never the full text**
+  (see the verification note under `Evidence`) — the table's contents are traceable, but **this repo's
+  completeness check has not been exhaustive**; additionally the LWW page for the English version
+  returned 403 to this repo, so the English text depends on an open-access mirror
+- **Response**: **This entry only states what those passages say**; claiming "all provisions of this
+  guideline" would require a full-text check (to be added)
+- **Signed**: @hpleapfrog · 2026-10-16
+
+### A2 — "The guideline prescribes the target" is neither "this repo recommends the target" nor "it fits anyone" (no attack yet)
+
+- **Claim**: This entry only claims **the guideline says so**; it does not claim the targets apply to
+  any specific person, nor that they have been validated to any particular degree of effectiveness
+- **Premise**: The discipline's three-layer boundary (see the discipline README, "one revision of the
+  boundary"): layer 2, "operating parameters stated verbatim in a guideline", **may be included**,
+  provided with a verifiable locator, population limits and an explicit disclaimer; layer 3,
+  "decisions about an individual patient", **may not**
+- **Reasoning**:
+  1. The three kinds of content here (diagnostic thresholds, BP classification, treatment targets)
+     are all **verbatim provisions** — layer 2
+  2. "Should this person take a drug, which one, how far to lower it" is layer 3 — **none of it is
+     written here**
+  3. Guideline targets **change as evidence changes** (this edition already differs from the 2018 one);
+     this entry records edition, volume and DOI precisely so readers can check currency themselves
+- **Evidence**: ev-078 · ev-070
+- **Attacked by**: **two textbooks (ev-074 · ev-077) are listed under `evidence:`, yet this repo has
+  never opened them** — a reader may mistake that for textbook-level cross-verification
+- **Response**: **This is a known weak point of this entry and it is stated twice** — in the
+  verification note under `Evidence` and in section 4 of `Statement`: the two textbooks have
+  `核验深度` of `仅定位` and **serve only as background, not as support**; `status` stays at
+  `暂定确认` rather than `已确证` precisely because the independent-review condition is not met
+- **Signed**: @hpleapfrog · 2026-10-16
+- **To be added**: full-text reading of the 98-page guideline and a currency check; upgrading the
+  verification depth of `ev-074` · `ev-077` once the books are in hand
+
+## Change log
+
+| Date | Change | Basis | Who |
+|---|---|---|---|
+| 2026-10-16 | Entry created; arose from the task of collecting **foreign and Chinese medical treatment guidelines and four standard textbooks**; the discipline's **7th claim**, and the second cardiovascular-targeted guideline entry | `ev-070` already present; `ev-074` · `ev-077` · `ev-078` registered, then topic chosen within the discipline boundary; key passages of the guideline and the open-access English version read and cross-checked sentence by sentence | @hpleapfrog |

@@ -15,14 +15,14 @@
 
 | Entry | Type | Status | Source |
 |---|---|---|---|
-| [National Bureau of Statistics, What is the survey unemployment rate](资源/国家统计局什么是调查失业率.en.md) | 资源 | 有效 | `ev-055` |
-| [Being unemployed is defined by three conditions that must hold at once](命题/失业人口由三个条件界定.en.md) | 命题 | 暂定确认 | `ev-055` |
-| [The survey and the registered urban unemployment rate are two different bases and cannot be compared or subtracted](命题/调查失业率与城镇登记失业率是两个不同口径.en.md) | 命题 | 暂定确认 | `ev-056` |
-| [The urban survey unemployment rate is unsuitable as a basis for assessing employment work, and should not be cascaded down](命题/城镇调查失业率不宜作为考核依据也不宜层层分解.en.md) | 命题 | 暂定确认 | `ev-055` |
-| [Taking the CPI to be the inflation rate](误解/把CPI当成通货膨胀率.en.md) | 误解 | 有效 | `ev-058` |
-| [The three GDP accounting approaches should agree in theory; the difference in practice is called the statistical discrepancy and is permitted](命题/GDP三种核算方法理论一致但允许统计误差.en.md) | 命题 | 暂定确认 | `ev-059` |
-| [GDP levels are at current prices and growth rates at constant prices; the two use different price bases](命题/GDP绝对额按现价计算增长速度按不变价计算.en.md) | 命题 | 暂定确认 | `ev-060` |
-| [The CPI basket changes every five years, and excludes luxuries and investment goods](命题/CPI的篮子每五年换一次且不含奢侈品与投资品.en.md) | 命题 | 暂定确认 | `ev-061` `ev-062` |
+| [National Bureau of Statistics, What is the survey unemployment rate](资源/nbs-survey-unemployment-rate.en.md) | 资源 | 有效 | `ev-055` |
+| [Being unemployed is defined by three conditions that must hold at once](命题/unemployment-three-conditions.en.md) | 命题 | 暂定确认 | `ev-055` |
+| [The survey and the registered urban unemployment rate are two different bases and cannot be compared or subtracted](命题/survey-vs-registered-unemployment.en.md) | 命题 | 暂定确认 | `ev-056` |
+| [The urban survey unemployment rate is unsuitable as a basis for assessing employment work, and should not be cascaded down](命题/unemployment-unsuitable-for-assessment.en.md) | 命题 | 暂定确认 | `ev-055` |
+| [Taking the CPI to be the inflation rate](误解/cpi-is-inflation-rate.en.md) | 误解 | 有效 | `ev-058` |
+| [The three GDP accounting approaches should agree in theory; the difference in practice is called the statistical discrepancy and is permitted](命题/gdp-three-methods-statistical-discrepancy.en.md) | 命题 | 暂定确认 | `ev-059` |
+| [GDP levels are at current prices and growth rates at constant prices; the two use different price bases](命题/gdp-level-current-price-growth-constant-price.en.md) | 命题 | 暂定确认 | `ev-060` |
+| [The CPI basket changes every five years, and excludes luxuries and investment goods](命题/cpi-basket-rotates-every-five-years-and-excludes-luxuries.en.md) | 命题 | 暂定确认 | `ev-061` `ev-062` |
 
 **All eight come from seven official NBS documents** (`ev-055`—`ev-062`, verification depth full
 text or four passages within the full text).

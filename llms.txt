@@ -84,9 +84,11 @@ index.json
 ├── known_limits                ← 本库自己承认的边界（**按学科分别写**）
 ├── 证据索引                    ← 全部来源：类别 · 等级 · 核验深度 · **定位** · 链接 · 许可 · 是否作废
 ├── 事件[]                      ← **与 objects 并列的另一类记录**（顶层 events/，见下）
-│      id · title · status（持续更新/已封存）· path · 证据 · 来源 · 最后更新
+│      id · title · status（持续更新/已封存）· path · path_en · 证据 · 来源 · 最后更新
 └── objects[]                   ← 全部对象，每条含：
-      id · type · title · status · path · 学科 · 学段
+      id · type · title · status · path · path_en · 学科 · 学段
+      ↑ `path` 是**中文正本**，`path_en` 是**英文译本**（文件名由 `id` 派生，无译文为 null）
+        **给英文读者引用时用 `path_en`，不要把中文文件名发给对方**
       适用 · 条件               ← **人群与条件限定**（转述必须连同内容一起给出）
       免责块在正文最前 (bool)    ← true = 转述前必须读文件正文开头的免责块
       证据 (["ev-039"])           ← 编号

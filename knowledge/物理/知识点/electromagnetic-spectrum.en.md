@@ -1,0 +1,73 @@
+---
+id: kb:physics:kp-electromagnetic-spectrum
+type: 知识点
+title: "Electromagnetic spectrum"
+status: 有效
+author: "@hpleapfrog"
+created: 2026-10-05
+updated: 2026-10-05
+scope:
+  学科: 物理
+  学段: 高中
+  范围: optics and electromagnetic waves
+
+edges:
+  先修: ["[波](waves.en.md)"]
+  支持: []
+  攻击: []
+evidence: [ev-030]
+license: CC-BY-SA-4.0
+---
+
+> **English version of [`电磁波谱.md`](电磁波谱.md).**
+
+> [!TIP]
+> **After reading this entry you should** be able to explain that visible light and invisible radiation differ only in frequency/wavelength, and to name typical uses for each frequency band
+
+## Definition
+
+**A spectrum** refers to a physical attribute with a **wide range of values** — the values are **continuous** in some situations and **discrete** in others.
+
+The electromagnetic spectrum is the whole range laid out by **frequency (or wavelength)**: from low-frequency radio waves,
+through microwaves, infrared, visible light, ultraviolet, and X rays, to high-frequency gamma rays.
+
+**Visible light is only one very narrow band within it**, and it has **no essential difference** from the other bands — only different frequencies and wavelengths.
+
+## Relations
+
+| Object | Entry | Note |
+|---|---|---|
+| **prerequisite** | [waves](waves.en.md) | frequency, wavelength, amplitude, transverse/longitudinal waves, waves transmit energy not matter |
+| teaching method · BL | [electromagnetic spectrum · BL: what "spectrum" means](../教法/em-spectrum-bl-what-is-a-spectrum.en.md) | first establish the concept of "a wide-range attribute" |
+| teaching method · OL/AL | [electromagnetic spectrum · OL/AL: one continuous spectrum, division of labor by band](../教法/em-spectrum-olal-continuous.en.md) | crossing vacuum, penetrating power, uses of each band |
+| misconception | [believing visible light and invisible radiation differ essentially](../误解/visible-light-is-special.en.md) | **the textbook names it as something to dispel** |
+
+> [!NOTE]
+> **The prerequisite gap has been repaired (2026-10-05).**
+>
+> Before covering the electromagnetic spectrum, the textbook **explicitly requires reviewing** "frequency, wavelength, amplitude" (`[BL]`)
+> and "the distinction between longitudinal and transverse waves" (`[AL]`) — see ev-030.
+>
+> Once the [waves](waves.en.md) node was established, the `先修` edge was attached.
+> This was an instance of **"the repo is missing a prerequisite node"**; together with
+> [Issue #17](https://github.com/hpleapfrog/Scholia/issues/17) (the prerequisite is **outside the discipline**),
+> it is two faces of the same class of problem — **that face remains unresolved.**
+
+## Argument
+
+### K10 · Why listed separately (no attack yet)
+
+- **Claim**: the electromagnetic spectrum deserves to be a separate knowledge point
+- **Premise**: the textbook devotes a separate section to it, giving 6 groups of tiered teaching hints, together with a virtual-physics resource (ev-030)
+- **Reasoning**: it has its own teaching difficulties (the abstract concept of "spectrum", the false impression of visible light's specialness) and its own resource
+- **Evidence**: ev-030
+- **Attacked**: it belongs to the optics part together with "reflection of light" and "refraction"; listing it separately may be overly fine-grained
+- **Attribution**: @hpleapfrog · 2026-10-05
+- **To be added**: if a "waves" knowledge point is established, check whether this entry should be merged into it or have its prerequisite made explicit
+
+## Change log
+
+| Date | Action | Basis | Who |
+|---|---|---|---|
+| 2026-10-05 | established the entry (#8 batch conversion · batch 2) | Issue #8 | @hpleapfrog |
+| 2026-10-05 | **attached the `先修` edge** — after the [waves](waves.en.md) node was established, the previously recorded "the repo is missing a prerequisite node" gap was repaired | repair of a gap in this repo | @hpleapfrog |

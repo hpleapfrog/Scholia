@@ -124,7 +124,7 @@ that is exactly the shape of `ev-002`: **everything looked right except that it 
 
 > [!CAUTION]
 > **ev-020 originally wrote only "580 entries, with 649 grouping markers", while the repo held neither script nor data** —
-> that row was therefore hit by an adversarial review ([attack entry](../knowledge/物理/命题/攻击/攻击-教材内建分组教学变体.en.md)'s `A4`).
+> that row was therefore hit by an adversarial review ([attack entry](../knowledge/物理/命题/攻击/tieredguidance.en.md)'s `A4`).
 >
 > **Script + details + commit hash are now supplied.** Current numbers:
 >

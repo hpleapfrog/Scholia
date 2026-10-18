@@ -9,7 +9,7 @@ See `ev-015` in [evidence/README.md](../../evidence/README.en.md).
 
 | Entry | Status | Location | Error type |
 |---|---|---|---|
-| [勘误：1A 册地震分布图数据来源不可靠](命题/勘误-地震分布图数据来源.en.md) | 待审 | 單元 1–23 圖 1.21(b) | **数据来源可靠性** (data-source reliability) |
+| [勘误：1A 册地震分布图数据来源不可靠](命题/hk-aristo-sci1a-earthquake-map.en.md) | 待审 | 單元 1–23 圖 1.21(b) | **数据来源可靠性** (data-source reliability) |
 
 Corresponding textbook: **《雅集科學新世紀 1A 冊》**, Aristo Educational Press, reprinted with corrections 2024.
 

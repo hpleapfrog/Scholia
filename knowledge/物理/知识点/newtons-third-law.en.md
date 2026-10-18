@@ -1,0 +1,98 @@
+---
+id: kb:physics:kp-newtons-third-law
+type: 知识点
+title: "Newton's third law"
+status: 有效
+author: "@hpleapfrog"
+created: 2026-10-05
+updated: 2026-10-05
+scope:
+  学科: 物理
+  学段: 高中
+  范围: relation between motion and force
+
+edges:
+  先修: ["[知识点：牛顿第二定律](newtons-second-law.en.md)"]
+  支持: []
+  攻击: []
+evidence: [ev-042]
+license: CC-BY-SA-4.0
+---
+
+> **English version of [`牛顿第三定律.md`](牛顿第三定律.md).**
+
+> [!TIP]
+> **After reading this entry you should** be able to point out any pair of action and reaction forces, and state that they act on two different objects respectively
+
+## Definition
+
+**Newton's third law**: the action and reaction forces between two objects are always
+
+- **equal in magnitude**
+- **opposite in direction**
+- **along the same straight line**
+- **acting on two different objects respectively**
+
+> [!IMPORTANT]
+> **The last one is the easiest for students to drop.** A pair of action and reaction forces
+> **never acts on the same object** — so they **never cancel each other out**.
+>
+> This connects exactly to the two phrases introduced in [force (high school)](force.en.md):
+> **`acting on` (A acts on B)** and **`being acted on` (B is acted on by A)**.
+
+The common forces the textbook names at this point (they are in the glossary of ev-042):
+
+| Force | What it is |
+|---|---|
+| **gravity** `weight` | the Earth's attraction of an object |
+| **support force** `normal force` | a force from the contact surface **perpendicular to** the surface |
+| **tension** `tension` | a force transmitted by **connecting bodies** such as ropes and rubber bands |
+| **thrust** `thrust` | e.g. the reaction the ground gives the foot, or gas gives a rocket |
+
+> [!NOTE]
+> **The textbook's `[BL]` tier here does only one thing: review "weight is a force".**
+>
+> > `Review the concept of weight as a force.`
+>
+> This is the same thing as the confusion named in [Newton's second law](newtons-second-law.en.md) (**weight vs `g`**),
+> and it appears **once in each of the two modules**. **The repo has not built a `误解` entry for this** — this is a gap.
+
+## Relations
+
+| Object | Entry | Note |
+|---|---|---|
+| prerequisite · knowledge point | [Newton's second law](newtons-second-law.en.md) | the textbook requires reviewing the first and second laws first |
+| teaching method · OL | [Newton's third law · OL: why it stays on the ground](../教法/newton3-ol-normal-force.en.md) | bring in the support force from "why does a falling object stop" |
+| teaching method · AL | [Newton's third law · AL: two rubber bands and inside/outside the system](../教法/newton3-al-rubber-band.en.md) | demonstrate tension and "connecting bodies transmit force" |
+| upstream · knowledge point | [force (high school)](force.en.md) | `system` / `external force` / `internal force` are used here for the first time |
+
+## Argument
+
+### K21 · Why listed separately (no attack yet)
+
+- **Claim**: Newton's third law deserves to be a separate knowledge point
+- **Premise**: the textbook devotes a section to it, with **5 teaching hints** (4 of them tiered) and 9 terms (ev-042)
+- **Reasoning**:
+  1. it is **an independent law**, and **its direction differs from the first two**:
+     the first and second laws concern how **a single object** moves under external forces; the third concerns the interaction **between two objects**
+  2. it requires a **new conceptual tool** — **dividing forces into those inside and those outside a system**
+     (the textbook's `[AL]` hint does this specifically)
+  3. it introduces three kinds of forces commonly used later: **support force, tension, thrust**
+- **Evidence**: ev-042
+- **Attacked**: it connects directly to [Newton's second law](newtons-second-law.en.md) in the same chapter,
+  **splitting it may sever the integrity of the "three laws"** — and the textbook's first `[OL]` hint is
+  `Review Newton's first and second laws`, showing it is **taught together with the first two**
+- **Response**: do not merge. **The reason is that its object changes**: the first two concern **a single object**,
+  the third concerns **a pair of objects**. Merging would rob the point "action and reaction forces do not act on
+  the same object" of its anchor — **and that is precisely the point students most easily lose**.
+- **Attribution**: @hpleapfrog · 2026-10-05
+- **To be added**:
+  - **conservation of momentum** (the third law and it are the two ends of the same main line; not built in this repo)
+  - **weight vs `g` confusion** (the textbook names it twice; no `误解` entry built in this repo)
+  - **vector addition and decomposition of forces** (not built in this repo)
+
+## Change log
+
+| Date | Action | Basis | Who |
+|---|---|---|---|
+| 2026-10-05 | established the entry (#8 batch conversion · batch 6); **the chain `force → inertia → Newton's second law → Newton's third law` is now complete** | user request · Issue #8 | @hpleapfrog |

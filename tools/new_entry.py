@@ -68,6 +68,9 @@ _UNSAFE = {"/": "／", "\\": "＼", ":": "：", "*": "＊", "?": "？",
 
 DEFAULT_AUTHOR = "@hpleapfrog"
 
+# 与 kbcheck.EN_SLUG_PREFIX 保持一致：英文文件名 = id 末段去掉类型前缀
+EN_SLUG_PREFIX = re.compile(r"^(kp|prop|method|mis|miscon|misconception|path|res|resource|attack)-")
+
 
 def fail(msg):
     print(f"x {msg}", file=sys.stderr)
@@ -182,7 +185,13 @@ def main():
     readme = (ROOT / "events" / "README.md") if is_event \
         else (ROOT / "knowledge" / subject / "README.md")
 
+    # 英文译本的文件名由 id 派生（R-BILING-01），这里替用户算好直接给。
+    en_slug = EN_SLUG_PREFIX.sub("", args.slug)
+    en_rel = (target_dir / f"{en_slug}.en.md").relative_to(ROOT).as_posix()
+
     print(f"已生成 {rel}")
+    print(f"英文译本应放在 {en_rel}（文件名由 id 派生；第一行写 "
+          f"`> **English version of [`{out.name}`]({out.name}).**`）")
     print()
     print("还差这几步（跑一遍 kbcheck 就会逐条报出来）")
     print(f"  1. 填 front-matter 的 `适用` / `条件` —— 缺了它，结论会被误用")

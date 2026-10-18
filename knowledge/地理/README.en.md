@@ -9,12 +9,12 @@ All entries are **first-hand statements from the publisher's errata**; see `ev-0
 
 | Entry | Status | Location | Error type |
 |---|---|---|---|
-| [勘误：关于本书地图出处](命题/勘误-关于本书地图出处.en.md) | 待审 | p.vi | 规范性缺失（地图合规）(compliance: map provenance) |
-| [勘误：道路长度漏字](命题/勘误-道路长度漏字.en.md) | 待审 | p.13 | 漏字 (omission) |
-| [勘误：等高线标注系统性错误](命题/勘误-等高线标注系统性错误.en.md) | 待审 | p.19–40（6 处） | 图文不符（**疑系统性**）(figure–text mismatch, **possibly systematic**) |
-| [勘误：清水湾地图摘录指涉有误](命题/勘误-清水湾地图摘录.en.md) | 待审 | p.45 | 指涉错误 (misreference) |
-| [勘误：「河盆等級」应为「河流等級」](命题/勘误-河盆应为河流.en.md) | 待审 | p.56 | **概念混用** (**concept conflation**) |
-| [勘误：cross-section 应为 cross section](命题/勘误-横切面术语.en.md) | 待审 | p.20 / 21 / 72 | 术语规范（**会过期**）(terminology, **will age**) |
+| [勘误：关于本书地图出处](命题/hk-ssgeog3e-vi-map-sources.en.md) | 待审 | p.vi | 规范性缺失（地图合规）(compliance: map provenance) |
+| [勘误：道路长度漏字](命题/hk-ssgeog3e-p13-typo.en.md) | 待审 | p.13 | 漏字 (omission) |
+| [勘误：等高线标注系统性错误](命题/hk-ssgeog3e-contour-errors.en.md) | 待审 | p.19–40（6 处） | 图文不符（**疑系统性**）(figure–text mismatch, **possibly systematic**) |
+| [勘误：清水湾地图摘录指涉有误](命题/hk-ssgeog3e-p45-map-ref.en.md) | 待审 | p.45 | 指涉错误 (misreference) |
+| [勘误：「河盆等級」应为「河流等級」](命题/hk-ssgeog3e-p56-river-order.en.md) | 待审 | p.56 | **概念混用** (**concept conflation**) |
+| [勘误：cross-section 应为 cross section](命题/hk-ssgeog3e-cross-section.en.md) | 待审 | p.20 / 21 / 72 | 术语规范（**会过期**）(terminology, **will age**) |
 
 Corresponding textbook: **《高中活學地理（第三版）》**, Oxford University Press (China), reprinted with corrections 2024.
 

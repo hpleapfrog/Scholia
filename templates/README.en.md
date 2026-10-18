@@ -38,6 +38,33 @@ and prints what is still missing.
 > When unsure, ask: **can this be rebutted?** If yes → `命题`. If no → concept, method,
 > misconception, order or material.
 
+## The English edition: filename derived from the `id`
+
+Every entry also has an English edition. **Its filename is not "Chinese name + `.en.md`"** — it is
+derived from the `id`:
+
+```
+id:  kb:physics:kp-frame-of-reference
+zh:  knowledge/物理/知识点/参考系.md
+en:  knowledge/物理/知识点/frame-of-reference.en.md
+```
+
+Rule: take the last segment of the `id` → drop the type prefix (`kp-` `prop-` `method-` `mis-`
+`path-` `res-` `attack-`) → add `.en.md` → put it in the **same folder** as the Chinese original.
+
+`python tools/new_entry.py` prints **that filename** when it finishes — just copy it.
+
+The first line of an English page is fixed:
+
+```markdown
+> **English version of [`参考系.md`](参考系.md).**
+```
+
+> [!IMPORTANT]
+> **A missing translation does not fail the check** (it is listed on every run), but a
+> **filename not derived from the `id`** or **an English page linking to a Chinese page** does
+> (`R-BILING-01` / `R-LINK-03`). Why: [decision record](../docs/decisions/english-filenames-from-id.en.md).
+
 ## Placeholders
 
 | Placeholder | Fill with | Who |
