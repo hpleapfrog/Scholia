@@ -519,6 +519,179 @@ def sample_graph04(root, _v):
     return False
 
 
+def sample_schema14(root, _v):
+    """医学条目正文开头的 `> [!CAUTION]` 免责块被改坏。"""
+    for p, t in _objects(root):
+        if not (field_of(t, "学科") or "").startswith("医学"):
+            continue
+        if "> [!CAUTION]" not in t:
+            continue
+        write(p, t.replace("> [!CAUTION]", "> CAUTION", 1))
+        return True
+    return False
+
+
+def sample_schema15(root, _v):
+    """front-matter 的值以 `*` 开头且不加引号（严格 YAML 解析器会报错）。"""
+    for p, t in _objects(root):
+        t2 = set_field(t, "updated", "*2026-10-18")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_schema16(root, _v):
+    """把一条「知识点」移到 `methods/`（目录与 type 不符）。"""
+    for p, t in _objects(root):
+        if p.parent.name != "concepts" or field_of(t, "type") != "知识点":
+            continue
+        dest_dir = p.parent.parent / "methods"
+        if not dest_dir.is_dir() or (dest_dir / p.name).exists():
+            continue
+        p.rename(dest_dir / p.name)
+        return True
+    return False
+
+
+def sample_event01(root, _v):
+    """事件的 `status` 写成「持续更新 / 已封存」以外的值。"""
+    for p in sorted((root / "events").glob("*.md")):
+        if p.name.startswith("README") or p.name.endswith(".en.md"):
+            continue
+        t2 = set_field(read(p), "status", "有效")
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_biling01(root, _v):
+    """把英译本改成不由 `id` 派生的文件名。"""
+    for p in sorted((root / "knowledge").rglob("*.en.md")):
+        if p.name.startswith("README"):
+            continue
+        t = read(p)
+        if not front_matter_of(t)[0] or not field_of(t, "id"):
+            continue
+        dest = p.with_name(p.name.replace(".en.md", "-renamed.en.md"))
+        if dest.exists():
+            continue
+        p.rename(dest)
+        return True
+    return False
+
+
+def sample_link03(root, _v):
+    """英文页面里加一条指向中文原件（且有译本）的链接。"""
+    zh = {}
+    for p, t in _objects(root):
+        oid = field_of(t, "id")
+        if oid:
+            zh[oid] = p
+    for p in sorted((root / "knowledge").rglob("*.en.md")):
+        if p.name.startswith("README"):
+            continue
+        t = read(p)
+        oid = field_of(t, "id")
+        if not oid or oid not in zh or zh[oid].parent != p.parent:
+            continue
+        t2 = insert_before_first_section(
+            t, "[中文正本](./" + zh[oid].name + ")" + chr(10) + chr(10))
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_evid02(root, _v):
+    """证据表的「类别」写成非法值。"""
+    p = root / "evidence" / "README.md"
+    lines = read(p).split(chr(10))
+    for k, line in enumerate(lines):
+        if not re.match(r"\s*\|\s*ev-\d+\s*\|", line):
+            continue
+        cells = line.split("|")
+        if len(cells) < 6 or "作废" in cells[2]:
+            continue
+        cells[2] = " ZZ "
+        lines[k] = "|".join(cells)
+        write(p, chr(10).join(lines))
+        return True
+    return False
+
+
+def sample_evid03(root, _v):
+    """把某条 `暂定确认` 所引唯一证据的核验深度改成「未核验」。"""
+    for p, t in _objects(root):
+        if field_of(t, "status") != "暂定确认":
+            continue
+        ids = re.findall(r"ev-\d+", front_matter_of(t)[0])
+        if len(ids) != 1:
+            continue
+        ep = root / "evidence" / "README.md"
+        lines = read(ep).split(chr(10))
+        for k, line in enumerate(lines):
+            if not re.match(r"\s*\|\s*" + re.escape(ids[0]) + r"\s*\|", line):
+                continue
+            cells = line.split("|")
+            if len(cells) < 6 or "作废" in cells[2]:
+                continue
+            cells[4] = " 未核验 "
+            lines[k] = "|".join(cells)
+            write(ep, chr(10).join(lines))
+            return True
+        return False
+    return False
+
+
+def sample_index01(root, _v):
+    """把 `citations.json` 改坏（手改了机器文件）。"""
+    p = root / "citations.json"
+    if not p.exists():
+        return False
+    write(p, "{}\n")
+    return True
+
+
+def sample_index02(root, _v):
+    """往 README 的生成块里塞一行（数字/清单过期）。"""
+    p = root / "README.md"
+    t = read(p)
+    marker = "<!-- kbcheck:begin -->"
+    if marker not in t:
+        return False
+    write(p, t.replace(marker, marker + chr(10) + "注入样本", 1))
+    return True
+
+
+def sample_readme01(root, _v):
+    """把一条对象从它的学科 README 里删掉。"""
+    for p, t in _objects(root):
+        rel = p.relative_to(root)
+        if rel.parts[0] != "knowledge":
+            continue
+        rp = root / rel.parts[0] / rel.parts[1] / "README.md"
+        if not rp.exists():
+            continue
+        txt = read(rp)
+        if p.name not in txt:
+            continue
+        write(rp, txt.replace(p.name, "ZZZ.md"))
+        return True
+    return False
+
+
+def sample_doc01(root, _v):
+    """FORMAT.md 的状态图例里删掉一个状态词。"""
+    p = root / "FORMAT.md"
+    t = read(p)
+    if "已失效" not in t:
+        return False
+    write(p, t.replace("已失效", "已退役"))
+    return True
+
+
 SAMPLES = [
     ("R-SCHEMA-17", "命题写「暂定确认」但 ## 论证 为空", sample_schema17),
     ("R-SCHEMA-18", "「变更记录」里有比 updated 更晚的日期", sample_schema18),
@@ -548,12 +721,27 @@ SAMPLES = [
     ("R-GRAPH-02", "支持边锚点在目标里不存在", sample_graph02),
     ("R-GRAPH-03", "路径的某个成果无人覆盖", sample_graph03),
     ("R-GRAPH-04", "路径某环节指不出对象", sample_graph04),
+    ("R-SCHEMA-14", "医学条目的 [!CAUTION] 免责块被改坏", sample_schema14),
+    ("R-SCHEMA-15", "front-matter 值以 * 开头不加引号", sample_schema15),
+    ("R-SCHEMA-16", "知识点被移出 concepts/（目录与 type 不符）", sample_schema16),
+    ("R-EVENT-01", "事件 status 写成非法值", sample_event01),
+    ("R-BILING-01", "英译本文件名不由 id 派生（改名）", sample_biling01),
+    ("R-LINK-03", "英文页面加了一条指向中文页的链接", sample_link03),
+    ("R-EVID-02", "证据表「类别」写成 ZZ", sample_evid02),
+    ("R-EVID-03", "暂定确认的唯一证据核验深度改成未核验", sample_evid03),
+    ("R-INDEX-01", "citations.json 被改坏", sample_index01),
+    ("R-INDEX-02", "README 生成块被塞进一行", sample_index02),
+    ("R-README-01", "对象从学科 README 里被删掉", sample_readme01),
+    ("R-DOC-01", "FORMAT.md 状态图例删掉「已失效」", sample_doc01),
 ]
 
 
 def run_check(root):
+    # 子进程强制 UTF-8：Windows 控制台默认 GBK，管道输出会让上层按 UTF-8 解码失败
+    env = dict(os.environ, PYTHONIOENCODING="utf-8", PYTHONUTF8="1")
     r = subprocess.run([sys.executable, str(root / "tools" / "kbcheck.py")],
-                       cwd=str(root), capture_output=True, text=True, encoding="utf-8")
+                       cwd=str(root), capture_output=True, text=True,
+                       encoding="utf-8", env=env)
     return (r.stdout or "") + (r.stderr or "")
 
 

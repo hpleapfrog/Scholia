@@ -405,13 +405,13 @@ def check_index(objects, events, errors):
         p = ROOT / name
         want = json.dumps(want_obj, ensure_ascii=False, separators=(",", ":")) + "\n"
         if not p.exists():
-            errors.append(f"{name} 不存在 —— 运行 `python tools/kbcheck.py --write-index` 生成")
+            errors.append(f"{name} 不存在 —— 运行 `python tools/kbcheck.py --write-index` 生成（R-INDEX-01）")
             continue
         have = p.read_text(encoding="utf-8").replace("\r\n", "\n")
         if have != want:
             errors.append(
                 f"{name} **与内容不一致**（内容改过但索引没重新生成）—— "
-                "运行 `python tools/kbcheck.py --write-index`，然后一起提交")
+                "运行 `python tools/kbcheck.py --write-index`，然后一起提交（R-INDEX-01）")
 
 
 def write_index(objects, events):
@@ -516,7 +516,7 @@ def check_front_matter_shape(fm, rel, errors):
         if v[0] in _YAML_BAD_PLAIN_START:
             errors.append(
                 f"{rel}: front-matter 第 {i} 行的值以 {v[0]!r} 开头，"
-                f"裸标量不允许（需加引号）—— 严格 YAML 解析器会报错")
+                f"裸标量不允许（需加引号）—— 严格 YAML 解析器会报错（R-SCHEMA-15）")
 
 
 STAGES = ("小学", "初中", "高中", "大学")
@@ -665,7 +665,7 @@ def check_arguments(objects, errors):
         raw = [x.lower() for x in ARG_ID.findall(section_body(o["text"], "论证") or "")]
         dup = [x for x, c in collections.Counter(raw).items() if c > 1]
         if dup:
-            errors.append(f"{rel}: `## 论证` 里论证 ID 重复 {sorted(set(dup))}")
+            errors.append(f"{rel}: `## 论证` 里论证 ID 重复 {sorted(set(dup))}（R-GRAPH-02）")
 
 
 def check_graph(objects, errors, warnings):
@@ -857,7 +857,7 @@ def check_path_outcomes(objects, errors, warnings):
         extra = covered - set(declared)
         if extra:
             errors.append(
-                f"{rel}: 编排里覆盖了未声明的成果编号: {sorted(extra)}")
+                f"{rel}: 编排里覆盖了未声明的成果编号: {sorted(extra)}（R-GRAPH-03）")
 
     return stats
 
@@ -909,7 +909,7 @@ def check_evidence_ids(objects, events, errors):
             elif ev in void:
                 errors.append(
                     f"{rel}: `evidence` 引用了**已作废**的编号 -> {ev}"
-                    f"（作废的证据不能再来支撑结论）")
+                    f"（作废的证据不能再来支撑结论）（R-EVID-01）")
 
 
 def check_readme_coverage(objects, errors):
@@ -928,12 +928,13 @@ def check_readme_coverage(objects, errors):
             continue
         subject_readme = ROOT / parts[0] / parts[1] / "README.md"
         if not subject_readme.exists():
-            errors.append(f"{rel}: 所属学科缺少 README -> knowledge/{parts[1]}/README.md")
+            errors.append(f"{rel}: 所属学科缺少 README -> knowledge/{parts[1]}/README.md（R-README-01）")
             continue
         if o["path"].name not in subject_readme.read_text(encoding="utf-8"):
             errors.append(
                 f"{rel}: **学科 README 里没有登记它**"
-                f"（`knowledge/{parts[1]}/README.md` 必须提到 `{o['path'].name}`）")
+                f"（`knowledge/{parts[1]}/README.md` 必须提到 `{o['path'].name}`）"
+                "（R-README-01）")
 
 
 # ── 链接锚点 ──────────────────────────────────────────────────────────────
@@ -1027,11 +1028,11 @@ def check_medical(objects, errors):
         if "医学" not in fm_nested(o["fm"], "学科"):
             continue
         if not fm_nested(o["fm"], "条件"):
-            errors.append(f"{rel}: 医学条目必须有 `scope.条件`（人群与限定）")
+            errors.append(f"{rel}: 医学条目必须有 `scope.条件`（人群与限定）（R-SCHEMA-14）")
         head = o["text"].split("\n## ", 1)[0]
         if "> [!CAUTION]" not in head:
             errors.append(
-                f"{rel}: 医学条目正文开头必须有 `> [!CAUTION]` 免责块"
+                f"{rel}: 医学条目正文开头必须有 `> [!CAUTION]` 免责块（R-SCHEMA-14）"
                 "（人群限定 + 非医疗建议）")
 
 
@@ -1083,7 +1084,7 @@ def check_section_order(objects, errors):
             pos.append(m.start() if m else -1)
         if all(p >= 0 for p in pos) and pos != sorted(pos):
             errors.append(
-                f"{rel}: 必备小节顺序应为 {' · '.join(order)}（FORMAT.md §1.3）")
+                f"{rel}: 必备小节顺序应为 {' · '.join(order)}（FORMAT.md §1.3）（R-SCHEMA-05）")
 
 
 def check_status_docs(errors):
@@ -1095,7 +1096,7 @@ def check_status_docs(errors):
         text = _repo_text(rel)
         missing = sorted(s for s in all_status if s not in text)
         if missing:
-            errors.append(f"{rel}: 状态图例不全，缺 {missing}")
+            errors.append(f"{rel}: 状态图例不全，缺 {missing}（R-DOC-01）")
 
 
 def check_license(objects, errors):
@@ -1113,7 +1114,7 @@ def check_id_prefix(objects, errors):
         subj = subj[0] if subj else ""
         slug = SUBJECT_SLUGS.get(subj)
         if not slug:
-            errors.append(f"{rel}: 未知 / 缺失学科 -> {subj!r}（见 SUBJECT_SLUGS）")
+            errors.append(f"{rel}: 未知 / 缺失学科 -> {subj!r}（见 SUBJECT_SLUGS）（R-SCHEMA-11）")
             continue
         i = fm_value(o["fm"], "id") or ""
         if not i.startswith(f"kb:{slug}:"):
@@ -1174,11 +1175,11 @@ def check_evidence_table(errors):
         if r["作废"]:
             continue
         if r["类别"] not in EVIDENCE_CATEGORIES:
-            errors.append(f"evidence/README.md: {ev} 类别非法 -> {r['类别']!r}")
+            errors.append(f"evidence/README.md: {ev} 类别非法 -> {r['类别']!r}（R-EVID-02）")
         if r["等级"] not in EVIDENCE_GRADES:
-            errors.append(f"evidence/README.md: {ev} 等级非法 -> {r['等级']!r}")
+            errors.append(f"evidence/README.md: {ev} 等级非法 -> {r['等级']!r}（R-EVID-02）")
         if r["核验深度"] not in EVIDENCE_DEPTHS:
-            errors.append(f"evidence/README.md: {ev} 核验深度非法 -> {r['核验深度']!r}")
+            errors.append(f"evidence/README.md: {ev} 核验深度非法 -> {r['核验深度']!r}（R-EVID-02）")
 
 
 # `未核验`（没打开过）与 `仅定位`（打开了但没读）都撑不起「确认」。
@@ -1212,7 +1213,7 @@ def check_evidence_verified_support(objects, errors):
             errors.append(
                 f"{rel}: `status` 是「{st}」，但它的证据**没有一条读过**"
                 f"（{detail}）—— 没读过就不能说「确认」；"
-                "把核验深度补成 `全文`/`摘要`，或把状态退回 `待审`")
+                "把核验深度补成 `全文`/`摘要`，或把状态退回 `待审`（R-EVID-03）")
 
 
 # ── 生成块：人类文档里的数字/清单，唯一来源是本脚本 ────────────────────────
@@ -1679,12 +1680,12 @@ def sync_generated(objects, events, write, errors):
     for rel, body in generated_blocks(objects, events).items():
         p = ROOT / rel
         if not p.exists():
-            errors.append(f"{rel}: 文件不存在（生成块的目标文件）")
+            errors.append(f"{rel}: 文件不存在（生成块的目标文件）（R-INDEX-02）")
             continue
         text = p.read_text(encoding="utf-8").replace("\r\n", "\n")
         if GENERATED_BEGIN not in text or GENERATED_END not in text:
             errors.append(
-                f"{rel}: 缺少生成块标记（{GENERATED_BEGIN} / {GENERATED_END}）")
+                f"{rel}: 缺少生成块标记（{GENERATED_BEGIN} / {GENERATED_END}）（R-INDEX-02）")
             continue
         pre, rest = text.split(GENERATED_BEGIN, 1)
         old, post = rest.split(GENERATED_END, 1)
@@ -1696,7 +1697,7 @@ def sync_generated(objects, events, write, errors):
             else:
                 errors.append(
                     f"{rel}: 生成块与来源不一致（数字/清单过期）"
-                    " —— 运行 `python tools/kbcheck.py --write-index`")
+                    " —— 运行 `python tools/kbcheck.py --write-index`（R-INDEX-02）")
 
 
 def check_event_object(fm, text, rel, ids, events, errors):
@@ -1708,7 +1709,7 @@ def check_event_object(fm, text, rel, ids, events, errors):
     keys = front_matter_keys(fm)
     dup = [k for k, c in collections.Counter(keys).items() if c > 1]
     if dup:
-        errors.append(f"{rel}: front-matter 顶层键重复 {dup}")
+        errors.append(f"{rel}: front-matter 顶层键重复 {dup}（R-SCHEMA-01）")
     missing = [k for k in EVENT_FIELDS if k not in keys]
     if missing:
         errors.append(f"{rel}: 事件 front-matter 缺字段 {missing}（R-SCHEMA-01）")
@@ -1716,15 +1717,15 @@ def check_event_object(fm, text, rel, ids, events, errors):
 
     t, st, i = fm_value(fm, "type"), fm_value(fm, "status"), fm_value(fm, "id")
     if t != EVENT_TYPE:
-        errors.append(f"{rel}: `事件` 的 `type` 必须是 {EVENT_TYPE!r} -> {t!r}")
+        errors.append(f"{rel}: `事件` 的 `type` 必须是 {EVENT_TYPE!r} -> {t!r}（R-EVENT-01）")
     if st not in EVENT_STATUS:
         errors.append(
-            f"{rel}: `事件` 的 `status` 只能是 {'/'.join(sorted(EVENT_STATUS))} -> {st!r}")
+            f"{rel}: `事件` 的 `status` 只能是 {'/'.join(sorted(EVENT_STATUS))} -> {st!r}（R-EVENT-01）")
     for sec in EVENT_SECTIONS:
         if not has_section(text, sec):
             errors.append(f"{rel}: 事件缺必备小节「{sec}」（R-SCHEMA-05）")
     if not (i or "").startswith(EVENT_ID_PREFIX):
-        errors.append(f"{rel}: `事件` 的 `id` 前缀必须是 {EVENT_ID_PREFIX!r} -> {i!r}")
+        errors.append(f"{rel}: `事件` 的 `id` 前缀必须是 {EVENT_ID_PREFIX!r} -> {i!r}（R-EVENT-01）")
     if i in ids:
         errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}（R-SCHEMA-03）")
     elif i:
@@ -1734,7 +1735,7 @@ def check_event_object(fm, text, rel, ids, events, errors):
     for key in ("edges", "先修", "支持", "攻击"):
         if re.search(rf"^[ \t]*{key}:", fm, re.M):
             errors.append(
-                f"{rel}: `事件` 不应有 `{key}`（事件记录事实，不分先修、不支持、不攻击）")
+                f"{rel}: `事件` 不应有 `{key}`（事件记录事实，不分先修、不支持、不攻击）（R-EVENT-01）")
 
     # 事件只需要证据：证据为空等于没有事件
     if not re.findall(r"ev-\d+", fm):
@@ -1750,7 +1751,7 @@ def check_event_readme(events, errors):
     p = ROOT / EVENT_DIR / "README.md"
     if not p.exists():
         if events:
-            errors.append(f"{EVENT_DIR}README.md 不存在（事件目录需要索引）")
+            errors.append(f"{EVENT_DIR}README.md 不存在（事件目录需要索引）（R-EVENT-01）")
         return
     txt = p.read_text(encoding="utf-8")
     for rel in events:
@@ -1758,7 +1759,7 @@ def check_event_readme(events, errors):
         if name not in txt:
             errors.append(
                 f"{rel}: **事件索引里没有登记它**"
-                f"（`{EVENT_DIR}README.md` 必须提到 `{name}`）")
+                f"（`{EVENT_DIR}README.md` 必须提到 `{name}`）（R-EVENT-01）")
 
 
 # 英文译本的文件名由 `id` 派生：取 id 最后一段，去掉类型前缀，加 `.en.md`。
@@ -1806,15 +1807,15 @@ def check_bilingual_pairs(objects, events, en_docs, errors, warnings):
         if not is_page and not oid:
             continue
         if not oid:
-            errors.append(f"{rel}: 英文译本缺 front-matter `id`（必须与中文原件同一个 id）")
+            errors.append(f"{rel}: 英文译本缺 front-matter `id`（必须与中文原件同一个 id）（R-BILING-01）")
             continue
         if oid not in zh_by_id:
-            errors.append(f"{rel}: 英文译本的 `id` 在中文原件里找不到 -> {oid}")
+            errors.append(f"{rel}: 英文译本的 `id` 在中文原件里找不到 -> {oid}（R-BILING-01）")
             continue
         want = en_path(zh_by_id[oid], oid)
         if rel != want:
             errors.append(f"{rel}: 英文文件名必须由 `id` 派生 -> 应为 {want}"
-                          f"（英文文件名里不该出现中文）")
+                          f"（英文文件名里不该出现中文）（R-BILING-01）")
         seen.add(oid)
 
     for oid, zh_rel in sorted(zh_by_id.items()):
@@ -1850,9 +1851,10 @@ def check_link_language(link_records, en_docs, objects, events, errors):
         alt = en_path(target_rel, oid)
         if (ROOT / alt).exists():
             alt_rel = posixpath.relpath(alt, posixpath.dirname(rel))
-            errors.append(f"{rel}: R-LINK-03 英文页面的链接指向了中文页 -> "
+            errors.append(f"{rel}: 英文页面的链接指向了中文页 -> "
                           f"[{label}]({target}) 应为 {alt_rel}"
-                          "（确需指向中文原件时，把该链接写在 `English version of` 行里）")
+                          "（确需指向中文原件时，把该链接写在 `English version of` 行里）"
+                          "（R-LINK-03）")
 
 
 def check_all():
@@ -1885,17 +1887,17 @@ def check_all():
 
         if is_event:
             if fm is None:
-                errors.append(f"{rel}: 事件缺 front-matter")
+                errors.append(f"{rel}: 事件缺 front-matter（R-SCHEMA-01）")
             else:
                 check_event_object(fm, text, rel, ids, events, errors)
         elif is_object:
             if fm is None:
-                errors.append(f"{rel}: 知识对象缺 front-matter")
+                errors.append(f"{rel}: 知识对象缺 front-matter（R-SCHEMA-01）")
             else:
                 keys = front_matter_keys(fm)
                 dup = [k for k, c in collections.Counter(keys).items() if c > 1]
                 if dup:
-                    errors.append(f"{rel}: front-matter 顶层键重复 {dup}")
+                    errors.append(f"{rel}: front-matter 顶层键重复 {dup}（R-SCHEMA-01）")
 
                 missing = [k for k in REQUIRED_FIELDS if k not in keys]
                 if missing:
@@ -2055,7 +2057,9 @@ def main():
             print("按规则汇总（同一条规则的多处错误通常一个改法）：")
             for rid, n in by_rule.most_common():
                 print(f"  {rid:14s} × {n}")
-            print(f"  {'（未标 ID）':12s} × {len(errors) - sum(by_rule.values())}")
+            unlabeled = len(errors) - sum(by_rule.values())
+            if unlabeled:
+                print(f"  {'（未标 ID）':12s} × {unlabeled}")
             print()
             print("  规则说明：docs/RULES.md")
             print()

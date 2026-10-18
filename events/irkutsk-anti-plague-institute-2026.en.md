@@ -5,7 +5,7 @@ title: "Death of a worker at the Irkutsk Anti-Plague Institute (Sep–Oct 2026)"
 status: 持续更新
 author: "@hpleapfrog"
 created: 2026-10-13
-updated: 2026-10-14
+updated: 2026-10-18
 evidence: [ev-064, ev-065, ev-066, ev-067, ev-068]
 license: CC-BY-SA-4.0
 ---
@@ -24,7 +24,9 @@ license: CC-BY-SA-4.0
 at the "Irkutsk Anti-Plague Research Institute of Siberia and the Far East" (Irkutsk APRI) in Shelekhov,
 Irkutsk region, Russia, was admitted with severe pneumonia in late September 2026 and **died in the early
 hours of 2 October**. Whether she died of **pneumonic plague** was raised by several parties but **has not
-been confirmed**; WHO and Russia call it "**pneumonia of undetermined etiology**".
+been confirmed**; WHO and Russia call it "**pneumonia of undetermined etiology**". Media confirm she did work
+with Yersinia pestis (a co-author of a March 2026 all-Russian congress report on plague-strain antibiotic
+susceptibility, per RFE/RL) — the background to why "pneumonic plague" was suspected first.
 
 The institute's laboratory and the inpatient unit of Shelekhov District Hospital were quarantined; about
 **197 contacts** were placed under medical observation (about 189 of them hospitalised), and several
@@ -58,6 +60,7 @@ countries tightened border health checks.
 | 2026-10-08 | The governor announced the **quarantine lifted** and observation ended; Russia called the "second case" **fake information** | ev-066 |
 | 2026-10-09 | As of that date: **no high-threat pathogen** detected among contacts; medical observation stopped | ev-067 |
 | 2026-10-10 | **WHO published DON 2026-DON620**: based on Russia's information, it found **no evidence of ongoing transmission**; but the **cause of death is unconfirmed**, a laboratory-associated exposure "**cannot be fully excluded at this stage**", and confidence in the assessment remains "**limited**" | ev-067 |
+| 2026-10-13 | The Irkutsk regional government **denied** reports of "restrictive measures because of plague", calling them **fake news**; it restated the official findings: the cause of death is "pneumonia of undetermined etiology", no plague case, and nearly 5,000 tests found no dangerous pathogen | see "media reports" below (SIA 10-13) |
 
 ### 2. Positions (official line vs media reports)
 
@@ -76,12 +79,13 @@ countries tightened border health checks.
 
 - **WHO**: risk assessment on 10-06; DON on 10-10 saying a lab-associated exposure cannot be fully excluded, recommending further testing (including reference laboratories), and **advising against** any travel or trade restrictions (ev-064 · ev-067).
 - **ECDC**: on 10-06, no secondary cases and no evidence of sustained transmission; its 10-09 weekly report said the **information is insufficient to draw a firm conclusion on the risk to the EU population** (ev-068).
-- **United States**: the State Department said it was monitoring closely; on 10-07 it delivered a formal diplomatic complaint (démarche) asking Russia for more information (media reports).
-- **Neighbouring countries**: Mongolia, Kazakhstan, Uzbekistan, Kyrgyzstan, Tajikistan and Indonesia tightened border/port health checks; the CDC of Hulunbuir in China's Inner Mongolia issued a plague risk advisory (all per media reports).
+- **United States**: the State Department said it was monitoring closely; on 10-07 it delivered a formal diplomatic complaint (démarche) asking Russia for more information; on 10-06 Trump said he would soon hold a call with Putin to discuss the situation (both per media; the latter via Politico 10-07).
+- **European Union**: on 10-07 (Wednesday) the European Commission and member states discussed the case at the Health Security Meeting (Politico; media).
+- **Neighbouring countries**: Mongolia, Kazakhstan, Uzbekistan, Kyrgyzstan, Tajikistan and Indonesia tightened border/port health checks; the CDC of Hulunbuir in China's Inner Mongolia issued a plague risk advisory; Armenia's prime minister ordered a commission on 10-08 to prevent the importation and spread of plague from Russia (all per media reports).
 
 ### 4. Unresolved contradictions and open questions
 
-1. **Pathogen unknown**: Russia says "not plague" and reportedly classifies the death as "**community-acquired pneumonia**" — but that is a diagnosis category, not a pathogen; **no pathogen result has ever been published**, and it has not said what killed her. WHO has asked; **nothing has been released**.
+1. **Pathogen unknown**: Russia says "not plague" and reportedly classifies the death as "**community-acquired pneumonia**" — but that is a diagnosis category, not a pathogen; **no pathogen result has ever been published**, and it has not said what killed her. WHO has asked; **nothing has been released**; the deceased's mother told media on 10-09 that as of 10-05 she had still not received a formal cause-of-death conclusion (media).
 2. **"Not plague" and "pneumonic plague" coexist**: the official line and parts of the media point in opposite directions; **this repo cannot decide who is right**.
 3. **"Was vaccinated" lacks detail**: Russia says she "was vaccinated against the high-threat pathogens she worked with" but **does not say which**.
 4. **Why hospitalise 189 contacts** for a diagnosis officials call non-contagious — a point questioned from outside.
@@ -112,3 +116,4 @@ countries tightened border health checks.
 | 2026-10-13 | Entry created; **this repo's first `event`**, and the first landing of the "real-time information" mechanism (top-level `events/`, kept apart from knowledge objects) | ev-064 · ev-065 · ev-066 registered, then the entry was created | @hpleapfrog |
 | 2026-10-13 | **Expanded collection**: added two sources — WHO DON `2026-DON620` (10-10) and ECDC (10-06); the timeline grew to 15 official rows; added three sections: "Positions", "International response", and "Unresolved contradictions and open questions" | added ev-067 (WHO DON 2026-DON620), ev-068 (ECDC) | @hpleapfrog |
 | 2026-10-14 | **Routine update**: checked through 10-14 — **no new official release** (the latest is still the 10-10 WHO DON); added media-reported details (about 5,000 samples, "community-acquired pneumonia" as the death classification, maternity-hospital screening, 60+ staff confined at the institute, FSB-escorted ambulances, the governor's remark) and enriched "Positions" | media reports added (Moscow Times, UA.NEWS, Kyiv Independent, Independent, etc.; none registered as evidence) | @hpleapfrog |
+| 2026-10-18 | **Routine update**: checked through 10-18 — **no new official release** (the latest is still the 10-10 WHO DON and the WHO event page shows no sub-update; after 10-15 media coverage is recap only); recorded the 10-13 regional-government fake-news denial ("restrictive measures because of plague" were fake), the EU Health Security Meeting on 10-07, Trump's 10-06 call remark, Armenia's 10-08 import-prevention commission and the family's statement that no formal death conclusion has been received (all media); added one line on her research background | media reports (SIA, Politico, The Insider, RFE/RL, StarHit, etc.; none registered as evidence) | @hpleapfrog |

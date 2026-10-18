@@ -37,9 +37,9 @@ So the table is **not** "how many sections short of the PEP contents list we are
 <!-- kbcheck:begin -->
 | | 章级主题数 | 占比 |
 |---|---|---|
-| 🟢 有覆盖 | **5** | 20% |
-| 🟡 部分覆盖 | **8** | 32% |
-| 🔴 完全缺 | **12** | 48% |
+| 🟢 有覆盖 | **6** | 24% |
+| 🟡 部分覆盖 | **9** | 36% |
+| 🔴 完全缺 | **10** | 40% |
 | **合计** | **25** | 100% |
 <!-- kbcheck:end -->
 
@@ -71,8 +71,8 @@ Ranked by "downstream nodes × size of the gap":
 |---|---|---|
 | ~~1~~ | ~~Force (HS) + Newton's 2nd + Newton's 3rd~~ | **✅ done** — `force → inertia → Newton's 2nd → Newton's 3rd` is connected |
 | ~~2~~ | ~~Conservation of momentum~~ | **✅ done** — `Newton's 2nd → momentum & impulse → conservation → collisions` |
-| 3 | **Electrostatics** (charge · field strength · potential energy) | compulsory-3 chapters 9–10; the library has a "current direction" misconception but **no electrostatics concept at all** |
-| ~~4~~ | ~~Circular motion + centripetal force~~ | **🟡 started (2026-10-18)** — uniform circular motion · centripetal force · centrifugal misconception; **rotational kinematics, angular acceleration, torque still missing** |
+| ~~3~~ | ~~Electrostatics (charge · field strength · potential energy)~~ | **✅ started (2026-10-18)** — charge · Coulomb's law · electric field · electric potential energy and potential (one node more than planned); **capacitance and charged particles in fields still missing** |
+| ~~4~~ | ~~Circular motion + centripetal force~~ | **✅ complete (2026-10-18)** — uniform circular motion · centripetal force · centrifugal misconception; **same day**: angular acceleration & rotational kinematics · torque |
 | 5 | **Laws of thermodynamics** | elective-3; the other end of the same energy thread as conservation of mechanical energy |
 | 6 | **Nuclear physics** | elective-3; sits after the existing "atomic structure" |
 
@@ -83,4 +83,6 @@ Ranked by "downstream nodes × size of the gap":
 | 2026-10-05 | Page created (first mapping against Chinese senior-high physics) | the request to "extend it to what Chinese senior-high students are taught" | @hpleapfrog |
 | 2026-10-18 | Statistics block turned into a generated block; fixed a statistics table that disagreed with its own overview table | a drift found while tidying: **the stats had two more rows than the table** | @hpleapfrog |
 | 2026-10-18 | **Compulsory-2 "circular motion" 🔴 → 🟡**: four new entries (ev-080–082) | OpenStax *Physics* ch. 6, modules m54173 / m54176 / m54181 read in full | @hpleapfrog |
+| 2026-10-18 | **Compulsory-3 "electrostatics and its applications" / "energy in electrostatic fields" 🔴 → 🟡**: four new concepts — charge · Coulomb's law · electric field · electric potential energy and potential (ev-083–087) | OpenStax *Physics* ch. 18, modules m54417 / m54410 / m54414 / m54428 / m54426 read in full | @hpleapfrog |
+| 2026-10-18 | **Compulsory-2 "circular motion" 🟡 → 🟢**: filled in angular acceleration & rotational kinematics · torque (ev-088) | OpenStax *Physics* ch. 6, module m54180 read in full | @hpleapfrog |
 | 2026-10-18 | English edition added; row-by-row table stays in the Chinese page (two copies would drift) | bilingual completeness (`R-BILING-03`) | @hpleapfrog |

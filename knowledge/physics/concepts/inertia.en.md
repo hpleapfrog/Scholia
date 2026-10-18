@@ -5,7 +5,7 @@ title: Inertia
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-18
 scope:
   学科: 物理
   学段: 高中
@@ -26,9 +26,44 @@ license: CC-BY-SA-4.0
 
 ## Definition
 
-**Inertia** is the property of an object **of maintaining its state of motion**.
+**Inertia** is the property of an object **of maintaining its state of motion**. Its full statement is **Newton's first law** (also called the **law of inertia**):
 
-The amount of inertia is determined by **mass**: the greater the mass, the greater the force needed to change its state of motion.
+- a body **at rest** tends to remain at rest;
+- a body **in motion** tends to remain in motion **in a straight line at a constant speed** — unless acted on by a **net external force**.
+
+> [!NOTE]
+> **Translating the law into problem-solving language.**
+>
+> - "constant velocity" in the law means **straight line** *and* **constant speed**;
+> - "no net external force" is written `F_net = 0` (or `ΣF = 0`) — the textbook's key equation;
+> - and there is a shortcut in reverse: the phrase "**at constant velocity**" in a problem tells you **the net external force is zero**.
+>   The textbook's example: a man pushes a box at constant velocity with +50 N, so friction must be −50 N — the two forces cancel exactly.
+
+The amount of inertia:
+
+- is determined by **mass**: the greater the mass, the greater the force needed to change its state of motion (a large truck vs a toy truck)
+- the textbook settles it with one problem: which has more inertia, a **parked** 2,000 kg car or a **moving** 60 kg bike and rider at 10 km/h? — the car.
+  **Inertia depends on mass, not on whether or how fast an object is moving**
+- Galileo first described the property; Newton wrote it into the first law, which is why that law is also the **law of inertia**
+
+> [!IMPORTANT]
+> **Friction is what takes the blame for "objects slow down by themselves".**
+>
+> The textbook insists on explaining **friction** first: an **external** force acting opposite to relative motion
+> (or preventing slipping). A sliding box "stops on its own" only because friction is decelerating it;
+> with no net external force it would **keep sliding at constant velocity**.
+> "Friction" is a family: **kinetic** (sliding), **static** (preventing slip), **rolling resistance**, **drag**;
+> its quantitative form is `f = μN` — the coefficient `μ` depends on the nature of the two surfaces, and `N` is the normal force.
+> The textbook's demonstration: turn off the air on an air hockey table and the puck stops after a short slide;
+> turn it on and the puck glides with almost no friction.
+
+> [!NOTE]
+> **Mass vs weight: no difference in daily speech, two different things in science.**
+>
+> Mass is the quantity of matter in an object (fixed by the number and types of atoms), **does not change with gravity** —
+> the same on Earth, in orbit, on the Moon — and is measured in **kilograms**.
+> Weight is a **force** and changes with gravity (its full treatment is in Newton's second law).
+> The textbook notes: everyday language uses the two interchangeably, and in science that is simply wrong.
 
 ## Relations
 
@@ -63,3 +98,4 @@ The amount of inertia is determined by **mass**: the greater the mass, the great
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the entry (#8 batch conversion · batch 1) | Issue #8 | @hpleapfrog |
+| 2026-10-18 | learner half expanded: the first law's full statement and `F_net = 0`, constant velocity ⇔ zero net force, mass sets inertia (independent of speed), the friction family, mass vs weight | weak-entry expansion · m54138 re-read (ev-025) | @hpleapfrog |
