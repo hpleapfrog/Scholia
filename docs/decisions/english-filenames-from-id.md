@@ -10,8 +10,8 @@
 `FORMAT.md` §0 原来规定：中文正本 `<name>.md`，英文译本 **同名** `<name>.en.md`。
 
 ```
-knowledge/物理/知识点/参考系.md
-knowledge/物理/知识点/参考系.en.md   ← 英文页
+knowledge/physics/concepts/参考系.md
+knowledge/physics/concepts/参考系.en.md   ← 英文页
 ```
 
 这个约定有一条隐性假设：**「同名」能表达「这是一对」**。
@@ -20,7 +20,7 @@ knowledge/物理/知识点/参考系.en.md   ← 英文页
 
 **一、英文内容的文件名是中文。**
 
-英文页的地址是 `knowledge/物理/知识点/参考系.en.md`。英文读者从 `START.en.md`
+英文页的地址是 `knowledge/physics/concepts/参考系.en.md`。英文读者从 `START.en.md`
 点进来，落在的是一个**中文文件名**的页面上；复制这个链接发出去，收件人看到的也是中文。
 文件内容全是英文，**名字却读不出它是什么**。
 
@@ -45,8 +45,8 @@ knowledge/物理/知识点/参考系.en.md   ← 英文页
 
 ```
 id:   kb:physics:kp-frame-of-reference
-中文： knowledge/物理/知识点/参考系.md
-英文： knowledge/物理/知识点/frame-of-reference.en.md
+中文： knowledge/physics/concepts/参考系.md
+英文： knowledge/physics/concepts/frame-of-reference.en.md
 ```
 
 | 好处 | 说明 |
@@ -71,9 +71,26 @@ id:   kb:physics:kp-frame-of-reference
 等于给每个中文条目加一道翻译工序——**那是另一条政策**，要改得单独决定，
 不该夹在一次命名修复里悄悄生效。缺口在每次跑校验时都会列出来。
 
-## 遗留
+## 后续（同日）：目录名也英文化
 
-- 目录名仍是中文（`knowledge/物理/知识点/`）。这是 §2 的既有决定（**内容目录用中文，给人看**），
-  本次只改文件名。若日后要让英文读者拿到全英文路径，那是**另一件事**：
-  要么改目录名（影响全部链接与 `SUBJECT_SLUGS`），要么单开 `en/` 镜像树（两套结构要同步）。
-  **在出现真实需求之前不做。**
+文件名改完，路径里还剩下 `knowledge/物理/命题/`。**同一个理由**（路径会被复制、贴进终端、
+被工具当成 URL 解析）对它一样成立，所以 2026-10-18 当天把 **31 个目录**也改成英文：
+
+```
+knowledge/physics/claims/     knowledge/physics/concepts/   knowledge/physics/methods/
+knowledge/physics/misconceptions/  knowledge/physics/paths/ knowledge/physics/resources/
+knowledge/physics/coverage/   knowledge/physics/claims/attacks/
+```
+
+学科目录：`physics` `life` `medicine` `geography` `science` `transport` `computing`
+`economics` `law`。
+
+**中文文件名保留**——目录要能当 URL 用，名字要给人看，这是两件事。
+
+> **学科目录名与 `id` 前缀是两套名字**：目录要能读（`medicine/`），前缀要短（`kb:med:`）。
+> 两套都只在 `tools/kbcheck.py` 里登记一次（`SUBJECT_DIRS` / `SUBJECT_SLUGS`）。
+
+## 仍然没有做的
+
+**中文条目的文件名仍是中文**（`欧姆定律.md`）。要全英文文件名，按同一套 `id` 派生规则改名即可，
+但那会**再砍掉一层可读性**（中文读者扫目录时认不出条目），不在本次范围。

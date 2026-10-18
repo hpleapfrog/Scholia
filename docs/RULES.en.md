@@ -10,7 +10,7 @@
 > **中文：** 由 [`tools/kbcheck.py`](../tools/kbcheck.py) 生成的规则注册表——**请勿手改**。
 
 <!-- kbcheck:begin -->
-**Mechanically enforced (31)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
+**Mechanically enforced (32)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
 
 | ID | Rule |
 |---|---|
@@ -29,6 +29,7 @@
 | `R-SCHEMA-13` | `教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」 |
 | `R-SCHEMA-14` | medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block |
 | `R-SCHEMA-15` | a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it |
+| `R-SCHEMA-16` | a file sits in the folder its `type` maps to (concepts / claims / methods / misconceptions / paths / resources) |
 | `R-EVENT-01` | `事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md` |
 | `R-LINK-01` | link targets exist (relative · repo-absolute · YAML `url:`) |
 | `R-LINK-02` | anchors exist (heading slug or argument id) |

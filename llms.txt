@@ -142,8 +142,8 @@ index.json
 | [`FORMAT.md`](FORMAT.md) | 格式规范（对象类型、状态、必备小节、判据） | 贡献者 · **AI 需要理解状态语义时** |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | 怎么提勘误；三个渠道的区别 | 贡献者 |
 | [`evidence/README.md`](evidence/README.md) | **全部来源索引**（编号有跳号，**以 `index.json` 的 `证据索引` 为准**） | 想核实出处 |
-| `knowledge/<学科>/README.md` | 每个学科的索引（表格） | 按学科浏览 |
-| `knowledge/物理/覆盖度/README.md` | 物理按中国高中对照的覆盖度 | **判断「本库有没有 X」** |
+| `knowledge/<subject>/README.md` | 每个学科的索引（表格） | 按学科浏览 |
+| `knowledge/physics/coverage/README.md` | 物理按中国高中对照的覆盖度 | **判断「本库有没有 X」** |
 | [`tools/kbcheck.py`](tools/kbcheck.py) | 全部校验规则（机器强制） | 想验证或复用机制 |
 | [`docs/RULES.md`](docs/RULES.md) | **规则注册表**（机械校验 / 人工复核，带 ID） | 想知道本库有哪些规则 |
 | [`AGENTS.md`](AGENTS.md) | 在仓库里工作的 agent 的入口与铁律 | 编码 / LLM agent |
@@ -179,7 +179,7 @@ index.json
 **本库不装「怎么做一件事」的流程**（如「怎么坐地铁」的步骤）。
 理由与判据见 [`FORMAT.md`](FORMAT.md) 的「本库**不**装什么」一节。
 
-**医学的边界分三层**（2026-10-12 修正，见 [`knowledge/医学/README.md`](knowledge/医学/README.md)）：
+**医学的边界分三层**（2026-10-12 修正，见 [`knowledge/medicine/README.md`](knowledge/medicine/README.md)）：
 
 | 层 | 装不装 |
 |---|---|
@@ -229,7 +229,7 @@ Scholia（https://github.com/hpleapfrog/Scholia）
 | 一条被登记为「实验数据 · 等级高」的证据，**其实是作者自己构造的数据** | `evidence/README.md` 的 `ev-002` 一节 |
 | 40 个文件里的**章节号是编出来的**（源文件里根本没有节号） | 同上「定位必须可核验」一节 |
 | 一次「多国教材对比」结论，因 **n=2 无法归因**而被判 `失据` | `objects[].id == "kb:physics:analogy-by-stage"` |
-| 一个「教材按水平分档」的命题，**被 AI 对抗审查击倒** | `knowledge/物理/命题/攻击/` |
+| 一个「教材按水平分档」的命题，**被 AI 对抗审查击倒** | `knowledge/physics/claims/attacks/` |
 | **本文件第一版写错了两个 id**（作者凭印象编的） | 见下 |
 
 > [!NOTE]

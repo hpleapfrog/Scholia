@@ -144,7 +144,7 @@ The repo also has a **dedicated check**: if `evidence` cites a non-existent numb
 | [`CONTRIBUTING.en.md`](CONTRIBUTING.en.md) | how to submit an erratum; the three channels compared | contributors |
 | [`evidence/README.en.md`](evidence/README.en.md) | **all sources index** (numbers skip; **`index.json` → `证据索引` is authoritative**) | verifying provenance |
 | `knowledge/<subject>/README.en.md` | each subject's index (tables) | browsing by subject |
-| `knowledge/物理/覆盖度/README.md` | physics coverage vs Chinese senior-high | **judging "does the repo have X"** |
+| `knowledge/physics/coverage/README.md` | physics coverage vs Chinese senior-high | **judging "does the repo have X"** |
 | [`tools/kbcheck.py`](tools/kbcheck.py) | all validation rules (machine-enforced) | verifying or reusing the mechanism |
 | [`docs/RULES.en.md`](docs/RULES.en.md) | **rule registry** (mechanical / human-reviewed, with IDs) | knowing the repo's rules |
 | [`AGENTS.md`](AGENTS.md) | entry point and hard rules for agents working in the repo | coding / LLM agents |
@@ -181,7 +181,7 @@ See [`events/README.en.md`](events/README.en.md).
 **The repo does not hold "how to do a thing"** (e.g. the steps of "how to take the subway").
 Reason and criteria: the "what the repo does **not** hold" section of [`FORMAT.en.md`](FORMAT.en.md).
 
-**Medicine's boundary has three layers** (corrected 2026-10-12, see [`knowledge/医学/README.en.md`](knowledge/医学/README.en.md)):
+**Medicine's boundary has three layers** (corrected 2026-10-12, see [`knowledge/medicine/README.en.md`](knowledge/medicine/README.en.md)):
 
 | Layer | Held? |
 |---|---|
@@ -231,7 +231,7 @@ Not a formality. The repo long records **its own past mistakes**, including:
 | an evidence registered as "experimental data · high grade" that **was actually data the author constructed** | the `ev-002` section of `evidence/README.en.md` |
 | **section numbers in 40 files were invented** (the source files have no section numbers at all) | same file, "the locator must be verifiable" section |
 | a "multi-textbook comparison" conclusion judged `失据` because **n=2 cannot attribute** | `objects[].id == "kb:physics:analogy-by-stage"` |
-| a "textbook levels by learner level" proposition **knocked down by an AI adversarial review** | `knowledge/物理/命题/攻击/` |
+| a "textbook levels by learner level" proposition **knocked down by an AI adversarial review** | `knowledge/physics/claims/attacks/` |
 | **the first version of this file got two ids wrong** (the author made them up from memory) | below |
 
 > [!NOTE]

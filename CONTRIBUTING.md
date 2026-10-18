@@ -57,7 +57,7 @@
 git clone https://github.com/hpleapfrog/Scholia.git
 cd Scholia
 git checkout -b fix/ohm-law-temperature
-# 编辑 knowledge/物理/命题/欧姆定律.md
+# 编辑 knowledge/physics/claims/欧姆定律.md
 python tools/kbcheck.py          # ← 必须通过
 git commit -am "补充温度条件与实验证据"
 git push origin fix/ohm-law-temperature

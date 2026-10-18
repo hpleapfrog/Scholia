@@ -83,6 +83,13 @@ SUBJECT_SLUGS = {"物理": "physics", "生活": "life", "医学": "med",
                  "交通": "transport", "计算机": "computing", "经济": "econ",
                  "法律": "law"}
 
+# 学科目录名（`knowledge/<subject>/`）。**与 id 前缀（SUBJECT_SLUGS）是两套名字**：
+# id 前缀要短（`kb:med:`），目录名要能读（`knowledge/medicine/`）。
+# 目录名是给人和 URL 看的——路径里出现中文会在复制链接、跨工具处理时变成百分号编码。
+SUBJECT_DIRS = {"物理": "physics", "生活": "life", "医学": "medicine",
+                "地理": "geography", "科学": "science", "交通": "transport",
+                "计算机": "computing", "经济": "economics", "法律": "law"}
+
 # 证据表的枚举（见 evidence/README.md 表头图例）
 EVIDENCE_CATEGORIES = {"教材", "论文", "指南", "官方文件", "交互式模拟",
                        "出版社勘误表", "本库数据"}
@@ -149,7 +156,7 @@ EVENT_STATUS_EN = {
 # 每个学科的覆盖说明（手写；**不写数字**，数字由 objects 自动统计在旁边）
 SUBJECT_NOTES = {
     "物理": "覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题"
-            "一条概念都没有（缺口清单见 `knowledge/物理/覆盖度/`）。",
+            "一条概念都没有（缺口清单见 `knowledge/physics/coverage/`）。",
     "地理": "全部是同一本香港教材的勘误。",
     "生活": "出行规则：北京地铁与民航的官方规定（含两份官方文件）。",
     "科学": "一条勘误。",
@@ -164,7 +171,7 @@ SUBJECTS_FALLBACK = "本学科尚无覆盖说明 —— **不要假设它覆盖�
 # 学科说明的英文版（给 START.en.md 的生成块用）
 SUBJECT_NOTES_EN = {
     "物理": "Part of Chinese senior-high physics. Against the PEP chapter-level topics, "
-            "about half the chapters have not a single concept here (gap list in `knowledge/物理/覆盖度/`).",
+            "about half the chapters have not a single concept here (gap list in `knowledge/physics/coverage/`).",
     "地理": "All errata from one Hong Kong textbook.",
     "生活": "Travel rules: official Beijing metro and civil-aviation provisions (two official documents).",
     "科学": "One erratum.",
@@ -336,7 +343,7 @@ def build_index(objects, events):
         },
         "known_limits": {
             "总览": "本库是**跨学科**的，**各学科覆盖程度差别很大**。"
-                    "判断「有没有 X」请查 `objects`（或该学科的 `knowledge/<学科>/README.md`），"
+                    "判断「有没有 X」请查 `objects`（或该学科的 `knowledge/<subject>/README.md`），"
                     "**不要假设它覆盖了什么**。",
             "按学科": {
                 s: {"条数": n, "说明": SUBJECT_NOTES.get(s, SUBJECTS_FALLBACK)}
@@ -859,7 +866,7 @@ def check_readme_coverage(objects, errors):
     一次是 9 条（第 4 批 5 条 + 第 5 批 4 条，**我自己写完忘了登记**）。
 
     **索引不会自己追上内容。** 这一条把它变成机械可查的：
-    文件名（`<name>.md`）必须出现在 `knowledge/<学科>/README.md` 里。
+    文件名（`<name>.md`）必须出现在 `knowledge/<subject>/README.md` 里。
     """
     for rel, o in objects.items():
         parts = Path(rel).parts
@@ -959,7 +966,7 @@ def check_teaching_level(objects, errors):
 def check_medical(objects, errors):
     """医学条目必须有 `scope.条件`，且正文开头是免责 `> [!CAUTION]` 块。
 
-    见 `knowledge/医学/README.md`「边界的一次修正（2026-10-12）」：
+    见 `knowledge/medicine/README.md`「边界的一次修正（2026-10-12）」：
     指南原文的规定可以收录，但必须带人群限定与免责，且以「指南规定了 X」表述。
     """
     for rel, o in objects.items():
@@ -1060,6 +1067,25 @@ def check_id_prefix(objects, errors):
                 f"{rel}: `id` 前缀应与学科一致（`kb:{slug}:…`）-> {i!r}")
 
 
+def check_type_dir(objects, errors):
+    """R-SCHEMA-16：文件所在目录必须与 `type` 对应。
+
+    目录名是英文之后（`concepts/` `claims/` `methods/` …），**目录和 `type` 是同一件事的两种写法**：
+    一个 `命题` 落在 `methods/` 里，读者按目录找东西就会找错，而单看文件内容完全合法。
+    这条只有在「目录名有语义」的前提下才有意义——中文目录那次改造之前它无法成立。
+    """
+    want = {"知识点": "concepts", "命题": "claims", "教法": "methods",
+            "误解": "misconceptions", "路径": "paths", "资源": "resources"}
+    for rel, o in sorted(objects.items()):
+        parts = Path(rel).parts
+        if len(parts) < 3 or parts[0] != "knowledge":
+            continue
+        expect = want.get(o["type"])
+        if expect and parts[2] != expect:
+            errors.append(f"{rel}: type={o['type']} 应放在 `{expect}/` 下，"
+                          f"实际在 `{parts[2]}/`（R-SCHEMA-16）")
+
+
 def check_evidence_table(errors):
     """证据表的 `类别` / `等级` / `核验深度` 必须是枚举值（作废行除外）。"""
     for ev, r in parse_evidence_index().items():
@@ -1140,6 +1166,7 @@ MECH_RULES = [
     ("R-SCHEMA-13", "`教法` 有 `scope.水平档`，取值 BL / OL / AL（可多档）或「不分档」"),
     ("R-SCHEMA-14", "医学条目有 `scope.条件`，且正文开头是 `> [!CAUTION]` 免责块"),
     ("R-SCHEMA-15", "front-matter 的 `key: value` 值不得以 YAML 指示符（`*` `&` `!` `|` `>` `%` `@` `` ` ``）开头而不加引号（否则严格 YAML 解析器报错）"),
+    ("R-SCHEMA-16", "文件所在目录与 `type` 对应（concepts / claims / methods / misconceptions / paths / resources）"),
     ("R-EVENT-01", "`事件` 单开顶层 `events/`，与 `objects` **分开**：`type`=事件、`status` 只用持续更新/已封存、必填段 陈述/依据/变更记录、**无论证、无任何边**、`id` 前缀 `kb:event:`、`evidence` 非空；且每个事件须登记在 `events/README.md`"),
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
@@ -1188,6 +1215,7 @@ MECH_RULES_EN = [
     ("R-SCHEMA-13", "`教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」"),
     ("R-SCHEMA-14", "medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block"),
     ("R-SCHEMA-15", "a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it"),
+    ("R-SCHEMA-16", "a file sits in the folder its `type` maps to (concepts / claims / methods / misconceptions / paths / resources)"),
     ("R-EVENT-01", "`事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md`"),
     ("R-LINK-01", "link targets exist (relative · repo-absolute · YAML `url:`)"),
     ("R-LINK-02", "anchors exist (heading slug or argument id)"),
@@ -1268,21 +1296,21 @@ def render_subject_overview_block(index, en=False):
             bits = " · ".join(f"{t} {c[t]}" for t in TYPE_ORDER if c.get(t))
             note = SUBJECT_NOTES.get(k, SUBJECTS_FALLBACK)
             name = k
-        lines.append(f"| [{name}](knowledge/{k}/README{suffix}) | {sum(c.values())} "
-                     f"| {bits} | {note} |")
+        lines.append(f"| [{name}](knowledge/{SUBJECT_DIRS.get(k, k)}/README{suffix}) "
+                     f"| {sum(c.values())} | {bits} | {note} |")
     lines.append(f"| **{'Total' if en else '合计'}** | **{index['统计']['对象总数']}** "
                  f"| — | — |")
     return "\n".join(lines)
 
 
 def render_coverage_block():
-    """`knowledge/物理/覆盖度/README.md` 的统计表 —— 从**同一页的总览表**数出来。
+    """`knowledge/physics/coverage/README.md` 的统计表 —— 从**同一页的总览表**数出来。
 
     **这一条是真事故**：总览表逐行标了 🟢/🟡/🔴，但下面手写的统计写着「6 · 10 · 11」（共 27），
     而表里只有 25 行、实际是 5 · 7 · 13。**统计与它自己的表对不上，而没有人能一眼看出来。**
     既然数字能从表里数出来，就不该手写。
     """
-    p = ROOT / "knowledge" / "物理" / "覆盖度" / "README.md"
+    p = ROOT / "knowledge" / SUBJECT_DIRS["物理"] / "coverage" / "README.md"
     if not p.exists():
         return None
     text = p.read_text(encoding="utf-8").replace("\r\n", "\n")
@@ -1316,7 +1344,7 @@ def render_subject_block(index):
            [k for k in sorted(sub) if k not in SUBJECT_ORDER]
     lines = ["| 学科 | 条目数 |", "|---|---|"]
     for k in keys:
-        lines.append(f"| [{k}]({k}/README.md) | {sub[k]} |")
+        lines.append(f"| [{k}]({SUBJECT_DIRS.get(k, k)}/README.md) | {sub[k]} |")
     ev = index["统计"].get("事件条数", 0)
     if ev:
         lines.append(f"| [事件（顶层）](../events/README.md) | {ev} |")
@@ -1371,7 +1399,7 @@ def generated_blocks(objects, events):
     }
     cov = render_coverage_block()
     if cov:
-        blocks["knowledge/物理/覆盖度/README.md"] = cov
+        blocks["knowledge/physics/coverage/README.md"] = cov
     return blocks
 
 
@@ -1704,6 +1732,7 @@ def check_all():
     check_license(objects, errors)
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
+    check_type_dir(objects, errors)
     check_evidence_verified_support(objects, errors)
     # 事件（与知识对象分开的另一套规则）
     check_event_readme(events, errors)

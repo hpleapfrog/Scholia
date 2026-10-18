@@ -37,7 +37,7 @@ an event answers "what happened" (a time-indexed fact, evidence only). They are 
 
 | Item | `事件` | `命题` (for contrast) |
 |---|---|---|
-| Location | top-level `events/` | `knowledge/<subject>/命题/` |
+| Location | top-level `events/` | `knowledge/<subject>/claims/` |
 | Answers | "what happened" | "what is true" |
 | `status` | `持续更新` / `已封存` | `已确证` / `已推翻` / `失据` … |
 | Required sections | `陈述` · `依据` · `变更记录` | `陈述` · `依据` · **`论证`** · `变更记录` |

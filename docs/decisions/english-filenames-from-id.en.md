@@ -12,8 +12,8 @@
 `<name>.en.md`.
 
 ```
-knowledge/物理/知识点/参考系.md
-knowledge/物理/知识点/参考系.en.md   ← the English page
+knowledge/physics/concepts/参考系.md
+knowledge/physics/concepts/参考系.en.md   ← the English page
 ```
 
 That convention carried a hidden assumption: **"same name" expresses "these are a pair"**.
@@ -22,7 +22,7 @@ That convention carried a hidden assumption: **"same name" expresses "these are 
 
 **1. English content sat under Chinese filenames.**
 
-The English page's address was `knowledge/物理/知识点/参考系.en.md`. An English reader arriving
+The English page's address was `knowledge/physics/concepts/参考系.en.md`. An English reader arriving
 from `START.en.md` landed on a page **named in Chinese**; paste that link elsewhere and the
 recipient sees Chinese too. The content is English — **the name says nothing about it**.
 
@@ -47,8 +47,8 @@ folder as the Chinese original.**
 
 ```
 id:  kb:physics:kp-frame-of-reference
-zh:  knowledge/物理/知识点/参考系.md
-en:  knowledge/物理/知识点/frame-of-reference.en.md
+zh:  knowledge/physics/concepts/参考系.md
+en:  knowledge/physics/concepts/frame-of-reference.en.md
 ```
 
 | Benefit | Why |
@@ -75,10 +75,30 @@ en:  knowledge/物理/知识点/frame-of-reference.en.md
 a hard gate adds a translation step to every Chinese entry — **that is a separate policy** and has
 to be decided on its own, not slipped in with a naming fix. The gap is listed on every run.
 
-## Remaining
+## Follow-up (same day): folders anglicised as well
 
-- **Directory names are still Chinese** (`knowledge/物理/知识点/`). That is the existing §2 decision
-  (**content folders in Chinese, for human readers**); this change touched filenames only.
-  If English readers eventually need fully English paths, that is **another job**: either rename the
-  folders (touching every link and `SUBJECT_SLUGS`) or open a mirrored `en/` tree (two structures to
-  keep in sync). **Not before a real need appears.**
+After the filenames were fixed, `knowledge/物理/命题/` was still in the path. **The same argument**
+(paths get copied, pasted into terminals, parsed as URLs) applies to it, so on 2026-10-18 **31 folders**
+were renamed to English:
+
+```
+knowledge/physics/claims/     knowledge/physics/concepts/   knowledge/physics/methods/
+knowledge/physics/misconceptions/  knowledge/physics/paths/ knowledge/physics/resources/
+knowledge/physics/coverage/   knowledge/physics/claims/attacks/
+```
+
+Subject folders: `physics` `life` `medicine` `geography` `science` `transport` `computing`
+`economics` `law`.
+
+**Chinese filenames stay** — folders must work as URLs, names must be readable by people; two
+different jobs.
+
+> **Subject folder names and `id` prefixes are two namespaces**: folders must read well
+> (`medicine/`), prefixes must be short (`kb:med:`). Both are registered exactly once, in
+> `tools/kbcheck.py` (`SUBJECT_DIRS` / `SUBJECT_SLUGS`).
+
+## Still not done
+
+**Chinese entries keep Chinese filenames** (`欧姆定律.md`). A fully English filename set is one more
+rename under the same `id`-derived rule — but it would **remove one more layer of readability**
+(a Chinese reader scanning a folder would no longer recognise entries), so it is out of scope here.

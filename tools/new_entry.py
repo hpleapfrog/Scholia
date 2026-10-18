@@ -37,14 +37,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATES = ROOT / "templates"
 
-# 类型 → (模板文件, 学科内子目录)；`事件` 单开顶层 events/，不进 knowledge/
+# 类型 → (模板文件, 学科内的英文目录)；`事件` 单开顶层 events/，不进 knowledge/
+# 目录名一律英文（FORMAT.md §2）；模板文件名仍是中文（模板本身就是中文文档）。
 TYPE_ALIASES = {
-    "知识点": ("知识点.md", "知识点"),
-    "命题": ("命题.md", "命题"),
-    "教法": ("教法.md", "教法"),
-    "误解": ("误解.md", "误解"),
-    "路径": ("路径.md", "路径"),
-    "资源": ("资源.md", "资源"),
+    "知识点": ("知识点.md", "concepts"),
+    "命题": ("命题.md", "claims"),
+    "教法": ("教法.md", "methods"),
+    "误解": ("误解.md", "misconceptions"),
+    "路径": ("路径.md", "paths"),
+    "资源": ("资源.md", "resources"),
     "事件": ("事件.md", None),
 }
 TYPE_EN = {
@@ -57,10 +58,15 @@ TYPE_EN = {
     "event": "事件", "events": "事件",
 }
 
-# 与 tools/kbcheck.py 的 SUBJECT_SLUGS 保持一致（id 前缀必须与学科匹配，R-SCHEMA-11）
+# 与 tools/kbcheck.py 的 SUBJECT_SLUGS / SUBJECT_DIRS 保持一致
+#   SUBJECT_SLUGS = id 前缀（要短：kb:med:）
+#   SUBJECT_DIRS  = 目录名（要能读：knowledge/medicine/）
 SUBJECT_SLUGS = {"物理": "physics", "生活": "life", "医学": "med", "地理": "geog",
                  "科学": "science", "交通": "transport", "计算机": "computing",
                  "经济": "econ", "法律": "law"}
+SUBJECT_DIRS = {"物理": "physics", "生活": "life", "医学": "medicine", "地理": "geography",
+                "科学": "science", "交通": "transport", "计算机": "computing",
+                "经济": "economics", "法律": "law"}
 
 # 中文标题里不能进文件名的半角字符 → 全角（Windows 禁止半角 \ / : * ? " < > |）
 _UNSAFE = {"/": "／", "\\": "＼", ":": "：", "*": "＊", "?": "？",
@@ -139,7 +145,8 @@ def main():
         if args.subject not in SUBJECT_SLUGS:
             return fail(f"未知学科 {args.subject!r}；可用：" + " / ".join(SUBJECT_SLUGS))
         prefix = f"kb:{SUBJECT_SLUGS[args.subject]}:"
-        target_dir = ROOT / "knowledge" / args.subject / subdir
+        subject_dir = SUBJECT_DIRS[args.subject]
+        target_dir = ROOT / "knowledge" / subject_dir / subdir
         oid = prefix + args.slug
         subject = args.subject
         if kind == "教法" and not args.kp:
@@ -151,7 +158,7 @@ def main():
         if args.kp:
             raw = args.kp.strip()
             cand = (target_dir / raw) if raw.startswith(".") \
-                else (ROOT / "knowledge" / args.subject / raw)
+                else (ROOT / "knowledge" / subject_dir / raw)
             if not cand.exists():
                 print(f"! 警告：{raw} 现在还不存在 —— 生成后 `knowledge_point` 会是断链，"
                       f"校验器会拦下它（R-SCHEMA-12）", file=sys.stderr)

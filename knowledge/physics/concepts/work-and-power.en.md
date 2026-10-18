@@ -1,0 +1,128 @@
+---
+id: kb:physics:kp-work-and-power
+type: 知识点
+title: "Work and power"
+status: 需复审
+author: "@hpleapfrog"
+created: 2026-10-05
+updated: 2026-10-05
+scope:
+  学科: 物理
+  学段: 高中
+  范围: energy
+
+edges:
+  先修: []
+  支持: []
+  攻击: []
+evidence: [ev-036]
+license: CC-BY-SA-4.0
+---
+
+> **English version of [`功与功率.md`](功与功率.md).**
+
+> [!TIP]
+> **After reading this entry you should** be able to judge whether a given process "does work in the scientific sense", and to state that power is the rate of doing work
+
+## Definition
+
+- **work** `W = F·d`: the effect of a force **along the direction of displacement**. Unit joule (J), **equal to newton·meter** (N·m)
+- **power** `P = W/t`: **the rate of doing work**. Unit watt, equal to N·m/s
+
+> [!IMPORTANT]
+> **"Doing work" has a strict criterion, and the criterion must first specify "which object, which force".**
+>
+> The textbook names two counterintuitive examples (ev-036):
+>
+> | Case | Does it do work in the scientific sense |
+> |---|---|
+> | **holding something motionless in the air** | ❌ **no work done** — the displacement $d=0$, so no force does any work |
+> | **carrying something on a horizontal surface** | ⚠️ **must be split up**, see below |
+>
+> **The "carrying something" row must be split up, otherwise it is wrong:**
+>
+> | Which force | Does it do work |
+> |---|---|
+> | **the vertical support force** | ❌ no (perpendicular to the horizontal displacement) |
+> | **the force that moves the box horizontally** | ✅ **does positive work** (at constant speed, all of this work turns into frictional heat) |
+> | **the net work on the box** | **zero** (constant speed ⇒ kinetic energy unchanged) |
+>
+> **So "no work is done" holds for only one of the first two — it depends on which force you are asking about.**
+> Saying flatly "carrying things horizontally does no work" is **wrong** in the case of **pushing a box**.
+
+> [!CAUTION]
+> **The table above originally said "carrying something on a horizontal surface ❌ no work done (force perpendicular to displacement)".**
+> **That sentence was wrong** — it took a reason that holds only for **vertical forces** and treated it as the reason for the whole case.
+> Corrected per `A1` of the [attack entry](../claims/attacks/work-power.en.md).
+
+> [!WARNING]
+> **The relation between "being tired" and "doing work" is "neither sufficient nor necessary", not "unrelated".**
+>
+> What was written here originally was "being tired **is not equal to** doing work". As a **general rule** that is wrong:
+> **running is tiring, and running does work.**
+>
+> | Statement | Right or wrong |
+> |---|---|
+> | tired ⇒ work | ❌ (**holding something motionless is tiring, but does no work**) |
+> | work ⇒ tired | ❌ (**free fall does work and is not tiring at all**) |
+> | "tired" and "doing work" are unrelated | ❌ (**running has both**) |
+>
+> "Holding something motionless" is easy to misread because **muscles really are consuming chemical energy**:
+> muscle fibers make repeated small contractions, **and both the force and the displacement occur inside the muscle**.
+>
+> **The correct closing move is not "that is a physiology question", but**: work must specify its object —
+> **the work of the external forces on the box is zero; the work of the internal forces in the muscle fibers is not zero, and it goes into internal energy.**
+> Both are physics, and they do not conflict. (This is the same as how [conservation of mechanical energy](conservation-of-mechanical-energy.en.md) treats frictional heat as physics.)
+
+## Relations
+
+| Object | Entry | Note |
+|---|---|---|
+| teaching method · OL | [work and power · OL: what counts as work and what does not](../methods/work-ol-what-counts.en.md) | run examples through the criterion repeatedly |
+| teaching method · AL | [work and power · AL: why the unit is N·m, and why you buy "kilowatt-hours"](../methods/work-al-unit-relations.en.md) | derive from the units that a "kilowatt-hour" is energy |
+
+## Argument
+
+### K15 · The criterion for "doing work" (**corrected, awaiting review**)
+
+- **Claim (current)**: judging whether work is done requires first specifying **which object, which force**; "carrying horizontally does no work" holds only for vertical forces
+- **Claim (original, knocked down)**: ~~"carrying something on a horizontal surface ❌ no work done (force perpendicular to displacement)"~~
+- **Why that original sentence was wrong**: it took a reason that holds only for **vertical forces** and treated it as the reason for **the whole case**.
+  When pushing a box, the push is in the same direction as the displacement and does positive work; if the speed is constant the net work is zero, and that work turns into frictional heat.
+- **Evidence**: ev-036 (the textbook gives only the conclusion, not this split)
+- **Attacked**:
+  - **quantifier and reason do not match**: a perpendicularity criterion that holds only for some forces was written as the criterion for the whole row
+  - **"tired is not equal to doing work" is wrong as a general rule**: running is tiring and does work.
+    The correct relation is **neither sufficient nor necessary**
+  - **"muscle consumption is a physiological question" is an evasion**: the force and the displacement in muscle fibers both lie within physics,
+    and the correct closing move is "specify the object", not "assign it to physiology"
+- **Status**: **awaiting review after the narrowing correction**
+- **Attribution**: @hpleapfrog (original) → corrected per the [attack entry](../claims/attacks/work-power.en.md)
+
+### K14 · Why listed separately (**attacked**)
+
+- **Claim**: work and power deserve to be a separate knowledge point
+- **Premise**: the textbook gives it its own section, with 8 teaching hints revolving around "what counts as work" and "unit relations" (ev-036)
+- **Reasoning**: it has an independent and **counterintuitive** criterion (holding something motionless does no work), which is the place in this node most easily taught wrongly
+- **Evidence**: ev-036
+- **Attacked**:
+  - it is in the same chapter as [conservation of mechanical energy](conservation-of-mechanical-energy.en.md) and directly connected to it (work is the measure of energy change),
+    **splitting it into two nodes may sever the main line "work → energy change"**
+  - **"the textbook gives it its own section" cannot support "it can stand alone"**: that section is titled
+    `Work, Power, and the Work–Energy Theorem` — the textbook **puts "work" and the "work–energy theorem" in exactly the same section**, while this entry's `目标` keeps only the first two and drops the third
+  - **"easily taught wrongly" is a reason for `教法`/`误解` nodes, not a reason for `知识点`**
+- **Attribution**: @hpleapfrog · 2026-10-05
+- **To be added**: give a reason for independence that does not rest on section division; or acknowledge that it and conservation of mechanical energy are nodes on the same main line
+
+> [!NOTE]
+> **The relation between this node and [conservation of mechanical energy](conservation-of-mechanical-energy.en.md) is not yet settled.**
+> The textbook places "work" **before** "mechanical energy" (§9.1 comes before §9.2);
+> were a `先修` edge built on that basis, it should be `work and power → conservation of mechanical energy`.
+> **But I do not have enough basis to judge whether this is a cognitive prerequisite or merely section order** (the same issue recorded on the edge of [speed and velocity](speed-and-velocity.en.md)), **so no edge is created for now.**
+
+## Change log
+
+| Date | Action | Basis | Who |
+|---|---|---|---|
+| 2026-10-05 | established the entry (#8 batch conversion · batch 3) | Issue #8 | @hpleapfrog |
+| 2026-10-05 | **criterion row corrected** ("carrying horizontally does no work" split up into three forces discussed one by one); **"tired is not equal to doing work" changed to "neither sufficient nor necessary"**; **K14's "(surviving)" retracted**; status `有效` → **`需复审`** | [AI 对抗审查](../claims/attacks/work-power.en.md) | AI 子代理提出 · @hpleapfrog 复核 |

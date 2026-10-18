@@ -25,15 +25,18 @@ and prints what is still missing.
 
 ## Which template (don't pick wrong)
 
-| What you have | Template | Test |
-|---|---|---|
-| A **concept** | [知识点](知识点.md) | it's "what it is"; no truth value |
-| A **claim that can be false** | [命题](命题.md) | it **can be rebutted**, and you can say why it holds |
-| A **way of teaching** | [教法](教法.md) | it answers "how to teach"; holds **conditionally** |
-| A **common misunderstanding** | [误解](误解.md) | "where many people go wrong", as an asset |
-| A **learning order** | [路径](路径.md) | an arrangement of concepts; every step links to an entry |
-| An **external resource** | [资源](资源.md) | it only says "where it is", never what it says |
-| Something that **happened** | [事件](事件.md) | time and evidence only, **no claim to attack** |
+| What you have | Template | Goes in | Test |
+|---|---|---|---|
+| A **concept** | [知识点](知识点.md) | `concepts/` | it's "what it is"; no truth value |
+| A **claim that can be false** | [命题](命题.md) | `claims/` | it **can be rebutted**, and you can say why it holds |
+| A **way of teaching** | [教法](教法.md) | `methods/` | it answers "how to teach"; holds **conditionally** |
+| A **common misunderstanding** | [误解](误解.md) | `misconceptions/` | "where many people go wrong", as an asset |
+| A **learning order** | [路径](路径.md) | `paths/` | an arrangement of concepts; every step links to an entry |
+| An **external resource** | [资源](资源.md) | `resources/` | it only says "where it is", never what it says |
+| Something that **happened** | [事件](事件.md) | top-level `events/` | time and evidence only, **no claim to attack** |
+
+**Folder names are English** (`knowledge/<subject>/claims/`); **filenames stay Chinese**
+(`欧姆定律.md`) — paths must work as URLs, names must be readable by people ([FORMAT](../FORMAT.en.md) §2).
 
 > When unsure, ask: **can this be rebutted?** If yes → `命题`. If no → concept, method,
 > misconception, order or material.
@@ -45,8 +48,8 @@ derived from the `id`:
 
 ```
 id:  kb:physics:kp-frame-of-reference
-zh:  knowledge/物理/知识点/参考系.md
-en:  knowledge/物理/知识点/frame-of-reference.en.md
+zh:  knowledge/physics/concepts/参考系.md
+en:  knowledge/physics/concepts/frame-of-reference.en.md
 ```
 
 Rule: take the last segment of the `id` → drop the type prefix (`kp-` `prop-` `method-` `mis-`

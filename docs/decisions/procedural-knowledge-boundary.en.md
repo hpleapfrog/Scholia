@@ -56,7 +56,7 @@ A "tidal volume 6 mL/kg" written here, followed by someone **without bedside dat
 | 2 | **risk** | **procedures whose error is irreversible and whose audience the repo cannot bound** |
 
 > **Criterion 2 excludes "procedures", not "conclusions".** The trial's **conclusion** that "low tidal volume reduces mortality" is still included
-> (see [`knowledge/医学/`](../../knowledge/医学/README.en.md)) —
+> (see [`knowledge/medicine/`](../../knowledge/medicine/README.en.md)) —
 > **because a conclusion with a source can be checked, while an instruction will be followed.**
 
 ## If this boundary is to change later
@@ -71,4 +71,4 @@ A "tidal volume 6 mL/kg" written here, followed by someone **without bedside dat
 **Not accepted**: relaxing `路径` to allow inline steps. That would invalidate the definition "路径 = an arrangement of 知识点",
 and `check_path_steps` is the mechanical version of exactly that definition.
 
-> The full failure messages of the two probes are in [`knowledge/生活/README.md`](../../knowledge/生活/README.en.md).
+> The full failure messages of the two probes are in [`knowledge/生活/README.md`](../../knowledge/life/README.en.md).

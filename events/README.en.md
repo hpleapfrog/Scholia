@@ -4,7 +4,7 @@
 
 > [!IMPORTANT]
 > **This directory holds "events" — a second kind of record, **parallel to** the knowledge
-> objects in [`knowledge/`](../knowledge/).**
+> objects in [`knowledge/`](../knowledge).**
 >
 > A proposition answers "**what is true**" (it has a truth value, is attacked and defended,
 > and converges to `已确证`/`已推翻`/`失据`); an event answers "**what happened**"

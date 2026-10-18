@@ -47,15 +47,15 @@ It **never decides "what is true".** It only guarantees that every claim carries
 <!-- kbcheck:begin -->
 | Subject | Entries | What's in it | What it collects |
 |---|---|---|---|
-| [Physics](knowledge/物理/README.en.md) | 86 | methods 45 · concepts 23 · claims 9 · misconceptions 6 · resources 2 · paths 1 | Part of Chinese senior-high physics. Against the PEP chapter-level topics, about half the chapters have not a single concept here (gap list in `knowledge/物理/覆盖度/`). |
-| [Life](knowledge/生活/README.en.md) | 8 | claims 6 · resources 2 | Travel rules: official Beijing metro and civil-aviation provisions (two official documents). |
-| [Medicine](knowledge/医学/README.en.md) | 8 | claims 8 | Conclusions from clinical guidelines and randomized trials; always phrased as "the guideline specifies X" — **no treatment advice**. |
-| [Geography](knowledge/地理/README.en.md) | 6 | claims 6 | All errata from one Hong Kong textbook. |
-| [Science](knowledge/科学/README.en.md) | 1 | claims 1 | One erratum. |
-| [Transport](knowledge/交通/README.en.md) | 4 | claims 4 | Road and rail: only conclusions verifiable in **official documents**; no how-to procedures. |
-| [Computing](knowledge/计算机/README.en.md) | 16 | claims 13 · misconceptions 1 · resources 2 | Conclusions locatable in standards and official docs; **no tutorial steps**. |
-| [Economics](knowledge/经济/README.en.md) | 8 | claims 6 · misconceptions 1 · resources 1 | Conclusions locatable in statistical releases and authoritative texts; **no forecasts or advice**. |
-| [Law](knowledge/法律/README.en.md) | 4 | claims 3 · resources 1 | Institutional provisions of statute law (elements · deadlines · legal effect); **no case rulings or legal advice**. |
+| [Physics](knowledge/physics/README.en.md) | 86 | methods 45 · concepts 23 · claims 9 · misconceptions 6 · resources 2 · paths 1 | Part of Chinese senior-high physics. Against the PEP chapter-level topics, about half the chapters have not a single concept here (gap list in `knowledge/physics/coverage/`). |
+| [Life](knowledge/life/README.en.md) | 8 | claims 6 · resources 2 | Travel rules: official Beijing metro and civil-aviation provisions (two official documents). |
+| [Medicine](knowledge/medicine/README.en.md) | 8 | claims 8 | Conclusions from clinical guidelines and randomized trials; always phrased as "the guideline specifies X" — **no treatment advice**. |
+| [Geography](knowledge/geography/README.en.md) | 6 | claims 6 | All errata from one Hong Kong textbook. |
+| [Science](knowledge/science/README.en.md) | 1 | claims 1 | One erratum. |
+| [Transport](knowledge/transport/README.en.md) | 4 | claims 4 | Road and rail: only conclusions verifiable in **official documents**; no how-to procedures. |
+| [Computing](knowledge/computing/README.en.md) | 16 | claims 13 · misconceptions 1 · resources 2 | Conclusions locatable in standards and official docs; **no tutorial steps**. |
+| [Economics](knowledge/economics/README.en.md) | 8 | claims 6 · misconceptions 1 · resources 1 | Conclusions locatable in statistical releases and authoritative texts; **no forecasts or advice**. |
+| [Law](knowledge/law/README.en.md) | 4 | claims 3 · resources 1 | Institutional provisions of statute law (elements · deadlines · legal effect); **no case rulings or legal advice**. |
 | **Total** | **141** | — | — |
 <!-- kbcheck:end -->
 
@@ -70,40 +70,45 @@ Physics has 20+ **concepts** with prerequisite relations. This is **one** sugges
 
 | Topic | Entries (suggested order) |
 |---|---|
-| **Intro kinematics** | [Reference frames](knowledge/物理/知识点/frame-of-reference.en.md) → [Speed & velocity](knowledge/物理/知识点/speed-and-velocity.en.md) → [Position–time graphs](knowledge/物理/知识点/position-time-graph.en.md) → [Acceleration](knowledge/物理/知识点/acceleration.en.md) |
-| **Force & Newton's laws** | [Force (HS)](knowledge/物理/知识点/force.en.md) → [Inertia](knowledge/物理/知识点/inertia.en.md) → [Newton's 2nd](knowledge/物理/知识点/newtons-second-law.en.md) → [Newton's 3rd](knowledge/物理/知识点/newtons-third-law.en.md) |
-| **Momentum** | [Momentum & impulse](knowledge/物理/知识点/momentum-impulse.en.md) → [Conservation of momentum](knowledge/物理/知识点/conservation-of-momentum.en.md) → [Elastic & inelastic collisions](knowledge/物理/知识点/elastic-inelastic-collisions.en.md) |
-| **Gravitation & the sky** | [Kepler's laws](knowledge/物理/知识点/keplers-laws.en.md) → [Universal gravitation](knowledge/物理/知识点/universal-gravitation.en.md) |
-| **Energy** | [Work & power](knowledge/物理/知识点/work-and-power.en.md) → [Conservation of mechanical energy](knowledge/物理/知识点/conservation-of-mechanical-energy.en.md) |
-| **Waves & sound** | [Waves](knowledge/物理/知识点/waves.en.md) → [Speed of sound & frequency](knowledge/物理/知识点/speed-of-sound.en.md) |
-| **Light** | [Reflection](knowledge/物理/知识点/reflection-of-light.en.md) · [Refraction](knowledge/物理/知识点/refraction.en.md) · [EM spectrum](knowledge/物理/知识点/electromagnetic-spectrum.en.md) |
-| **Electricity** | [Resistance & Ohm's law](knowledge/物理/知识点/resistance-and-ohms-law.en.md) |
-| **Atoms** | [Atomic structure](knowledge/物理/知识点/atomic-structure.en.md) |
-| **Middle school** | [Force & motion (MS)](knowledge/物理/知识点/forces-and-motion-jhs.en.md) |
+| **Intro kinematics** | [Reference frames](knowledge/physics/concepts/frame-of-reference.en.md) → [Speed & velocity](knowledge/physics/concepts/speed-and-velocity.en.md) → [Position–time graphs](knowledge/physics/concepts/position-time-graph.en.md) → [Acceleration](knowledge/physics/concepts/acceleration.en.md) |
+| **Force & Newton's laws** | [Force (HS)](knowledge/physics/concepts/force.en.md) → [Inertia](knowledge/physics/concepts/inertia.en.md) → [Newton's 2nd](knowledge/physics/concepts/newtons-second-law.en.md) → [Newton's 3rd](knowledge/physics/concepts/newtons-third-law.en.md) |
+| **Momentum** | [Momentum & impulse](knowledge/physics/concepts/momentum-impulse.en.md) → [Conservation of momentum](knowledge/physics/concepts/conservation-of-momentum.en.md) → [Elastic & inelastic collisions](knowledge/physics/concepts/elastic-inelastic-collisions.en.md) |
+| **Gravitation & the sky** | [Kepler's laws](knowledge/physics/concepts/keplers-laws.en.md) → [Universal gravitation](knowledge/physics/concepts/universal-gravitation.en.md) |
+| **Energy** | [Work & power](knowledge/physics/concepts/work-and-power.en.md) → [Conservation of mechanical energy](knowledge/physics/concepts/conservation-of-mechanical-energy.en.md) |
+| **Waves & sound** | [Waves](knowledge/physics/concepts/waves.en.md) → [Speed of sound & frequency](knowledge/physics/concepts/speed-of-sound.en.md) |
+| **Light** | [Reflection](knowledge/physics/concepts/reflection-of-light.en.md) · [Refraction](knowledge/physics/concepts/refraction.en.md) · [EM spectrum](knowledge/physics/concepts/electromagnetic-spectrum.en.md) |
+| **Electricity** | [Resistance & Ohm's law](knowledge/physics/concepts/resistance-and-ohms-law.en.md) |
+| **Atoms** | [Atomic structure](knowledge/physics/concepts/atomic-structure.en.md) |
+| **Middle school** | [Force & motion (MS)](knowledge/physics/concepts/forces-and-motion-jhs.en.md) |
 
 **Common mistakes**, kept in one place (6 in physics):
-[Current vs. electron flow](knowledge/物理/误解/conventional-current.en.md) ·
-[Frame of reference as "background"](knowledge/物理/误解/frame-as-background.en.md) ·
-[Moving objects naturally slow down](knowledge/物理/误解/objects-slow-naturally.en.md) ·
-[Visible vs. invisible radiation](knowledge/物理/误解/visible-light-is-special.en.md) ·
-[Waves push matter along](knowledge/物理/误解/waves-carry-matter.en.md) ·
-[Confusing G and g](knowledge/物理/误解/g-vs-g.en.md)
+[Current vs. electron flow](knowledge/physics/misconceptions/conventional-current.en.md) ·
+[Frame of reference as "background"](knowledge/physics/misconceptions/frame-as-background.en.md) ·
+[Moving objects naturally slow down](knowledge/physics/misconceptions/objects-slow-naturally.en.md) ·
+[Visible vs. invisible radiation](knowledge/physics/misconceptions/visible-light-is-special.en.md) ·
+[Waves push matter along](knowledge/physics/misconceptions/waves-carry-matter.en.md) ·
+[Confusing G and g](knowledge/physics/misconceptions/g-vs-g.en.md)
 
-**Want a full learning sequence**: [Intro kinematics (BL)](knowledge/物理/路径/kinematics-intro-bl.en.md) —
+**Want a full learning sequence**: [Intro kinematics (BL)](knowledge/physics/paths/kinematics-intro-bl.en.md) —
 it states **what you'll be able to do** and the material for each step.
 
 ## 4. How to read an entry (the most useful section)
 
 ### Six words first (you'll only see them in paths; don't memorize them)
 
+Paths are in English (`concepts/` `claims/`…); here is what each means:
+
 | You'll see | It means | How to use it |
 |---|---|---|
-| `知识点/` | a **concept** | **start here**, like a textbook section |
-| `命题/` | a **true/false claim** | a conclusion + why it holds |
-| `教法/` | a **way of teaching** a concept | teachers pick methods; students can read "another way to understand it" |
-| `误解/` | **where many people go wrong** | check whether you think that too |
-| `资源/` | external material (simulations, official docs) | supplementary |
-| `路径/` | a **learning order** | like a syllabus: "learn A, then B" |
+| `concepts/` | a **concept** (knowledge point) | **start here**, like a textbook section |
+| `claims/` | a **true/false claim** (proposition) | a conclusion + why it holds |
+| `methods/` | a **way of teaching** a concept | teachers pick methods; students can read "another way to understand it" |
+| `misconceptions/` | **where many people go wrong** | check whether you think that too |
+| `resources/` | external material (simulations, official docs) | supplementary |
+| `paths/` | a **learning order** | like a syllabus: "learn A, then B" |
+
+> Folder names are English; **filenames and content are still Chinese** — `concepts/加速度.md`
+> is the concept "acceleration" (each entry has an English edition named `acceleration.en.md`).
 
 ### An entry has two halves
 
@@ -133,9 +138,9 @@ you to read** — there is always a Chinese gloss nearby. **If one is missing, r
 
 | It doesn't have | Specifically |
 |---|---|
-| **A complete textbook** | Against Chinese PEP chapter-level topics, **about half the chapters have not a single concept here**. See the [coverage table](knowledge/物理/覆盖度/README.md) |
+| **A complete textbook** | Against Chinese PEP chapter-level topics, **about half the chapters have not a single concept here**. See the [coverage table](knowledge/physics/coverage/README.md) |
 | **Chinese-classroom data** | Most `methods` are compiled from **OpenStax *Physics*, a US high-school textbook**. Reliable — but this library has **no data** on how well it works in a Chinese classroom |
-| **Medical advice** | Medicine entries say "a guideline specifies X", **never "you should do X"**. See the [medicine subject note](knowledge/医学/README.en.md) |
+| **Medical advice** | Medicine entries say "a guideline specifies X", **never "you should do X"**. See the [medicine subject note](knowledge/medicine/README.en.md) |
 | **How-to procedures** | Steps like "how to take the metro" are excluded — **getting them wrong is irreversible, and the library cannot bound who they apply to** (see [FORMAT](FORMAT.en.md)) |
 | **A single `confirmed` entry** | See the IMPORTANT box above |
 

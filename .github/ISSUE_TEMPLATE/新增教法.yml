@@ -14,7 +14,7 @@ body:
     id: target
     attributes:
       label: 目标知识点
-      placeholder: knowledge/物理/知识点/电阻与欧姆定律.md
+      placeholder: knowledge/physics/concepts/电阻与欧姆定律.md
     validations:
       required: true
 

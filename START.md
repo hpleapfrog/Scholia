@@ -46,15 +46,15 @@
 <!-- kbcheck:begin -->
 | 学科 | 条数 | 里面有什么 | 收什么 |
 |---|---|---|---|
-| [物理](knowledge/物理/README.md) | 86 | 教法 45 · 知识点 23 · 命题 9 · 误解 6 · 资源 2 · 路径 1 | 覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题一条概念都没有（缺口清单见 `knowledge/物理/覆盖度/`）。 |
-| [生活](knowledge/生活/README.md) | 8 | 命题 6 · 资源 2 | 出行规则：北京地铁与民航的官方规定（含两份官方文件）。 |
-| [医学](knowledge/医学/README.md) | 8 | 命题 8 | 临床指南与随机试验的结论；一律以「指南 / 研究规定了 X」表述，**不提供诊疗建议**。 |
-| [地理](knowledge/地理/README.md) | 6 | 命题 6 | 全部是同一本香港教材的勘误。 |
-| [科学](knowledge/科学/README.md) | 1 | 命题 1 | 一条勘误。 |
-| [交通](knowledge/交通/README.md) | 4 | 命题 4 | 道路交通与轨道交通：只收**官方文件**能核验的结论，不收办事流程。 |
-| [计算机](knowledge/计算机/README.md) | 16 | 命题 13 · 误解 1 · 资源 2 | 标准与官方文档能定位的结论；**不收教程式步骤**。 |
-| [经济](knowledge/经济/README.md) | 8 | 命题 6 · 误解 1 · 资源 1 | 统计数据与权威文本能定位的结论；**不收预测与建议**。 |
-| [法律](knowledge/法律/README.md) | 4 | 命题 3 · 资源 1 | 成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。 |
+| [物理](knowledge/physics/README.md) | 86 | 教法 45 · 知识点 23 · 命题 9 · 误解 6 · 资源 2 · 路径 1 | 覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题一条概念都没有（缺口清单见 `knowledge/physics/coverage/`）。 |
+| [生活](knowledge/life/README.md) | 8 | 命题 6 · 资源 2 | 出行规则：北京地铁与民航的官方规定（含两份官方文件）。 |
+| [医学](knowledge/medicine/README.md) | 8 | 命题 8 | 临床指南与随机试验的结论；一律以「指南 / 研究规定了 X」表述，**不提供诊疗建议**。 |
+| [地理](knowledge/geography/README.md) | 6 | 命题 6 | 全部是同一本香港教材的勘误。 |
+| [科学](knowledge/science/README.md) | 1 | 命题 1 | 一条勘误。 |
+| [交通](knowledge/transport/README.md) | 4 | 命题 4 | 道路交通与轨道交通：只收**官方文件**能核验的结论，不收办事流程。 |
+| [计算机](knowledge/computing/README.md) | 16 | 命题 13 · 误解 1 · 资源 2 | 标准与官方文档能定位的结论；**不收教程式步骤**。 |
+| [经济](knowledge/economics/README.md) | 8 | 命题 6 · 误解 1 · 资源 1 | 统计数据与权威文本能定位的结论；**不收预测与建议**。 |
+| [法律](knowledge/law/README.md) | 4 | 命题 3 · 资源 1 | 成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。 |
 | **合计** | **141** | — | — |
 <!-- kbcheck:end -->
 
@@ -68,40 +68,44 @@
 
 | 主题 | 条目（按建议顺序） |
 |---|---|
-| **运动学入门** | [参考系](knowledge/物理/知识点/参考系.md) → [速度与速率](knowledge/物理/知识点/速度与速率.md) → [位置-时间图](knowledge/物理/知识点/位置-时间图.md) → [加速度](knowledge/物理/知识点/加速度.md) |
-| **力与牛顿定律** | [力（高中）](knowledge/物理/知识点/力-高中.md) → [惯性](knowledge/物理/知识点/惯性.md) → [牛顿第二定律](knowledge/物理/知识点/牛顿第二定律.md) → [牛顿第三定律](knowledge/物理/知识点/牛顿第三定律.md) |
-| **动量** | [动量和冲量](knowledge/物理/知识点/动量和冲量.md) → [动量守恒定律](knowledge/物理/知识点/动量守恒定律.md) → [弹性碰撞与非弹性碰撞](knowledge/物理/知识点/弹性碰撞与非弹性碰撞.md) |
-| **万有引力与天体** | [开普勒定律](knowledge/物理/知识点/开普勒定律.md) → [万有引力定律](knowledge/物理/知识点/万有引力定律.md) |
-| **能量** | [功与功率](knowledge/物理/知识点/功与功率.md) → [机械能守恒](knowledge/物理/知识点/机械能守恒.md) |
-| **波与声** | [波](knowledge/物理/知识点/波.md) → [声速与频率](knowledge/物理/知识点/声速与频率.md) |
-| **光** | [光的反射](knowledge/物理/知识点/光的反射.md) · [光的折射](knowledge/物理/知识点/光的折射.md) · [电磁波谱](knowledge/物理/知识点/电磁波谱.md) |
-| **电** | [电阻与欧姆定律](knowledge/物理/知识点/电阻与欧姆定律.md) |
-| **原子** | [原子结构](knowledge/物理/知识点/原子结构.md) |
-| **初中** | [力与运动（初中）](knowledge/物理/知识点/力与运动-初中.md) |
+| **运动学入门** | [参考系](knowledge/physics/concepts/参考系.md) → [速度与速率](knowledge/physics/concepts/速度与速率.md) → [位置-时间图](knowledge/physics/concepts/位置-时间图.md) → [加速度](knowledge/physics/concepts/加速度.md) |
+| **力与牛顿定律** | [力（高中）](knowledge/physics/concepts/力-高中.md) → [惯性](knowledge/physics/concepts/惯性.md) → [牛顿第二定律](knowledge/physics/concepts/牛顿第二定律.md) → [牛顿第三定律](knowledge/physics/concepts/牛顿第三定律.md) |
+| **动量** | [动量和冲量](knowledge/physics/concepts/动量和冲量.md) → [动量守恒定律](knowledge/physics/concepts/动量守恒定律.md) → [弹性碰撞与非弹性碰撞](knowledge/physics/concepts/弹性碰撞与非弹性碰撞.md) |
+| **万有引力与天体** | [开普勒定律](knowledge/physics/concepts/开普勒定律.md) → [万有引力定律](knowledge/physics/concepts/万有引力定律.md) |
+| **能量** | [功与功率](knowledge/physics/concepts/功与功率.md) → [机械能守恒](knowledge/physics/concepts/机械能守恒.md) |
+| **波与声** | [波](knowledge/physics/concepts/波.md) → [声速与频率](knowledge/physics/concepts/声速与频率.md) |
+| **光** | [光的反射](knowledge/physics/concepts/光的反射.md) · [光的折射](knowledge/physics/concepts/光的折射.md) · [电磁波谱](knowledge/physics/concepts/电磁波谱.md) |
+| **电** | [电阻与欧姆定律](knowledge/physics/concepts/电阻与欧姆定律.md) |
+| **原子** | [原子结构](knowledge/physics/concepts/原子结构.md) |
+| **初中** | [力与运动（初中）](knowledge/physics/concepts/力与运动-初中.md) |
 
 **做题常错的地方**单独收着（物理 6 条）：
-[电流方向与电子流向](knowledge/物理/误解/电流方向与电子流向混淆.md) ·
-[参考系当成背景](knowledge/物理/误解/参考系当成背景.md) ·
-[运动物体自然慢下来](knowledge/物理/误解/运动物体自然慢下来.md) ·
-[可见光与不可见辐射](knowledge/物理/误解/可见光与不可见辐射有本质不同.md) ·
-[波把物质一起推走](knowledge/物理/误解/波把物质一起推走.md) ·
-[混淆 G 与 g](knowledge/物理/误解/混淆G与g.md)
+[电流方向与电子流向](knowledge/physics/misconceptions/电流方向与电子流向混淆.md) ·
+[参考系当成背景](knowledge/physics/misconceptions/参考系当成背景.md) ·
+[运动物体自然慢下来](knowledge/physics/misconceptions/运动物体自然慢下来.md) ·
+[可见光与不可见辐射](knowledge/physics/misconceptions/可见光与不可见辐射有本质不同.md) ·
+[波把物质一起推走](knowledge/physics/misconceptions/波把物质一起推走.md) ·
+[混淆 G 与 g](knowledge/physics/misconceptions/混淆G与g.md)
 
-**想按完整流程学一段**：[运动学入门（BL 档）](knowledge/物理/路径/运动学入门-BL.md)——
+**想按完整流程学一段**：[运动学入门（BL 档）](knowledge/physics/paths/运动学入门-BL.md)——
 它写明「**学完你会做哪几件事**」，每一步用什么材料。
 
 ## 四、怎么读一个条目（这一节最有用）
 
 ### 先认六个词（只会出现在路径里，不用背）
 
+路径是英文的（`concepts/` `claims/`…），下表是它们各自的意思：
+
 | 你会看到 | 意思 | 怎么用 |
 |---|---|---|
-| `知识点/` | 一个**概念** | **从这里开始读**，像教科书的一节 |
-| `命题/` | 一条**有真假的陈述** | 一个结论 + 它凭什么成立 |
-| `教法/` | 同一个概念的**一种讲法** | 老师找讲法用；学生可以看「换个说法怎么理解」 |
-| `误解/` | **很多人会错**的地方 | 检查自己是不是也这么想 |
-| `资源/` | 外部材料（模拟、官方文件） | 补充材料 |
-| `路径/` | 一条**学习顺序** | 像一张课程表：「先学 A，再学 B」 |
+| `concepts/` | 一个**概念**（知识点） | **从这里开始读**，像教科书的一节 |
+| `claims/` | 一条**有真假的陈述**（命题） | 一个结论 + 它凭什么成立 |
+| `methods/` | 同一个概念的**一种讲法**（教法） | 老师找讲法用；学生可以看「换个说法怎么理解」 |
+| `misconceptions/` | **很多人会错**的地方（误解） | 检查自己是不是也这么想 |
+| `resources/` | 外部材料（模拟、官方文件）（资源） | 补充材料 |
+| `paths/` | 一条**学习顺序**（路径） | 像一张课程表：「先学 A，再学 B」 |
+
+> 目录名是英文的，**文件名和内容仍然是中文**——`concepts/加速度.md` 就是「加速度」这个概念。
 
 ### 一个条目分成两半
 
@@ -131,9 +135,9 @@
 
 | 它没有 | 具体 |
 |---|---|
-| **完整的教科书** | 物理按人教版章级主题对照，**一半左右的章级主题一条概念都没有**。见[覆盖度表](knowledge/物理/覆盖度/README.md) |
+| **完整的教科书** | 物理按人教版章级主题对照，**一半左右的章级主题一条概念都没有**。见[覆盖度表](knowledge/physics/coverage/README.md) |
 | **中国课堂的实测数据** | `教法` 绝大多数整理自 **OpenStax《Physics》——一本美国高中教材**。它可靠，但「在中国课堂上效果如何」本库没有数据 |
-| **医疗建议** | 医学条目只说「某份指南规定了什么」，**不说「你该怎么做」**。详见[医学学科说明](knowledge/医学/README.md) |
+| **医疗建议** | 医学条目只说「某份指南规定了什么」，**不说「你该怎么做」**。详见[医学学科说明](knowledge/medicine/README.md) |
 | **办事流程** | 「怎么坐地铁」「怎么挂号」这类步骤不收——**弄错了后果不可逆，而本库限定不了适用对象**（见 [FORMAT](FORMAT.md) 的「本库不装什么」） |
 | **一条「已确证」** | 见上面那个 IMPORTANT 框 |
 
