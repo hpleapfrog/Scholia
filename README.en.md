@@ -15,6 +15,8 @@
 | **An AI agent** working in this repo | [**AGENTS.md**](AGENTS.md) — hard rules · how to edit · how to run checks |
 | **An AI / program** reading content | [**llms.txt**](llms.txt) + parse [**index.json**](index.json) — what must not be quoted, each entry's real source |
 | Wiring it into an agent | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) — zero-dependency read-only MCP server |
+| **Adding an entry** (contributor) | [`templates/`](templates/README.en.md) + `python tools/new_entry.py` — one command gives you a valid skeleton |
+| **Building your own** (personal) | [`templates/`](templates/README.en.md) — copy the skeletons; no fork, no network |
 | Curious how it's built | keep reading |
 
 ---
@@ -130,8 +132,10 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 
 ## Open questions (the important ones)
 
-1. **Can entry cost drop below 5 minutes?** ← **decides the project's survival** (most entries
-   are 30–60-minute full objects, the opposite of the "start from single errata" advice).
+1. **Can entry cost drop below 5 minutes?** ← **decides the project's survival**. [`templates/`](templates/README.en.md)
+   and `tools/new_entry.py` are in place (structure to the script, content to the human), but
+   **whether it really drops to 5 minutes is unverified** — it has to be proven on the next real
+   entry, not claimed by adding templates.
 2. `已确证` / `争议` / `已推翻` **have never been used** — a single contributor cannot produce them
    honestly; this is not a gap code can fill.
 3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17), waiting for 3–5 cases); there is no way to express "advanced".

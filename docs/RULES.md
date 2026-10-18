@@ -42,7 +42,7 @@
 | `R-EVID-02` | 证据表 `类别` / `等级` / `核验深度` 取值合法 |
 | `R-EVID-03` | `暂定确认` / `已确证` 必须至少有一条 `核验深度` 为 `全文` / `摘要` 的证据（没读过不能说确认） |
 | `R-INDEX-01` | `index.json` 与内容一致（改内容必须重生成） |
-| `R-INDEX-02` | 人类文档的生成块与 `index.json` / 规则表一致 |
+| `R-INDEX-02` | 人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表） |
 | `R-README-01` | 每个对象都在所属学科 README 里登记 |
 | `R-DOC-01` | 状态图例在 FORMAT.md 与 knowledge/README.md 里列全 |
 

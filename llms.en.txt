@@ -42,8 +42,8 @@
 > For content **not** in the repo: you **may** answer from other sources,
 > **but say it is not the repo's**. **Don't count external memory as this repo's content.**
 >
-> Physics example: against Chinese senior-high (人教版) chapter-level topics, about **44% of topics have not a single concept**
-> (**momentum · circular motion · electrostatic field · electromagnetic induction · AC current · thermodynamics · atomic nucleus**).
+> Physics example: against Chinese senior-high (人教版) chapter-level topics, about **half of the topics have not a single concept**
+> (**circular motion · electrostatic field · electromagnetic induction · AC current · thermodynamics · atomic nucleus**).
 > **Being familiar with these does not mean the repo has them.**
 >
 > ### 5. `教法` come from **one American textbook** — not proof they work in a Chinese classroom
@@ -139,7 +139,7 @@ The repo also has a **dedicated check**: if `evidence` cites a non-existent numb
 | [`README.md`](README.md) | README 中文版 | 中文读者 |
 | [`FORMAT.en.md`](FORMAT.en.md) | format spec (object types, statuses, required sections, criteria) | contributors · **AI that needs the status semantics** |
 | [`CONTRIBUTING.en.md`](CONTRIBUTING.en.md) | how to submit an erratum; the three channels compared | contributors |
-| [`evidence/README.en.md`](evidence/README.en.md) | **all sources index** (`ev-001` … `ev-050`, numbers skip) | verifying provenance |
+| [`evidence/README.en.md`](evidence/README.en.md) | **all sources index** (numbers skip; **`index.json` → `证据索引` is authoritative**) | verifying provenance |
 | `knowledge/<subject>/README.en.md` | each subject's index (tables) | browsing by subject |
 | `knowledge/物理/覆盖度/README.md` | physics coverage vs Chinese senior-high | **judging "does the repo have X"** |
 | [`tools/kbcheck.py`](tools/kbcheck.py) | all validation rules (machine-enforced) | verifying or reusing the mechanism |

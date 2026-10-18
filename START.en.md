@@ -3,40 +3,77 @@
 > 中文 → [**START.md**](START.md)
 
 > [!NOTE]
-> **This page is for people who want to learn something — not for contributors.**
-> You don't need to know how this library is built to use it.
+> **This page is for people who want to use this library — not for contributors.**
+> You don't need to know how it's built to use it.
 
 > [!TIP]
 > **Are you an AI or a program?** Skip this page — go to [`llms.txt`](llms.txt) and parse the
 > machine entry [`index.json`](index.json). There it says **what must not be quoted as fact**.
 
-## What this is (in one paragraph)
+## In one sentence
 
-**It is a physics collection you can verify yourself.**
+**A cross-disciplinary collection you can verify yourself.**
 
-Every entry tells you two things: **what it says**, and **why it says so** (which book, which
-page, which clause).
+Every entry tells you two things: **what it says**, and **why it says so** — which book, which page,
+which clause, which trial, which official document.
 
-**It is not a complete textbook yet** — section 3 below honestly states what's here and what isn't.
+It **never decides "what is true".** It only guarantees that every claim carries **its source**,
+**its status**, and **the rebuttals raised against it**. Truth is the reader's call.
+
+## Thirty seconds: three rules
+
+| # | Rule | What it means for you |
+|---|---|---|
+| 1 | **No source, no entry** | Every entry has a provenance. If it doesn't open, is the wrong version, or doesn't say that — you can say so |
+| 2 | **Status is computed, not voted** | `effective` = no surviving attack, **not** the same as independently reviewed |
+| 3 | **Methods are not ranked** | One concept can carry several teaching approaches for different audiences; **there is no "best" one** |
+
+> [!IMPORTANT]
+> **Nothing in this library is `confirmed` yet.** That needs an **independent reviewer who is not the
+> author**, and there is currently one contributor. **This is the rule working, not the content missing.**
 
 ## 1. Which kind of person are you?
 
 | You are | Go to |
 |---|---|
-| **A student** wanting to understand a concept | find the entry in the **topic index** below, then read its `## 定义` / `## 陈述` |
-| **A teacher** looking for a way to teach it | under each concept hang several **`教法` (methods)** — different ways to teach the same concept, by audience |
-| **Someone who found an error** | go straight to [Contributing](CONTRIBUTING.en.md). **"You're wrong" is the most welcome thing here** |
-| **Someone who wants to reuse it** | knowledge content is [CC BY-SA 4.0](LICENSE) — **free to reuse, attribution required** |
+| **A student** wanting to understand a concept | pick a subject in section 2 → read `## 定义` / `## 陈述` |
+| **A teacher** looking for a way to teach it | every `concept` hangs several **`methods`** — same concept, different audiences, by level |
+| **Someone who found an error** | section 6. **"You're wrong" is the most welcome thing here**, and you don't need Git |
+| **Someone who wants to reuse it** | knowledge content is [CC BY-SA 4.0](LICENSE) — attribution is enough |
+| **Someone who wants their own copy** | section 7 — fork with full history, or just use the templates in your own folder |
 
-## 2. Topic index: what to learn, click here
+## 2. What's in it now
 
-**Physics** — read **in order**; each entry's "prerequisites" are its predecessors:
+<!-- kbcheck:begin -->
+| Subject | Entries | What's in it | What it collects |
+|---|---|---|---|
+| [Physics](knowledge/物理/README.en.md) | 86 | methods 45 · concepts 23 · claims 9 · misconceptions 6 · resources 2 · paths 1 | Part of Chinese senior-high physics. Against the PEP chapter-level topics, about half the chapters have not a single concept here (gap list in `knowledge/物理/覆盖度/`). |
+| [Life](knowledge/生活/README.en.md) | 8 | claims 6 · resources 2 | Travel rules: official Beijing metro and civil-aviation provisions (two official documents). |
+| [Medicine](knowledge/医学/README.en.md) | 8 | claims 8 | Conclusions from clinical guidelines and randomized trials; always phrased as "the guideline specifies X" — **no treatment advice**. |
+| [Geography](knowledge/地理/README.en.md) | 6 | claims 6 | All errata from one Hong Kong textbook. |
+| [Science](knowledge/科学/README.en.md) | 1 | claims 1 | One erratum. |
+| [Transport](knowledge/交通/README.en.md) | 4 | claims 4 | Road and rail: only conclusions verifiable in **official documents**; no how-to procedures. |
+| [Computing](knowledge/计算机/README.en.md) | 16 | claims 13 · misconceptions 1 · resources 2 | Conclusions locatable in standards and official docs; **no tutorial steps**. |
+| [Economics](knowledge/经济/README.en.md) | 8 | claims 6 · misconceptions 1 · resources 1 | Conclusions locatable in statistical releases and authoritative texts; **no forecasts or advice**. |
+| [Law](knowledge/法律/README.en.md) | 4 | claims 3 · resources 1 | Institutional provisions of statute law (elements · deadlines · legal effect); **no case rulings or legal advice**. |
+| **Total** | **141** | — | — |
+<!-- kbcheck:end -->
 
-| Topic | Entries (in suggested order) |
+> The table above is generated by [`tools/kbcheck.py`](tools/kbcheck.py) from [`index.json`](index.json);
+> **it is never hand-written**. A hand-written index is worse than none: it is a **grounded** error —
+> when the library grew past a hundred entries the hand-written table still said a dozen,
+> so readers concluded "nothing here for me" and left.
+
+## 3. Physics: a suggested reading order
+
+Physics has 20+ **concepts** with prerequisite relations. This is **one** suggested order, not the only one:
+
+| Topic | Entries (suggested order) |
 |---|---|
 | **Intro kinematics** | [Reference frames](knowledge/物理/知识点/参考系.en.md) → [Speed & velocity](knowledge/物理/知识点/速度与速率.en.md) → [Position–time graphs](knowledge/物理/知识点/位置-时间图.en.md) → [Acceleration](knowledge/物理/知识点/加速度.en.md) |
 | **Force & Newton's laws** | [Force (HS)](knowledge/物理/知识点/力-高中.en.md) → [Inertia](knowledge/物理/知识点/惯性.en.md) → [Newton's 2nd](knowledge/物理/知识点/牛顿第二定律.en.md) → [Newton's 3rd](knowledge/物理/知识点/牛顿第三定律.en.md) |
-| **Gravitation & the sky** | [Kepler's laws](knowledge/物理/知识点/开普勒定律.en.md) → [Law of universal gravitation](knowledge/物理/知识点/万有引力定律.en.md) |
+| **Momentum** | [Momentum & impulse](knowledge/物理/知识点/动量和冲量.en.md) → [Conservation of momentum](knowledge/物理/知识点/动量守恒定律.en.md) → [Elastic & inelastic collisions](knowledge/物理/知识点/弹性碰撞与非弹性碰撞.en.md) |
+| **Gravitation & the sky** | [Kepler's laws](knowledge/物理/知识点/开普勒定律.en.md) → [Universal gravitation](knowledge/物理/知识点/万有引力定律.en.md) |
 | **Energy** | [Work & power](knowledge/物理/知识点/功与功率.en.md) → [Conservation of mechanical energy](knowledge/物理/知识点/机械能守恒.en.md) |
 | **Waves & sound** | [Waves](knowledge/物理/知识点/波.en.md) → [Speed of sound & frequency](knowledge/物理/知识点/声速与频率.en.md) |
 | **Light** | [Reflection](knowledge/物理/知识点/光的反射.en.md) · [Refraction](knowledge/物理/知识点/光的折射.en.md) · [EM spectrum](knowledge/物理/知识点/电磁波谱.en.md) |
@@ -44,8 +81,7 @@ page, which clause).
 | **Atoms** | [Atomic structure](knowledge/物理/知识点/原子结构.en.md) |
 | **Middle school** | [Force & motion (MS)](knowledge/物理/知识点/力与运动-初中.en.md) |
 
-**Common mistakes**, collected in one place (6 of them):
-
+**Common mistakes**, kept in one place (6 in physics):
 [Current vs. electron flow](knowledge/物理/误解/电流方向与电子流向混淆.en.md) ·
 [Frame of reference as "background"](knowledge/物理/误解/参考系当成背景.en.md) ·
 [Moving objects naturally slow down](knowledge/物理/误解/运动物体自然慢下来.en.md) ·
@@ -53,129 +89,59 @@ page, which clause).
 [Waves push matter along](knowledge/物理/误解/波把物质一起推走.en.md) ·
 [Confusing G and g](knowledge/物理/误解/混淆G与g.en.md)
 
-**Want a full learning path**: [Intro kinematics (BL)](knowledge/物理/路径/运动学入门-BL.en.md) —
-it tells you **which things you'll be able to do** and the material for each step.
+**Want a full learning sequence**: [Intro kinematics (BL)](knowledge/物理/路径/运动学入门-BL.en.md) —
+it states **what you'll be able to do** and the material for each step.
 
-> Other subjects ([Geography](knowledge/地理/README.en.md) · [Science](knowledge/科学/README.en.md) ·
-> [Life · travel rules](knowledge/生活/README.en.md)) still have very little.
+## 4. How to read an entry (the most useful section)
 
-**Geography (6, all errata from Hong Kong textbooks)** —
-[Map provenance / missing approval number](knowledge/地理/命题/勘误-关于本书地图出处.en.md) ·
-[Systematic contour-labeling error](knowledge/地理/命题/勘误-等高线标注系统性错误.en.md) ·
-[Road length typo](knowledge/地理/命题/勘误-道路长度漏字.en.md) ·
-[River basin vs. river](knowledge/地理/命题/勘误-河盆应为河流.en.md) ·
-[Cross-section terminology](knowledge/地理/命题/勘误-横切面术语.en.md) ·
-[Tsing Wan map excerpt misreference](knowledge/地理/命题/勘误-清水湾地图摘录.en.md)
-
-**Science (1)** — [Unreliable data source on an earthquake map](knowledge/科学/命题/勘误-地震分布图数据来源.en.md)
-
-**Life · travel rules (5)** —
-[Beijing metro carry-on size/weight limits](knowledge/生活/命题/携带物品的尺寸与重量上限.en.md) ·
-[Involuntary refunds & changes must be free](knowledge/生活/命题/非自愿退票与变更不得收费.en.md) ·
-[Overbooking: volunteers first](knowledge/生活/命题/超售必须先征集自愿者.en.md) ·
-Official docs: [Beijing metro passenger rules](knowledge/生活/资源/北京市轨道交通乘客守则.en.md) ·
-[Air passenger service regulations](knowledge/生活/资源/公共航空运输旅客服务管理规定.en.md)
-
-> These three subjects have **very little** (12 entries together), listed only so you know they exist.
-
-**Medicine · clinical evidence (2)** —
-
-| Entry | Evidence |
-|---|---|
-| [For ARDS patients, low tidal volume lowers mortality](knowledge/医学/命题/ARDS低潮气量通气.en.md) | an N=861 randomized trial |
-| [For OSA, adult PAP titration has guideline-specified start/step/target rules](knowledge/医学/命题/睡眠呼吸暂停PAP调定.en.md) | AASM 2008 guideline text (checked clause by clause) + a multicenter RCT (HomePAP) |
-
-> [!CAUTION]
-> **These two say "what a study/guideline concluded or specified", not "what you should do".**
-> This library **gives no medical advice for any specific patient** — setting a ventilator for a
-> particular patient needs diagnostic data and qualified staff, beyond what it can answer.
-> The OSA entry **does record the guideline's operational parameters**, but always phrased as
-> **"the guideline specifies X"**, with a disclaimer block at the very top of the body.
-> See the [medicine subject note](knowledge/医学/README.en.md).
-
-## 3. What this library **has** and **doesn't**
-
-> [!WARNING]
-> **Said up front so you don't waste time.**
->
-> Mapped against Chinese senior-high (PEP) chapter-level topics, **nearly half have not a single
-> concept here**:
->
-> | | chapter-level topics | share |
-> |---|---|---|
-> | ✅ covered | 5 | 19% |
-> | 🟡 partial | 10 | 37% |
-> | ❌ **none** | **12** | **44%** |
->
-> **Missing entirely**: momentum · circular motion · electrostatics · electromagnetic induction ·
-> AC · thermodynamics · nuclear physics.
->
-> Full mapping in the [coverage table](knowledge/物理/覆盖度/README.md).
-
-**One more thing to know**: most `教法` (methods) here are compiled from **OpenStax *Physics* — a
-US high-school textbook**. Its content is reliable, but **this library has no data on how well it
-works in a Chinese classroom**.
-
-## 4. **How to read an entry** (the most useful section)
-
-### Six words first (you'll see them in paths)
+### Six words first (you'll only see them in paths; don't memorize them)
 
 | You'll see | It means | How to use it |
 |---|---|---|
-| `知识点/` | a **concept** | **start reading here**, like a textbook section |
+| `知识点/` | a **concept** | **start here**, like a textbook section |
 | `命题/` | a **true/false claim** | a conclusion + why it holds |
-| `教法/` | a **way of teaching** a concept | teachers pick methods; students can read "how to understand it" |
-| `误解/` | **where many people go wrong** | to check whether you think that too |
+| `教法/` | a **way of teaching** a concept | teachers pick methods; students can read "another way to understand it" |
+| `误解/` | **where many people go wrong** | check whether you think that too |
 | `资源/` | external material (simulations, official docs) | supplementary |
 | `路径/` | a **learning order** | like a syllabus: "learn A, then B" |
-
-**These are the library's internal names; you don't need to memorize them.** They appear only in **URL paths**.
 
 ### An entry has two halves
 
 | Section | For whom | What to do |
 |---|---|---|
-| **the `> [!TIP]` at the very top** | **you** | **what you'll be able to do after reading** — check it first to decide whether to keep going |
+| the `> [!TIP]` at the very top | **you** | "what you'll be able to do after this" — read it first to decide |
 | `## 定义` / `## 陈述` / `## 做法` | **you** | **start reading here** |
 | `## 关联` | **you** | follow it to prerequisites and related entries |
 | `## 禁忌` / `## 风险` (methods only) | **you** | check "who it's not for" before using |
-| `## 论证` | **reviewers** | **skippable** — the bookkeeping of "why this holds" |
-| `## 变更记录` | **reviewers** | skippable |
+| `## 论证` / `## 变更记录` | reviewers | **skippable** — the bookkeeping of "why this holds" |
 
-> **So to read a concept**: look at the top line "after this you should be able to…"; if you want
-> to know **why to care**, read `## 定义`; to learn **how to teach it**, click the method linked in
-> `## 关联`; **everything from `## 论证` down can be skipped.**
-
-**Three more symbols — don't panic when you see them**:
+**Three more symbols — don't panic**:
 
 | You see | It means |
 |---|---|
-| an id like `(ev-039)` | a **source id** — a row in [`evidence/README.md`](evidence/README.en.md); **click to see which book, which page** |
+| an id like `(ev-039)` | a **source id** — a row in [`evidence/README.md`](evidence/README.en.md); click to see which book, which page |
 | `[BL]` / `[OL]` / `[AL]` | textbook **level markers**: Below Level / On Level / Advanced |
 | "prerequisite" | what you should already know **before** this |
 
-**English originals**: entries quote English sentences from the textbook. **The quote is for
-provenance, not for you to read** — **there is always a Chinese gloss nearby** (usually right
-after). **If you find a passage without one, report it.**
+**English originals**: entries quote the textbook's own sentences. **That's for provenance, not for
+you to read** — there is always a Chinese gloss nearby. **If one is missing, report it.**
 
-## 5. A complete example
+## 5. What this library does **not** have
 
-Say you want to understand **why "deceleration" isn't used in physics**. Open [Acceleration](knowledge/物理/知识点/加速度.en.md):
+> [!WARNING]
+> **Said up front so you don't waste time.**
 
-1. **Above `## 定义` is a table** (GitHub auto-renders the top of the file as a table) reading
-   "**Goal**: compute acceleration with `a = Δv/Δt` and explain the sign–direction relation" —
-   **check what you'll learn first**
-2. Read `## 定义`: the formula, units, and **why "deceleration" isn't used**
-3. In that `[!IMPORTANT]` box is an **English original**, immediately followed by a Chinese gloss —
-   **the Chinese is for you; the English is the source**
-4. In `## 关联` you can click [Speed & velocity](knowledge/物理/知识点/速度与速率.en.md) (its prerequisite)
-5. From `## 论证` down **you can skip everything**, unless you want to know who attacked it
-
-**That's a complete reading path.** Other entries have the same structure.
+| It doesn't have | Specifically |
+|---|---|
+| **A complete textbook** | Against Chinese PEP chapter-level topics, **about half the chapters have not a single concept here**. See the [coverage table](knowledge/物理/覆盖度/README.md) |
+| **Chinese-classroom data** | Most `methods` are compiled from **OpenStax *Physics*, a US high-school textbook**. Reliable — but this library has **no data** on how well it works in a Chinese classroom |
+| **Medical advice** | Medicine entries say "a guideline specifies X", **never "you should do X"**. See the [medicine subject note](knowledge/医学/README.en.md) |
+| **How-to procedures** | Steps like "how to take the metro" are excluded — **getting them wrong is irreversible, and the library cannot bound who they apply to** (see [FORMAT](FORMAT.en.md)) |
+| **A single `confirmed` entry** | See the IMPORTANT box above |
 
 ## 6. What to do when you find an error
 
-**"This library welcomes that sentence the most."** And it **doesn't require you to know Git**:
+**This library welcomes that sentence the most.** And it **doesn't require you to know Git**:
 
 | Your skill | What to do |
 |---|---|
@@ -189,7 +155,23 @@ Say you want to understand **why "deceleration" isn't used in physics**. Open [A
 > You don't need to be an expert. Give a **source** (which book, which page) or **a counterexample**,
 > and this library is obliged to respond. **It records every correction, including its own mistakes.**
 
+## 7. Building your own copy
+
+The design lets you take it away **without asking anyone** — it is not a platform, it is a pile of files.
+
+| You want | How |
+|---|---|
+| **A private knowledge base of your own** (course notes, textbook errata, a work manual) | copy the blank skeletons in [`templates/`](templates/README.en.md) and fill them per [FORMAT](FORMAT.en.md). **No fork, no network needed** |
+| **To build on someone else's** | `git clone`, then edit freely; [`tools/kbcheck.py`](tools/kbcheck.py) is dependency-free and runs locally |
+| **An AI that can query your library** | wire [`tools/scholia_mcp.py`](tools/scholia_mcp.py) as a read-only MCP server, or let the AI read `index.json` |
+| **To fully detach and maintain your own** | fork with the full Git history. **That's your right, and nobody's permission is needed** |
+
+> [!TIP]
+> **Only want the content, not the format?** You can ignore it — every entry is a plain Markdown file,
+> so just copy them out. The `front-matter` is for machines; GitHub folds it away when rendering.
+
 ## Curious how this library works
 
 That's another track, for contributors: [README](README.en.md) (mission & status) ·
-[FORMAT](FORMAT.en.md) (format spec) · [CONTRIBUTING](CONTRIBUTING.en.md) (how to take part).
+[FORMAT](FORMAT.en.md) (format spec) · [CONTRIBUTING](CONTRIBUTING.en.md) (how to take part) ·
+[AGENTS](AGENTS.md) (how an AI works **inside** this repo).

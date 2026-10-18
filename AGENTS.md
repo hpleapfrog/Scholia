@@ -58,6 +58,9 @@ python tools/kbcheck.py --write-index   # 若改了内容：重生成 index.json
 4. **不写死会漂移的数字**（统计数字一律由脚本生成）。
 5. **不上传教材原文或扫描页**——只存定位、短引用、原创摘要。
 6. **AI 可以当攻击方，不能当 `已确证` 的复核者**（见 [FORMAT.md](FORMAT.md) §6）。
+7. **新增条目先用脚手架起手**：`python tools/new_entry.py --type <类型> --subject <学科> --slug <slug> --title "<标题>"`
+   —— 骨架来自 [`templates/`](templates/README.md)。**结构交给脚本，内容留给你**；
+   生完立刻跑 `kbcheck`，它报的错就是待办清单。
 
 **English:** After editing, always run `kbcheck` (and `--write-index` for content
 changes). `index.json` and the marked generated blocks are outputs — never hand-edit.

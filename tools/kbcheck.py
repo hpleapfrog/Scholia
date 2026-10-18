@@ -147,17 +147,35 @@ EVENT_STATUS_EN = {
 
 # 每个学科的覆盖说明（手写；**不写数字**，数字由 objects 自动统计在旁边）
 SUBJECT_NOTES = {
-    "物理": "覆盖中国高中物理的一部分。按人教版章级主题对照，约 44% 的主题一条概念都没有"
-            "（见 knowledge/物理/覆盖度/README.md）。",
+    "物理": "覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题"
+            "一条概念都没有（缺口清单见 `knowledge/物理/覆盖度/`）。",
     "地理": "全部是同一本香港教材的勘误。",
     "生活": "出行规则：北京地铁与民航的官方规定（含两份官方文件）。",
     "科学": "一条勘误。",
+    "医学": "临床指南与随机试验的结论；一律以「指南 / 研究规定了 X」表述，**不提供诊疗建议**。",
     "交通": "道路交通与轨道交通：只收**官方文件**能核验的结论，不收办事流程。",
     "计算机": "标准与官方文档能定位的结论；**不收教程式步骤**。",
     "经济": "统计数据与权威文本能定位的结论；**不收预测与建议**。",
     "法律": "成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。",
 }
 SUBJECTS_FALLBACK = "本学科尚无覆盖说明 —— **不要假设它覆盖了什么**，请看 objects。"
+
+# 学科说明的英文版（给 START.en.md 的生成块用）
+SUBJECT_NOTES_EN = {
+    "物理": "Part of Chinese senior-high physics. Against the PEP chapter-level topics, "
+            "about half the chapters have not a single concept here (gap list in `knowledge/物理/覆盖度/`).",
+    "地理": "All errata from one Hong Kong textbook.",
+    "生活": "Travel rules: official Beijing metro and civil-aviation provisions (two official documents).",
+    "科学": "One erratum.",
+    "医学": "Conclusions from clinical guidelines and randomized trials; always phrased as "
+            "\"the guideline specifies X\" — **no treatment advice**.",
+    "交通": "Road and rail: only conclusions verifiable in **official documents**; no how-to procedures.",
+    "计算机": "Conclusions locatable in standards and official docs; **no tutorial steps**.",
+    "经济": "Conclusions locatable in statistical releases and authoritative texts; **no forecasts or advice**.",
+    "法律": "Institutional provisions of statute law (elements · deadlines · legal effect); "
+            "**no case rulings or legal advice**.",
+}
+SUBJECTS_FALLBACK_EN = "No coverage note yet — **do not assume what it covers**; read `objects`."
 
 EVIDENCE_INDEX = ROOT / "evidence" / "README.md"
 
@@ -1121,7 +1139,7 @@ MECH_RULES = [
     ("R-EVID-02", "证据表 `类别` / `等级` / `核验深度` 取值合法"),
     ("R-EVID-03", "`暂定确认` / `已确证` 必须至少有一条 `核验深度` 为 `全文` / `摘要` 的证据（没读过不能说确认）"),
     ("R-INDEX-01", "`index.json` 与内容一致（改内容必须重生成）"),
-    ("R-INDEX-02", "人类文档的生成块与 `index.json` / 规则表一致"),
+    ("R-INDEX-02", "人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表）"),
     ("R-README-01", "每个对象都在所属学科 README 里登记"),
     ("R-DOC-01", "状态图例在 FORMAT.md 与 knowledge/README.md 里列全"),
 ]
@@ -1168,7 +1186,7 @@ MECH_RULES_EN = [
     ("R-EVID-02", "evidence table `类别` / `等级` / `核验深度` values valid"),
     ("R-EVID-03", "`暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed)"),
     ("R-INDEX-01", "`index.json` consistent with content (regenerate on change)"),
-    ("R-INDEX-02", "human-doc generated blocks match `index.json` / rule table"),
+    ("R-INDEX-02", "human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table)"),
     ("R-README-01", "every object registered in its subject README"),
     ("R-DOC-01", "status legend listed in FORMAT.md and knowledge/README.md"),
 ]
@@ -1202,6 +1220,79 @@ def render_stats_block(index):
         f"| 证据 / Evidence | {s['证据条数']}（含作废 / void {s['作废证据条数']}） |",
         f"| 已确证 / Confirmed | **{s['已确证条数']}** |",
     ])
+
+
+def render_subject_overview_block(index, en=False):
+    """`START.md` 的学科总览 —— **全部来自 `index.json`**。
+
+    **为什么必须是生成块**：`START.md` 是唯一面向普通读者的人口页，
+    却曾长期手写「医学 2 条」「生活 5 条」「其他学科内容很少（12 条）」这类枚举。
+    内容涨到 141 条时，那张手写表还停在 12 条 —— **读者按它判断「这里没有我要的东西」，
+    然后离开**。手写的目录比没有目录更糟：它是有依据的错误。
+    """
+    objs = index["objects"]
+    by_subject = collections.defaultdict(collections.Counter)
+    for o in objs:
+        by_subject[o["学科"].split(" ")[0]][o["type"]] += 1
+
+    keys = [k for k in SUBJECT_ORDER if k in by_subject] + \
+           [k for k in sorted(by_subject) if k not in SUBJECT_ORDER]
+    suffix = ".en.md" if en else ".md"
+
+    if en:
+        lines = ["| Subject | Entries | What's in it | What it collects |", "|---|---|---|---|"]
+    else:
+        lines = ["| 学科 | 条数 | 里面有什么 | 收什么 |", "|---|---|---|---|"]
+    for k in keys:
+        c = by_subject[k]
+        if en:
+            bits = " · ".join(f"{TYPE_EN[t]} {c[t]}" for t in TYPE_ORDER if c.get(t))
+            note = SUBJECT_NOTES_EN.get(k, SUBJECTS_FALLBACK_EN)
+            name = SUBJECT_EN.get(k, k)
+        else:
+            bits = " · ".join(f"{t} {c[t]}" for t in TYPE_ORDER if c.get(t))
+            note = SUBJECT_NOTES.get(k, SUBJECTS_FALLBACK)
+            name = k
+        lines.append(f"| [{name}](knowledge/{k}/README{suffix}) | {sum(c.values())} "
+                     f"| {bits} | {note} |")
+    lines.append(f"| **{'Total' if en else '合计'}** | **{index['统计']['对象总数']}** "
+                 f"| — | — |")
+    return "\n".join(lines)
+
+
+def render_coverage_block():
+    """`knowledge/物理/覆盖度/README.md` 的统计表 —— 从**同一页的总览表**数出来。
+
+    **这一条是真事故**：总览表逐行标了 🟢/🟡/🔴，但下面手写的统计写着「6 · 10 · 11」（共 27），
+    而表里只有 25 行、实际是 5 · 7 · 13。**统计与它自己的表对不上，而没有人能一眼看出来。**
+    既然数字能从表里数出来，就不该手写。
+    """
+    p = ROOT / "knowledge" / "物理" / "覆盖度" / "README.md"
+    if not p.exists():
+        return None
+    text = p.read_text(encoding="utf-8").replace("\r\n", "\n")
+    body = section_body(text, "总览") or ""
+    marks = {"🟢": "有覆盖", "🟡": "部分覆盖", "🔴": "完全缺"}
+    cnt = collections.Counter()
+    for line in body.splitlines():
+        s = line.strip()
+        if not s.startswith("|"):
+            continue
+        cells = [c.strip() for c in s.strip("|").split("|")]
+        if len(cells) < 3:
+            continue
+        for m in marks:
+            if cells[2].startswith(m):
+                cnt[m] += 1
+                break
+    total = sum(cnt.values())
+    if not total:
+        return None
+    lines = ["| | 章级主题数 | 占比 |", "|---|---|---|"]
+    for m in ("🟢", "🟡", "🔴"):
+        lines.append(f"| {m} {marks[m]} | **{cnt[m]}** | {cnt[m] / total:.0%} |")
+    lines.append(f"| **合计** | **{total}** | 100% |")
+    return "\n".join(lines)
 
 
 def render_subject_block(index):
@@ -1254,13 +1345,19 @@ def render_rules_block_en():
 
 def generated_blocks(objects, events):
     index = build_index(objects, events)
-    return {
+    blocks = {
         "README.md": render_stats_block(index),
         "README.en.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
+        "START.md": render_subject_overview_block(index),
+        "START.en.md": render_subject_overview_block(index, en=True),
         "docs/RULES.md": render_rules_block(),
         "docs/RULES.en.md": render_rules_block_en(),
     }
+    cov = render_coverage_block()
+    if cov:
+        blocks["knowledge/物理/覆盖度/README.md"] = cov
+    return blocks
 
 
 def sync_generated(objects, events, write, errors):

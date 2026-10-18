@@ -41,7 +41,7 @@
 | `R-EVID-02` | evidence table `类别` / `等级` / `核验深度` values valid |
 | `R-EVID-03` | `暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed) |
 | `R-INDEX-01` | `index.json` consistent with content (regenerate on change) |
-| `R-INDEX-02` | human-doc generated blocks match `index.json` / rule table |
+| `R-INDEX-02` | human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table) |
 | `R-README-01` | every object registered in its subject README |
 | `R-DOC-01` | status legend listed in FORMAT.md and knowledge/README.md |
 
