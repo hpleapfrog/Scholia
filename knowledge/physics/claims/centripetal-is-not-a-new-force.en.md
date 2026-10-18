@@ -2,7 +2,7 @@
 id: kb:physics:prop-centripetal-is-not-a-new-force
 type: 命题
 title: "Centripetal force is not a new kind of force but the velocity-perpendicular component of the net force"
-status: 暂定确认
+status: 待审
 author: "@hpleapfrog"
 created: 2026-10-18
 updated: 2026-10-18

@@ -2,7 +2,7 @@
 id: kb:physics:mis-centrifugal-force-is-real
 type: 误解
 title: "Centrifugal force is a real force"
-status: 有效
+status: 待审
 author: "@hpleapfrog"
 created: 2026-10-18
 updated: 2026-10-18
