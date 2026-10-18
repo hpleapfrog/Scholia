@@ -895,7 +895,7 @@ def check_evidence_ids(objects, events, errors):
         ids = re.findall(r"ev-\d+", o["fm"], re.I)
         for ev in sorted({x.lower() for x in ids}):
             if ev not in known:
-                errors.append(f"{rel}: `evidence` 引用了索引里没有的编号 -> {ev}")
+                errors.append(f"{rel}: `evidence` 引用了索引里没有的编号 -> {ev}（R-EVID-01）")
             elif ev in void:
                 errors.append(
                     f"{rel}: `evidence` 引用了**已作废**的编号 -> {ev}"
@@ -976,7 +976,7 @@ def check_evidence_nonempty(objects, errors):
         if not evidence_ids_of(o["fm"]):
             errors.append(
                 f"{rel}: `evidence` 为空 —— 本库「无来源不入库」，"
-                "每个对象至少引一条证据（FORMAT.md §3）")
+                "每个对象至少引一条证据（FORMAT.md §3）（R-SCHEMA-04）")
 
 
 def check_knowledge_tip(objects, errors):
@@ -988,7 +988,7 @@ def check_knowledge_tip(objects, errors):
         first = next((ln.strip() for ln in after.splitlines() if ln.strip()), "")
         if not first.startswith("> [!TIP]"):
             errors.append(
-                f"{rel}: `知识点` 正文第一行必须是 `> [!TIP]`（读完你会什么）")
+                f"{rel}: `知识点` 正文第一行必须是 `> [!TIP]`（读完你会什么）（R-SCHEMA-06）")
 
 
 def check_teaching_level(objects, errors):
@@ -1030,13 +1030,13 @@ def check_stage(objects, errors):
     for rel, o in objects.items():
         v = fm_nested(o["fm"], "学段")
         if not v:
-            errors.append(f"{rel}: 缺 `scope.学段`")
+            errors.append(f"{rel}: 缺 `scope.学段`（R-SCHEMA-07）")
             continue
         for part in re.split(r"[至、,，]", v):
             part = part.strip()
             if part and part not in ALLOWED_STAGES:
                 errors.append(
-                    f"{rel}: `学段` 取值非法 -> {v!r}"
+                    f"{rel}: `学段` 取值非法 -> {v!r}（R-SCHEMA-07）"
                     "（允许 小学/初中/高中/大学/不限，组合用「至」）")
 
 
@@ -1046,10 +1046,10 @@ def check_dates(objects, errors):
         ok = True
         for k, val in (("created", c), ("updated", u)):
             if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(val or "")):
-                errors.append(f"{rel}: `{k}` 必须是 YYYY-MM-DD -> {val!r}")
+                errors.append(f"{rel}: `{k}` 必须是 YYYY-MM-DD -> {val!r}（R-SCHEMA-08）")
                 ok = False
         if ok and u < c:
-            errors.append(f"{rel}: `updated`（{u}）早于 `created`（{c}）")
+            errors.append(f"{rel}: `updated`（{u}）早于 `created`（{c}）（R-SCHEMA-18）")
 
 
 def check_author(objects, errors):
@@ -1581,13 +1581,35 @@ def render_subject_block_en(index):
     return "\n".join(lines)
 
 
+def verified_rules():
+    """哪些机械规则**有注入样本**（`tools/verify_rules.py` 的 `SAMPLES`）。
+
+    规则表说「已强制」很容易，说和查是两件事。这张清单让两者可以对照：
+    **没有样本的规则，只是"写了检查函数"，没有人验证过它会失败。**
+    读不到时返回空集（不因为自测脚本坏了就挡住校验）。
+    """
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import verify_rules as vr           # noqa: E402  同目录、零副作用（main 有 __main__ 守卫）
+        return {rid for rid, _desc, _fn in vr.SAMPLES}
+    except Exception:
+        return set()
+
+
 def render_rules_block():
+    done = verified_rules()
     lines = [
-        f"**机械校验（{len(MECH_RULES)} 条）** —— 由 `tools/kbcheck.py` 强制；改规则必须同步改检查：",
-        "", "| ID | 规则 |", "|---|---|",
+        f"**机械校验（{len(MECH_RULES)} 条，其中 {len(done & {r for r, _ in MECH_RULES})} 条有注入样本）**"
+        f" —— 由 `tools/kbcheck.py` 强制；改规则必须同步改检查：",
+        "",
+        "> **「注入样本」= 在 [`tools/verify_rules.py`](../tools/verify_rules.py) 里有一个**会失败**的样本。**",
+        "> 标 `—` 的规则**只有检查函数、没有任何人验证过它会失败**——它们可能是空转的。",
+        "> 这不是缺陷清单，是**待补清单**：补一个样本，就把它变成 ✅。",
+        "", "| ID | 规则 | 注入样本 |", "|---|---|---|",
     ]
     for rid, text in MECH_RULES:
-        lines.append(f"| `{rid}` | {text} |")
+        mark = "✅" if rid in done else "—"
+        lines.append(f"| `{rid}` | {text} | {mark} |")
     lines += [
         "",
         f"**人工复核（{len(MANUAL_RULES)} 条）** —— 无法机械化，按 [CONTRIBUTING](../CONTRIBUTING.md) 的自检表执行：",
@@ -1599,12 +1621,19 @@ def render_rules_block():
 
 
 def render_rules_block_en():
+    done = verified_rules()
     lines = [
-        f"**Mechanically enforced ({len(MECH_RULES_EN)})** — enforced by `tools/kbcheck.py`; change a rule, change the check:",
-        "", "| ID | Rule |", "|---|---|",
+        f"**Mechanically enforced ({len(MECH_RULES_EN)}, of which {len(done & {r for r, _ in MECH_RULES_EN})} have an injected sample)**"
+        f" — enforced by `tools/kbcheck.py`; change a rule, change the check:",
+        "",
+        "> **An injected sample means [`tools/verify_rules.py`](../tools/verify_rules.py) contains a** failing **sample for it.**",
+        "> A rule marked `—` **has a check function that nobody has watched fail** — it may be a no-op.",
+        "> This is not a defect list but a **to-do list**: add a sample and it turns ✅.",
+        "", "| ID | Rule | Injected sample |", "|---|---|---|",
     ]
     for rid, text in MECH_RULES_EN:
-        lines.append(f"| `{rid}` | {text} |")
+        mark = "✅" if rid in done else "—"
+        lines.append(f"| `{rid}` | {text} | {mark} |")
     lines += [
         "",
         f"**Human-reviewed ({len(MANUAL_RULES_EN)})** — not mechanizable; run the checklist in [CONTRIBUTING](../CONTRIBUTING.en.md):",
@@ -1672,7 +1701,7 @@ def check_event_object(fm, text, rel, ids, events, errors):
         errors.append(f"{rel}: front-matter 顶层键重复 {dup}")
     missing = [k for k in EVENT_FIELDS if k not in keys]
     if missing:
-        errors.append(f"{rel}: 事件 front-matter 缺字段 {missing}")
+        errors.append(f"{rel}: 事件 front-matter 缺字段 {missing}（R-SCHEMA-01）")
     check_front_matter_shape(fm, rel, errors)
 
     t, st, i = fm_value(fm, "type"), fm_value(fm, "status"), fm_value(fm, "id")
@@ -1683,11 +1712,11 @@ def check_event_object(fm, text, rel, ids, events, errors):
             f"{rel}: `事件` 的 `status` 只能是 {'/'.join(sorted(EVENT_STATUS))} -> {st!r}")
     for sec in EVENT_SECTIONS:
         if f"## {sec}" not in text:
-            errors.append(f"{rel}: 事件缺必备小节「{sec}」")
+            errors.append(f"{rel}: 事件缺必备小节「{sec}」（R-SCHEMA-05）")
     if not (i or "").startswith(EVENT_ID_PREFIX):
         errors.append(f"{rel}: `事件` 的 `id` 前缀必须是 {EVENT_ID_PREFIX!r} -> {i!r}")
     if i in ids:
-        errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}")
+        errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}（R-SCHEMA-03）")
     elif i:
         ids[i] = rel
 
@@ -1700,7 +1729,8 @@ def check_event_object(fm, text, rel, ids, events, errors):
     # 事件只需要证据：证据为空等于没有事件
     if not re.findall(r"ev-\d+", fm):
         errors.append(
-            f"{rel}: `事件` 的 `evidence` 为空 —— 事件只需要证据，证据为空等于没有事件")
+            f"{rel}: `事件` 的 `evidence` 为空 —— 事件只需要证据，证据为空等于没有事件"
+            "（R-SCHEMA-04）")
 
     events[rel] = {"fm": fm, "text": text}
 
@@ -1859,7 +1889,7 @@ def check_all():
 
                 missing = [k for k in REQUIRED_FIELDS if k not in keys]
                 if missing:
-                    errors.append(f"{rel}: front-matter 缺字段 {missing}")
+                    errors.append(f"{rel}: front-matter 缺字段 {missing}（R-SCHEMA-01）")
 
                 check_front_matter_shape(fm, rel, errors)
 
@@ -1872,13 +1902,13 @@ def check_all():
                         errors.append(f"{rel}: type={t} 不允许 status={st!r}")
                     for sec in REQUIRED_SECTIONS[t]:
                         if f"## {sec}" not in text:
-                            errors.append(f"{rel}: 缺必备小节「{sec}」")
+                            errors.append(f"{rel}: 缺必备小节「{sec}」（R-SCHEMA-05）")
                     # FORMAT.md §5：所有类型都必须有 ## 论证（草案下可留空）
                     if "## 论证" not in text:
-                        errors.append(f"{rel}: 缺必备小节「论证」（所有类型都必须有）")
+                        errors.append(f"{rel}: 缺必备小节「论证」（所有类型都必须有）（R-SCHEMA-05）")
 
                 if i in ids:
-                    errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}")
+                    errors.append(f"{rel}: id 与 {ids[i]} 重复 -> {i}（R-SCHEMA-03）")
                 elif i:
                     ids[i] = rel
 
@@ -1916,7 +1946,7 @@ def check_all():
                 sp, _, anchor = m.group(1).partition("#")
                 cand = ROOT / sp
                 if not cand.exists():
-                    errors.append(f"{rel}: 链接目标不存在 -> [{label}]({target})")
+                    errors.append(f"{rel}: 链接目标不存在 -> [{label}]({target})（R-LINK-01）")
                     continue
                 target_rel = sp
             elif target.startswith("http"):
@@ -1930,14 +1960,14 @@ def check_all():
                     cand = path.parent / path_part.replace("/", os.sep)
                     if not cand.exists():
                         errors.append(
-                            f"{rel}: 链接目标不存在 -> [{label}]({target})")
+                            f"{rel}: 链接目标不存在 -> [{label}]({target})（R-LINK-01）")
                         continue
                     target_rel = os.path.relpath(cand, ROOT).replace(os.sep, "/")
             # R-LINK-03 要等全部对象收齐才能判（目标是不是「有译本的条目」）
             link_records.append((rel, label, target, target_rel, en_pointer))
             if anchor and target_rel.endswith(".md") \
                     and not anchor_ok(target_rel, anchor):
-                errors.append(f"{rel}: 锚点不存在 -> [{label}]({target})")
+                errors.append(f"{rel}: 锚点不存在 -> [{label}]({target})（R-LINK-02）")
 
     # 图校验：单看一个文件查不出来的那部分
     check_bilingual_pairs(objects, events, en_docs, errors, warnings)
