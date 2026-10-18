@@ -10,7 +10,7 @@
 > **中文：** 由 [`tools/kbcheck.py`](../tools/kbcheck.py) 生成的规则注册表——**请勿手改**。
 
 <!-- kbcheck:begin -->
-**Mechanically enforced (39, of which 23 have an injected sample)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
+**Mechanically enforced (39, of which 27 have an injected sample)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
 
 > **An injected sample means [`tools/verify_rules.py`](../tools/verify_rules.py) contains a** failing **sample for it.**
 > A rule marked `—` **has a check function that nobody has watched fail** — it may be a no-op.
@@ -43,10 +43,10 @@
 | `R-BILING-03` | documents (root / subject READMEs / coverage / docs) must have a same-named `.en.md`; `templates/` and `.github/` exempt | ✅ |
 | `R-BILING-02` | an English edition's `type` / `status` / `evidence` match the Chinese original (the mechanisable half of `M-10`) | ✅ |
 | `R-LINK-03` | links inside an English page point at the English page (when it exists); exempt: `English version of` lines and links to files that have no translation | — |
-| `R-GRAPH-01` | `先修` connects only 知识点, acyclic | — |
-| `R-GRAPH-02` | `支持` / `攻击` edge argument anchors exist | — |
-| `R-GRAPH-03` | `路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning) | — |
-| `R-GRAPH-04` | `路径` each 环节 connects to ≥1 in-repo object | — |
+| `R-GRAPH-01` | `先修` connects only 知识点, acyclic | ✅ |
+| `R-GRAPH-02` | `支持` / `攻击` edge argument anchors exist | ✅ |
+| `R-GRAPH-03` | `路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning) | ✅ |
+| `R-GRAPH-04` | `路径` each 环节 connects to ≥1 in-repo object | ✅ |
 | `R-GRAPH-05` | attack entries in `claims/attacks/` carry at least one `攻击` edge to a specific argument | ✅ |
 | `R-EVID-01` | `evidence` id registered and not voided | ✅ |
 | `R-EVID-02` | evidence table `类别` / `等级` / `核验深度` values valid | — |

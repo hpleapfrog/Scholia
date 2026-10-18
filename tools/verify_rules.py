@@ -418,6 +418,106 @@ def sample_schema13(root, _v):
             return True
     return False
 
+def _paths(root):
+    """所有路径条目。"""
+    out = []
+    for p in sorted((root / "knowledge").rglob("paths/*.md")):
+        if p.name.endswith(".en.md"):
+            continue
+        out.append((p, read(p)))
+    return out
+
+
+def sample_graph01(root, _v):
+    """给一条「命题」加上 先修 边（先修只能连知识点）。"""
+    for p, t in _objects(root):
+        if field_of(t, "type") != "命题":
+            continue
+        t2 = set_field(t, "先修", '["[x](x.md)"]')
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_graph01_cycle(root, _v):
+    """两个知识点互相当对方的先修（成环）。"""
+    concepts = [x for x in _objects(root) if field_of(x[1], "type") == "知识点"]
+    same_dir = {}
+    for p, t in concepts:
+        same_dir.setdefault(str(p.parent), []).append((p, t))
+    for group in same_dir.values():
+        if len(group) < 2:
+            continue
+        (p1, t1), (p2, t2) = group[0], group[1]
+        n1, n2 = p1.name, p2.name
+        w1 = set_field(t1, "先修", '["[x](' + n2 + ')"]')
+        w2 = set_field(t2, "先修", '["[x](' + n1 + ')"]')
+        if w1 and w2:
+            write(p1, w1)
+            write(p2, w2)
+            return True
+    return False
+
+
+def sample_graph02(root, _v):
+    """`支持` 边指向存在的条目，但锚点在目标里不存在。"""
+    concepts = [x for x in _objects(root) if field_of(x[1], "type") == "知识点"]
+    if not concepts:
+        return False
+    target = concepts[0][0].name
+    for p, t in _objects(root):
+        if field_of(t, "type") != "命题" or p.parent.name == "attacks":
+            continue
+        rel = "../concepts/" + target
+        t2 = set_field(t, "支持", '["[x](' + rel + '#zzz99)"]')
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_graph03(root, _v):
+    """把编排表里某个成果编号抹掉（成果无人覆盖）。"""
+    for p, t in _paths(root):
+        fm, body = front_matter_of(t)
+        i = body.find(chr(10) + "## 编排")
+        if i < 0:
+            continue
+        j = body.find(chr(10) + "## ", i + 1)
+        seg = body[i:j if j > 0 else len(body)]
+        if "o4" in seg:
+            new = body[:i] + seg.replace("o4", "—") + (body[j:] if j > 0 else "")
+            write(p, fm + new)
+            return True
+    return False
+
+
+def sample_graph04(root, _v):
+    """把编排表某一行的「条目」列换成 —（环节指不出对象）。"""
+    NL = chr(10)
+    for p, t in _paths(root):
+        fm, body = front_matter_of(t)
+        lines = body.split(NL)
+        in_table = False
+        for k, line in enumerate(lines):
+            s = line.strip()
+            if s.startswith("| #") or s.startswith("|  #"):
+                in_table = True
+                continue
+            if in_table and s.startswith("|---"):
+                continue
+            if in_table and s.startswith("|"):
+                cells = [c.strip() for c in s.strip("|").split("|")]
+                if len(cells) >= 3 and "](" in cells[2]:
+                    cells[2] = "—"
+                    lines[k] = "| " + " | ".join(cells) + " |"
+                    write(p, fm + NL.join(lines))
+                    return True
+            elif in_table and not s.startswith("|"):
+                in_table = False
+    return False
+
 
 SAMPLES = [
     ("R-SCHEMA-17", "命题写「暂定确认」但 ## 论证 为空", sample_schema17),
@@ -443,6 +543,11 @@ SAMPLES = [
     ("R-SCHEMA-11", "id 前缀换成别的学科", sample_schema11),
     ("R-SCHEMA-12", "教法的 knowledge_point 指向不存在的文件", sample_schema12),
     ("R-SCHEMA-13", "教法的水平档写成 ZZ", sample_schema13),
+    ("R-GRAPH-01", "命题加了 先修 边", sample_graph01),
+    ("R-GRAPH-01", "两个知识点互为先修（成环）", sample_graph01_cycle),
+    ("R-GRAPH-02", "支持边锚点在目标里不存在", sample_graph02),
+    ("R-GRAPH-03", "路径的某个成果无人覆盖", sample_graph03),
+    ("R-GRAPH-04", "路径某环节指不出对象", sample_graph04),
 ]
 
 
@@ -474,7 +579,8 @@ def main():
             shutil.rmtree(tmp, ignore_errors=True)
 
     total = len(SAMPLES)
-    print(f"\n{total - len(failures)}/{total} 条规则被注入样本成功触发")
+    rules = {rid for rid, _d, _f in SAMPLES}
+    print(f"\n{total - len(failures)}/{total} 个样本成功触发（覆盖 {len(rules)} 条规则）")
     return 0 if not failures else 1
 
 
