@@ -19,3 +19,7 @@ jobs:
       # 校验器零第三方依赖，直接跑
       - name: 运行 kbcheck
         run: python tools/kbcheck.py
+      # 规则自测：每条机械规则注入一个**会失败**的样本，证明它真的在查
+      # （规则表说「已强制」 ≠ 代码真的在查；2026-10-18 有六条规则能空过）
+      - name: 规则自测（注入失败样本）
+        run: python tools/verify_rules.py

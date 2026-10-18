@@ -281,7 +281,7 @@ graph LR
 | [离心力是一个真实存在的力](misconceptions/离心力是一个真实的力.md) | 待审 | 教材 Teacher Support 点名 `Some students might be confused…` + 章首要求教师处理该误解 |
 | [把电流方向当成电子实际移动方向](misconceptions/电流方向与电子流向混淆.md) | 有效 | 教材明确标注为需强调项 |
 | [把参考系当成「背景」而不是「观察视角」](misconceptions/参考系当成背景.md) | 有效 | 教材 Misconception 标注 + **自带可当场诊断的演示** |
-| [运动物体会「自然地」慢下来](misconceptions/运动物体自然慢下来.md) | 有效 | 教材明确点名需破除 |
+| [运动物体会「自然地」慢下来](misconceptions/运动物体自然慢下来.md) | 需复审 | 教材明确点名需破除 |
 | [以为可见光与不可见辐射有本质不同](misconceptions/可见光与不可见辐射有本质不同.md) | 有效 | 教材用 `Dispel any misconceptions` 明确要求破除 |
 | [波把物质一起推走](misconceptions/波把物质一起推走.md) | 有效 | 教材正文用 `Many people think … In reality, however …` 直接纠偏 |
 | [把 G 与 g 当成同一个东西](misconceptions/混淆G与g.md) | 有效 | 教材用 `Be sure no one is confusing G with g` **当成检查项**（全模块只此一句） |
