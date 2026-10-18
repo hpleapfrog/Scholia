@@ -1130,6 +1130,34 @@ def check_type_dir(objects, errors):
                           f"实际在 `{parts[2]}/`（R-SCHEMA-16）")
 
 
+def check_doc_bilingual(errors):
+    """R-BILING-03：**文档类**文件必须有同名 `.en.md`。
+
+    条目级的双语由 `R-BILING-01` 管；但规范、入口、索引这些「文档」此前只靠 `M-10` 的人工约定——
+    结果它们真的缺了英文（`knowledge/README` 与覆盖度页长期只有中文，`AGENTS` 则是**内联双语**，
+    与「一个文档两份文件」的约定不一致）。
+
+    **豁免**（写清理由，不靠默契）：
+    - `templates/*.md`：骨架是中文写给人抄的，翻译一份没有读者；
+    - `.github/*`：Issue / PR 模板由 GitHub 渲染，双语会挤在表单里。
+
+    生成的规则表、索引等由 `R-INDEX-01/02` 管，不在此列。
+    """
+    targets = ["AGENTS.md", "README.md", "START.md", "FORMAT.md", "CONTRIBUTING.md",
+               "knowledge/README.md", "evidence/README.md", "events/README.md",
+               "docs/RULES.md", "docs/decisions/README.md",
+               "knowledge/physics/coverage/README.md"]
+    for d in sorted(set(SUBJECT_DIRS.values())):
+        targets.append(f"knowledge/{d}/README.md")
+    for rel in targets:
+        p = ROOT / rel
+        if not p.exists():
+            continue
+        if not (p.parent / (p.stem + ".en.md")).exists():
+            errors.append(f"{rel}: 缺英文译本 -> 应为 {p.stem}.en.md（R-BILING-03；"
+                          f"templates/ 与 .github/ 豁免）")
+
+
 def check_evidence_table(errors):
     """证据表的 `类别` / `等级` / `核验深度` 必须是枚举值（作废行除外）。"""
     for ev, r in parse_evidence_index().items():
@@ -1344,6 +1372,7 @@ MECH_RULES = [
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
     ("R-BILING-01", "英译本文件名由 `id` 派生（`<id 末段去类型前缀>.en.md`，与中文原件同目录）；缺译本给提示、不判失败"),
+    ("R-BILING-03", "文档类文件（根级 / 学科 README / 覆盖度 / docs）必须有同名 `.en.md`；`templates/` 与 `.github/` 豁免"),
     ("R-BILING-02", "英译本的 `type` / `status` / `evidence` 与中文原件一致（`M-10` 里可机械化的那一半）"),
     ("R-LINK-03", "英文页面的站内链接指向英文页（该页存在时）；例外：`English version of` 行、指向无译本文件的链接"),
     ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
@@ -1399,6 +1428,7 @@ MECH_RULES_EN = [
     ("R-LINK-01", "link targets exist (relative · repo-absolute · YAML `url:`)"),
     ("R-LINK-02", "anchors exist (heading slug or argument id)"),
     ("R-BILING-01", "an English edition's filename is derived from its `id` (`<id-tail minus type prefix>.en.md`, same folder as the Chinese original); a missing translation is a notice, not a failure"),
+    ("R-BILING-03", "documents (root / subject READMEs / coverage / docs) must have a same-named `.en.md`; `templates/` and `.github/` exempt"),
     ("R-BILING-02", "an English edition's `type` / `status` / `evidence` match the Chinese original (the mechanisable half of `M-10`)"),
     ("R-LINK-03", "links inside an English page point at the English page (when it exists); exempt: `English version of` lines and links to files that have no translation"),
     ("R-GRAPH-01", "`先修` connects only 知识点, acyclic"),
@@ -1535,6 +1565,22 @@ def render_subject_block(index):
     return "\n".join(lines)
 
 
+def render_subject_block_en(index):
+    """`knowledge/README.en.md` 的学科表 —— 与中文版**同源**（同一份 `index.json`）。"""
+    sub = index["统计"]["按学科"]
+    keys = [k for k in SUBJECT_ORDER if k in sub] + \
+           [k for k in sorted(sub) if k not in SUBJECT_ORDER]
+    lines = ["| Subject | Entries |", "|---|---|"]
+    for k in keys:
+        name = SUBJECT_EN.get(k, k)
+        lines.append(f"| [{name}]({SUBJECT_DIRS.get(k, k)}/README.en.md) | {sub[k]} |")
+    ev = index["统计"].get("事件条数", 0)
+    if ev:
+        lines.append(f"| [Events (top level)](../events/README.en.md) | {ev} |")
+    lines.append(f"| **Total** | **{index['统计']['对象总数']}** |")
+    return "\n".join(lines)
+
+
 def render_rules_block():
     lines = [
         f"**机械校验（{len(MECH_RULES)} 条）** —— 由 `tools/kbcheck.py` 强制；改规则必须同步改检查：",
@@ -1575,6 +1621,7 @@ def generated_blocks(objects, events):
         "README.md": render_stats_block(index),
         "README.en.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
+        "knowledge/README.en.md": render_subject_block_en(index),
         "START.md": render_subject_overview_block(index),
         "START.en.md": render_subject_overview_block(index, en=True),
         "docs/RULES.md": render_rules_block(),
@@ -1583,6 +1630,8 @@ def generated_blocks(objects, events):
     cov = render_coverage_block()
     if cov:
         blocks["knowledge/physics/coverage/README.md"] = cov
+        # 统计表是纯数字，中英两份共用同一段生成内容
+        blocks["knowledge/physics/coverage/README.en.md"] = cov
     return blocks
 
 
@@ -1917,6 +1966,7 @@ def check_all():
     check_license(objects, errors)
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
+    check_doc_bilingual(errors)
     check_type_dir(objects, errors)
     check_status_has_argument(objects, errors)
     check_updated_matches_changelog(objects, errors)

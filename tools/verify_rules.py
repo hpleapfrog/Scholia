@@ -169,6 +169,16 @@ def sample_evid04(root, _v):
     return False
 
 
+def sample_biling03(root, _v):
+    """删掉一份文档的英译本。"""
+    for rel in ("knowledge/README.en.md", "AGENTS.en.md", "evidence/README.en.md"):
+        p = root / rel
+        if p.exists():
+            p.unlink()
+            return True
+    return False
+
+
 SAMPLES = [
     ("R-SCHEMA-17", "命题写「暂定确认」但 ## 论证 为空", sample_schema17),
     ("R-SCHEMA-18", "「变更记录」里有比 updated 更晚的日期", sample_schema18),
@@ -176,6 +186,7 @@ SAMPLES = [
     ("R-GRAPH-05", "攻击条目没有 攻击 边", sample_graph05),
     ("R-README-02", "学科 README 状态列与 front-matter 不一致", sample_readme02),
     ("R-EVID-04", "正文引用了不存在的证据编号", sample_evid04),
+    ("R-BILING-03", "文档缺英译本（删掉 knowledge/README.en.md）", sample_biling03),
 ]
 
 

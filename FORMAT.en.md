@@ -17,7 +17,7 @@
 
 | Document | Chinese (canonical, primary) | English (translation) |
 |---|---|---|
-| Spec · process · decisions · indexes · READMEs | **`<name>.md`** | `<name>.en.md` |
+| Spec · process · decisions · indexes · entry points (`START` `AGENTS`) · READMEs | **`<name>.md`** | `<name>.en.md` |
 | **Knowledge entries · events** | **`<Chinese name>.md`** | **`<derived from id>.en.md`** |
 
 - **An entry's English filename is derived from its `id`**: take the last segment of the `id`,
@@ -40,8 +40,11 @@
 
 - **Chinese is the canonical language** (`title`, terms, quotations); **English is a translation**,
   for international readers and AI.
-- **Pairing is machine-checked** (`R-BILING-01`: a missing translation, a filename not derived from
-  the `id`, or an English page linking to a Chinese one all fail); **content sync is still manual** (`M-10`).
+- **Pairing is machine-checked**: entries by `R-BILING-01` (a missing translation is a notice; a
+  filename not derived from the `id`, or an English page linking to a Chinese one, fail); **documents**
+  by `R-BILING-03` (root / subject READMEs / coverage / `docs/` need a same-named `.en.md`).
+  **Exempt**: `templates/` (skeletons are Chinese, written to be copied) and `.github/` (bilingual
+  forms get cramped). **content sync is still manual** (`M-10`).
 - The line in an English page that points back to the Chinese original is fixed:
 
   ```markdown
