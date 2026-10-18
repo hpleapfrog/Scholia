@@ -14,7 +14,7 @@
 | 想学东西的人 | [**START.md**](START.md) —— 按学科索引 · 怎么读一条 · 现在有什么、没什么 |
 | **AI agent**（在本仓库工作） | [**AGENTS.md**](AGENTS.md) —— 铁律 · 怎么改 · 怎么跑校验 |
 | **AI / 程序**（读内容） | [**llms.txt**](llms.txt) + [**index.json**](index.json)（导航）· [**citations.json**](citations.json)（按 id 取引用材料）· [**evidence.json**](evidence.json)（证据登记） |
-| 想把这个库**挂到 agent** | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) —— 零依赖 MCP server（只读） |
+| 想把这个库**挂到 agent** | `python tools/scholia_mcp.py --print-config` —— 零依赖 MCP server（只读），配置直接打印出来 |
 | 想**加一条**（贡献者） | [`templates/`](templates/README.md) + `python tools/new_entry.py` —— 一条命令出骨架 |
 | 想**建自己的一份**（个人） | [`templates/`](templates/README.md) —— 复制骨架即可，不用 fork、不用联网 |
 | 想知道库是怎么做出来的 | 本页往下 |

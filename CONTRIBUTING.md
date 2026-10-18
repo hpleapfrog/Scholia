@@ -89,6 +89,20 @@ git push origin fix/ohm-law-temperature
 # 然后在 GitHub 上开 PR
 ```
 
+### 命令速查（全部零依赖，`python` 即可）
+
+| 想做什么 | 命令 |
+|---|---|
+| **校验**（提交前必跑） | `python tools/kbcheck.py` |
+| 改了内容，重生成机器文件与文档块 | `python tools/kbcheck.py --write-index` |
+| **新建一条**（自动出骨架 + 登记进学科 README） | `python tools/new_entry.py --type 命题 --subject 物理 --slug ohm-law --title "…"` |
+| 改完规则，验证「规则真的会拦」 | `python tools/verify_rules.py` |
+| 不知道能做什么 | `python tools/make_tasks.py --limit 10` |
+| 把库挂到 AI（打印可粘贴的配置） | `python tools/scholia_mcp.py --print-config` |
+
+> 报错时会按规则汇总（`R-LINK-01 × 3`），同一条规则的多处错误通常一个改法；
+> 规则清单见 [`docs/RULES.md`](docs/RULES.md)。
+
 格式要求见 [FORMAT.md](FORMAT.md)。四条要点：
 
 1. **一个知识点 = 一个 `.md` 文件**（不合并、不拆散）

@@ -701,15 +701,15 @@ def check_graph(objects, errors, warnings):
         if t == "教法":
             kps = fm_links(fm, "knowledge_point")
             if not kps:
-                errors.append(f"{rel}: 「教法」缺 `knowledge_point`（FORMAT.md §4）")
+                errors.append(f"{rel}: 「教法」缺 `knowledge_point`（FORMAT.md §4）（R-SCHEMA-12）")
             for tgt in kps:
                 r = resolve_link(path, tgt)
                 dest = objects.get(r) if r else None
                 if dest is None:
-                    errors.append(f"{rel}: `knowledge_point` 指向的不是知识对象 -> {tgt}")
+                    errors.append(f"{rel}: `knowledge_point` 指向的不是知识对象 -> {tgt}（R-SCHEMA-12）")
                 elif dest["type"] != "知识点":
                     errors.append(
-                        f"{rel}: `knowledge_point` 必须指向「知识点」，实际 type={dest['type']}")
+                        f"{rel}: `knowledge_point` 必须指向「知识点」，实际 type={dest['type']}（R-SCHEMA-12）")
 
     # 先修图环检测
     for n in list(prereq):
@@ -1010,11 +1010,11 @@ def check_teaching_level(objects, errors):
         if not lv:
             errors.append(
                 f"{rel}: `教法` 缺 `scope.水平档`（BL / OL / AL 组合，"
-                "或跨全部档位的「不分档」）")
+                "或跨全部档位的「不分档」）（R-SCHEMA-13）")
             continue
         codes = set(re.findall(r"\b(BL|OL|AL)\b", lv))
         if LEVEL_UNDIVIDED not in lv and not codes:
-            errors.append(f"{rel}: `水平档` 无法识别 -> {lv!r}")
+            errors.append(f"{rel}: `水平档` 无法识别 -> {lv!r}（R-SCHEMA-13）")
 
 
 def check_medical(objects, errors):
@@ -1066,11 +1066,11 @@ def check_author(objects, errors):
     for rel, o in objects.items():
         a = (fm_value(o["fm"], "author") or "").strip().strip('"')
         if not a:
-            errors.append(f"{rel}: 缺 `author`（不可匿名）")
+            errors.append(f"{rel}: 缺 `author`（不可匿名）（R-SCHEMA-09）")
         elif not (a.startswith("@") or a.startswith("AI")):
             errors.append(
                 f"{rel}: `author` 应形如 `@handle` 或 "
-                f"`AI（模型）· 经 @某人复核 · 日期` -> {a!r}")
+                f"`AI（模型）· 经 @某人复核 · 日期` -> {a!r}（R-SCHEMA-09）")
 
 
 def check_section_order(objects, errors):
@@ -1103,7 +1103,7 @@ def check_license(objects, errors):
     for rel, o in objects.items():
         v = (fm_value(o["fm"], "license") or "").strip()
         if v != ALLOWED_LICENSE:
-            errors.append(f"{rel}: `license` 必须是 {ALLOWED_LICENSE} -> {v!r}")
+            errors.append(f"{rel}: `license` 必须是 {ALLOWED_LICENSE} -> {v!r}（R-SCHEMA-10）")
 
 
 def check_id_prefix(objects, errors):
@@ -1118,7 +1118,7 @@ def check_id_prefix(objects, errors):
         i = fm_value(o["fm"], "id") or ""
         if not i.startswith(f"kb:{slug}:"):
             errors.append(
-                f"{rel}: `id` 前缀应与学科一致（`kb:{slug}:…`）-> {i!r}")
+                f"{rel}: `id` 前缀应与学科一致（`kb:{slug}:…`）-> {i!r}（R-SCHEMA-11）")
 
 
 def check_type_dir(objects, errors):
@@ -1906,10 +1906,10 @@ def check_all():
                 t, st, i = fm_value(fm, "type"), fm_value(fm, "status"), fm_value(fm, "id")
 
                 if t not in TYPES:
-                    errors.append(f"{rel}: type 非法 -> {t!r}")
+                    errors.append(f"{rel}: type 非法 -> {t!r}（R-SCHEMA-02）")
                 else:
                     if st not in ALLOWED_STATUS[t]:
-                        errors.append(f"{rel}: type={t} 不允许 status={st!r}")
+                        errors.append(f"{rel}: type={t} 不允许 status={st!r}（R-SCHEMA-02）")
                     for sec in REQUIRED_SECTIONS[t]:
                         if not has_section(text, sec):
                             errors.append(f"{rel}: 缺必备小节「{sec}」（R-SCHEMA-05）")
@@ -1925,7 +1925,7 @@ def check_all():
                 # 只有「命题」可以用「已确证」
                 if ONLY_CLAIMS_CAN_BE_CONFIRMED and t != "命题" and st == "已确证":
                     errors.append(
-                        f"{rel}: 只有「命题」可以用「已确证」（{t} 不存在唯一正确）")
+                        f"{rel}: 只有「命题」可以用「已确证」（{t} 不存在唯一正确）（R-SCHEMA-02）")
 
                 if t in TYPES:
                     objects[rel] = {"type": t, "fm": fm, "text": text, "path": path}
@@ -2047,6 +2047,18 @@ def main():
         for e in errors:
             print(f"  x {e}")
         print()
+        # 按规则汇总：一次报 20 条时，先看「哪几条规则在响」比逐行读快得多
+        by_rule = collections.Counter(
+            m.group(1) for m in (re.search(r"（(R-[A-Z]+-[0-9]+)）", e) for e in errors) if m
+        )
+        if by_rule:
+            print("按规则汇总（同一条规则的多处错误通常一个改法）：")
+            for rid, n in by_rule.most_common():
+                print(f"  {rid:14s} × {n}")
+            print(f"  {'（未标 ID）':12s} × {len(errors) - sum(by_rule.values())}")
+            print()
+            print("  规则说明：docs/RULES.md")
+            print()
         print(f"结果：{len(errors)} 处问题")
         return 1
 

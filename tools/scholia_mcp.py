@@ -278,5 +278,24 @@ def main():
             sys.stdout.flush()
 
 
+def print_config():
+    """`--print-config`：直接打出可粘贴的 MCP 配置（含绝对路径）。
+
+    挂载 MCP 最常卡的一步是「配置里该写什么路径」。与其让人去猜，
+    不如让脚本按**自己所在的位置**算出来——拷贝即用。
+    """
+    cfg = {"mcpServers": {"scholia": {
+        "command": sys.executable,
+        "args": [str(Path(__file__).resolve())],
+    }}}
+    print(json.dumps(cfg, ensure_ascii=False, indent=2))
+    print()
+    print("# 把上面这段加到 agent 的 MCP 配置里即可（settings → MCP）。")
+    print("# command 用的是本机 " + "Python 解释器的绝对路径" + "，换机器后重跑本命令。")
+    return 0
+
+
 if __name__ == "__main__":
+    if "--print-config" in sys.argv:
+        sys.exit(print_config())
     main()

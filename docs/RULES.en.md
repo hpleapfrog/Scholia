@@ -10,7 +10,7 @@
 > **中文：** 由 [`tools/kbcheck.py`](../tools/kbcheck.py) 生成的规则注册表——**请勿手改**。
 
 <!-- kbcheck:begin -->
-**Mechanically enforced (39, of which 17 have an injected sample)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
+**Mechanically enforced (39, of which 23 have an injected sample)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
 
 > **An injected sample means [`tools/verify_rules.py`](../tools/verify_rules.py) contains a** failing **sample for it.**
 > A rule marked `—` **has a check function that nobody has watched fail** — it may be a no-op.
@@ -19,18 +19,18 @@
 | ID | Rule | Injected sample |
 |---|---|---|
 | `R-SCHEMA-01` | front-matter requires 11 fields; no duplicate top-level keys | ✅ |
-| `R-SCHEMA-02` | valid type; status constrained by type; only 命题 may use 已确证 | — |
+| `R-SCHEMA-02` | valid type; status constrained by type; only 命题 may use 已确证 | ✅ |
 | `R-SCHEMA-03` | unique id | ✅ |
 | `R-SCHEMA-04` | `evidence` non-empty (no source, no entry) | ✅ |
 | `R-SCHEMA-05` | required sections present, fixed order; all six types have `## 论证` | ✅ |
 | `R-SCHEMA-06` | `知识点` first body line is `> [!TIP]` (what you'll know) | ✅ |
 | `R-SCHEMA-07` | `scope.学段` uses the enum (小学/初中/高中/大学/不限; combine with 「至」) | ✅ |
 | `R-SCHEMA-08` | `created` / `updated` are YYYY-MM-DD; updated ≥ created | ✅ |
-| `R-SCHEMA-09` | `author` is `@handle` or `AI（model）· 经 @reviewer · date` | — |
-| `R-SCHEMA-10` | `license` must be CC-BY-SA-4.0 | — |
-| `R-SCHEMA-11` | `id` prefix matches subject (物理→physics · 生活→life · 医学→med · 地理→geog · 科学→science · 交通→transport · 计算机→computing · 经济→econ · 法律→law) | — |
-| `R-SCHEMA-12` | `教法` has `knowledge_point` pointing to a 知识点 | — |
-| `R-SCHEMA-13` | `教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」 | — |
+| `R-SCHEMA-09` | `author` is `@handle` or `AI（model）· 经 @reviewer · date` | ✅ |
+| `R-SCHEMA-10` | `license` must be CC-BY-SA-4.0 | ✅ |
+| `R-SCHEMA-11` | `id` prefix matches subject (物理→physics · 生活→life · 医学→med · 地理→geog · 科学→science · 交通→transport · 计算机→computing · 经济→econ · 法律→law) | ✅ |
+| `R-SCHEMA-12` | `教法` has `knowledge_point` pointing to a 知识点 | ✅ |
+| `R-SCHEMA-13` | `教法` has `scope.水平档`, values BL / OL / AL (multiple ok) or 「不分档」 | ✅ |
 | `R-SCHEMA-14` | medical entries have `scope.条件` and body starts with a `> [!CAUTION]` block | — |
 | `R-SCHEMA-15` | a front-matter `key: value` value must not start unquoted with a YAML indicator (`*` `&` `!` `|` `>` `%` `@` `` ` ``) — strict YAML parsers reject it | — |
 | `R-SCHEMA-16` | a file sits in the folder its `type` maps to (concepts / claims / methods / misconceptions / paths / resources) | — |
