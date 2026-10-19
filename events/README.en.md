@@ -19,7 +19,7 @@
 | Event | Status | Evidence | Last updated |
 |---|---|---|---|
 | [伊尔库茨克反瘟疫研究所员工死亡事件（2026 年 9–10 月）](irkutsk-anti-plague-institute-2026.en.md) | 持续更新 | `ev-064` `ev-065` `ev-066` `ev-067` `ev-068` | 2026-10-18 |
-| [Timeline and origins of the COVID-19 pandemic (2019–2025)](covid19-timeline-and-origins.en.md) | 持续更新 | `ev-090` `ev-091` `ev-092` `ev-093` `ev-094` `ev-095` `ev-096` `ev-097` `ev-098` `ev-099` `ev-100` `ev-101` `ev-102` `ev-103` `ev-104` `ev-105` `ev-106` `ev-107` `ev-108` `ev-109` `ev-110` `ev-111` `ev-112` `ev-113` `ev-114` `ev-115` `ev-116` `ev-117` `ev-118` `ev-119` `ev-120` `ev-121` `ev-122` | 2026-10-18 |
+| [Timeline and origins of the COVID-19 pandemic (2019–2025)](covid19-timeline-and-origins.en.md) | 持续更新 | `ev-090` `ev-091` `ev-092` `ev-093` `ev-094` `ev-095` `ev-096` `ev-097` `ev-098` `ev-099` `ev-100` `ev-101` `ev-102` `ev-103` `ev-104` `ev-105` `ev-106` `ev-107` `ev-108` `ev-109` `ev-110` `ev-111` `ev-112` `ev-113` `ev-114` `ev-115` `ev-116` `ev-117` `ev-118` `ev-119` `ev-120` `ev-121` `ev-122` `ev-123` `ev-124` `ev-125` `ev-126` `ev-127` `ev-128` `ev-129` `ev-130` `ev-131` `ev-132` `ev-133` | 2026-10-19 |
 
 **2 events.**
 
