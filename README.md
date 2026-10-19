@@ -91,7 +91,7 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 | 对象 / Objects | **164** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 67 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
 | 学科 / Subjects | 物理 Physics 99 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 26 · 经济 Economics 8 · 法律 Law 4 |
-| 证据 / Evidence | 127（含作废 / void 5） |
+| 证据 / Evidence | 133（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
