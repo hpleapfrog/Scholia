@@ -55,6 +55,15 @@ projected for one reader.
 **Minimal goal:** finish one chapter of one textbook — 200 errata, the full path from 0 to 200.
 Not "backing up human knowledge."
 
+> [!NOTE]
+> **2026-10-20: the minimal goal is met.**
+> The repository added a "mathematics" subject and ingested **all 308** Approved / Textbook errata
+> in **Chapter 6** (Vector Calculus) of OpenStax *Calculus Volume 3* — **308 entries in a single
+> chapter, ≥ 200**. The earlier 200-entry batch from Chapters 1–5 of *University Physics Volume 1*
+> spans five chapters and remains recorded as-is in the
+> [decision record](docs/decisions/errata-200-scope.en.md); the math batch's source, composition and
+> structural change are in the [new decision record](docs/decisions/calc3-ch6-errata.en.md).
+
 ## Format & checks
 
 **One concept = one `.md` file**: `front-matter` holds what machines need, the body what
@@ -111,10 +120,10 @@ this repository satisfies attribution.
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **164** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 67 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
+| 对象 / Objects | **673** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 576 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 99 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 26 · 经济 Economics 8 · 法律 Law 4 |
-| 证据 / Evidence | 133（含作废 / void 5） |
+| 学科 / Subjects | 物理 Physics 300 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 26 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
+| 证据 / Evidence | 145（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -133,9 +142,12 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 ## Open questions (the important ones)
 
 1. **Can entry cost drop below 5 minutes?** ← **decides the project's survival**. [`templates/`](templates/README.en.md)
-   and `tools/new_entry.py` are in place (structure to the script, content to the human), but
-   **whether it really drops to 5 minutes is unverified** — it has to be proven on the next real
-   entry, not claimed by adding templates.
+   and `tools/new_entry.py` are in place (structure to the script, content to the human). On 2026-10-20
+   a real entry was trialled ([area under a velocity–time graph](knowledge/physics/claims/velocity-time-graph-area.en.md)):
+   about 12 minutes from topic selection to a passing `kbcheck` (**agent timing**, including source
+   search, evidence registration and bilingual writing); `new_entry.py` generates the skeleton in under
+   a second. **Still over five minutes; human timing untested** — the toolchain is not the bottleneck,
+   source reading and content writing are.
 2. `已确证` / `争议` / `已推翻` **have never been used** — a single contributor cannot produce them
    honestly; this is not a gap code can fill.
 3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17), waiting for 3–5 cases); there is no way to express "advanced".

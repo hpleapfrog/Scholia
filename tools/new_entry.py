@@ -63,10 +63,10 @@ TYPE_EN = {
 #   SUBJECT_DIRS  = 目录名（要能读：knowledge/medicine/）
 SUBJECT_SLUGS = {"物理": "physics", "生活": "life", "医学": "med", "地理": "geog",
                  "科学": "science", "交通": "transport", "计算机": "computing",
-                 "经济": "econ", "法律": "law"}
+                 "经济": "econ", "法律": "law", "数学": "math"}
 SUBJECT_DIRS = {"物理": "physics", "生活": "life", "医学": "medicine", "地理": "geography",
                 "科学": "science", "交通": "transport", "计算机": "computing",
-                "经济": "economics", "法律": "law"}
+                "经济": "economics", "法律": "law", "数学": "mathematics"}
 
 # 中文标题里不能进文件名的半角字符 → 全角（Windows 禁止半角 \ / : * ? " < > |）
 _UNSAFE = {"/": "／", "\\": "＼", ":": "：", "*": "＊", "?": "？",
@@ -179,7 +179,7 @@ def main():
                "  知识点 concept · 命题 claim · 教法 method · 误解 misconception\n"
                "  路径 path · 资源 resource · 事件 event")
     ap.add_argument("--type", "-t", required=True, help="条目类型（中文或英文别名）")
-    ap.add_argument("--subject", "-s", help="学科：物理/生活/医学/地理/科学/交通/计算机/经济/法律")
+    ap.add_argument("--subject", "-s", help="学科：物理/生活/医学/地理/科学/交通/计算机/经济/法律/数学")
     ap.add_argument("--slug", required=True, help="id 后缀，ASCII，如 ohm-law")
     ap.add_argument("--title", required=True, help="人类可读标题（也就是文件名）")
     ap.add_argument("--author", default=DEFAULT_AUTHOR, help=f"署名（默认 {DEFAULT_AUTHOR}）")
