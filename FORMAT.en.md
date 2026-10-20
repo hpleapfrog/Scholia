@@ -306,6 +306,23 @@ outcomes:
 > **An uncovered outcome is an error, not a warning** — the path fails its own declared goal.
 > A path without `outcomes` gets a **warning** noting coverage is still a human judgement.
 
+Beyond "is it there", **two dimensions are computable** (`R-GRAPH-07`, advisory, non-blocking):
+
+| Dimension | How | What it does **not** answer |
+|---|---|---|
+| **Redundancy** | how many 编排 rows cover each outcome; `≤1` is reported | whether two passes are enough |
+| **Whether it was read** | the **maximum verification depth** of the covering entries' evidence; `仅定位` / `未核验` is reported | whether this was the right source |
+
+> [!WARNING]
+> **Parse the sequencing table by row, not by column position**: outcome ids may sit in the last column or
+> in the second-to-last (`| # | 环节 | 条目 | 覆盖 | 时长 |`). **Scanning only the last column reports an
+> unreadable path as "no redundancy problem"** — this silent degradation already happened once here; see
+> [decision record](docs/decisions/coverage-is-not-strength.en.md).
+> This branch has **two** injected samples: `sample_graph07` (changes evidence depth) and
+> `sample_graph07b` (**pushes the 覆盖 column off the end**, which is the one that watches column position).
+> The second was validated on 2026-10-20 by reverting to the first implementation: after the revert the
+> number of paths reporting single-step coverage **dropped from 4 to 2**.
+
 ### Every step must link to a knowledge object
 
 A `路径` is "an **ordering of concepts**"; a step that points at nothing is not a step.
@@ -385,6 +402,21 @@ Rules are dead; people execute them:
 > [status-and-liveness](docs/decisions/status-and-liveness.en.md)) — collapsing both causes into one
 > status made an attack **invisible in `status`**.
 
+### Three high-tier statuses cannot be obtained by editing one field (`R-SCHEMA-19`)
+
+Step 3 of the algorithm above **is executed by a human**, but its **preconditions** are objective facts —
+so they can be machine-checked:
+
+| Status | Mechanical precondition | What it blocks |
+|---|---|---|
+| `已确证` | **≥2 distinct `@` handles** across `author` and 变更记录 | a self-declared confirmation leaving no trace — if a non-author review really happened, it signed something |
+| `争议` | the entry has **≥2 arguments** and **≥1 inbound `攻击` edge** | with one argument the correct status is `失据` / `需复审`; writing `争议` **fabricates a conflict** |
+| `已推翻` | **≥1 inbound `攻击` edge whose attacker is citable** | when the attacker itself has been knocked down, only the support was removed — **write `失据`** |
+
+> These three **do not produce statuses**. They make **the zero auditable**: reading a library where
+> nothing is `已确证`, you can tell that is **a rule holding**, not **nobody watching**. Cases and
+> measurements: [decision record](docs/decisions/status-zero-is-auditable.en.md).
+
 ### Arguments must have IDs; attacks must land on an argument
 
 Each argument under `## 论证` must be `### <ID> · <title>`, ID like `A1` `M2` `K3` (`[A-Z]+\d+`),
@@ -440,9 +472,15 @@ dispatch excluded truth-checking — see
 > **Many instances from the same source are not independent evidence.**
 
 **Don't write counts into an entry** — `kbcheck.py` reports edge counts live; **hard-coding drifts**.
-**Independence turns on the source, not the count**; sources are free text, so `kbcheck.py` **cannot
-compute independence** — that's a human judgement. (On the "15 supporting edges" mistake, see
-[support-count-not-strength](docs/decisions/support-count-not-strength.en.md).)
+**Independence turns on the source, not the count.** That sentence contains **two halves** — do not blur them:
+
+| The half | Who does it | How |
+|---|---|---|
+| **Same source identifier** (do the edges' evidence items sit inside one source?) | **machine** (`R-GRAPH-06`) | union of evidence ids + set of source identifiers; a "source identifier" is just **one way of cutting the locator string** (take the 《title》, otherwise record `（未识别）`) |
+| **Whether different sources are truly independent** | **human** (`M-03`) | whether two publishers' books count as independent is a judgement, not a string comparison |
+
+`（未识别）` **does not mean "independent"** — that half returns to a human. (On the "15 supporting edges"
+mistake, see [support-count-not-strength](docs/decisions/support-count-not-strength.en.md).)
 
 ### "Survived" cannot self-assert — write "not yet attacked" when there are zero attacks
 

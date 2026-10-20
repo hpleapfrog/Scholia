@@ -40,8 +40,9 @@
 | [HTTP 402 is 'reserved for future use', 305 is deprecated and 306 is unused: three registered codes with no semantics](claims/http-reserved-deprecated-codes.en.md) | 命题 | 暂定确认 | `ev-054` |
 | [An HTTP 404 does not say whether the lack is temporary or permanent, and is also used to avoid disclosing that a resource exists](claims/http-404-temporary-vs-permanent-non-disclosure.en.md) | 命题 | 暂定确认 | `ev-054` |
 | [Treating 418 as a normative HTTP status code](misconceptions/http-418-is-real.en.md) | 误解 | 有效 | `ev-054` `ev-057` |
+| [HTTP 451 refuses access for legal reasons and does not imply whether the resource exists](claims/http-451-legal-unavailable.en.md) | 命题 | 暂定确认 | `ev-153` `ev-054` `ev-057` |
 
-**All twenty-six come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057` / `ev-089`; verification depth is stated per entry).
+**All twenty-seven come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057` / `ev-089`; verification depth is stated per entry).
 That means this subject's current coverage is **not** the same as the subject "Computing" itself —
 see "What is still missing" below.
 

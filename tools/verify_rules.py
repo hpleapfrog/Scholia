@@ -692,6 +692,213 @@ def sample_doc01(root, _v):
     return True
 
 
+# ── 2026-10-20 新增：状态可达性 / 支持边同源 / 覆盖强度 ──────────────────────
+
+def _claims_with_argument(root):
+    """带论证 ID 的命题（用来当 `支持` 边的靶）。攻击条目跳过。"""
+    for p in sorted((root / "knowledge").rglob("claims/*.md")):
+        if p.name.endswith(".en.md") or "attacks" in p.parts:
+            continue
+        fm, body = front_matter_of(read(p))
+        if kv(fm, "type") != "命题":
+            continue
+        m = re.search(r"(?m)^### ([A-Z]+)(\d+)", body)
+        if m:
+            yield p, fm, body, (m.group(1) + m.group(2)).lower(), \
+                len(re.findall(r"(?m)^### [A-Z]+\d+", body))
+
+
+def sample_schema19_confirmed(root, _v):
+    """命题直接写「已确证」——全条只有作者一个人的署名。"""
+    for p, fm, body, _a, _n in _claims_with_argument(root):
+        if kv(fm, "status") == "已确证":
+            continue
+        names = set(re.findall(r"@([\w][\w.\-]*)", fm + body))
+        if len(names) > 1:
+            continue
+        write(p, re.sub(r"(?m)^status:.*$", "status: 已确证", fm, count=1) + body)
+        return True
+    return False
+
+
+def sample_schema19_disputed(root, _v):
+    """只有一条论证的命题直接写「争议」——图上没有任何冲突可言。"""
+    for p, fm, body, _a, n in _claims_with_argument(root):
+        if n >= 2 or kv(fm, "status") == "争议":
+            continue
+        write(p, re.sub(r"(?m)^status:.*$", "status: 争议", fm, count=1) + body)
+        return True
+    return False
+
+
+def sample_schema19_overturned(root, _v):
+    """命题写「已推翻」，但没有任何一条 `攻击` 边指着它。"""
+    for p, fm, body, _a, n in _claims_with_argument(root):
+        if n < 1 or kv(fm, "status") == "已推翻":
+            continue
+        write(p, re.sub(r"(?m)^status:.*$", "status: 已推翻", fm, count=1) + body)
+        return True
+    return False
+
+
+def sample_graph06(root, _v):
+    """两条 `支持` 边指向同一个论证，两个支持者引的是**同一份证据**。"""
+    target = None
+    for p, fm, body, anchor, _n in _claims_with_argument(root):
+        target = (p, anchor)
+        break
+    if not target:
+        return False
+    by_ev = {}
+    for p in sorted((root / "knowledge").rglob("*.md")):
+        if p.name.endswith(".en.md") or p == target[0]:
+            continue
+        fm, body = front_matter_of(read(p))
+        ev = kv(fm, "evidence") or ""
+        if len(re.findall(r"ev-\d+", ev)) != 1:
+            continue
+        if not re.search(r"(?m)^\s*支持: \[\]\s*$", fm):
+            continue
+        by_ev.setdefault(ev, []).append((p, fm, body))
+    pair = next((v for v in by_ev.values() if len(v) >= 2), None)
+    if not pair:
+        return False
+    n = 0
+    for p, fm, body in pair[:2]:
+        rel = os.path.relpath(str(target[0]), str(p.parent)).replace("\\", "/")
+        new = re.sub(r"(?m)^(\s*支持): \[\]\s*$",
+                     rf'\1: ["[命题：注入样本]({rel}#{target[1]})"]', fm, count=1)
+        if new != fm:
+            write(p, new + body)
+            n += 1
+    return n == 2
+
+
+def sample_graph07(root, _v):
+    """把某个成果**唯一**覆盖条目所依据的证据，核验深度从 `全文` 改成 `仅定位`。
+
+    只挑「全路径里只出现一次」的成果：这样这条成果的依据就是这一条证据，
+    改完之后「覆盖到了，但依据没读过」才成立。
+    """
+    ep = root / "evidence" / "README.md"
+    for p, t in _paths(root):
+        _fm, body = front_matter_of(t)
+        i = body.find(chr(10) + "## 编排")
+        if i < 0:
+            continue
+        j = body.find(chr(10) + "## ", i + 1)
+        seg = body[i:j if j > 0 else len(body)]
+        rows = [r for r in seg.splitlines() if r.strip().startswith("|")]
+        seen = {}
+        for r in rows:
+            cells = [c.strip() for c in r.strip().strip("|").split("|")]
+            if len(cells) < 2:
+                continue
+            # 与 kbcheck 同一处置：**不按列位取「覆盖」**。这个样本自己要是只扫末列，
+            # 碰上 `# | 环节 | 条目 | 覆盖 | 时长` 就挑不出成果，然后**静默 SKIP**——
+            # 而 SKIP 看起来像「样本没找到可用数据」，实际是样本读不懂输入。
+            for oid in re.findall(r"\b(o\d+)\b", " ".join(cells)):
+                seen.setdefault(oid, []).append(r)
+        single = [oid for oid, v in seen.items() if len(v) == 1]
+        for oid in single:
+            r = seen[oid][0]
+            link = None
+            for c in r.strip().strip("|").split("|"):
+                mm = re.search(r"\[[^\]]*\]\(([^)#]+)", c)
+                if mm:
+                    link = mm.group(1)
+            if not link:
+                continue
+            obj = (p.parent / link).resolve()
+            if not obj.exists():
+                continue
+            ofm, _ob = front_matter_of(read(obj))
+            ids = re.findall(r"ev-\d+", kv(ofm, "evidence") or "")
+            if len(ids) != 1:
+                continue
+            lines = read(ep).splitlines(True)
+            hit = False
+            for k, line in enumerate(lines):
+                if line.strip().startswith(f"| {ids[0]} |") and "| 全文 |" in line:
+                    cells = line.strip().strip("|").split("|")
+                    cells[3] = " 仅定位 "
+                    lines[k] = "| " + " | ".join(c.strip() for c in cells) + " |\n"
+                    hit = True
+            if hit:
+                write(ep, "".join(lines))
+                return True
+    return False
+
+
+def sample_graph07b(root, _v):
+    """把「覆盖」列**挤出末列**，看 R-GRAPH-07 还认不认得出这条路径的单环节覆盖。
+
+    这是一条**回归样本**，不是新的失败模式。2026-10-20 的第一版实现按列位取值
+    （只扫 `cells[-1]`），碰上 `运动学入门-BL` 那种
+    `# | 环节 | 条目 | 覆盖 | 时长` 的表，就把整条路径读成「没有单环节覆盖」——
+    **假干净**。`sample_graph07` 改的是证据深度，列位解析错成什么样它都照样 PASS，
+    所以这里补一条专门盯**输入形状**的样本。
+
+    做法：找一条「覆盖」确实在末列的路径，给整张表追加一列（备注），
+    并插入一个只被**一个新环节**覆盖的成果 `o9`。
+    列位解析的实现会**悄悄不再报这条路径**（`o9` 在输出里根本不出现）；
+    扫全部单元格的实现会在 thin 列表末尾报出它——所以断言写的是 `'o9']`
+    而不是裸 `o9`：要的是「它出现在单环节覆盖列表的末尾」，
+    不是「输出里某处恰好有这两个字符」。
+    """
+    for p, t in _paths(root):
+        fm, body = front_matter_of(t)
+        m = re.search(r"(?m)^outcomes:[ \t]*\n((?:[ \t]+.*\n?)+)", fm)
+        if not m:
+            continue
+        decl = re.findall(r"\b(o\d+)\b", m.group(1))
+        # 注入点必须还不存在，否则「o9 出现了」证明不了任何事
+        if not decl or "o9" in decl:
+            continue
+        i = body.find(chr(10) + "## 编排")
+        if i < 0:
+            continue
+        k = body.find(chr(10) + "## ", i + 1)
+        k = k if k > 0 else len(body)
+        pre, seg, post = body[:i + 1], body[i + 1:k], body[k:]
+        lines = seg.splitlines(True)
+        rows = [n for n, r in enumerate(lines) if r.strip().startswith("|")]
+        if len(rows) < 3:
+            continue
+        data = [n for n in rows if re.match(r"\|\s*\d+\s*\|", lines[n].strip())]
+        # 前提：表是「4 列 + 覆盖在末列」。形状一旦变了，这条样本就该大声 SKIP
+        ok = True
+        for n in data:
+            cells = [c.strip() for c in lines[n].strip().strip("|").split("|")]
+            if len(cells) != 4 or not re.fullmatch(r"o\d+(?:, ?o\d+)*", cells[-1]):
+                ok = False
+                break
+        if not ok or not data:
+            continue
+        link = None
+        for n in data:
+            mm = re.search(r"\[[^\]]*\]\(([^)]+)\)", lines[n])
+            if mm:
+                link = mm.group(1)
+        if not link:
+            continue
+        out = list(lines)
+        for idx, n in enumerate(rows):
+            s = out[n].rstrip("\n").rstrip()
+            out[n] = (s + " 备注 |\n" if idx == 0 else
+                      s + " --- |\n" if idx == 1 else s + "  |\n")
+        out.insert(data[-1] + 1,
+                   f"| {len(data) + 1} | 注入环节（自测样本） | [注入]({link}) | o9 |  |\n")
+        fm_lines = fm.splitlines(True)
+        last_o = max(n for n, r in enumerate(fm_lines) if re.match(r"^\s+- o\d", r))
+        if not fm_lines[last_o].endswith("\n"):
+            fm_lines[last_o] += "\n"
+        fm_lines.insert(last_o + 1, "  - o9: 注入成果（自测样本，非真实条目内容）\n")
+        write(p, "".join(fm_lines) + pre + "".join(out) + post)
+        return True
+    return False
+
+
 SAMPLES = [
     ("R-SCHEMA-17", "命题写「暂定确认」但 ## 论证 为空", sample_schema17),
     ("R-SCHEMA-18", "「变更记录」里有比 updated 更晚的日期", sample_schema18),
@@ -733,6 +940,12 @@ SAMPLES = [
     ("R-INDEX-02", "README 生成块被塞进一行", sample_index02),
     ("R-README-01", "对象从学科 README 里被删掉", sample_readme01),
     ("R-DOC-01", "FORMAT.md 状态图例删掉「已失效」", sample_doc01),
+    ("R-SCHEMA-19", "命题一个人署名就写「已确证」", sample_schema19_confirmed, "但全条只有"),
+    ("R-SCHEMA-19", "只有一条论证、零攻击边就写「争议」", sample_schema19_disputed, "status=「争议」"),
+    ("R-SCHEMA-19", "没有未被击倒的攻击就写「已推翻」", sample_schema19_overturned, "status=「已推翻」"),
+    ("R-GRAPH-06", "两条支持边引的是同一份证据", sample_graph06, "但证据并集只有"),
+    ("R-GRAPH-07", "成果唯一覆盖条目的证据被改成未读", sample_graph07, "证据最高只到"),
+    ("R-GRAPH-07", "把「覆盖」列挤出末列后仍要报出单环节覆盖", sample_graph07b, "'o9']"),
 ]
 
 
@@ -747,7 +960,13 @@ def run_check(root):
 
 def main():
     failures = []
-    for rule, desc, fn in SAMPLES:
+    for entry in SAMPLES:
+        rule, desc, fn = entry[:3]
+        # 第 4 项（可选）：这条样本要在那份输出里**确实看到**的话。
+        # 有的规则在**未注入的仓库里**就已经报别的数据（例如 R-GRAPH-07 的
+        # 「单环节覆盖」分支）——只 grep 规则 ID 会**假装通过**。写死要看到的句子，
+        # 才证明**这一支**在查。
+        expect = entry[3] if len(entry) > 3 else rule
         tmp = tempfile.mkdtemp(prefix="scholia_selftest_")
         repo = Path(tmp) / "repo"
         try:
@@ -758,7 +977,7 @@ def main():
                 failures.append((rule, "no-sample"))
                 continue
             out = run_check(repo)
-            if rule in out:
+            if expect in out:
                 print(f"PASS  {rule}  {desc}")
             else:
                 print(f"FAIL  {rule}  {desc}  ← 注入后没报这条规则")
@@ -767,7 +986,7 @@ def main():
             shutil.rmtree(tmp, ignore_errors=True)
 
     total = len(SAMPLES)
-    rules = {rid for rid, _d, _f in SAMPLES}
+    rules = {e[0] for e in SAMPLES}
     print(f"\n{total - len(failures)}/{total} 个样本成功触发（覆盖 {len(rules)} 条规则）")
     return 0 if not failures else 1
 

@@ -64,7 +64,7 @@
 |---|---|
 | `M-01` | Chinese gloss near English quotations (one of three readability rules) |
 | `M-02` | learner-facing content comes first |
-| `M-03` | `支持` edge **independence** is judged by humans (source is free text, can't compute) |
+| `M-03` | `支持` edge **cross-source independence** is still judged by humans — `R-GRAPH-06` only computes the 'same source identifier' half |
 | `M-04` | `教法` `禁忌` marks evidence strength (strong/weak), not mixed with `风险` |
 | `M-05` | don't upload textbook originals or scans |
 | `M-06` | check license per new source (textbook CC BY ≠ what it embeds is too) |
