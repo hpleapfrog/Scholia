@@ -1,9 +1,14 @@
-# Templates: get one entry in under 5 minutes
+# Templates: pushing a bilingual entry toward the 5-minute budget
 
 > 中文 → [**README.md**](README.md)
 
 > [!IMPORTANT]
 > **This folder answers the project's open question #1**: "can entry cost drop under 5 minutes?"
+> **The author fixed the unit: one bilingual pair** (Chinese body + English twin + both registers).
+> **This folder removes structural friction; it does not meet the budget.** The phased trial came in at
+> **13 min 16 s per bilingual entry = 2.6× the budget**, while the skeleton took **319 ms** and validation
+> **2.2 s** — **the toolchain was never the bottleneck**. The gap and the three ways out are in
+> [phase-by-phase entry cost](../docs/decisions/entry-cost-phases.en.md).
 > Until now almost every entry was a full 30–60 minute object — the opposite of the advice to
 > "start from a single erratum", and the most likely way a single-contributor project dies.
 >

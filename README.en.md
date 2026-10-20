@@ -141,23 +141,26 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 
 ## Open questions (the important ones)
 
-1. **Can entry cost drop below 5 minutes?** ← **decides the project's survival**. [`templates/`](templates/README.en.md)
+1. **Can a bilingual entry drop below 5 minutes?** ← **decides the project's survival**. **The unit of that
+   "5 minutes" is now fixed** (2026-10-20, by the author): **one bilingual pair** — Chinese body + English
+   translation + both registers — **not** one language. [`templates/`](templates/README.en.md)
    and `tools/new_entry.py` are in place (structure to the script, content to the human). The first trial
    ([area under a velocity–time graph](knowledge/physics/claims/velocity-time-graph-area.en.md)) left only a
-   total: about 12 minutes. The second (2026-10-20,
+   total: about 12 minutes — **2.4× the fixed budget**. The second (2026-10-20,
    [HTTP 451 refuses access for legal reasons](knowledge/computing/claims/http-451-legal-unavailable.en.md))
-   was **stamped per phase**: **topic selection → Chinese body finished = 4 min 9 s**, skeleton **319 ms**,
-   full validation **2.2 s**; the extra nine minutes went almost entirely to the
-   **bilingual parallel structure, evidence registration
-   and index counts**. **The toolchain is not the bottleneck** (reproduced); but "5 minutes" **still has no
-   stated unit** — per bilingual pair or per single language. **Human timing remains unmeasured**: agent
-   timing logs "283 lines read" as 17 seconds, which is not true of a person. This round also falsified one
-   of the record's own assumptions: **"P7→P9 is pure structural copying, so it can be scripted wholesale" is
-   only half true** — the subject index tables come in **7 header shapes**, and 4 of them carry columns
+   was **stamped per phase**: **13 min 16 s for the bilingual pair = 2.6× the budget, not met**. Inside that,
+   topic selection → Chinese body finished took **4 min 9 s**, and the following **9 min 7 s** went almost
+   entirely to the **bilingual parallel structure, evidence registration and index counts**; the skeleton took
+   **319 ms** and full validation **2.2 s** — **the toolchain is not the bottleneck** (reproduced). **So the
+   8 min 16 s that has to disappear lives only in the parallel structure** — and this round falsified one of
+   this library's own assumptions: **"P7→P9 is pure structural copying, so it can be scripted wholesale" is
+   only half true**. The subject index tables come in **7 header shapes**, and 4 of them carry columns
    (`证据等级`, `位置`+`错误类型`, `目标`+`自检`, `禁忌`) that are **content, not formatting**; the evidence
    register is split into **3 batch blocks** and its `定位` column is a hand-written reading record — the
    column that caught this round's wrong title.
-   Phase data, three findings and two proposed budgets → [decision record](docs/decisions/entry-cost-phases.en.md)
+   **Human timing remains unmeasured**: agent timing logs "283 lines read" as 17 seconds, which is not true
+   of a person. Phase data, three findings and the remaining compression scope
+   → [decision record](docs/decisions/entry-cost-phases.en.md)
 2. `已确证` / `争议` / `已推翻` are **all 0**. This is **still not a gap code can fill** — what is missing is
    **people** (a reviewer, a defender). But code can make the **zero auditable**: `R-SCHEMA-19` now checks
    each status's structural precondition (`已确证` needs **≥2 distinct handles** across `author` + changelog;

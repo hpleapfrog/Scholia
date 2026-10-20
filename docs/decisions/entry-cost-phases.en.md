@@ -1,10 +1,13 @@
 # Phase-by-phase entry cost: four minutes gets you the Chinese text; the rest is bilingual bookkeeping
 
 > Open item: [README](../../README.en.md), item 1 of "Open questions that matter". Recorded 2026-10-20.
-> Tools: [`tools/new_entry.py`](../../tools/new_entry.py) and [templates](../../templates/README.md).
+> Tools: [`tools/new_entry.py`](../../tools/new_entry.py) and [templates](../../templates/README.en.md).
 
 "Can one entry be recorded in under 5 minutes" **decides whether the project survives** — above that
-number, the collection rate cannot keep up with the amount of content that needs covering. The first
+number, the collection rate cannot keep up with the amount of content that needs covering.
+**The author has now fixed the unit of that "5 minutes": one bilingual pair** (2026-10-20, see the note at
+the end of finding two), so the two timed trials read as **2.4×** and **2.6×** the budget: **not met, but we
+can now say where the overage is**. The first
 timed trial ([The area under a velocity–time graph equals displacement](../../knowledge/physics/claims/velocity-time-graph-area.en.md),
 ev-151) produced only a total: about 12 minutes, **unphased**, so it could say "we are over" but not **where**.
 The second trial ([HTTP 451 refuses access for legal reasons](../../knowledge/computing/claims/http-451-legal-unavailable.en.md),
@@ -40,7 +43,8 @@ not counted as work**).
 the total. The first trial's conclusion reproduced exactly.
 
 **Two: what breaks the 5-minute budget is not reading and writing, it is bilingual + registration + index.**
-The Chinese body was finished at 4 min 9 s. Almost all of the extra nine minutes went into
+The Chinese body was finished at 4 min 9 s; **the bilingual pair totalled 13 min 16 s — 2.6× the 5-minute
+budget**. Almost all of the extra nine minutes went into
 **parallel structures**: the evidence row must be written **twice** (`evidence/README.md` and
 `README.en.md`), the English twin must be **written as a second full document**, the subject README's
 index row and counts like "twenty-seven entries" must be updated, and `--write-index` regenerates three
@@ -50,9 +54,12 @@ machine files.
 > **This is not an argument that bilingualism is a burden.** The second language is load-bearing,
 > not packaging — the English page is not a translation, it is a second checkable entry point into the
 > same argument (see [English filenames derived from `id`](english-filenames-from-id.md)).
-> **The point is: if 5 minutes is the target, it has to state its unit — one language per entry, or a
-> bilingual pair.** The "5 minutes" in the README states no unit, so both trials have been measured
-> against the bilingual cost.
+>
+> **The unit question is now settled by the author (2026-10-20): "5 minutes" means one bilingual pair.**
+> That turns this open item from "cannot be compared" into **a quantified gap**: the bilingual pair measured
+> **13 min 16 s = 2.6× the budget**, so **8 min 16 s has to disappear**; the first trial's ~12 minutes is
+> **2.4×**. **"4 min 9 s for the Chinese body" is no longer "within budget"** — it is only the **first 31%**
+> of a bilingual entry, and the remaining **69%** is exactly where the overage comes from.
 
 **Three: agent timing cannot stand in for human timing, and the difference is exactly where it hurts.**
 "283 lines read in 17 seconds" is true for an agent and false for a **person**. The two most expensive
@@ -128,13 +135,31 @@ placeholder.**
 > **This tool was not built in this round:** shipping a tool for an assumption that is only half true costs
 > more than not shipping it.
 
+> [!CAUTION]
+> **Under the unit now fixed, "5 minutes" and "bilingual is load-bearing" are two requirements that fight.**
+> The budget is 300 seconds, and **the Chinese body alone took 249** — which leaves **51 seconds** for
+> "English body + both registers + index". That segment actually measured **547 seconds**, i.e. **10.7× the
+> remaining budget**. Automating all three of the "unambiguously scriptable" items above still does not remove
+> **rewriting the English page as the same argument a second time** — and in this library that page is not
+> packaging, it is the second checkable entry point (see
+> [English filenames derived from `id`](english-filenames-from-id.md)).
+>
+> **So this is not a "squeeze a bit harder" question; it is a three-way structural choice**:
+> ① change **how the English page is produced** (a script emits the structural skeleton, a human verifies
+> only the argument and the locators — which concedes that most of the bilingual cost can be tool-compressed);
+> ② move the budget back to a **single-language unit** (which voids the note above); or
+> ③ keep the structure as it is, **accept that a bilingual entry costs more than 5 minutes**, and revise the
+> "collection rate keeps up" estimate accordingly.
+> **This is the author's call, not something this round may make for the author.**
+
 ## Next steps (not done)
 
-- [ ] Split "5 minutes" into two budgets: **per bilingual pair** and **per single language**, timed separately.
-      The cost structure measured this round suggests: **single language ≤ 5 min** (the Chinese body here took
-      4 min 9 s — **already within it**) and **bilingual pair ≤ 13 min** (this pair took 13 min 16 s).
-      **This is a proposal, not a conclusion** — the threshold is a life-or-death call for the project and
-      belongs to the author
+- [x] ~~Split "5 minutes" into two budgets: per bilingual pair and per single language~~
+      **The author fixed the unit: one bilingual pair** (2026-10-20). This record no longer carries two
+      parallel readings; the 4 min 9 s Chinese body is **the first 31% of a bilingual entry**, not an
+      independent pass
+- [ ] **Re-measure under the fixed unit**: there is currently **one** phased bilingual sample (13 min 16 s).
+      Turning "8 min 16 s over" into a trustworthy average needs at least 3 phased trials (see the last bullet)
 - [ ] Time one entry by a human, to supply the half agent timing cannot
 - [ ] ~~Script the manual part of P7→P9, since it is pure structural copying~~ **premise checked: only 5
       subjects have purely-copyable index rows** (see the section above). The scriptable scope shrinks to
