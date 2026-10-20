@@ -168,6 +168,7 @@ graph LR
 | [攻击：「教材内建分组教学变体」的计数与分档模型](claims/attacks/攻击-教材内建分组教学变体.md) | 暂定确认 | **AI 提出 · 人复核** 的攻击 |
 | [攻击：「运动物体自然慢下来」的三条断言](claims/attacks/攻击-运动物体自然慢下来.md) | 暂定确认 | **AI 提出 · 人复核** 的攻击 |
 | [攻击：「功与功率」的判据行与节点边界](claims/attacks/攻击-功与功率判据.md) | 暂定确认 | **AI 提出 · 人复核** 的攻击 |
+| [速度—时间图的面积等于位移](claims/速度—时间图的面积等于位移.md) | 待审 | OpenStax《Physics》§2.4（`ev-151`） |
 
 > [!CAUTION]
 > **本库迄今影响面最大的一次攻击（2026-10-05）。**
@@ -199,6 +200,217 @@ graph LR
 > 在 n=2 时它们与「学段」**同样吻合数据**。
 >
 > 这是「论证被攻击 → 求存活集合 → 定状态」这条主链路的**第一次真实执行**。
+
+## 教材勘误：OpenStax《University Physics Volume 1》（200 条）
+
+> 这 200 条是 **University Physics Volume 1 第 1–5 章的全部 Approved / Textbook 勘误**。
+> 其中 42 条是出版方接受的教学建议，不是「正文写错」；每条的性质栏单独标明。
+> 项目原定的「一章 200 条」在公开数据里找不到：注册学科中单章最多 51 条（物理）。
+> 本批因此以一本书的五章为范围——**没有把数学书改标成物理来凑「一章」**。
+> 差距与备选见[决策记录](../../docs/decisions/errata-200-scope.md)。
+
+| 条目 | 状态 | 来源 |
+|---|---|---|
+| [勘误 #1993：第 1 章 · Units and Measurement, Section: The Scope and Scale of Physics](claims/勘误-UP1-1993.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #1993（`ev-150`） |
+| [勘误 #2251：第 1 章 · Units and Measurement, End of Chapter Exercises, 55](claims/勘误-UP1-2251.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #2251（`ev-150`） |
+| [勘误 #3500：第 1 章 · Section 6, Example 1.7](claims/勘误-UP1-3500.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3500（`ev-150`） |
+| [勘误 #3501：第 1 章 · Section 7](claims/勘误-UP1-3501.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3501（`ev-150`） |
+| [勘误 #3502：第 1 章 · Section 7](claims/勘误-UP1-3502.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3502（`ev-150`） |
+| [勘误 #8796：第 1 章 · Example 1.7](claims/勘误-UP1-8796.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #8796（`ev-150`） |
+| [勘误 #8944：第 1 章 · Appendix C](claims/勘误-UP1-8944.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #8944（`ev-150`） |
+| [勘误 #9035：第 1 章 · Section 1.2, "The Kilogram"](claims/勘误-UP1-9035.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9035（`ev-150`） |
+| [勘误 #11081：第 1 章 · Problems page 38](claims/勘误-UP1-11081.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #11081（`ev-150`） |
+| [勘误 #11204：第 1 章 · In Chapter 1, Section 1.2 Units and Standards, Figure 1.9](claims/勘误-UP1-11204.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #11204（`ev-150`） |
+| [勘误 #12545：第 1 章 · Unit 1. Mechanics: Chapter 1 Units and Measurement: Section 1.5 Estima…](claims/勘误-UP1-12545.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12545（`ev-150`） |
+| [勘误 #14975：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.6 Signifi…](claims/勘误-UP1-14975.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #14975（`ev-150`） |
+| [勘误 #17613：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.1 The Sco…](claims/勘误-UP1-17613.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17613（`ev-150`） |
+| [勘误 #17614：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.1 The Sco…](claims/勘误-UP1-17614.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17614（`ev-150`） |
+| [勘误 #17620：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.2 Units a…](claims/勘误-UP1-17620.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17620（`ev-150`） |
+| [勘误 #17641：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.5 Estimat…](claims/勘误-UP1-17641.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17641（`ev-150`） |
+| [勘误 #17642：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.5 Estimat…](claims/勘误-UP1-17642.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17642（`ev-150`） |
+| [勘误 #17654：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.6 Signifi…](claims/勘误-UP1-17654.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17654（`ev-150`） |
+| [勘误 #17655：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.6 Signifi…](claims/勘误-UP1-17655.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17655（`ev-150`） |
+| [勘误 #18669：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.3 Unit Co…](claims/勘误-UP1-18669.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #18669（`ev-150`） |
+| [勘误 #20736：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Chapter Review: Pro…](claims/勘误-UP1-20736.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20736（`ev-150`） |
+| [勘误 #21376：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Chapter Review: Sum…](claims/勘误-UP1-21376.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #21376（`ev-150`） |
+| [勘误 #23459：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Chapter Review: Cha…](claims/勘误-UP1-23459.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #23459（`ev-150`） |
+| [勘误 #23666：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.1 The Sco…](claims/勘误-UP1-23666.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #23666（`ev-150`） |
+| [勘误 #23669：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.2 Units a…](claims/勘误-UP1-23669.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #23669（`ev-150`） |
+| [勘误 #23773：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.3 Unit Co…](claims/勘误-UP1-23773.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #23773（`ev-150`） |
+| [勘误 #25754：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Chapter Review](claims/勘误-UP1-25754.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25754（`ev-150`） |
+| [勘误 #27063：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.6 Signifi…](claims/勘误-UP1-27063.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27063（`ev-150`） |
+| [勘误 #27155：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.1 The Sco…](claims/勘误-UP1-27155.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27155（`ev-150`） |
+| [勘误 #27277：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.7 Solving…](claims/勘误-UP1-27277.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27277（`ev-150`） |
+| [勘误 #27679：第 1 章 · Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.6 Signifi…](claims/勘误-UP1-27679.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27679（`ev-150`） |
+| [勘误 #1984：第 2 章 · Vectors, Section: Products of Vectors](claims/勘误-UP1-1984.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #1984（`ev-150`） |
+| [勘误 #2091：第 2 章 · Vectors, End of Chapter Exercises](claims/勘误-UP1-2091.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #2091（`ev-150`） |
+| [勘误 #2148：第 2 章 · Vectors, End of Chapter Exercises, 7](claims/勘误-UP1-2148.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #2148（`ev-150`） |
+| [勘误 #2149：第 2 章 · Vectors, End of Chapter Exercises, 25](claims/勘误-UP1-2149.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #2149（`ev-150`） |
+| [勘误 #2164：第 2 章 · Vectors, Section: Coordinate Systems and Components of a Vector](claims/勘误-UP1-2164.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #2164（`ev-150`） |
+| [勘误 #3574：第 2 章 · Section 1](claims/勘误-UP1-3574.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3574（`ev-150`） |
+| [勘误 #3575：第 2 章 · Section 2](claims/勘误-UP1-3575.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3575（`ev-150`） |
+| [勘误 #3577：第 2 章 · Section 2](claims/勘误-UP1-3577.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3577（`ev-150`） |
+| [勘误 #3578：第 2 章 · Section 2](claims/勘误-UP1-3578.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3578（`ev-150`） |
+| [勘误 #3582：第 2 章 · Section 2](claims/勘误-UP1-3582.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3582（`ev-150`） |
+| [勘误 #3583：第 2 章 · Section 2](claims/勘误-UP1-3583.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3583（`ev-150`） |
+| [勘误 #5093：第 2 章 · Problem 28 (g)](claims/勘误-UP1-5093.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5093（`ev-150`） |
+| [勘误 #5131：第 2 章 · Problems section](claims/勘误-UP1-5131.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5131（`ev-150`） |
+| [勘误 #7656：第 2 章 · problem 38](claims/勘误-UP1-7656.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #7656（`ev-150`） |
+| [勘误 #7956：第 2 章 · Problem 37 (b), page 929, ver 12.5](claims/勘误-UP1-7956.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #7956（`ev-150`） |
+| [勘误 #7957：第 2 章 · Problem 47 (a), page 930, version 12.5](claims/勘误-UP1-7957.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #7957（`ev-150`） |
+| [勘误 #7958：第 2 章 · Problem 47 (b), page 930, version 12.5](claims/勘误-UP1-7958.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #7958（`ev-150`） |
+| [勘误 #8543：第 2 章 · Problem #47](claims/勘误-UP1-8543.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #8543（`ev-150`） |
+| [勘误 #9619：第 2 章 · example 2.10](claims/勘误-UP1-9619.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9619（`ev-150`） |
+| [勘误 #11353：第 2 章 · Check your understanding 2.7](claims/勘误-UP1-11353.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #11353（`ev-150`） |
+| [勘误 #11926：第 2 章 · Unit 1. Mechanics: Chapter 2 Vectors: Section 2.2 Coordinate Systems a…](claims/勘误-UP1-11926.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #11926（`ev-150`） |
+| [勘误 #12128：第 2 章 · Answer Key: Chapter 2](claims/勘误-UP1-12128.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12128（`ev-150`） |
+| [勘误 #12856：第 2 章 · Unit 1. Mechanics: Chapter 2 Vectors: Section 2.4 Products of Vectors](claims/勘误-UP1-12856.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12856（`ev-150`） |
+| [勘误 #12893：第 2 章 · Unit 1. Mechanics: Chapter 2 Vectors: Section 2.2 Coordinate Systems a…](claims/勘误-UP1-12893.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12893（`ev-150`） |
+| [勘误 #14972：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Chapter Review: Problems](claims/勘误-UP1-14972.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #14972（`ev-150`） |
+| [勘误 #16164：第 2 章 · Coordinate Systems and Components of a Vector](claims/勘误-UP1-16164.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #16164（`ev-150`） |
+| [勘误 #19201：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Additional Problems](claims/勘误-UP1-19201.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19201（`ev-150`） |
+| [勘误 #20387：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.2 Coordinate Systems an…](claims/勘误-UP1-20387.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20387（`ev-150`） |
+| [勘误 #20393：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.2 Coordinate Systems an…](claims/勘误-UP1-20393.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20393（`ev-150`） |
+| [勘误 #20514：第 2 章 · Answer Key: Chapter 2](claims/勘误-UP1-20514.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20514（`ev-150`） |
+| [勘误 #20856：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.3 Algebra of Vectors](claims/勘误-UP1-20856.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20856（`ev-150`） |
+| [勘误 #20857：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.3 Algebra of Vectors](claims/勘误-UP1-20857.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20857（`ev-150`） |
+| [勘误 #20858：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.3 Algebra of Vectors](claims/勘误-UP1-20858.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20858（`ev-150`） |
+| [勘误 #21377：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Chapter Review: Problems](claims/勘误-UP1-21377.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #21377（`ev-150`） |
+| [勘误 #21379：第 2 章 · Answer Key: Chapter 2](claims/勘误-UP1-21379.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #21379（`ev-150`） |
+| [勘误 #21477：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.3 Algebra of Vectors](claims/勘误-UP1-21477.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #21477（`ev-150`） |
+| [勘误 #22805：第 2 章 · Answer Key: Chapter 2](claims/勘误-UP1-22805.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #22805（`ev-150`） |
+| [勘误 #22816：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Chapter Review: Problems](claims/勘误-UP1-22816.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #22816（`ev-150`） |
+| [勘误 #22834：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Chapter Review: Problems](claims/勘误-UP1-22834.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #22834（`ev-150`） |
+| [勘误 #23694：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.2 Coordinate Systems an…](claims/勘误-UP1-23694.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #23694（`ev-150`） |
+| [勘误 #25991：第 2 章 · Answer Key: Chapter 2](claims/勘误-UP1-25991.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25991（`ev-150`） |
+| [勘误 #25992：第 2 章 · Answer Key: Chapter 2](claims/勘误-UP1-25992.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25992（`ev-150`） |
+| [勘误 #27308：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.4 Products of Vectors](claims/勘误-UP1-27308.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27308（`ev-150`） |
+| [勘误 #27577：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors](claims/勘误-UP1-27577.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27577（`ev-150`） |
+| [勘误 #27583：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Chapter Review: Problems](claims/勘误-UP1-27583.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27583（`ev-150`） |
+| [勘误 #27642：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.2 Coordinate Systems an…](claims/勘误-UP1-27642.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27642（`ev-150`） |
+| [勘误 #27680：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Chapter Review](claims/勘误-UP1-27680.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27680（`ev-150`） |
+| [勘误 #27753：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.1 Scalars and Vectors](claims/勘误-UP1-27753.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27753（`ev-150`） |
+| [勘误 #27754：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Section 2.4 Products of Vectors](claims/勘误-UP1-27754.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27754（`ev-150`） |
+| [勘误 #28415：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Chapter Review: Conceptual Questi…](claims/勘误-UP1-28415.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #28415（`ev-150`） |
+| [勘误 #28919：第 2 章 · Unit 1 Mechanics: Chapter 2 Vectors: Chapter Review: Problems](claims/勘误-UP1-28919.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #28919（`ev-150`） |
+| [勘误 #3818：第 3 章 · Section 2](claims/勘误-UP1-3818.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3818（`ev-150`） |
+| [勘误 #3828：第 3 章 · Section 3](claims/勘误-UP1-3828.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3828（`ev-150`） |
+| [勘误 #3829：第 3 章 · Section 3](claims/勘误-UP1-3829.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3829（`ev-150`） |
+| [勘误 #3830：第 3 章 · Section 3](claims/勘误-UP1-3830.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3830（`ev-150`） |
+| [勘误 #3831：第 3 章 · Section 3](claims/勘误-UP1-3831.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3831（`ev-150`） |
+| [勘误 #3849：第 3 章 · Section 4](claims/勘误-UP1-3849.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3849（`ev-150`） |
+| [勘误 #3851：第 3 章 · Section 4](claims/勘误-UP1-3851.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3851（`ev-150`） |
+| [勘误 #3920：第 3 章 · problem 96](claims/勘误-UP1-3920.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #3920（`ev-150`） |
+| [勘误 #5134：第 3 章 · section 3.5](claims/勘误-UP1-5134.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5134（`ev-150`） |
+| [勘误 #5143：第 3 章 · Conceptual Question #2](claims/勘误-UP1-5143.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5143（`ev-150`） |
+| [勘误 #5152：第 3 章 · Problem 6](claims/勘误-UP1-5152.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5152（`ev-150`） |
+| [勘误 #5153：第 3 章 · Question 21](claims/勘误-UP1-5153.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5153（`ev-150`） |
+| [勘误 #6569：第 3 章 · Problem 29.](claims/勘误-UP1-6569.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6569（`ev-150`） |
+| [勘误 #6631：第 3 章 · problem 44](claims/勘误-UP1-6631.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6631（`ev-150`） |
+| [勘误 #6839：第 3 章 · problem 57 part (b)](claims/勘误-UP1-6839.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6839（`ev-150`） |
+| [勘误 #9156：第 3 章 · Section 3.2, Equation 3.7](claims/勘误-UP1-9156.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9156（`ev-150`） |
+| [勘误 #10826：第 3 章 · https://openstax.org/books/university-physics-volume-1/pages/3-6-findi…](claims/勘误-UP1-10826.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #10826（`ev-150`） |
+| [勘误 #12682：第 3 章 · Unit 1. Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.4…](claims/勘误-UP1-12682.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12682（`ev-150`） |
+| [勘误 #12891：第 3 章 · Unit 1. Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.1…](claims/勘误-UP1-12891.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12891（`ev-150`） |
+| [勘误 #12923：第 3 章 · Unit 1. Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.4…](claims/勘误-UP1-12923.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12923（`ev-150`） |
+| [勘误 #13138：第 3 章 · Unit 1. Mechanics: Chapter 3 Motion Along a Straight Line: Chapter Rev…](claims/勘误-UP1-13138.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #13138（`ev-150`） |
+| [勘误 #17597：第 3 章 · Answer Key: Chapter 3](claims/勘误-UP1-17597.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17597（`ev-150`） |
+| [勘误 #17759：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.1…](claims/勘误-UP1-17759.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17759（`ev-150`） |
+| [勘误 #17760：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.1…](claims/勘误-UP1-17760.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17760（`ev-150`） |
+| [勘误 #17761：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-17761.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17761（`ev-150`） |
+| [勘误 #17762：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-17762.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17762（`ev-150`） |
+| [勘误 #17763：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-17763.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17763（`ev-150`） |
+| [勘误 #17764：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.3…](claims/勘误-UP1-17764.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17764（`ev-150`） |
+| [勘误 #18762：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Chapter Revi…](claims/勘误-UP1-18762.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #18762（`ev-150`） |
+| [勘误 #19594：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Chapter Revi…](claims/勘误-UP1-19594.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19594（`ev-150`） |
+| [勘误 #19806：第 3 章 · Unit 1 Mechanics Chapter 3 Motion Along a Straight Line Chapter Review…](claims/勘误-UP1-19806.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19806（`ev-150`） |
+| [勘误 #20194：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.6…](claims/勘误-UP1-20194.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20194（`ev-150`） |
+| [勘误 #21584：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-21584.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #21584（`ev-150`） |
+| [勘误 #21921：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-21921.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #21921（`ev-150`） |
+| [勘误 #22531：第 3 章 · Answer Key: Chapter 3](claims/勘误-UP1-22531.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #22531（`ev-150`） |
+| [勘误 #22663：第 3 章 · Answer Key: Chapter 3](claims/勘误-UP1-22663.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #22663（`ev-150`） |
+| [勘误 #24111：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.4…](claims/勘误-UP1-24111.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #24111（`ev-150`） |
+| [勘误 #24112：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.4…](claims/勘误-UP1-24112.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #24112（`ev-150`） |
+| [勘误 #24113：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.5…](claims/勘误-UP1-24113.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #24113（`ev-150`） |
+| [勘误 #25654：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Chapter Revi…](claims/勘误-UP1-25654.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25654（`ev-150`） |
+| [勘误 #25715：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.3…](claims/勘误-UP1-25715.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25715（`ev-150`） |
+| [勘误 #25899：第 3 章 · Answer Key: Chapter 3](claims/勘误-UP1-25899.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25899（`ev-150`） |
+| [勘误 #26665：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.5…](claims/勘误-UP1-26665.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #26665（`ev-150`） |
+| [勘误 #26738：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-26738.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #26738（`ev-150`） |
+| [勘误 #27278：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-27278.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27278（`ev-150`） |
+| [勘误 #27641：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-27641.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27641（`ev-150`） |
+| [勘误 #27643：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.1…](claims/勘误-UP1-27643.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27643（`ev-150`） |
+| [勘误 #27755：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-27755.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27755（`ev-150`） |
+| [勘误 #27772：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.2…](claims/勘误-UP1-27772.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27772（`ev-150`） |
+| [勘误 #27886：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.4…](claims/勘误-UP1-27886.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27886（`ev-150`） |
+| [勘误 #29258：第 3 章 · Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Chapter Revi…](claims/勘误-UP1-29258.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #29258（`ev-150`） |
+| [勘误 #4988：第 4 章 · Displacement and Velocity Vectors (4.1)](claims/勘误-UP1-4988.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #4988（`ev-150`） |
+| [勘误 #5013：第 4 章 · problem 45](claims/勘误-UP1-5013.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5013（`ev-150`） |
+| [勘误 #5137：第 4 章 · page 181](claims/勘误-UP1-5137.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5137（`ev-150`） |
+| [勘误 #5147：第 4 章 · page 183](claims/勘误-UP1-5147.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5147（`ev-150`） |
+| [勘误 #5150：第 4 章 · page 190](claims/勘误-UP1-5150.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5150（`ev-150`） |
+| [勘误 #5151：第 4 章 · page 190](claims/勘误-UP1-5151.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5151（`ev-150`） |
+| [勘误 #5507：第 4 章 · Example 4.8](claims/勘误-UP1-5507.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5507（`ev-150`） |
+| [勘误 #5526：第 4 章 · Example 4.13](claims/勘误-UP1-5526.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5526（`ev-150`） |
+| [勘误 #6829：第 4 章 · problem 39](claims/勘误-UP1-6829.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6829（`ev-150`） |
+| [勘误 #6893：第 4 章 · Problem 59](claims/勘误-UP1-6893.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6893（`ev-150`） |
+| [勘误 #7032：第 4 章 · problem 87](claims/勘误-UP1-7032.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #7032（`ev-150`） |
+| [勘误 #7033：第 4 章 · problem 8](claims/勘误-UP1-7033.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #7033（`ev-150`） |
+| [勘误 #7974：第 4 章 · Example 4.1, Figure 4.4, page 160, version 12.5](claims/勘误-UP1-7974.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #7974（`ev-150`） |
+| [勘误 #7984：第 4 章 · Solutions, Chapter 4, Problem 29 (d), page 939, version 12.5](claims/勘误-UP1-7984.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #7984（`ev-150`） |
+| [勘误 #8547：第 4 章 · Problem #39](claims/勘误-UP1-8547.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #8547（`ev-150`） |
+| [勘误 #9453：第 4 章 · figure 4.5](claims/勘误-UP1-9453.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9453（`ev-150`） |
+| [勘误 #9525：第 4 章 · section 4 https://cnx.org/contents/1Q9uMg_a@13.41:py6Hulz7@9/4-4-Unifo…](claims/勘误-UP1-9525.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9525（`ev-150`） |
+| [勘误 #9584：第 4 章 · 教材勘误](claims/勘误-UP1-9584.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9584（`ev-150`） |
+| [勘误 #9585：第 4 章 · 教材勘误](claims/勘误-UP1-9585.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9585（`ev-150`） |
+| [勘误 #9592：第 4 章 · 教材勘误](claims/勘误-UP1-9592.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9592（`ev-150`） |
+| [勘误 #12743：第 4 章 · Unit 1. Mechanics: Chapter 4 Motion in Two and Three Dimensions: Secti…](claims/勘误-UP1-12743.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12743（`ev-150`） |
+| [勘误 #12985：第 4 章 · Unit 1. Mechanics: Chapter 4 Motion in Two and Three Dimensions: Secti…](claims/勘误-UP1-12985.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #12985（`ev-150`） |
+| [勘误 #13001：第 4 章 · Unit 1. Mechanics: Chapter 4 Motion in Two and Three Dimensions: Secti…](claims/勘误-UP1-13001.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #13001（`ev-150`） |
+| [勘误 #13028：第 4 章 · Unit 1. Mechanics: Chapter 4 Motion in Two and Three Dimensions: Secti…](claims/勘误-UP1-13028.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #13028（`ev-150`） |
+| [勘误 #13498：第 4 章 · Unit 1. Mechanics: Chapter 4 Motion in Two and Three Dimensions: Chapt…](claims/勘误-UP1-13498.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #13498（`ev-150`） |
+| [勘误 #13693：第 4 章 · Unit 1. Mechanics: Chapter 4 Motion in Two and Three Dimensions: Secti…](claims/勘误-UP1-13693.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #13693（`ev-150`） |
+| [勘误 #17838：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-17838.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17838（`ev-150`） |
+| [勘误 #17856：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-17856.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17856（`ev-150`） |
+| [勘误 #17960：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-17960.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #17960（`ev-150`） |
+| [勘误 #19665：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-19665.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19665（`ev-150`） |
+| [勘误 #19808：第 4 章 · Unit 1 Mechanics Chapter 4 Motion in Two and Three Dimensions Section…](claims/勘误-UP1-19808.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19808（`ev-150`） |
+| [勘误 #19809：第 4 章 · Unit 1 Mechanics Chapter 4 Motion in Two and Three Dimensions Section…](claims/勘误-UP1-19809.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19809（`ev-150`） |
+| [勘误 #20547：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-20547.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20547（`ev-150`） |
+| [勘误 #20795：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-20795.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20795（`ev-150`） |
+| [勘误 #20801：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-20801.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20801（`ev-150`） |
+| [勘误 #20892：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-20892.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20892（`ev-150`） |
+| [勘误 #20920：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Chapte…](claims/勘误-UP1-20920.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20920（`ev-150`） |
+| [勘误 #23716：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-23716.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #23716（`ev-150`） |
+| [勘误 #25541：第 4 章 · Answer Key: Chapter 4](claims/勘误-UP1-25541.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25541（`ev-150`） |
+| [勘误 #25680：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Chapte…](claims/勘误-UP1-25680.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25680（`ev-150`） |
+| [勘误 #25681：第 4 章 · Answer Key: Chapter 4](claims/勘误-UP1-25681.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #25681（`ev-150`） |
+| [勘误 #27310：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-27310.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27310（`ev-150`） |
+| [勘误 #27315：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-27315.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27315（`ev-150`） |
+| [勘误 #27478：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-27478.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #27478（`ev-150`） |
+| [勘误 #28131：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-28131.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #28131（`ev-150`） |
+| [勘误 #28932：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-28932.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #28932（`ev-150`） |
+| [勘误 #28933：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Sectio…](claims/勘误-UP1-28933.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #28933（`ev-150`） |
+| [勘误 #29363：第 4 章 · Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Chapte…](claims/勘误-UP1-29363.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #29363（`ev-150`） |
+| [勘误 #5620：第 5 章 · Question 15 (p. 255)](claims/勘误-UP1-5620.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5620（`ev-150`） |
+| [勘误 #5635：第 5 章 · Problem 72](claims/勘误-UP1-5635.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #5635（`ev-150`） |
+| [勘误 #6223：第 5 章 · #79, page 261](claims/勘误-UP1-6223.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6223（`ev-150`） |
+| [勘误 #6454：第 5 章 · Example 5.16](claims/勘误-UP1-6454.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6454（`ev-150`） |
+| [勘误 #6830：第 5 章 · Problem 47](claims/勘误-UP1-6830.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6830（`ev-150`） |
+| [勘误 #6932：第 5 章 · problem 83](claims/勘误-UP1-6932.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #6932（`ev-150`） |
+| [勘误 #8056：第 5 章 · Example 5.16 "Coupled Blocks"](claims/勘误-UP1-8056.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #8056（`ev-150`） |
+| [勘误 #9847：第 5 章 · Problem 57](claims/勘误-UP1-9847.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9847（`ev-150`） |
+| [勘误 #9848：第 5 章 · In Chapter 5 (Newton’s Laws of Motion) on problem 36](claims/勘误-UP1-9848.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9848（`ev-150`） |
+| [勘误 #9867：第 5 章 · Section 6 (Common Forces)](claims/勘误-UP1-9867.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #9867（`ev-150`） |
+| [勘误 #13176：第 5 章 · Unit 1. Mechanics: Chapter 5 Newton's Laws of Motion: Section 5.6 Comm…](claims/勘误-UP1-13176.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #13176（`ev-150`） |
+| [勘误 #13385：第 5 章 · Unit 1. Mechanics: Chapter 5 Newton's Laws of Motion: Chapter Review:…](claims/勘误-UP1-13385.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #13385（`ev-150`） |
+| [勘误 #18527：第 5 章 · Unit 1 Mechanics: Chapter 5 Newton's Laws of Motion: Section 5.5 Newto…](claims/勘误-UP1-18527.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #18527（`ev-150`） |
+| [勘误 #19096：第 5 章 · Unit 1 Mechanics: Chapter 5 Newton's Laws of Motion: Chapter Review: P…](claims/勘误-UP1-19096.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19096（`ev-150`） |
+| [勘误 #19291：第 5 章 · Unit 1 Mechanics: Chapter 5 Newton's Laws of Motion: Chapter Review](claims/勘误-UP1-19291.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19291（`ev-150`） |
+| [勘误 #19842：第 5 章 · Unit 1 Mechanics Chapter 5 Newton's Laws of Motion Section 5.3 Newton'…](claims/勘误-UP1-19842.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #19842（`ev-150`） |
+| [勘误 #20637：第 5 章 · Unit 1 Mechanics: Chapter 5 Newton's Laws of Motion: Section 5.6 Commo…](claims/勘误-UP1-20637.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20637（`ev-150`） |
+| [勘误 #20638：第 5 章 · Unit 1 Mechanics: Chapter 5 Newton's Laws of Motion: Section 5.6 Commo…](claims/勘误-UP1-20638.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20638（`ev-150`） |
+| [勘误 #20652：第 5 章 · Unit 1 Mechanics: Chapter 5 Newton's Laws of Motion: Section 5.4 Mass…](claims/勘误-UP1-20652.md) | 待审 | OpenStax《University Physics Volume 1》勘误 #20652（`ev-150`） |
 
 ## 教法
 

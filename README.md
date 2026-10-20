@@ -45,6 +45,14 @@
 
 **最小目标**：先做完一本教材的一章——200 条勘误，跑通从 0 到 200 的全过程。不是「备份人类知识」。
 
+> [!NOTE]
+> **2026-10-20：最小目标已达成。**
+> 本库新增「数学」学科，并导入 OpenStax《Calculus Volume 3》第 6 章（Vector Calculus）
+> **全部 308 条** Approved / Textbook 勘误——**同一章 308 条 ≥ 200**。
+> 此前《University Physics Volume 1》第 1–5 章的 200 条批次跨五章，仍如实记录在
+> [决策记录](docs/decisions/errata-200-scope.md)；数学批次的来源、构成与结构改动见
+> [另一份决策记录](docs/decisions/calc3-ch6-errata.md)。
+
 ## 格式与校验
 
 **一个知识点 = 一个 `.md` 文件**：front-matter 存机器需要的，正文存人需要的；GitHub 原生渲染，论证图用 Mermaid 直接画出来。完整规范见 [FORMAT.md](FORMAT.md)；规则清单见 [docs/RULES.md](docs/RULES.md)。
@@ -88,10 +96,10 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **164** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 67 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
+| 对象 / Objects | **673** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 576 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 99 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 26 · 经济 Economics 8 · 法律 Law 4 |
-| 证据 / Evidence | 133（含作废 / void 5） |
+| 学科 / Subjects | 物理 Physics 300 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 26 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
+| 证据 / Evidence | 145（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -109,8 +117,11 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 ## 未决（要紧的几条）
 
 1. **录入成本能否压到 5 分钟以内** ← **决定项目生死**。已给 [`templates/`](templates/README.md) +
-   `tools/new_entry.py`（结构交给脚本，内容留给人），但**「真的降到 5 分钟了吗」尚未验证**——
-   要等下一个真实条目试出来，不是靠加模板就能宣称的
+   `tools/new_entry.py`（结构交给脚本，内容留给人）。2026-10-20 用一条真实条目试测
+   （[速度—时间图的面积等于位移](knowledge/physics/claims/速度—时间图的面积等于位移.md)）：
+   从选题到 `kbcheck` 通过约 12 分钟（**代理计时**，含来源检索、证据登记与中英双语）；
+   `new_entry.py` 生成骨架不到 1 秒。**仍超过 5 分钟，人类计时未测**——工具链不是瓶颈，
+   来源核读与内容写作才是
 2. `已确证` / `争议` / `已推翻` **从未被使用**——单贡献者状态下无法诚实产生，不是能靠写代码补的缺口
 3. 前置在学科之外时表达不了（[Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)，等 3–5 例再动结构）；「进阶」关系没有表达手段
 4. `支持` 边的独立性算不出来（来源是自由文本，独立与否必须人判断）；目标覆盖度只算「有没有」，不算「够不够」

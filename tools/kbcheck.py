@@ -81,14 +81,15 @@ ALLOWED_LICENSE = "CC-BY-SA-4.0"
 SUBJECT_SLUGS = {"物理": "physics", "生活": "life", "医学": "med",
                  "地理": "geog", "科学": "science",
                  "交通": "transport", "计算机": "computing", "经济": "econ",
-                 "法律": "law"}
+                 "法律": "law", "数学": "math"}
 
 # 学科目录名（`knowledge/<subject>/`）。**与 id 前缀（SUBJECT_SLUGS）是两套名字**：
 # id 前缀要短（`kb:med:`），目录名要能读（`knowledge/medicine/`）。
 # 目录名是给人和 URL 看的——路径里出现中文会在复制链接、跨工具处理时变成百分号编码。
 SUBJECT_DIRS = {"物理": "physics", "生活": "life", "医学": "medicine",
                 "地理": "geography", "科学": "science", "交通": "transport",
-                "计算机": "computing", "经济": "economics", "法律": "law"}
+                "计算机": "computing", "经济": "economics", "法律": "law",
+                "数学": "mathematics"}
 
 # 证据表的枚举（见 evidence/README.md 表头图例）
 EVIDENCE_CATEGORIES = {"教材", "论文", "指南", "官方文件", "交互式模拟",
@@ -167,6 +168,8 @@ SUBJECT_NOTES = {
     "计算机": "标准与官方文档能定位的结论；**不收教程式步骤**。",
     "经济": "统计数据与权威文本能定位的结论；**不收预测与建议**。",
     "法律": "成文法文本的制度性规定（构成要件 · 期限 · 法律效果）；**不收个案裁判与法律意见**。",
+    "数学": "OpenStax《Calculus Volume 3》第 6 章（Vector Calculus）的出版社勘误；"
+            "每条只主张「出版方已记录并接受」，不主张当前网页版仍错。",
 }
 SUBJECTS_FALLBACK = "本学科尚无覆盖说明 —— **不要假设它覆盖了什么**，请看 objects。"
 
@@ -184,6 +187,8 @@ SUBJECT_NOTES_EN = {
     "经济": "Conclusions locatable in statistical releases and authoritative texts; **no forecasts or advice**.",
     "法律": "Institutional provisions of statute law (elements · deadlines · legal effect); "
             "**no case rulings or legal advice**.",
+    "数学": "Publisher errata from Chapter 6 (Vector Calculus) of OpenStax *Calculus Volume 3*; "
+            "each entry claims only that the publisher recorded and accepted it, not that the current web text is still wrong.",
 }
 SUBJECTS_FALLBACK_EN = "No coverage note yet — **do not assume what it covers**; read `objects`."
 
@@ -1221,14 +1226,14 @@ GENERATED_BEGIN = "<!-- kbcheck:begin -->"
 GENERATED_END = "<!-- kbcheck:end -->"
 
 SUBJECT_ORDER = ["物理", "生活", "医学", "地理", "科学",
-                 "交通", "计算机", "经济", "法律"]
+                 "交通", "计算机", "经济", "法律", "数学"]
 TYPE_ORDER = ["教法", "知识点", "命题", "误解", "资源", "路径"]
 TYPE_EN = {"教法": "methods", "知识点": "concepts", "命题": "claims",
            "误解": "misconceptions", "资源": "resources", "路径": "paths"}
 SUBJECT_EN = {"物理": "Physics", "生活": "Life", "医学": "Medicine",
               "地理": "Geography", "科学": "Science",
               "交通": "Transport", "计算机": "Computing", "经济": "Economics",
-              "法律": "Law"}
+              "法律": "Law", "数学": "Mathematics"}
 
 # ── 规则注册表：每条规则一个 ID，分「机械校验」与「人工复核」──────────────
 # 改了任何一条规则，**必须同时改这里的清单与对应的检查**——否则 R-INDEX-02 会失败。

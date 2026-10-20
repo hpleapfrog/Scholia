@@ -22,3 +22,5 @@
 | [events-are-not-propositions.md](events-are-not-propositions.md) | `事件` 与 `命题` 分开：为什么塞进命题会产生没有攻击点的假论证 |
 | [three-machine-files.md](three-machine-files.md) | 机器入口拆成三份：省 token 靠「不读」，不靠「总和更小」 |
 | [english-filenames-from-id.md](english-filenames-from-id.md) | 英文文件名从「同名」改成「由 `id` 派生」：为什么「同名」既让英文页用中文名、又让配对无法机械校验 |
+| [errata-200-scope.md](errata-200-scope.md) | 200 条勘误为什么跨五章而不是「一章」：公开数据没有注册学科的单章达到 200 条 |
+| [calc3-ch6-errata.md](calc3-ch6-errata.md) | 最小目标的达成：新增「数学」学科并导入 Calculus Volume 3 第 6 章 308 条；一次带回归的结构改动 |

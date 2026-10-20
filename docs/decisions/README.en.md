@@ -19,3 +19,5 @@
 | [events-are-not-propositions.md](events-are-not-propositions.en.md) | keeping `事件` apart from `命题`: why forcing it into a proposition yields fake argument-free structure |
 | [three-machine-files.md](three-machine-files.en.md) | splitting the machine entry into three: tokens are saved by *not reading*, not by a smaller sum |
 | [english-filenames-from-id.md](english-filenames-from-id.en.md) | English filenames moved from "same name" to "derived from `id`": "same name" both gave English pages Chinese filenames and made pairing uncheckable |
+| [errata-200-scope.md](errata-200-scope.en.md) | why the 200 errata span five chapters rather than "one": no registered-subject chapter in the public data reaches 200 |
+| [calc3-ch6-errata.md](calc3-ch6-errata.en.md) | the minimal goal met: a new mathematics subject and 308 entries from Calculus Volume 3, Chapter 6; a structural change with a regression check |
