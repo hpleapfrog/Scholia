@@ -120,10 +120,10 @@ this repository satisfies attribution.
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **674** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 577 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
+| 对象 / Objects | **675** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 578 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 300 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 27 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
-| 证据 / Evidence | 146（含作废 / void 5） |
+| 学科 / Subjects | 物理 Physics 300 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 28 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
+| 证据 / Evidence | 147（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -162,8 +162,11 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
    register is split into **3 batch blocks** and its `定位` column is a hand-written reading record — the
    column that caught this round's wrong title.
    **Human timing remains unmeasured**: agent timing logs "283 lines read" as 17 seconds, which is not true
-   of a person. Phase data, three findings and the remaining compression scope
-   → [decision record](docs/decisions/entry-cost-phases.en.md)
+   of a person. A third trial on 2026-10-21 split P7→P9 into four stamps: **3 min 44 s of agent wall clock**,
+   with a bilingual tail of **61 s** — but the source was small, the topic was chosen by the repository, and
+   the English page was an immediate translation, so **this is not a passing reading**; it proves only that the
+   four phases can be timed and that the toolchain is still not the bottleneck. Phase data, findings and the
+   remaining compression scope → [decision record](docs/decisions/entry-cost-phases.en.md)
 2. `已确证` / `争议` / `已推翻` are **all 0**. This is **still not a gap code can fill** — what is missing is
    **people** (a reviewer, a defender). But code can make the **zero auditable**: `R-SCHEMA-19` now checks
    each status's structural precondition (`已确证` needs **≥2 distinct handles** across `author` + changelog;
