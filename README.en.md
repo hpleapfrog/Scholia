@@ -148,11 +148,14 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
    ([area under a velocity–time graph](knowledge/physics/claims/velocity-time-graph-area.en.md)) left only a
    total: about 12 minutes — **2.4× the fixed budget**. The second (2026-10-20,
    [HTTP 451 refuses access for legal reasons](knowledge/computing/claims/http-451-legal-unavailable.en.md))
-   was **stamped per phase**: **13 min 16 s for the bilingual pair = 2.6× the budget, not met**. Inside that,
-   topic selection → Chinese body finished took **4 min 9 s**, and the following **9 min 7 s** went almost
-   entirely to the **bilingual parallel structure, evidence registration and index counts**; the skeleton took
-   **319 ms** and full validation **2.2 s** — **the toolchain is not the bottleneck** (reproduced). **So the
-   8 min 16 s that has to disappear lives only in the parallel structure** — and this round falsified one of
+   was **stamped per phase**: **13 min 16 s of wall clock for the bilingual pair — at most 2.6× the budget,
+   not met**. Inside that, topic selection → Chinese body finished took **4 min 9 s** (an uninterrupted
+   segment); the **9 min 7 s** from there to the finished index went almost entirely to the **bilingual
+   parallel structure, evidence registration and index counts**; the skeleton took **319 ms** and full
+   validation **2.2 s** — **the toolchain is not the bottleneck** (reproduced). **But that 9 min 7 s contains
+   one session interruption** (its completion timestamp was backfilled), so "at most 8 min 16 s to cut" is an
+   upper bound and the pure-work multiple is **unmeasured**. **Whatever has to go, it lives only in the
+   parallel structure** — and this round falsified one of
    this library's own assumptions: **"P7→P9 is pure structural copying, so it can be scripted wholesale" is
    only half true**. The subject index tables come in **7 header shapes**, and 4 of them carry columns
    (`证据等级`, `位置`+`错误类型`, `目标`+`自检`, `禁忌`) that are **content, not formatting**; the evidence

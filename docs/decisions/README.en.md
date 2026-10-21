@@ -24,4 +24,4 @@
 | [coverage-is-not-strength.md](coverage-is-not-strength.en.md) | the two "enough" dimensions beyond "is it covered"; one **falsely clean** positional parse, and the regression sample that watches that shape (revert the fix and the all-clear paths go from 4 to 2) |
 | [status-zero-is-auditable.md](status-zero-is-auditable.en.md) | `已确证` / `争议` / `已推翻` are all 0: the guards turn that into an **auditable zero** |
 | [out-of-library-prerequisites.md](out-of-library-prerequisites.en.md) | 7 out-of-library prerequisites (Issue #17's 3–5 case trigger is met); the schema still untouched |
-| [entry-cost-phases.md](entry-cost-phases.en.md) | phased entry cost: 4 minutes buys the Chinese body; the rest is bilingual bookkeeping. **The author fixed the unit at one bilingual pair** (measured 13 min 16 s = 2.6× the budget, not met) |
+| [entry-cost-phases.md](entry-cost-phases.en.md) | phased entry cost: 4 minutes buys the Chinese body; the rest is bilingual bookkeeping. **The author fixed the unit at one bilingual pair** (13 min 16 s wall clock, one interruption inside = at most 2.6× the budget, not met) |

@@ -6,8 +6,9 @@
 "Can one entry be recorded in under 5 minutes" **decides whether the project survives** — above that
 number, the collection rate cannot keep up with the amount of content that needs covering.
 **The author has now fixed the unit of that "5 minutes": one bilingual pair** (2026-10-20, see the note at
-the end of finding two), so the two timed trials read as **2.4×** and **2.6×** the budget: **not met, but we
-can now say where the overage is**. The first
+the end of finding two), so the two timed trials read as about **2.4×** and **at most 2.6×** the budget —
+the second is wall clock containing **one session interruption that was never stamped separately** (see the
+table and its note). Both are **not met**, but the second can say **where** the overage sits. The first
 timed trial ([The area under a velocity–time graph equals displacement](../../knowledge/physics/claims/velocity-time-graph-area.en.md),
 ev-151) produced only a total: about 12 minutes, **unphased**, so it could say "we are over" but not **where**.
 The second trial ([HTTP 451 refuses access for legal reasons](../../knowledge/computing/claims/http-451-legal-unavailable.en.md),
@@ -34,8 +35,9 @@ more honest than a total: inside "about 12 minutes" **no segment** knows whether
 for a machine.
 
 **Raw stamps are checkable**: [`entry-cost-phases.tsv`](entry-cost-phases.tsv) (same directory, epochs are
-Unix seconds; the interruption after P7 is marked in that row's note — **wall clock spent interrupted is
-not counted as work**).
+Unix seconds; the interruption after P7 is marked in that row's note — **so the 13 min 16 s includes it and
+is an upper bound, not pure work**; `P8` and `P9` share one timestamp, so those stamps were not taken live
+either).
 
 ## Three findings, pointing in different directions
 
@@ -43,8 +45,10 @@ not counted as work**).
 the total. The first trial's conclusion reproduced exactly.
 
 **Two: what breaks the 5-minute budget is not reading and writing, it is bilingual + registration + index.**
-The Chinese body was finished at 4 min 9 s; **the bilingual pair totalled 13 min 16 s — 2.6× the 5-minute
-budget**. Almost all of the extra nine minutes went into
+The Chinese body was finished at 4 min 9 s; **the bilingual pair totalled 13 min 16 s of wall clock — at
+most 2.6× the 5-minute budget**. Inside that, P7→P9's 547 seconds **contain one session interruption**;
+how much of them was interruption was never stamped, so **the pure-work multiple has not been measured**.
+Almost all of the extra time went into
 **parallel structures**: the evidence row must be written **twice** (`evidence/README.md` and
 `README.en.md`), the English twin must be **written as a second full document**, the subject README's
 index row and counts like "twenty-seven entries" must be updated, and `--write-index` regenerates three
@@ -56,10 +60,14 @@ machine files.
 > same argument (see [English filenames derived from `id`](english-filenames-from-id.md)).
 >
 > **The unit question is now settled by the author (2026-10-20): "5 minutes" means one bilingual pair.**
-> That turns this open item from "cannot be compared" into **a quantified gap**: the bilingual pair measured
-> **13 min 16 s = 2.6× the budget**, so **8 min 16 s has to disappear**; the first trial's ~12 minutes is
-> **2.4×**. **"4 min 9 s for the Chinese body" is no longer "within budget"** — it is only the **first 31%**
-> of a bilingual entry, and the remaining **69%** is exactly where the overage comes from.
+> That turns this open item from "cannot be compared" into **a quantified gap whose size is only known as an
+> upper bound**: the bilingual pair logged **13 min 16 s of wall clock**, **at most 2.6× the budget**, so
+> **at most 8 min 16 s has to disappear**; the first trial's ~12 minutes is about **2.4×**.
+> **Why only an upper bound**: the 547 seconds of P7→P9 contain a session interruption whose completion
+> timestamp was backfilled, and **the interruption was never stamped on its own**.
+> **"4 min 9 s for the Chinese body" is no longer "within budget"** — by wall clock it is only the **first
+> 31%** of a bilingual entry, and the remaining part is exactly where the 8 min 16 s comes from; that part
+> **has not yet been measured with sub-phase stamps**.
 
 **Three: agent timing cannot stand in for human timing, and the difference is exactly where it hurts.**
 "283 lines read in 17 seconds" is true for an agent and false for a **person**. The two most expensive
@@ -138,8 +146,9 @@ placeholder.**
 > [!CAUTION]
 > **Under the unit now fixed, "5 minutes" and "bilingual is load-bearing" are two requirements that fight.**
 > The budget is 300 seconds, and **the Chinese body alone took 249** — which leaves **51 seconds** for
-> "English body + both registers + index". That segment actually measured **547 seconds**, i.e. **10.7× the
-> remaining budget**. Automating all three of the "unambiguously scriptable" items above still does not remove
+> "English body + both registers + index". That segment measures **547 seconds of wall clock, one interruption
+> included — at most 10.7× the remaining budget**. Automating all three of the "unambiguously scriptable"
+> items above still does not remove
 > **rewriting the English page as the same argument a second time** — and in this library that page is not
 > packaging, it is the second checkable entry point (see
 > [English filenames derived from `id`](english-filenames-from-id.md)).
@@ -158,8 +167,12 @@ placeholder.**
       **The author fixed the unit: one bilingual pair** (2026-10-20). This record no longer carries two
       parallel readings; the 4 min 9 s Chinese body is **the first 31% of a bilingual entry**, not an
       independent pass
-- [ ] **Re-measure under the fixed unit**: there is currently **one** phased bilingual sample (13 min 16 s).
-      Turning "8 min 16 s over" into a trustworthy average needs at least 3 phased trials (see the last bullet)
+- [ ] **Split P7→P9 into four stamps before re-measuring**: evidence row (zh) · evidence row (en) · English
+      body · index and counts. The existing 547 seconds **contain one unpinned interruption**; without the
+      split, "the parallel structure is expensive" cannot be told apart from "that session got interrupted"
+- [ ] **Re-measure under the fixed unit**: there is currently **one** phased bilingual sample, and its
+      13 min 16 s is **wall clock with an interruption inside**. Turning "at most 8 min 16 s over" into a
+      trustworthy average needs at least 3 trials **with complete sub-phase stamps**
 - [ ] Time one entry by a human, to supply the half agent timing cannot
 - [ ] ~~Script the manual part of P7→P9, since it is pure structural copying~~ **premise checked: only 5
       subjects have purely-copyable index rows** (see the section above). The scriptable scope shrinks to
