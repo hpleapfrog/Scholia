@@ -23,6 +23,7 @@ graph LR
   E --> EP
   WP --> T1["热力学第一定律"] --> T2["热力学第二定律"]
   E --> T1
+  AT --> AN["原子核"] --> RD["放射性衰变"]
 ```
 
 | 知识点 | 学段 | 先修 | 挂在其下的教法 | 误解 |
@@ -59,6 +60,24 @@ graph LR
 | [电势能与电势](concepts/electric-potential-energy.en.md) | 高中 | **电场强度** · **机械能守恒**（势能只在差值上记账） | — | — |
 | [热力学第一定律](concepts/thermodynamic-first-law.en.md) | 高中 | **Work and power** · **Conservation of mechanical energy** (`W = PΔV` and energy bookkeeping) | — | — |
 | [热力学第二定律](concepts/thermodynamic-second-law.en.md) | 高中 | **First law of thermodynamics** | — | — |
+| [原子核](concepts/atomic-nucleus.en.md) | 高中 | **Atomic structure** | — | — |
+| [放射性衰变](concepts/radioactive-decay.en.md) | 高中 | **Atomic nucleus** | — | — |
+
+> [!IMPORTANT]
+> **Batch 9 (2026-10-21) opens the 选必三 "atomic nucleus" chapter with "Atomic nucleus" and "Radioactive decay".**
+>
+> It attaches to the existing "Atomic structure" entry:
+>
+> ```
+> 原子结构 → 原子核 → 放射性衰变
+> ```
+>
+> The nucleus entry covers composition, nuclide notation, isotopes, and the strong nuclear force; the decay entry covers α / β⁻ / γ,
+> conservation of mass number and charge, and half-life. **Binding energy/mass defect, fission and fusion, β⁺/antineutrinos,
+> and medical applications are still missing** — so the coverage page records the chapter as 🟡 only.
+>
+> **Two source defects recorded**: the prose in m54580 gives the strong-force range as `10–15 meters` (the section table says 1 fm);
+> and the alpha-decay energy example substitutes `0.0005631 u` as `0.005631 u`, a factor of 10. The entries use neither number.
 
 > [!IMPORTANT]
 > **Batch 8 (2026-10-21) begins the 选必三 thermal chapter with the first and second laws of thermodynamics.**

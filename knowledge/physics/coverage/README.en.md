@@ -38,8 +38,8 @@ So the table is **not** "how many sections short of the PEP contents list we are
 | | 章级主题数 | 占比 |
 |---|---|---|
 | 🟢 有覆盖 | **6** | 24% |
-| 🟡 部分覆盖 | **10** | 40% |
-| 🔴 完全缺 | **9** | 36% |
+| 🟡 部分覆盖 | **11** | 44% |
+| 🔴 完全缺 | **8** | 32% |
 | **合计** | **25** | 100% |
 <!-- kbcheck:end -->
 
@@ -74,7 +74,7 @@ Ranked by "downstream nodes × size of the gap":
 | ~~3~~ | ~~Electrostatics (charge · field strength · potential energy)~~ | **✅ started (2026-10-18)** — charge · Coulomb's law · electric field · electric potential energy and potential (one node more than planned); **capacitance and charged particles in fields still missing** |
 | ~~4~~ | ~~Circular motion + centripetal force~~ | **✅ complete (2026-10-18)** — uniform circular motion · centripetal force · centrifugal misconception; **same day**: angular acceleration & rotational kinematics · torque |
 | ~~5~~ | ~~Laws of thermodynamics~~ | **✅ started (2026-10-21)** — first law of thermodynamics · second law of thermodynamics; **heat-engine efficiency, the Carnot cycle, and the statistical interpretation of entropy still missing** |
-| 6 | **Nuclear physics** | elective-3; sits after the existing "atomic structure" |
+| ~~6~~ | ~~Nuclear physics~~ | **✅ started (2026-10-21)** — atomic nucleus · radioactive decay; **binding energy/mass defect, fission and fusion, and medical applications still missing** |
 
 ## Change log
 
@@ -87,3 +87,4 @@ Ranked by "downstream nodes × size of the gap":
 | 2026-10-18 | **Compulsory-2 "circular motion" 🟡 → 🟢**: filled in angular acceleration & rotational kinematics · torque (ev-088) | OpenStax *Physics* ch. 6, module m54180 read in full | @hpleapfrog |
 | 2026-10-18 | English edition added; row-by-row table stays in the Chinese page (two copies would drift) | bilingual completeness (`R-BILING-03`) | @hpleapfrog |
 | 2026-10-21 | **Elective-3 "laws of thermodynamics" 🔴 → 🟡**: first law of thermodynamics · second law of thermodynamics added (ev-156/ev-157) | OpenStax *Physics* ch. 12, modules m54305 / m54306 read in full | @hpleapfrog |
+| 2026-10-21 | **Elective-3 "atomic nucleus" 🔴 → 🟡**: atomic nucleus · radioactive decay added (ev-158/ev-159) | OpenStax *Physics* ch. 22, modules m54580 / m63183 read in full | @hpleapfrog |
