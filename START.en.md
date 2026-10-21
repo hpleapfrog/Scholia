@@ -71,21 +71,15 @@ Physics has 20+ concepts with prerequisites. A **path** packages the order toget
 for each step, and states **what you will be able to do** at the top — check the outcome before
 deciding whether to walk it.
 
-| Path | After it you can |
-|---|---|
-| [Intro kinematics](knowledge/physics/paths/kinematics-intro-bl.en.md) | describe a motion with a position–time graph |
-| [Forces and motion](knowledge/physics/paths/forces-and-motion-hs.en.md) | explain how force changes motion, with Newton's three laws |
-| [Gravitation and the sky](knowledge/physics/paths/gravitation.en.md) | state Kepler's laws and estimate with GmM/r² |
-| [Work, power and mechanical energy](knowledge/physics/paths/energy-work.en.md) | decide whether a force does work; solve a fall by conservation |
-
-**Everything else** (momentum · waves and sound · light · electricity · atoms · middle school) is in the
-[physics index](knowledge/physics/README.en.md) — every entry by stage, with prerequisites, plus the
-**six common-mistake entries**.
+**Every path is listed in [the physics index](knowledge/physics/README.en.md#路径-paths)** — each with stage,
+goal and self-check result. The paths run from "intro kinematics" through "electrostatics",
+"circuits", "mechanical oscillations", "alternating current" and "optics"; the recent ones are
+**concept orders with no methods yet**, and their entries say so.
 
 > [!NOTE]
-> **This page no longer copies the entry list.** Hand-written lists drift (this one had drifted down to
-> 12 entries while the library held 145). The four rows above are **entry titles**, not statistics;
-> counts come from the generated block in [section 2](#2-whats-in-it-now).
+> **This page does not copy the path list.** Hand-written lists here have drifted twice
+> (the entry list down to 12 while the library held 145; the path list stuck at 4 while 9 existed).
+> Follow the link — that table is kept honest by `R-README-01`.
 
 ## 4. How to read an entry (the most useful section)
 
