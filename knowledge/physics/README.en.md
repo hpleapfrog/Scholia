@@ -21,6 +21,8 @@ graph LR
   WP["功与功率"]
   CH["电荷"] --> CL["库仑定律"] --> EF["电场强度"] --> EP["电势能与电势"]
   E --> EP
+  WP --> T1["热力学第一定律"] --> T2["热力学第二定律"]
+  E --> T1
 ```
 
 | 知识点 | 学段 | 先修 | 挂在其下的教法 | 误解 |
@@ -55,6 +57,24 @@ graph LR
 | [库仑定律](concepts/coulombs-law.en.md) | 高中 | **电荷**（教材未写「Review electric charge」，依据是定律定义——见条目 K1） | — | — |
 | [电场强度](concepts/electric-field.en.md) | 高中 | **库仑定律** | — | — |
 | [电势能与电势](concepts/electric-potential-energy.en.md) | 高中 | **电场强度** · **机械能守恒**（势能只在差值上记账） | — | — |
+| [热力学第一定律](concepts/thermodynamic-first-law.en.md) | 高中 | **Work and power** · **Conservation of mechanical energy** (`W = PΔV` and energy bookkeeping) | — | — |
+| [热力学第二定律](concepts/thermodynamic-second-law.en.md) | 高中 | **First law of thermodynamics** | — | — |
+
+> [!IMPORTANT]
+> **Batch 8 (2026-10-21) begins the 选必三 thermal chapter with the first and second laws of thermodynamics.**
+>
+> It attaches to the end of the "work and power → conservation of mechanical energy" energy thread:
+>
+> ```
+> 功与功率 → 机械能守恒 → 热力学第一定律 → 热力学第二定律
+> ```
+>
+> The first law's `先修` points to work and power (where `W = PΔV` comes from) and to conservation of mechanical energy (energy bookkeeping);
+> the second law covers total entropy and the direction of spontaneous processes only. Heat-engine efficiency, the Carnot cycle,
+> and the statistical interpretation of entropy are **still missing** — so 选必三 Chapter 3 is recorded as 🟡 on the coverage page, not 🟢.
+>
+> **Two honest notes**: the textbook does not use the label "state function", so that label is this repo's transcription;
+> and the second-law module gives no quantitative refrigerator example, so the entry records that as a gap instead of supplying one.
 
 > [!IMPORTANT]
 > **Batch 7 (2026-10-05) added the whole "momentum" chapter — the repo's first "force × time" thread.**

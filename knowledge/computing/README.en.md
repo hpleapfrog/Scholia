@@ -42,8 +42,9 @@
 | [Treating 418 as a normative HTTP status code](misconceptions/http-418-is-real.en.md) | 误解 | 有效 | `ev-054` `ev-057` |
 | [HTTP 451 refuses access for legal reasons and does not imply whether the resource exists](claims/http-451-legal-unavailable.en.md) | 命题 | 暂定确认 | `ev-153` `ev-054` `ev-057` |
 | [JSON exchanged between systems must use UTF-8 (closed ecosystems excepted), and network-transmitted JSON must not begin with a BOM](claims/json-utf8-no-bom.en.md) | 命题 | 暂定确认 | `ev-154` |
+| [RFC 3629 limits valid UTF-8 to 1-4 bytes and forbids encoding surrogates or code points above U+10FFFF](claims/rfc3629-utf8-1to4-bytes.en.md) | 命题 | 暂定确认 | `ev-155` |
 
-**All twenty-eight come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057` / `ev-089` / `ev-154`; verification depth is stated per entry).
+**All twenty-nine come from IETF's public RFCs and IANA's public registry** (`ev-052` / `ev-053` / `ev-054` / `ev-057` / `ev-089` / `ev-154` / `ev-155`; verification depth is stated per entry).
 That means this subject's current coverage is **not** the same as the subject "Computing" itself —
 see "What is still missing" below.
 
@@ -52,12 +53,12 @@ see "What is still missing" below.
 | Gap | Why it matters | Source needed |
 |---|---|---|
 | **Language and platform documentation** | the entries so far cover network protocols and one format specification; "the default behaviour of a given API" and "the conditions under which a compatibility rule applies" are entirely absent | official Python / Java documentation, with version number and release date |
-| **Format and encoding specifications** | the JSON encoding rules are now covered (RFC 8259 §8.1); the **constraints and defaults** of `UTF-8` / `HTML` are still absent, and that is where retellings go wrong most often | RFC 3629 (UTF-8) · the Unicode Standard · WHATWG standards |
+| **Format and encoding specifications** | the JSON encoding rules (RFC 8259 §8.1) and the UTF-8 byte boundaries (RFC 3629 §3/§4) are now covered; the **constraints and defaults** of `HTML` are still absent, and the authoritative definition of UTF-8 sits in the Unicode Standard rather than in the RFC | the Unicode Standard · the WHATWG HTML standard |
 | **Version-difference entries** | "what changed for X between v1 and v2" is this subject's most typical checkable content, and the count is currently zero | the version-history pages of each specification |
 
 **The next entry here should still be a "format and encoding specification"** — the main protocol-side gaps (the whole of HTTP status-code §15, the registration procedure) are filled,
-and **the encoding and BOM rules of RFC 8259 (JSON) §8.1 were added on 2026-10-21**;
-but not a single entry covers the constraints and defaults of `RFC 3629` (UTF-8), the Unicode Standard or `HTML` (WHATWG); **new evidence is needed**.
+and **the encoding and BOM rules of RFC 8259 (JSON) §8.1 and the 1-4 byte boundary of RFC 3629 (UTF-8) §3/§4 were added on 2026-10-21**;
+but not a single entry covers the constraints and defaults of the Unicode Standard (the authority RFC 3629 points to) or `HTML` (WHATWG); **new evidence is needed**.
 
 ## Boundary
 
@@ -85,6 +86,7 @@ tutorials are not repeated. **This repo does not teach how to write code; it rec
 
 | Date | Action | Basis | Who |
 |---|---|---|---|
+| 2026-10-21 | added the claim "RFC 3629 limits valid UTF-8 to 1-4 bytes and forbids encoding surrogates or code points above U+10FFFF", verifying RFC 3629 §1–§18 in full (§1/§3/§4 the byte boundaries, the surrogate prohibition and the ABNF; §10/§12 the overflow rationale and the version tightening); `ev-155` registered; the format-and-encoding row in "What is still missing" now names Unicode / HTML, and the "next entry" paragraph was rewritten to match | topic chosen against the subject boundary after ev-155 (RFC 3629) was registered | @hpleapfrog |
 | 2026-10-21 | added the claim "JSON exchanged between systems must use UTF-8 (closed ecosystems excepted), and network-transmitted JSON must not begin with a BOM", verifying RFC 8259 §1–§14 and Appendix A in full (§8.1 encoding and BOM); `ev-154` registered; the format-and-encoding row in "What is still missing" now names UTF-8 / Unicode / HTML, and the "next entry" paragraph was rewritten to match | topic chosen against the subject boundary after ev-154 (RFC 8259) was registered | @hpleapfrog |
 | 2026-10-18 | added six claims: 1xx (the four interim-response rules and 100 / 101), 202 (no promise of processing, no asynchronous re-send), 205 (reset of the document view and the prohibition on content), 206 (length semantics and header duties), 402 / 305 / 306 (three placeholder codes) and 404 (its two-branch semantics and its silence on temporary vs permanent), verifying all of RFC 9110 §15 (including §15.3.7.1–§15.3.7.3); the "remaining individual codes" row in "What is still missing" cleared, and the "next entry" paragraph rewritten | ev-054 already registered; swept up against the priority named in "What is still missing" | @hpleapfrog |
 | 2026-10-18 | added the claim "IETF Review requires an RFC in the IETF Stream approved by the IESG as having IETF consensus, and Standards Track is not required", verifying RFC 8126 §4.8 (with §4.7 / §4.9 / §4.11 for contrast); `ev-089` registered; the §4.8 row in "What is still missing" filled in, and the "next entry" paragraph turned to format and encoding specifications | topic chosen against the subject boundary after ev-089 (RFC 8126) was registered | @hpleapfrog |

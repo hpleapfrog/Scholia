@@ -9,18 +9,18 @@
 <!-- kbcheck:begin -->
 | Subject | Entries |
 |---|---|
-| [Physics](physics/README.en.md) | 300 |
+| [Physics](physics/README.en.md) | 302 |
 | [Life](life/README.en.md) | 8 |
 | [Medicine](medicine/README.en.md) | 8 |
 | [Geography](geography/README.en.md) | 6 |
 | [Science](science/README.en.md) | 1 |
 | [Transport](transport/README.en.md) | 4 |
-| [Computing](computing/README.en.md) | 28 |
+| [Computing](computing/README.en.md) | 29 |
 | [Economics](economics/README.en.md) | 8 |
 | [Law](law/README.en.md) | 4 |
 | [Mathematics](mathematics/README.en.md) | 308 |
 | [Events (top level)](../events/README.en.md) | 2 |
-| **Total** | **675** |
+| **Total** | **678** |
 <!-- kbcheck:end -->
 
 > [!NOTE]

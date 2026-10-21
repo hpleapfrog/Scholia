@@ -38,8 +38,8 @@ So the table is **not** "how many sections short of the PEP contents list we are
 | | 章级主题数 | 占比 |
 |---|---|---|
 | 🟢 有覆盖 | **6** | 24% |
-| 🟡 部分覆盖 | **9** | 36% |
-| 🔴 完全缺 | **10** | 40% |
+| 🟡 部分覆盖 | **10** | 40% |
+| 🔴 完全缺 | **9** | 36% |
 | **合计** | **25** | 100% |
 <!-- kbcheck:end -->
 
@@ -73,7 +73,7 @@ Ranked by "downstream nodes × size of the gap":
 | ~~2~~ | ~~Conservation of momentum~~ | **✅ done** — `Newton's 2nd → momentum & impulse → conservation → collisions` |
 | ~~3~~ | ~~Electrostatics (charge · field strength · potential energy)~~ | **✅ started (2026-10-18)** — charge · Coulomb's law · electric field · electric potential energy and potential (one node more than planned); **capacitance and charged particles in fields still missing** |
 | ~~4~~ | ~~Circular motion + centripetal force~~ | **✅ complete (2026-10-18)** — uniform circular motion · centripetal force · centrifugal misconception; **same day**: angular acceleration & rotational kinematics · torque |
-| 5 | **Laws of thermodynamics** | elective-3; the other end of the same energy thread as conservation of mechanical energy |
+| ~~5~~ | ~~Laws of thermodynamics~~ | **✅ started (2026-10-21)** — first law of thermodynamics · second law of thermodynamics; **heat-engine efficiency, the Carnot cycle, and the statistical interpretation of entropy still missing** |
 | 6 | **Nuclear physics** | elective-3; sits after the existing "atomic structure" |
 
 ## Change log
@@ -86,3 +86,4 @@ Ranked by "downstream nodes × size of the gap":
 | 2026-10-18 | **Compulsory-3 "electrostatics and its applications" / "energy in electrostatic fields" 🔴 → 🟡**: four new concepts — charge · Coulomb's law · electric field · electric potential energy and potential (ev-083–087) | OpenStax *Physics* ch. 18, modules m54417 / m54410 / m54414 / m54428 / m54426 read in full | @hpleapfrog |
 | 2026-10-18 | **Compulsory-2 "circular motion" 🟡 → 🟢**: filled in angular acceleration & rotational kinematics · torque (ev-088) | OpenStax *Physics* ch. 6, module m54180 read in full | @hpleapfrog |
 | 2026-10-18 | English edition added; row-by-row table stays in the Chinese page (two copies would drift) | bilingual completeness (`R-BILING-03`) | @hpleapfrog |
+| 2026-10-21 | **Elective-3 "laws of thermodynamics" 🔴 → 🟡**: first law of thermodynamics · second law of thermodynamics added (ev-156/ev-157) | OpenStax *Physics* ch. 12, modules m54305 / m54306 read in full | @hpleapfrog |
