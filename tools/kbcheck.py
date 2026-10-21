@@ -687,9 +687,15 @@ def check_graph(objects, errors, warnings):
         for tgt in fm_links(fm, "先修"):
             r = resolve_link(path, tgt)
             dest = objects.get(r) if r else None
-            if t != "知识点":
+            # `路径` 是唯一例外：它的 `先修` 声明的是**外部先修**——
+            # 「这条路径要求你先会的东西，但本路径不教它」。
+            # `check_paths` 一直靠这个字段判「先修缺口」不在路径内，
+            # 而这条检查以前把它一并禁掉了：两条规则互相打架，
+            # 只是此前所有路径的 `先修` 都写成 `[]`，从没撞上。
+            if t not in ("知识点", "路径"):
                 errors.append(
-                    f"{rel}: 只有「知识点」可以有 `先修` 边（FORMAT.md §2），本条 type={t}（R-GRAPH-01）")
+                    f"{rel}: 只有「知识点」（以及声明外部先修的「路径」）可以有 `先修` 边"
+                    f"（FORMAT.md §2），本条 type={t}（R-GRAPH-01）")
             if dest is None:
                 errors.append(f"{rel}: `先修` 指向的不是知识对象 -> {tgt}（R-GRAPH-01）")
             elif dest["type"] != "知识点":
@@ -1591,7 +1597,7 @@ MECH_RULES = [
     ("R-BILING-03", "文档类文件（根级 / 学科 README / 覆盖度 / docs）必须有同名 `.en.md`；`templates/` 与 `.github/` 豁免"),
     ("R-BILING-02", "英译本的 `type` / `status` / `evidence` 与中文原件一致（`M-10` 里可机械化的那一半）"),
     ("R-LINK-03", "英文页面的站内链接指向英文页（该页存在时）；例外：`English version of` 行、指向无译本文件的链接"),
-    ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
+    ("R-GRAPH-01", "`先修` 只连「知识点」（`路径` 可声明外部先修），且无环"),
     ("R-GRAPH-02", "`支持` / `攻击` 边的论证锚点存在"),
     ("R-GRAPH-03", "`路径` 每个成果至少被一个环节覆盖（未声明 outcomes 给警告）"),
     ("R-GRAPH-04", "`路径` 每个环节至少连到一个库内对象"),
