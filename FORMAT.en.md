@@ -137,6 +137,15 @@ level into the prerequisite**.
 > [!IMPORTANT]
 > **Prerequisite edges connect `知识点` only.** Hard rule, enforced by `tools/kbcheck.py`
 > (background: [Issue #11](https://github.com/hpleapfrog/Scholia/issues/11)).
+>
+> **The one exception is `路径`**: a path's `先修` declares **external prerequisites** —
+> things you should already know before walking it, which the path itself does not teach
+> (e.g. the electrostatics path requires conservation of mechanical energy).
+> These edges must still point at `知识点`.
+>
+> The exception was added on 2026-10-21: `check_paths` had always relied on this field to decide
+> that a prerequisite sits outside the path, while the hard rule above banned it for paths —
+> **two rules fighting each other**, unnoticed only because every path's `先修` had been `[]`.
 
 ### Naming: every folder in English; Chinese entries keep Chinese filenames
 

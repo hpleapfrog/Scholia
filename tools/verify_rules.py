@@ -530,6 +530,16 @@ def sample_graph01(root, _v):
     return False
 
 
+def sample_graph01_path_bad(root, _v):
+    """`路径` 的外部先修指向**教法**（允许路径有先修，但目标仍必须是知识点）。"""
+    for p, t in _paths(root):
+        t2 = set_field(t, "先修", '["[x](../methods/x.md)"]')
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
 def sample_graph01_cycle(root, _v):
     """两个知识点互相当对方的先修（成环）。"""
     concepts = [x for x in _objects(root) if field_of(x[1], "type") == "知识点"]
@@ -1015,6 +1025,7 @@ SAMPLES = [
     ("R-SCHEMA-13", "教法的水平档写成 ZZ", sample_schema13),
     ("R-GRAPH-01", "命题加了 先修 边", sample_graph01),
     ("R-GRAPH-01", "两个知识点互为先修（成环）", sample_graph01_cycle),
+    ("R-GRAPH-01", "路径的外部先修指向教法", sample_graph01_path_bad),
     ("R-GRAPH-02", "支持边锚点在目标里不存在", sample_graph02),
     ("R-GRAPH-03", "路径的某个成果无人覆盖", sample_graph03),
     ("R-GRAPH-04", "路径某环节指不出对象", sample_graph04),
