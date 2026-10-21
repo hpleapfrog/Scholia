@@ -96,7 +96,8 @@ git push origin fix/ohm-law-temperature
 | **校验**（提交前必跑） | `python tools/kbcheck.py` |
 | 改了内容，重生成机器文件与文档块 | `python tools/kbcheck.py --write-index` |
 | **新建一条**（自动出骨架 + 登记进学科 README） | `python tools/new_entry.py --type 命题 --subject 物理 --slug ohm-law --title "…"` |
-| 改完规则，验证「规则真的会拦」 | `python tools/verify_rules.py` |
+| 改完规则，验证「规则真的会拦」 | `python tools/verify_rules.py`（全量，约 1–2 分钟） |
+| 只验证**某一条**规则 | `python tools/verify_rules.py --only R-GRAPH`（**约 3 秒**） |
 | 不知道能做什么 | `python tools/make_tasks.py --limit 10` |
 | 把库挂到 AI（打印可粘贴的配置） | `python tools/scholia_mcp.py --print-config` |
 
