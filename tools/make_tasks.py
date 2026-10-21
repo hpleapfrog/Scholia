@@ -13,6 +13,7 @@
 |---|---|---|
 | `review` 复核 | 状态 `待审` 且有论证、证据已读过全文的条目 | **3 分钟**，不需要写内容 |
 | `translate` 补译本 | `path_en` 为 null 的条目 | 中，需要翻译 |
+| `methods` 缺教法 | 没有任何 `教法` 挂在下面的 `知识点` | 大，需要教材原文 |
 | `todo` 待补 | 正文里写着 `**待补**：` 的条目 | 不定 |
 | `coverage` 覆盖度 | `knowledge/physics/coverage/README.md` 里 🔴 的章 | 大，需要采集与撰写 |
 
@@ -84,7 +85,33 @@ def tasks():
                 if len(cells) >= 2:
                     cov.append(cells[1])
     out["coverage"] = cov
+
+    # 缺教法：知识点有了，但没有任何「教法」挂在它下面。
+    # 这是本库模型里最真实的缺口——知识点回答「是什么」，教法才回答「怎么讲」，
+    # 而它**在覆盖度页上完全看不见**（那一页只看知识点有没有）。
+    covered = set()
+    for p in (ROOT / "knowledge").rglob("methods/*.md"):
+        fm, _body = split_fm(p)
+        for link in re.findall(r"\[[^\]]*\]\(([^)]+)\)", fm.get("knowledge_point", "")):
+            covered.add(link.split("/")[-1].removesuffix(".md"))
+    out["methods"] = [o for o in index["objects"]
+                      if o["type"] == "知识点"
+                      and Path(o["path"]).stem not in covered]
     return out
+
+
+def split_fm(path):
+    """粗读 front-matter 的 `key: value`（本工具只需要 knowledge_point 一行）。"""
+    text = path.read_text(encoding="utf-8")
+    if not text.startswith("---"):
+        return {}, text
+    end = text.find("\n---", 3)
+    fm, out = text[4:end], {}
+    for line in fm.split("\n"):
+        if ":" in line and not line.startswith(" "):
+            k, v = line.split(":", 1)
+            out[k.strip()] = v.strip()
+    return out, text
 
 
 HEAD = {
@@ -92,12 +119,15 @@ HEAD = {
     "translate": ("补英文译本", "按 `id` 派生文件名，与中文原件同目录。"),
     "todo": ("兑现「待补」", "条目自己写下的缺口。"),
     "coverage": ("补覆盖度缺口", "物理按人教版对照仍为 🔴 的章。"),
+    "methods": ("缺教法的知识点",
+                "知识点回答「是什么」，教法回答「怎么讲」。这一栏在覆盖度页上**看不见**——"
+                "那里只数知识点有没有，不数有没有人写过怎么教。"),
 }
 
 
 def render(t, limit):
     lines = []
-    for key in ("review", "translate", "todo", "coverage"):
+    for key in ("review", "translate", "methods", "todo", "coverage"):
         items = t[key]
         title, why = HEAD[key]
         lines.append(f"\n## {title}（{len(items)} 项）\n\n{why}\n")
@@ -106,7 +136,7 @@ def render(t, limit):
             continue
         shown = items[:limit] if limit else items
         for it in shown:
-            if key in ("review", "translate"):
+            if key in ("review", "translate", "methods"):
                 lines.append(f"- `{it['id']}` · {it['title']} — `{it['path']}`")
             elif key == "todo":
                 lines.append(f"- `{it[0]['id']}` · {it[1]}")
@@ -119,12 +149,15 @@ def render(t, limit):
 
 def create_issues(t, limit):
     made = 0
-    for key in ("review", "translate"):
+    for key in ("review", "translate", "methods"):
         for it in t[key][:limit]:
-            title = f"[{'复核' if key == 'review' else '译本'}] {it['title']}"
+            tag = {"review": "复核", "translate": "译本", "methods": "教法"}[key]
+            title = f"[{tag}] {it['title']}"
             body = (f"条目：`{it['id']}`\n\n路径：`{it['path']}`\n\n"
-                    + ("按「复核一条」模板回答三个问题即可。"
-                       if key == "review" else "英文译本文件名由 `id` 派生，与中文原件同目录。"))
+                    + {"review": "按「复核一条」模板回答三个问题即可。",
+                       "translate": "英文译本文件名由 `id` 派生，与中文原件同目录。",
+                       "methods": "这个知识点还没有任何教法条目：缺的是「怎么讲」，"
+                                  "需要教材里有标记的课堂做法（[BL]/[OL]/[AL]）。"}[key])
             r = subprocess.run(["gh", "issue", "create", "--title", title, "--body", body],
                                cwd=str(ROOT), capture_output=True, text=True)
             if r.returncode == 0:
