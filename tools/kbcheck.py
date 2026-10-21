@@ -96,6 +96,9 @@ EVIDENCE_CATEGORIES = {"教材", "论文", "指南", "官方文件", "交互式�
                        "出版社勘误表", "本库数据"}
 EVIDENCE_GRADES = {"高", "中", "低", "—"}
 EVIDENCE_DEPTHS = {"全文", "摘要", "仅定位", "未核验", "—"}
+# 核验深度的排序：用来算「覆盖这个成果的证据，最高读到了哪一层」
+DEPTH_RANK = {"未核验": 1, "仅定位": 2, "摘要": 3, "全文": 4, "—": 0}
+DEPTH_NAME = {v: k for k, v in DEPTH_RANK.items() if k != "—"}
 
 # 只有「命题」可以说是「已确证」——其余都是组织层或条件性的
 ONLY_CLAIMS_CAN_BE_CONFIRMED = True
@@ -835,8 +838,17 @@ def check_path_outcomes(objects, errors, warnings):
     路径在 front-matter 声明 `outcomes`（可观测的学习成果，编号 o1/o2/…），
     并在 `## 编排` 表里为每个环节标注它覆盖哪些成果。校验器检查：
     每个声明的成果是否至少被一个环节覆盖。
+
+    **「有没有」之外再算两个可查的维度**（这是「够不够」里**机器能算**的那部分，
+    教学上够不够仍要人判）：
+
+    1. **冗余度**：这个成果被**几个环节**覆盖。只有 1 个环节 = 一处讲砸就没有第二次机会
+    2. **读没读过**：覆盖它的这些条目，其证据的**最高核验深度**
+       （`仅定位` / `未核验` 的覆盖，说到底是「排了个位置」，不是「有依据地覆盖」）
     """
+    ev = parse_evidence_index()
     stats = {}
+    strength = {}
     for rel, o in objects.items():
         if o["type"] != "路径":
             continue
@@ -853,8 +865,60 @@ def check_path_outcomes(objects, errors, warnings):
         body = section_body(o["text"], "编排") or ""
         covered = set(re.findall(r"\b(o\d+)\b", body))
 
+        steps = collections.Counter()
+        depths = collections.defaultdict(list)
+        for line in body.splitlines():
+            s = line.strip()
+            if not s.startswith("|"):
+                continue
+            cells = [c.strip() for c in s.strip("|").split("|")]
+            if len(cells) < 2:
+                continue
+            # 成果编号**不保证在最后一列**：`运动学入门-BL` 的表是
+            # `# | 环节 | 条目 | 覆盖 | 时长`，覆盖在倒数第二列。
+            # 只扫最后一列会让这条路径**报成「没有单环节覆盖」**——
+            # 假干净比没检查更糟。所以扫全部单元格，链接也从任意单元格取。
+            outs = []
+            for c in cells:
+                outs += re.findall(r"\b(o\d+)\b", c)
+            outs = sorted(set(outs))
+            if not outs:
+                continue
+            link = None
+            for c in cells:
+                mm = re.search(r"\[[^\]]*\]\(([^)#]+)", c)
+                if mm:
+                    link = mm.group(1)
+                    break
+            dest = resolve_link(o["path"], link) if link else None
+            for oid in outs:
+                steps[oid] += 1
+                if dest and dest in objects:
+                    for e in evidence_ids_of(objects[dest]["fm"]):
+                        d = ev.get(e, {}).get("核验深度")
+                        if d:
+                            depths[oid].append(d)
+
         missing = [x for x in declared if x not in covered]
         stats[rel] = (len(declared) - len(missing), len(declared))
+
+        thin = [x for x in declared if 0 < steps.get(x, 0) <= 1]
+        unread = [x for x in declared if depths.get(x)
+                  and max((DEPTH_RANK.get(d, 0) for d in depths[x])) <= DEPTH_RANK["仅定位"]]
+        # 深度上限单独算：报告里「证据最高只到 —」看起来像**没数据**，
+        # 而真相是「所有覆盖条目的证据都读到了 全文」——两者要让读者分得清。
+        per_outcome_best = [max((DEPTH_RANK.get(d, 0) for d in depths[x]), default=0)
+                            for x in declared if depths.get(x)]
+        ceiling = DEPTH_NAME.get(min(per_outcome_best), "") if per_outcome_best else ""
+        strength[rel] = (thin, unread, ceiling)
+        if thin:
+            warnings.append(
+                f"{rel}: 成果 {thin} **只由一个环节覆盖** —— "
+                "覆盖度是「有没有」，冗余度是「够不够」的第一层（R-GRAPH-07）")
+        if unread:
+            warnings.append(
+                f"{rel}: 成果 {unread} 的覆盖条目**证据最高只到 `仅定位`/`未核验`** —— "
+                "位置排上了，依据还没读过（R-GRAPH-07）")
 
         if missing:
             errors.append(
@@ -864,7 +928,7 @@ def check_path_outcomes(objects, errors, warnings):
             errors.append(
                 f"{rel}: 编排里覆盖了未声明的成果编号: {sorted(extra)}（R-GRAPH-03）")
 
-    return stats
+    return stats, strength
 
 
 def argument_graph(objects):
@@ -1255,6 +1319,141 @@ def check_status_has_argument(objects, errors):
                 f"「{st}」必须由存活（或被击倒）的论证算出来；空集请写「待审」（R-SCHEMA-17）")
 
 
+def inbound_edge_map(objects, key):
+    """入边表：`{被指向的条目: [(指向它的条目, 锚点), …]}`。
+
+    `支持` / `攻击` 的语义是**入边**——条目自己写了什么不算，要看在库里有谁指向它。
+    单看一个文件永远查不出「这条被几条边指着」，所以统一在这里算一次。
+    """
+    out = collections.defaultdict(list)
+    for rel, o in objects.items():
+        for tgt in fm_links(o["fm"], key):
+            r = resolve_link(o["path"], tgt)
+            if not r:
+                continue
+            anchor = tgt.split("#")[1].strip().lower() if "#" in tgt else ""
+            out[r].append((rel, anchor))
+    return out
+
+
+def check_status_reachability(objects, errors):
+    """R-SCHEMA-19：`已确证` / `争议` / `已推翻` 必须有**结构上的依据**，不能只改一个字段。
+
+    这三个状态全库目前是 **0 条**。0 不是问题——问题是**从 0 到「写了就通过」以前没有门槛**：
+    把 `status:` 手动改成「已确证」，其余什么都不用动，校验照样全绿。
+    **本库最难拿到的状态，变成了一个字段值。**
+
+    现在每个状态各要求一个**机器能查**的前提（必要，**不是**充分；人该判的仍然写 M-07）：
+
+    | 状态 | 机器要求 | 人仍然要判 |
+    |---|---|---|
+    | `已确证` | `author` 与「变更记录」里出现 **≥2 个不同的 `@` 署名** | 第二名署名者是否**真的**独立复核过（AI 不算，M-07） |
+    | `争议` | ≥2 条论证 **且** ≥1 条**入边 `攻击`** | 两个存活论证的结论是否**真的冲突** |
+    | `已推翻` | ≥1 条**未被击倒**的入边 `攻击` | 攻击方自己站不站得住 |
+
+    **为什么 `争议` 也要攻击边**：没有攻击边的「争议」和没有攻击者的「存活」是同一个毛病
+    （见 `check_argument_liveness`）——**冲突必须在图上看得见**，否则它只是作者的一句心情。
+    """
+    atk_in = inbound_edge_map(objects, "攻击")
+    for rel, o in sorted(objects.items()):
+        st = fm_value(o["fm"], "status")
+        if st == "已确证":
+            names = set(re.findall(r"@([\w][\w.\-]*)", fm_value(o["fm"], "author") or ""))
+            names |= set(re.findall(r"@([\w][\w.\-]*)", section_body(o["text"], "变更记录") or ""))
+            if len(names) < 2:
+                errors.append(
+                    f"{rel}: status=「已确证」，但全条只有 {len(names)} 个 `@` 署名 —— "
+                    "`已确证` 需要**一名非作者的独立复核**，请在「变更记录」里写下复核人"
+                    f"（不是作者本人；AI 复核不计，见 M-07）（R-SCHEMA-19）")
+        elif st == "争议":
+            n_args = len(arg_ids(o["text"]))
+            if n_args < 2 or not atk_in.get(rel):
+                errors.append(
+                    f"{rel}: status=「争议」，但它有 {n_args} 条论证、"
+                    f"{len(atk_in.get(rel, []))} 条入边 `攻击` —— "
+                    "「争议」= 存活论证**结论冲突**，冲突必须落在图上：至少 2 条论证、"
+                    "且至少 1 条指向本条某论证的 `攻击` 边（R-SCHEMA-19）")
+        elif st == "已推翻":
+            live = [(a, anc) for (a, anc) in atk_in.get(rel, [])
+                    if fm_value(objects[a]["fm"], "status") not in NOT_CITABLE]
+            if not live:
+                errors.append(
+                    f"{rel}: status=「已推翻」，但没有任何**未被击倒**的入边 `攻击` —— "
+                    "推翻要由站得住的攻击产生；只是「支撑被拆掉」请写 `失据`（R-SCHEMA-19）")
+
+
+def evidence_origin(rec):
+    """一条证据的**来源标识** = 定位文本里「发布主体 + 作品」那一段。
+
+    这只是**对定位字符串的一种切法**，不是对内容的判断：
+    切出来相同 → 同一本书 / 同一份文件（同一来源，**可证**）；
+    切出来不同 → **不代表**独立（两本书可能同一套编委）；
+    切不出来 → `（未识别）`，**未识别不等于独立**，要人补（M-03）。
+    """
+    loc = (rec or {}).get("定位", "") or ""
+    m = re.search(r"^\s*(.{0,40}?《[^》]+》)", loc)
+    if m:
+        return m.group(1).strip()
+    m = re.search(r"^\s*([A-Za-z0-9][\w.\- ]{1,40}?)[，、·（(]", loc)
+    if m:
+        return m.group(1).strip()
+    return ""
+
+
+def check_support_homology(objects, warnings):
+    """R-GRAPH-06：同一论证上的多条 `支持`，**共享的是几份证据、几个来源**。
+
+    「15 条支持」被写强度写过一次（见 docs/decisions/support-count-not-strength.md），
+    而「同一来源的多个观测不等于多份证据」在本库已经**撞过两次**
+    （`ev-002` 与「类比按学段」）。
+
+    原来说「独立性算不出来（来源是自由文本）」——**其中一半其实算得出来**：
+    几条边的证据**编号并集**、以及它们的**来源标识是否同一个**，都是定位文本上的结构事实。
+    算不出来的只剩「同一出版方的两份材料算不算独立」，那留给人（M-03）。
+
+    - ≥2 条 `支持` 边、证据并集只有 **0 或 1 个编号** → 提示：条数不构成强度
+    - ≥2 条 `支持` 边、但**来源标识只有一个** → 提示：这些边指向**同一份材料**
+    - 其余情况只**如实列出**编号、来源标识与类别，把判断留给人
+
+    提示不阻塞：多条边来自同一来源**是合法的**，只是不能被读成多份印证。
+    """
+    ev = parse_evidence_index()
+    sup_in = inbound_edge_map(objects, "支持")
+    report = []
+    for rel, edges in sorted(sup_in.items()):
+        if len(edges) < 2:
+            continue
+        groups = collections.defaultdict(set)
+        for src, anchor in edges:
+            groups[anchor or "（无锚点）"].add(tuple(sorted(evidence_ids_of(objects[src]["fm"]))))
+        for anchor, evsets in sorted(groups.items()):
+            ids = sorted({e for s in evsets for e in s})
+            origins = collections.Counter()
+            unknown = 0
+            for e in ids:
+                o_ = evidence_origin(ev.get(e))
+                if o_:
+                    origins[o_] += 1
+                else:
+                    unknown += 1
+            cats = collections.Counter(ev.get(e, {}).get("类别", "（未登记）") for e in ids)
+            obits = " · ".join(f"{k}×{v}" for k, v in sorted(origins.items())) or "（未识别）"
+            cbits = " · ".join(f"{k}×{v}" for k, v in sorted(cats.items()))
+            if len(ids) <= 1:
+                warnings.append(
+                    f"{rel}: 论证 `{anchor}` 有 {len(edges)} 条 `支持` 边，"
+                    f"但证据并集只有 {ids or ['（无 evidence）']} —— "
+                    f"这些边**不是独立印证**，条数不代表强度（R-GRAPH-06）")
+            elif len(origins) == 1 and not unknown:
+                warnings.append(
+                    f"{rel}: 论证 `{anchor}` 有 {len(edges)} 条 `支持` 边、{len(ids)} 份证据，"
+                    f"但来源标识只有 **1 个**（{next(iter(origins))}）—— "
+                    f"它们是**同一份材料的 {len(ids)} 个位置**，不是 {len(ids)} 份独立证据（R-GRAPH-06）")
+            report.append((rel, anchor, len(edges), ids, len(origins) + (1 if unknown else 0),
+                            obits + (f" · （未识别）×{unknown}" if unknown else ""), cbits))
+    return report
+
+
 def check_updated_matches_changelog(objects, errors):
     """R-SCHEMA-18：`updated` 与「变更记录」里最后一行日期必须一致。
 
@@ -1384,6 +1583,7 @@ MECH_RULES = [
     ("R-SCHEMA-16", "文件所在目录与 `type` 对应（concepts / claims / methods / misconceptions / paths / resources）"),
     ("R-SCHEMA-17", "「暂定确认 / 已确证 / 失据 / 已推翻」必须有 ≥1 条论证（空集只能写「待审」）"),
     ("R-SCHEMA-18", "`updated` 与「变更记录」最后一行的日期一致"),
+    ("R-SCHEMA-19", "`已确证` 需 ≥2 个不同的 `@` 署名 · `争议` 需 ≥2 条论证且 ≥1 条入边 `攻击` · `已推翻` 需 ≥1 条未被击倒的入边 `攻击`（状态不能只靠改一个字段）"),
     ("R-EVENT-01", "`事件` 单开顶层 `events/`，与 `objects` **分开**：`type`=事件、`status` 只用持续更新/已封存、必填段 陈述/依据/变更记录、**无论证、无任何边**、`id` 前缀 `kb:event:`、`evidence` 非空；且每个事件须登记在 `events/README.md`"),
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
@@ -1396,6 +1596,8 @@ MECH_RULES = [
     ("R-GRAPH-03", "`路径` 每个成果至少被一个环节覆盖（未声明 outcomes 给警告）"),
     ("R-GRAPH-04", "`路径` 每个环节至少连到一个库内对象"),
     ("R-GRAPH-05", "攻击条目（`claims/attacks/`）必须有一条 `攻击` 边，落到具体论证上"),
+    ("R-GRAPH-06", "同一论证上的多条 `支持` 边：证据编号并集只有 ≤1 份、或来源标识只有 1 个 → 提示「条数不构成强度」"),
+    ("R-GRAPH-07", "路径的每个成果：只由 1 个环节覆盖、或覆盖条目的证据最高只到 `仅定位`/`未核验` → 提示（覆盖「有没有」之外的强度）"),
     ("R-EVID-01", "`evidence` 编号已登记且未作废"),
     ("R-EVID-02", "证据表 `类别` / `等级` / `核验深度` 取值合法"),
     ("R-EVID-03", "`暂定确认` / `已确证` 必须至少有一条 `核验深度` 为 `全文` / `摘要` 的证据（没读过不能说确认）"),
@@ -1410,7 +1612,7 @@ MECH_RULES = [
 MANUAL_RULES = [
     ("M-01", "英文引用附近必须有中文说明（面向学习者可读性三条之一）"),
     ("M-02", "面向学习者的内容写在前面"),
-    ("M-03", "`支持` 边的**独立性**由人判断（来源是自由文本，算不出）"),
+    ("M-03", "`支持` 边的**跨来源独立性**仍由人判断 —— `R-GRAPH-06` 只算得出「同一来源标识」那一半"),
     ("M-04", "`教法` 的 `禁忌` 标注证据强度（强/弱），且与 `风险` 不混"),
     ("M-05", "不上传教材原文或扫描页"),
     ("M-06", "新引用资源逐条核对许可（教材 CC BY ≠ 它嵌的东西也是）"),
@@ -1466,7 +1668,7 @@ MECH_RULES_EN = [
 MANUAL_RULES_EN = [
     ("M-01", "Chinese gloss near English quotations (one of three readability rules)"),
     ("M-02", "learner-facing content comes first"),
-    ("M-03", "`支持` edge **independence** is judged by humans (source is free text, can't compute)"),
+    ("M-03", "`支持` edge **cross-source independence** is still judged by humans — `R-GRAPH-06` only computes the 'same source identifier' half"),
     ("M-04", "`教法` `禁忌` marks evidence strength (strong/weak), not mixed with `风险`"),
     ("M-05", "don't upload textbook originals or scans"),
     ("M-06", "check license per new source (textbook CC BY ≠ what it embeds is too)"),
@@ -1607,7 +1809,7 @@ def verified_rules():
     try:
         sys.path.insert(0, str(ROOT / "tools"))
         import verify_rules as vr           # noqa: E402  同目录、零副作用（main 有 __main__ 守卫）
-        return {rid for rid, _desc, _fn in vr.SAMPLES}
+        return {e[0] for e in vr.SAMPLES}
     except Exception:
         return set()
 
@@ -1996,8 +2198,9 @@ def check_all():
     check_readme_coverage(objects, errors)
     check_paths(objects, errors, warnings)
     check_path_steps(objects, errors)
-    stats = check_path_outcomes(objects, errors, warnings)
+    stats, strength = check_path_outcomes(objects, errors, warnings)
     argstats = argument_graph(objects)
+    homology = check_support_homology(objects, warnings)
     check_index(objects, events, errors)
 
     # 单对象规则（FORMAT.md 里写了、此前没有机械检查的那些）
@@ -2016,6 +2219,7 @@ def check_all():
     check_doc_bilingual(errors)
     check_type_dir(objects, errors)
     check_status_has_argument(objects, errors)
+    check_status_reachability(objects, errors)
     check_updated_matches_changelog(objects, errors)
     check_bilingual_fields(objects, events, en_fm, errors)
     check_attack_has_edge(objects, errors)
@@ -2026,12 +2230,13 @@ def check_all():
     check_event_readme(events, errors)
     sync_generated(objects, events, False, errors)
 
-    return md_files, ids, errors, warnings, stats, argstats, objects, events
+    return md_files, ids, errors, warnings, stats, argstats, objects, events, strength, homology
 
 
 def main():
     write = "--write-index" in sys.argv
-    md_files, ids, errors, warnings, stats, argstats, objects, events = check_all()
+    (md_files, ids, errors, warnings, stats, argstats, objects, events,
+     strength, homology) = check_all()
 
     print(f"扫描 {len(md_files)} 个文档，识别知识对象 {len(objects)} 条，事件 {len(events)} 条")
     print()
@@ -2081,14 +2286,24 @@ def main():
     print("  · 人类文档里的统计数字与 index.json 一致")
     print("  · 必备小节齐全且顺序正确")
     print("  · 英文译本的文件名由 `id` 派生，且与中文原件一一对应")
-    print("  ── 以下五项是单看一个文件查不出来的 ──")
+    print("  ── 以下几项是单看一个文件查不出来的 ──")
     print("  · `先修` 边只连「知识点」，且无环")
     print("  · `教法` 都有 `knowledge_point`，且指向「知识点」")
     print("  · `支持` / `攻击` 边都落在具体论证上（锚点存在）")
     print("  · 每条路径的「先修缺口」已机械校验（无缺口）")
+    print("  · `已确证` / `争议` / `已推翻` 的结构前提已校验（R-SCHEMA-19）")
     for rel, (cov, total) in sorted(stats.items()):
+        thin, unread, ceiling = strength.get(rel, ([], [], ""))
+        bits = []
+        if thin:
+            bits.append(f"单环节覆盖 {','.join(thin)}")
+        if unread:
+            bits.append(f"这些成果的证据最高只到 仅定位/未核验：{','.join(unread)}")
+        # 深度这一维**总是**报出来：只报异常会让人分不清「没问题」与「没测」
+        bits.append(f"覆盖深度下限 {ceiling or '（无可判定的证据行）'}")
+        extra = f"  【{' · '.join(bits)}】" if bits else ""
         print(f"  · 目标覆盖度：{Path(rel).stem} —— {cov}/{total} "
-              f"({cov/total:.0%})，无未覆盖成果")
+              f"({cov/total:.0%})，无未覆盖成果{extra}")
 
     sup, atk = argstats
     if sup or atk:
@@ -2102,6 +2317,11 @@ def main():
             if atk.get(rel):
                 bits.append(f"攻击 {atk[rel]}")
             print(f"    · {Path(rel).stem}：{' · '.join(bits)}")
+    if homology:
+        print("  ── 支持边的证据构成（可数的事实先摆出来，跨来源是否独立仍要人判 M-03）──")
+        for rel, anchor, n, ids, n_origin, obits, cbits in homology:
+            print(f"    · {Path(rel).stem} `{anchor}`：{n} 条支持 · "
+                  f"{len(ids)} 份证据 · {n_origin} 个来源标识（{obits}）· 类别 {cbits}")
     return 0
 
 

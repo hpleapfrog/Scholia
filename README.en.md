@@ -120,10 +120,10 @@ this repository satisfies attribution.
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **673** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 576 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
+| 对象 / Objects | **674** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 577 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 300 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 26 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
-| 证据 / Evidence | 145（含作废 / void 5） |
+| 学科 / Subjects | 物理 Physics 300 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 27 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
+| 证据 / Evidence | 146（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -141,18 +141,57 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 
 ## Open questions (the important ones)
 
-1. **Can entry cost drop below 5 minutes?** ← **decides the project's survival**. [`templates/`](templates/README.en.md)
-   and `tools/new_entry.py` are in place (structure to the script, content to the human). On 2026-10-20
-   a real entry was trialled ([area under a velocity–time graph](knowledge/physics/claims/velocity-time-graph-area.en.md)):
-   about 12 minutes from topic selection to a passing `kbcheck` (**agent timing**, including source
-   search, evidence registration and bilingual writing); `new_entry.py` generates the skeleton in under
-   a second. **Still over five minutes; human timing untested** — the toolchain is not the bottleneck,
-   source reading and content writing are.
-2. `已确证` / `争议` / `已推翻` **have never been used** — a single contributor cannot produce them
-   honestly; this is not a gap code can fill.
-3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17), waiting for 3–5 cases); there is no way to express "advanced".
-4. Support-edge independence cannot be computed (sources are free text); goal coverage counts
-   "whether", not "how well".
+1. **Can a bilingual entry drop below 5 minutes?** ← **decides the project's survival**. **The unit of that
+   "5 minutes" is now fixed** (2026-10-20, by the author): **one bilingual pair** — Chinese body + English
+   translation + both registers — **not** one language. [`templates/`](templates/README.en.md)
+   and `tools/new_entry.py` are in place (structure to the script, content to the human). The first trial
+   ([area under a velocity–time graph](knowledge/physics/claims/velocity-time-graph-area.en.md)) left only a
+   total: about 12 minutes — **2.4× the fixed budget**. The second (2026-10-20,
+   [HTTP 451 refuses access for legal reasons](knowledge/computing/claims/http-451-legal-unavailable.en.md))
+   was **stamped per phase**: **13 min 16 s of wall clock for the bilingual pair — at most 2.6× the budget,
+   not met**. Inside that, topic selection → Chinese body finished took **4 min 9 s** (an uninterrupted
+   segment); the **9 min 7 s** from there to the finished index went almost entirely to the **bilingual
+   parallel structure, evidence registration and index counts**; the skeleton took **319 ms** and full
+   validation **2.2 s** — **the toolchain is not the bottleneck** (reproduced). **But that 9 min 7 s contains
+   one session interruption** (its completion timestamp was backfilled), so "at most 8 min 16 s to cut" is an
+   upper bound and the pure-work multiple is **unmeasured**. **Whatever has to go, it lives only in the
+   parallel structure** — and this round falsified one of
+   this library's own assumptions: **"P7→P9 is pure structural copying, so it can be scripted wholesale" is
+   only half true**. The subject index tables come in **7 header shapes**, and 4 of them carry columns
+   (`证据等级`, `位置`+`错误类型`, `目标`+`自检`, `禁忌`) that are **content, not formatting**; the evidence
+   register is split into **3 batch blocks** and its `定位` column is a hand-written reading record — the
+   column that caught this round's wrong title.
+   **Human timing remains unmeasured**: agent timing logs "283 lines read" as 17 seconds, which is not true
+   of a person. Phase data, three findings and the remaining compression scope
+   → [decision record](docs/decisions/entry-cost-phases.en.md)
+2. `已确证` / `争议` / `已推翻` are **all 0**. This is **still not a gap code can fill** — what is missing is
+   **people** (a reviewer, a defender). But code can make the **zero auditable**: `R-SCHEMA-19` now checks
+   each status's structural precondition (`已确证` needs **≥2 distinct handles** across `author` + changelog;
+   `争议` needs **≥2 arguments and ≥1 inbound `攻击` edge**; `已推翻` needs an **attack that is citable**,
+   otherwise write `失据`). Measured: the corpus has 4 `攻击` edges, and all four attacked entries already
+   satisfy "≥2 arguments" — the only thing absent is **an opponent for the attack**. The signature census is
+   the same fact from the other side: `@hpleapfrog` 1,379 times, the other three handles only in historical
+   changelog rows. → [decision record](docs/decisions/status-zero-is-auditable.en.md)
+3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)):
+   **the count has grown from 1 to 7** — "angle in geometry" ×4 (reflection, its teaching method, refraction,
+   its teaching method), "vector" ×2 (force, acceleration), "vector direction of angular velocity" ×1
+   (uniform circular motion); "progression" has 3 instances and the body text even grew a `后续` convention
+   on its own — **the "wait for 3–5 cases" trigger has passed**. Recommended: **option 1** of Issue #17
+   (an optional `外部先修` field; machine-check "was it declared" and "does the same name recur").
+   **A schema change needs its own review and was not made this round**: what is delivered here is an input
+   to that review, not its outcome. → [decision record](docs/decisions/out-of-library-prerequisites.en.md)
+4. Support-edge independence cannot be computed; goal coverage counts "whether", not "how well".
+   **Both sentences were split into a computable half and a human half.** `R-GRAPH-06` computes **the same
+   source identifier** (measured: `教材内建分组教学变体#a3` has **42 support edges · 21 pieces of evidence ·
+   1 source identifier** — the line "the same source repeated 26 times" has grown to 42, still from one book);
+   `R-GRAPH-07` computes **redundancy and reading depth** (all 15 learning outcomes are covered, but
+   **11 of them, 73%, are taught exactly once**). **Cross-source independence still belongs to `M-03`.**
+   This item also produced one **falsely clean** lesson: the first version parsed the sequencing table by
+   column position and reported an unreadable path as "no redundancy problem". That branch now has **two**
+   injected samples, the second one pushing the 覆盖 column off the end of the table, and reverting to the
+   first implementation measurably dropped **the paths reporting single-step coverage from 4 to 2** →
+   [support-count](docs/decisions/support-count-not-strength.en.md) ·
+   [coverage](docs/decisions/coverage-is-not-strength.en.md)
 
 ## Layout
 
