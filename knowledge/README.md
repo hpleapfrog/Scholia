@@ -7,7 +7,7 @@
 <!-- kbcheck:begin -->
 | 学科 | 条目数 |
 |---|---|
-| [物理](physics/README.md) | 348 |
+| [物理](physics/README.md) | 349 |
 | [生活](life/README.md) | 8 |
 | [医学](medicine/README.md) | 8 |
 | [地理](geography/README.md) | 6 |
@@ -18,7 +18,7 @@
 | [法律](law/README.md) | 4 |
 | [数学](mathematics/README.md) | 308 |
 | [事件（顶层）](../events/README.md) | 2 |
-| **合计** | **724** |
+| **合计** | **725** |
 <!-- kbcheck:end -->
 
 > [!NOTE]
