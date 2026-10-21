@@ -10,7 +10,7 @@ scope:
   学科: 物理
   学段: 高中
   适用: students who have done "Work and power" and "Conservation of mechanical energy" and are meeting heat and work in one energy ledger for the first time
-  条件: covers only `ΔU = Q − W` for a closed system, with the OpenStax sign convention (Q positive for net heat in, W positive for net work done by the system); heat engines, cyclic processes, and heat capacity are out of scope
+  条件: covers only `ΔU = Q − W` for a closed system, with the OpenStax sign convention (Q positive for net heat in, W positive for net work done by the system); heat engines and cyclic processes are built in [Heat engines and the Carnot cycle](heat-engine-and-carnot-cycle.en.md); heat capacity is out of scope
 edges:
   先修: ["[Work and power](work-and-power.en.md)", "[Conservation of mechanical energy](conservation-of-mechanical-energy.en.md)"]
   支持: []
@@ -52,7 +52,8 @@ The **first law of thermodynamics** is energy conservation kept as a ledger that
 |---|---|
 | Prerequisite | [Work and power](work-and-power.en.md) — `W = Fd` is where `W = PΔV` comes from; [Conservation of mechanical energy](conservation-of-mechanical-energy.en.md) — first learn to keep an energy ledger in a closed system, then the first law adds heat to the same ledger |
 | Follow-up | [Second law of thermodynamics](thermodynamic-second-law.en.md) — the first law balances the books, not the direction of the process |
-| Recorded gap | **Internal energy (microscopic definition)**, **heat capacity and specific heat**, **heat engines and efficiency** are not built in this repo; "heat" as a mode of energy transfer has no node of its own |
+| Follow-up | [Heat engines and the Carnot cycle](heat-engine-and-carnot-cycle.en.md) — the first law applied to a cycle: `ΔU = 0` ⇒ `W = Q_h − Q_c` |
+| Recorded gap | **Internal energy (microscopic definition)** and **heat capacity and specific heat** are not built in this repo; "heat" as a mode of energy transfer has no node of its own |
 
 ## Argument
 
@@ -82,3 +83,4 @@ The **first law of thermodynamics** is energy conservation kept as a ledger that
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-21 | Entry created; first node of the 选必三 "laws of thermodynamics" chapter, attached to the energy thread "work and power → conservation of mechanical energy" | written after reading m54305 in full (ev-156) | @hpleapfrog |
+| 2026-10-21 | Added the follow-up link to "Heat engines and the Carnot cycle" and removed the now-built "heat engines and efficiency" from the gap row | synced after that entry was added in batch 29 | @hpleapfrog |

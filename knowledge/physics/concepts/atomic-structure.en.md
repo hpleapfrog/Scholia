@@ -5,14 +5,14 @@ title: "Atomic structure"
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-21
 scope:
   学科: 物理
   学段: 高中
   范围: atomic physics
 
 edges:
-  先修: []
+  先修: ["[Planck's quantum hypothesis](planck-quantum-hypothesis.en.md)"]
   支持: []
   攻击: []
 evidence: [ev-035]
@@ -54,9 +54,10 @@ Electrons can only occupy **discrete energy levels**. **Jumping up = absorbing e
 > **Before entering this section the textbook explicitly requires first reviewing "quantization"** (ev-035, in-text hint):
 > "What is quantization? Give examples of quantum and non-quantum concepts."
 >
-> This repo currently **has no** "energy quantization" knowledge point, so `先修` is left empty.
-> This is again **a case of a missing prerequisite node in the repo** — the same kind as the "wave" case,
-> **but this time it has not been fixed, because that node has not accumulated enough teaching methods.**
+> This repo previously **had no** "energy quantization" knowledge point, so `先修` was left empty.
+> On 2026-10-21 [Planck's quantum hypothesis](planck-quantum-hypothesis.en.md)
+> (blackbody radiation · `E = nhf`) was created and the prerequisite was attached;
+> that new node **still has no teaching-method entries**, so its teaching record remains to be filled in.
 
 ## Argument
 
@@ -76,3 +77,4 @@ Electrons can only occupy **discrete energy levels**. **Jumping up = absorbing e
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the entry (#8 batch conversion · batch 3) | Issue #8 | @hpleapfrog |
+| 2026-10-21 | changed `先修` from empty to "Planck's quantum hypothesis" (energy quantization) and rewrote the NOTE saying the repo had no such node | new entry kb:physics:planck-quantum-hypothesis created; the textbook requires reviewing quantization first (ev-035) | @hpleapfrog |

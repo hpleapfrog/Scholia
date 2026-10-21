@@ -10,7 +10,7 @@ scope:
   学科: 物理
   学段: 高中
   适用: students who have done "Atomic nucleus" and need to write the three decay equations and use half-life in estimates
-  条件: covers alpha, beta-minus, and gamma decay, conservation laws, and half-life only; beta-plus, electron capture, the antineutrino distinction, binding energy, and fission/fusion are out of scope
+  条件: covers alpha, beta-minus, and gamma decay, conservation laws, and half-life only; beta-plus, electron capture, and the antineutrino distinction are out of scope, and binding energy, fission/fusion, and medical applications have their own entries
 edges:
   先修: ["[Atomic nucleus](atomic-nucleus.en.md)"]
   支持: []
@@ -59,7 +59,9 @@ license: CC-BY-SA-4.0
 | Relation | Entry |
 |---|---|
 | Prerequisite | [Atomic nucleus](atomic-nucleus.en.md) — knowing that the nucleus is made of protons and neutrons is what makes the changes in `A` and `Z` readable |
-| Recorded gap | **β⁺ decay and electron capture**, **the antineutrino distinction**, **binding energy and mass defect**, **nuclear fission and fusion**, **medical applications** are not built in this repo |
+| Related | [Binding energy and mass defect](binding-energy-and-mass-defect.en.md) — the energy released in alpha decay is the mass difference between parent and daughter; the β+ electron bookkeeping is still missing |
+| Related | [Ionizing radiation in medicine](ionizing-radiation-in-medicine.en.md) — PET uses the two `0.511 MeV` photons from β⁺ annihilation; the full β⁺ equation and energy accounting are still missing |
+| Recorded gap | **the full β⁺ decay equation and energy accounting**, **electron capture**, **the antineutrino distinction** are not built in this repo |
 
 ## Argument
 
@@ -73,7 +75,7 @@ license: CC-BY-SA-4.0
   3. gamma: excited nucleus → ground state + photon → both `A` and `Z` unchanged; only the energy state changes
   4. conservation lets you recover an unknown nucleus: in the textbook's Cs-137 → Ba-137 example, the daughter's `Z = 56` fixes the parent's `Z = 55`
 - **Evidence**: ev-158
-- **Attacked**: the textbook writes the beta products as `e + ν` and does not distinguish the antineutrino; for β⁺ it says only `may also emit a positron` and gives no equation. This entry covers β⁻ only and records β⁺ and the antineutrino as gaps. Also, the alpha-decay energy example substitutes `Δm = 0.0005631 u` as `0.005631 u`, a factor of 10; this entry does not use that number
+- **Attacked**: the textbook writes the beta products as `e + ν` and does not distinguish the antineutrino; for β⁺ it says only `may also emit a positron` and gives no equation. This entry covers β⁻ only; the full β⁺ equation and threshold are still missing ([ionizing radiation in medicine](ionizing-radiation-in-medicine.en.md) uses only the annihilation photons), and the antineutrino is not distinguished either. Also, the alpha-decay energy example substitutes `Δm = 0.0005631 u` as `0.005631 u`, a factor of 10; this entry does not use that number
 - **Attribution**: @hpleapfrog · 2026-10-21
 
 ### K2 · The half-life is a statistical law, not the lifetime of one nucleus (no attack yet)
@@ -90,3 +92,5 @@ license: CC-BY-SA-4.0
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-21 | Entry created; second node of the 选必三 "atomic nucleus" chapter, following "atomic nucleus" and placing the three decays and the half-life under one statistical law | written after reading m54580 and m63183 in full (ev-158/ev-159) | @hpleapfrog |
+| 2026-10-21 | Backfilled after "Binding energy and mass defect" and "Nuclear fission and fusion" were built: one related relation added and both items removed from the gap table | new this round: ev-185/ev-186 | @hpleapfrog |
+| 2026-10-21 | Backfilled after "Ionizing radiation in medicine" was built: one related relation added; "medical applications" removed from the gap table, and the β⁺ gap reworded as "full equation and energy accounting" | new this round: ev-187/ev-188/ev-189 | @hpleapfrog |

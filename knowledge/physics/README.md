@@ -10,20 +10,69 @@ graph LR
   AC["加速度"] --> UCM["匀速圆周运动"]
   UCM --> RA["角加速度与转动运动学"] --> TQ["力矩"]
   W --> M["电磁波谱"]
+  W --> PQ["普朗克量子假设"]
+  M --> PQ
+  PQ --> PE["光电效应"]
+  PE --> WPD["波粒二象性"]
+  W --> WPD
+  PQ --> AT["原子结构"]
   F["参考系"] --> S["速度与速率"] --> P["位置-时间图"]
   R["电阻与欧姆定律"]
   N["力与运动（初中）"]
   I["惯性"]
   L["光的反射"]
+  W --> RF["光的折射"] --> LID["光的干涉与衍射"]
+  RF --> TIR["全反射"]
+  W --> LID
+  W --> POL["光的偏振"]
+  RF --> POL
   E["机械能守恒"]
   K["开普勒定律"]
-  AT["原子结构"]
   WP["功与功率"]
   CH["电荷"] --> CL["库仑定律"] --> EF["电场强度"] --> EP["电势能与电势"]
   E --> EP
+  EP --> C["电容"]
+  EF --> C
+  EP --> CPM["带电粒子在电场中的运动"]
+  EF --> CPM
+  PM --> CPM
+  NSL --> CPM
+  CH --> EPU["静电的防止与利用"]
+  EF --> EPU
   WP --> T1["热力学第一定律"] --> T2["热力学第二定律"]
+  T2 --> HE["热机与卡诺循环"]
+  T2 --> SE["熵的统计解释"]
   E --> T1
   AT --> AN["原子核"] --> RD["放射性衰变"]
+  AN --> BE["结合能与质量亏损"] --> FF["核裂变与核聚变"]
+  RD --> IRM["医学中的电离辐射"]
+  EF --> MF["磁场"] --> AF["安培力"]
+  MF --> LF["洛伦兹力"]
+  UCM --> LF
+  LF --> MSC["质谱仪与回旋加速器"]
+  EF --> MSC
+  MF --> FL["磁通量"] --> EI["电磁感应定律"]
+  R --> EI
+  EI --> SI["自感与互感"]
+  EI --> EC["涡流与动生电动势"]
+  LF --> EC
+  EI --> AC2["交变电流"] --> TR["变压器"] --> PT["远距离输电"]
+  AC2 --> RMS["有效值（RMS）"] --> RX["感抗与容抗"]
+  SI --> RX
+  C --> RX
+  R --> PT
+  S --> PM["抛体运动"]
+  AC --> PM
+  NSL["牛顿第二定律"] --> SHM["简谐运动"] --> SP["单摆"]
+  SHM --> PES["简谐运动的相位与能量"] --> DFO["阻尼振动与受迫振动"]
+  R --> EPW["电功率"]
+  R --> SER["串联与并联"]
+  R --> CCL["闭合电路欧姆定律与内阻"]
+  SER --> CCL
+  EPW --> CCL
+  EPW --> EWJ["电功与焦耳定律"]
+  R --> EWJ
+  EWJ --> ERS["能源与可持续发展"]
 ```
 
 | 知识点 | 学段 | 先修 | 挂在其下的教法 | 误解 |
@@ -38,15 +87,31 @@ graph LR
 | [速度与速率](concepts/速度与速率.md) | 高中 | 参考系 | BL/OL · AL 共 2 条 | — |
 | [位置-时间图](concepts/位置-时间图.md) | 高中 | 速度与速率 | BL/OL · AL 共 2 条 | — |
 | [加速度](concepts/加速度.md) | 高中 | **速度与速率** | OL · AL 共 2 条 | — |
+| [抛体运动](concepts/抛体运动.md) | 高中 | **速度与速率** · **加速度**（正交分解本身归数学，库里没有） | — | — |
+| [简谐运动](concepts/简谐运动.md) | 高中 | **牛顿第二定律**（回复力经 `a = F/m` 决定运动） | — | — |
+| [单摆](concepts/单摆.md) | 高中 | **简谐运动** · **力（高中）**（重力的分解） | — | — |
+| [简谐运动的相位与能量](concepts/简谐运动的相位与能量.md) | 高中 | **简谐运动**（`F = −kx`、`T = 2π√(m/k)`） | — | — |
+| [阻尼振动与受迫振动](concepts/阻尼振动与受迫振动.md) | 高中 | **简谐运动的相位与能量**（能量耗散与共振的基准） | — | — |
+| [电功率](concepts/电功率.md) | 高中 | **电阻与欧姆定律**（`P = V²/R`、`P = I²R` 由 `V = IR` 代入） | — | — |
+| [串联与并联](concepts/串联与并联.md) | 高中 | **电阻与欧姆定律**（各电阻上的 `V = IR` 与等效电阻的定义） | — | — |
+| [闭合电路欧姆定律与内阻](concepts/闭合电路欧姆定律与内阻.md) | 高中 | **电阻与欧姆定律** · **串联与并联** · **电功率** | — | — |
+| [电功与焦耳定律](concepts/电功与焦耳定律.md) | 高中 | **电功率** · **电阻与欧姆定律** | — | — |
+| [能源与可持续发展](concepts/能源与可持续发展.md) | 高中 | **电功与焦耳定律** | — | — |
 | [光的反射](concepts/光的反射.md) | 高中 | —（前置是**初中几何**，不归物理） | BL · AL 共 2 条 | — |
 | [声速与频率](concepts/声速与频率.md) | 高中 | **波** | BL · AL 共 2 条 | — |
 | [机械能守恒](concepts/机械能守恒.md) | 高中 | — | BL · OL 共 2 条 | 运动物体自然慢下来 |
 | [电磁波谱](concepts/电磁波谱.md) | 高中 | **波** | BL · OL/AL 共 2 条 | 可见光与不可见辐射有本质不同 |
+| [普朗克量子假设](concepts/普朗克量子假设.md) | 高中 | **波** · **电磁波谱** | — | — |
+| [光电效应](concepts/光电效应.md) | 高中 | **普朗克量子假设** | — | — |
+| [波粒二象性](concepts/波粒二象性.md) | 高中 | **光电效应** · **波** | — | — |
 | [开普勒定律](concepts/开普勒定律.md) | 高中 | — | OL · AL 共 2 条 | — |
 | [万有引力定律](concepts/万有引力定律.md) | 高中 | **开普勒定律** | OL · AL 共 2 条 | 混淆 G 与 g |
-| [原子结构](concepts/原子结构.md) | 高中 | —（**前置是「量子化」，库里还没有**） | OL 共 3 条 | — |
+| [原子结构](concepts/原子结构.md) | 高中 | **普朗克量子假设**（能量量子化；2026-10-21 接上） | OL 共 3 条 | — |
 | [功与功率](concepts/功与功率.md) | 高中 | —（与机械能守恒的关系**尚未定**） | OL · AL 共 2 条 | — |
 | [光的折射](concepts/光的折射.md) | 初中 / 高中 | **波** | BL · OL · AL 共 3 条 | — |
+| [全反射](concepts/全反射.md) | 高中 | **光的折射** | — | — |
+| [光的干涉与衍射](concepts/光的干涉与衍射.md) | 高中 | **波** · **光的折射** | — | — |
+| [光的偏振](concepts/光的偏振.md) | 高中 | **波** · **光的折射**（布儒斯特定律用 `n`） | — | — |
 | [动量和冲量](concepts/动量和冲量.md) | 高中 | **牛顿第二定律** | AL 共 1 条 | — |
 | [动量守恒定律](concepts/动量守恒定律.md) | 高中 | **动量和冲量** | OL · AL 共 2 条 | — |
 | [弹性碰撞与非弹性碰撞](concepts/弹性碰撞与非弹性碰撞.md) | 高中 | **动量守恒定律** · **机械能守恒** | — | — |
@@ -58,10 +123,648 @@ graph LR
 | [库仑定律](concepts/库仑定律.md) | 高中 | **电荷**（教材未写「Review electric charge」，依据是定律定义——见条目 K1） | — | — |
 | [电场强度](concepts/电场强度.md) | 高中 | **库仑定律** | — | — |
 | [电势能与电势](concepts/电势能与电势.md) | 高中 | **电场强度** · **机械能守恒**（势能只在差值上记账） | — | — |
+| [电容](concepts/电容.md) | 高中 | **电势能与电势** · **电场强度**（`C = Q/V` 与匀强场 `E = V/d`） | — | — |
+| [带电粒子在电场中的运动](concepts/带电粒子在电场中的运动.md) | 高中 | **电势能与电势** · **电场强度** · **抛体运动** · **牛顿第二定律** | — | — |
+| [静电的防止与利用](concepts/静电的防止与利用.md) | 高中 | **电场强度** · **电荷** | — | — |
 | [热力学第一定律](concepts/热力学第一定律.md) | 高中 | **功与功率** · **机械能守恒**（`W = PΔV` 与能量记账） | — | — |
 | [热力学第二定律](concepts/热力学第二定律.md) | 高中 | **热力学第一定律** | — | — |
+| [热机与卡诺循环](concepts/热机与卡诺循环.md) | 高中 | **热力学第一定律** · **热力学第二定律**（循环 `ΔU = 0`；第二定律的第二种表述） | — | — |
+| [熵的统计解释](concepts/熵的统计解释.md) | 高中 | **热力学第二定律**（`ΔS = Q/T` 与自发方向；本条给它微观基础） | — | — |
 | [原子核](concepts/原子核.md) | 高中 | **原子结构** | — | — |
 | [放射性衰变](concepts/放射性衰变.md) | 高中 | **原子核** | — | — |
+| [结合能与质量亏损](concepts/结合能与质量亏损.md) | 高中 | **原子核**（核素记号与质量数；`E = (Δm)c²`） | — | — |
+| [核裂变与核聚变](concepts/核裂变与核聚变.md) | 高中 | **结合能与质量亏损** · **原子核**（铁峰与 `A`、`Z` 记账） | — | — |
+| [医学中的电离辐射](concepts/医学中的电离辐射.md) | 高中 | **放射性衰变**（半衰期、活度与 β⁺ 湮没） | — | — |
+| [磁场](concepts/磁场.md) | 高中 | **电场强度**（教材以电场类比引出磁场） | — | — |
+| [安培力](concepts/安培力.md) | 高中 | **磁场** | — | — |
+| [洛伦兹力](concepts/洛伦兹力.md) | 高中 | **磁场** · **匀速圆周运动**（垂直于速度的恒力 ⇒ 匀速圆周运动） | — | — |
+| [质谱仪与回旋加速器](concepts/质谱仪与回旋加速器.md) | 高中 | **洛伦兹力** · **电场强度**（速度选择器的 `qE`；回旋加速器的 `T` 与 `r`） | — | — |
+| [磁通量](concepts/磁通量.md) | 高中 | **磁场** | — | — |
+| [电磁感应定律](concepts/电磁感应定律.md) | 高中 | **磁通量** · **电阻与欧姆定律**（`I = ε/R`） | — | — |
+| [自感与互感](concepts/自感与互感.md) | 高中 | **电磁感应定律**（`ε = −NΔΦ/Δt`、楞次定律） | — | — |
+| [涡流与动生电动势](concepts/涡流与动生电动势.md) | 高中 | **电磁感应定律** · **洛伦兹力**（`F = qvB`） | — | — |
+| [交变电流](concepts/交变电流.md) | 高中 | **电磁感应定律** · **匀速圆周运动**（`ω`、`v = rω`、`T = 2π/ω`） | — | — |
+| [有效值（RMS）](concepts/有效值.md) | 高中 | **交变电流**（正弦式 `V = V0 sin 2πft`、峰值与频率） | — | — |
+| [感抗与容抗](concepts/感抗与容抗.md) | 高中 | **交变电流** · **有效值（RMS）** · **自感与互感** · **电容**（`X_L = 2πfL`、`X_C = 1/(2πfC)`） | — | — |
+| [变压器](concepts/变压器.md) | 高中 | **电磁感应定律** · **交变电流**（必须有变化的磁通） | — | — |
+| [远距离输电](concepts/远距离输电.md) | 高中 | **变压器** · **电阻与欧姆定律**（`P_loss = I²R_wire`） | — | — |
+
+> [!IMPORTANT]
+> **第 34 批（2026-10-21）补上有效值（RMS）、感抗与容抗——优先清单第 8 项的两块完成，选必二第 3 章「交变电流」仍差三相电，保持 🟡。**
+>
+> ```
+> 交变电流 → 有效值（RMS） → 感抗与容抗 ← 自感与互感
+>                                        ← 电容
+> ```
+>
+> 「有效值（RMS）」讲 `V = V0 sin 2πft`、`P_ave = ½I0V0`、`I_rms = I0/√2`、`V_rms = V0/√2`、
+> `P_ave = I_rmsV_rms = I_rms²R = V_rms²/R`、纯电阻的峰值功率 `P0 = 2P_ave`，以及用有效值算输电损耗；
+> `√2` 的均方根推导、平均值与有效值的区别由本库补写。
+> 「感抗与容抗」讲 `X_L = 2πfL`、`X_C = 1/(2πfC)`、电感电压超前 90°、电容电压滞后 90°、
+> 串联 RLC 的 `Z = √(R² + (X_L − X_C)²)`、`f0 = 1/(2π√(LC))`、`cosφ = R/Z` 与 `P_ave = I_rmsV_rms cosφ`；
+> `X_L`／`X_C` 的微积分推导与相位超前／滞后判据由本库补写。
+> 复算：`170 V`、`P0 = 120 W`、`500 A`、`250 kW`、`0.250%`、`4000 A`、`16.0 MW`、`16.0%`；
+> `X_L(60) = 1.131 Ω`、`X_L(10⁴) = 188.5 Ω`、`X_C(60) = 530.5 Ω`、`X_C(10⁴) = 3.183 Ω`、
+> `Z(60) = 530.9 Ω`、`Z(10⁴) = 189.6 Ω`、`f0 = 1.2995 kHz`、`cosφ = 0.07535`、`φ = 85.68°`、
+> `P(60) = 2.043 W`、`P_res = 360 W`。
+>
+> **来源**：OpenStax《College Physics 2e》第 20 章 `m42348`（Alternating Current versus Direct Current）
+> 与第 23 章 `m42427`（Reactance, Inductive and Capacitive）、`m42431`（RLC Series AC Circuits），
+> 三模块都通读了 cnxml 源文件；许可按仓库的 **CC BY-NC-SA 4.0** 从严处理（openstax.org 同书页面标 CC BY 4.0），
+> 只引用定位与短引用（ev-194/ev-195）。
+>
+> **原文缺陷**：`m42348` 把 `average` 与 `rms` 混用、`√2` 无推导、「AC 电击更危险」无引用；
+> `m42427` 把电抗叫 `effective resistance`、`X_L ∝ f` 的解释把频率与变化率混为一谈；
+> `m42431` 的 `7.50 Hz` 习题答案对应约 1.0 kHz，且 (c) 的 `26.4 W` 是视在功率而不是平均功率；
+> 术语表把功率因数定义成「功率比最大值小的量」。
+>
+> **还缺**：三相电——**现有 CC BY 教材（CP2e 与 University Physics Vol 2）都没有对应模块**，
+> 需要用户决定是否接受其他可核来源；非正弦有效值、真有效值仪表、并联交流网络、复数阻抗与相量法、
+> 品质因数与通带、功率因数补偿仍记在条目缺口表。
+
+> [!IMPORTANT]
+> **第 33 批（2026-10-21）补上自感与互感、涡流与动生电动势——优先清单第 7 项完成，选必二第 2 章「电磁感应」转 🟢。**
+>
+> ```
+> 磁通量 → 电磁感应定律 → 自感与互感
+>                       ├→ 涡流与动生电动势 ← 洛伦兹力
+>                       └→ 交变电流 → 变压器 → 远距离输电
+> ```
+>
+> 「自感与互感」讲 `ε = −L ΔI/Δt`、`L = NΔΦ/ΔI`、螺线管 `L = μ0N²A/ℓ`、互感 `ε₂ = −M ΔI₁/Δt`、
+> 亨利与 `E_ind = ½LI²`；「涡流与动生电动势」讲 `ε = Bℓv` 的洛伦兹力与法拉第两条路线、
+> 相对运动、涡流、磁阻尼与开槽/绝缘体，以及天平、分选、探测器、制动与电磁炉。
+> 复算：`0.632 mH`、`0.284 J`、`1.0×10⁴ V`、`31.25 kV / 125 kJ / 1.56 MW`、`1.97×10⁻² H`、
+> `200 H` 与 `5.00 °C`；`150 μV`、`7.80 kV`、`0.630 V`、`1.44 V`、`2.22 m/s`、`1.98×10² T`、`θ = 24.2°`。
+>
+> **来源**：OpenStax《College Physics 2e》第 23 章的 `m42420`（Inductance）、`m42400`（Motional Emf）、
+> `m42404`（Eddy Currents and Magnetic Damping），三模块都通读了 cnxml 源文件；
+> 许可按仓库的 **CC BY-NC-SA 4.0** 从严处理（openstax.org 同书页面标 CC BY 4.0，两处不一致），
+> 只引用定位与短引用（ev-192/ev-193）。
+>
+> **原文缺陷**：`m42420` 的 Section Summary 与术语表把 `inductance` 定义成互感；
+> 1 H 例题把绝对值与负号混用；公式用有限差而非导数；地感线圈与金属探测器两句无引用。
+> `m42400` 正文只给垂直情形的 `ε = Bℓv`，习题却要求 `Bℓv sinθ`；系绳卫星题 (a) 的 `10.0 N`
+> 与 (b) 的能量对应 `78 kW`，与题给 `5.00 kV × 10.0 A = 50 kW` 相差 `1.56` 倍。
+> `m42404` 术语表把涡流限定为「动生电动势引起」；电磁炉「必须铁磁性」说过头；「阻尼正比于速度」未推导。
+>
+> **还缺**：RL 暂态、感抗 `X_L = ωL`、电感串并联、磁能密度、互感系数的几何计算、磁芯饱和与涡流损耗的定量模型、
+> 电磁驱动（异步电动机、直线电机）、涡流制动的工程设计、霍尔电压与载流子符号的定量关系；
+> 有效值/RMS、电感电容对交流的影响、三相电仍记在「交变电流」的缺口表，所以第 3 章仍是 🟡
+> （第 34 批已补前两项，只剩三相电）。
+
+> [!IMPORTANT]
+> **第 32 批（2026-10-21）补上简谐运动的相位与能量、阻尼振动与受迫振动——优先清单第 10 项完成，选必一第 2 章「机械振动」转 🟢。**
+>
+> ```
+> 简谐运动 → 简谐运动的相位与能量 → 阻尼振动与受迫振动
+> ```
+>
+> 「简谐运动的相位与能量」讲匀速圆周运动投影 `x = X cos θ`、`θ = ωt`、`ω = 2π/T`，
+> 相位与初相 `φ`（本库补写）、相位差与时间差 `Δt = |Δφ|/ω`（本库补写），
+> 以及 `½mv² + ½kx² = ½kX²`、`v = ±ω√(X² − x²)`、`v_max = ωX`、`a_max = ω²X`（本库补写）。
+> 「阻尼振动与受迫振动」讲三种阻尼、受迫振动、固有频率与共振；
+> 阻尼越小共振峰越高越窄、越大越宽越低；能量输入补偿耗散时受迫振动可等幅。
+> 复算：`v_max = 0.852 m/s`、`E = 19.74 J`、`x/X = √3/2`、`d = 1.59 m`、每周期 3% 振幅损失对应 `≈5.9%` 能量损失、
+> `384 J`、`5.00×10⁵ J` 与 `1.20×10³ s`、悬挂 `141 J`。
+>
+> **来源**：OpenStax《College Physics 2e》第 16 章 Oscillatory Motion and Waves 的
+> `m42244`（Energy and the Simple Harmonic Oscillator）、`m42245`（Uniform Circular Motion and Simple Harmonic Motion）、
+> `m42246`（Damped Harmonic Motion）、`m42247`（Forced Oscillations and Resonance），四个模块都通读了 cnxml 源文件；
+> 许可按仓库的 **CC BY-NC-SA 4.0** 从严处理（openstax.org 同书页面标 CC BY 4.0，两处不一致），
+> 只引用定位与短引用（ev-190/ev-191）。
+>
+> **原文缺陷**：`m42244` 与 `m42245` 只有初相为零的余弦式，没有相位差与时间差；单摆能量式的 `ω` 是角速度 `dθ/dt`，
+> 与圆运动式的角频率 `2π/T` 同符号不同义；AP 题把 `½kX²` 叫 `internal energy`；Section Summary 把 `v_max` 排成 `Xkm`。
+> `m42246` 正文说临界阻尼 `may overshoot ... only once`，图注与术语表却说 `without overshooting`；
+> 正文说欠阻尼「更快回到平衡」，与临界阻尼「最快」的定义冲突；AP 题答案 `1.698 m` 与教材自己的公式 `3.40 m` 相差约 2 倍。
+> 塔科马桥的「风以共振频率驱动」因果叙述本库未核实，不当作已证事实。
+>
+> **还缺**：相位差的实验测量（李萨如图形）、不同频率的合成（拍）、阻尼方程与指数衰减时间常数、品质因数 `Q`、
+> 共振曲线的定量公式与半高宽、受迫振动的相位滞后、塔科马桥工程调查原始报告；
+> 单摆的大角度周期修正、圆锥摆、复摆仍记在「单摆」条目的缺口表。
+
+> [!IMPORTANT]
+> **第 31 批（2026-10-21）补上医学中的电离辐射——优先清单第 6 项完成，选必三第 5 章「原子核」转 🟢。**
+>
+> ```
+> 放射性衰变 → 医学中的电离辐射
+> ```
+>
+> 「医学中的电离辐射」讲示踪与放射性药物、`99mTc` 的 `0.142 MeV` γ 与 `6.0 h` 半衰期、
+> γ 相机 / SPECT / PET（β⁺ 湮没的两个 `0.511 MeV` 反向光子与符合探测）、
+> 吸收剂量 `Gy` 与等效剂量 `Sv`（`H = D × RBE`）、本底与诊断剂量、放疗的治疗比与几何汇聚、以及屏蔽/距离/时间防护。
+> 一次腹部 CT 相当于约 `3.6` 年本底、一张胸片约 `2.6` 天、`50–80 Sv` 按每次 `2 Sv` 折合 `25–40` 次，
+> 以及 `0.75 Sv` 对 `15 mSv` 的 `50` 倍差距，都是本库复算。
+>
+> **来源**：OpenStax《College Physics 2e》第 32 章 Medical Applications of Nuclear Physics 的
+> `m42649`（Diagnostics and Medical Imaging）、`m42652`（Biological Effects of Ionizing Radiation）、
+> `m42654`（Therapeutic Uses of Ionizing Radiation），三个模块都通读了 cnxml 源文件；
+> 许可按仓库的 **CC BY-NC-SA 4.0** 从严处理（openstax.org 页面标 CC BY 4.0，两处不一致），
+> 只引用定位与短引用（ev-187/ev-188/ev-189）。
+>
+> **原文缺陷**：m42654 把前列腺籽源写成 `135I`（6 个月）与 `103Pd`（3 个月），这组同位素/半衰期配对无法由已核材料内部核实，
+> 本条不采用；m42652 正文说「每张牙片约 5 mSv」而同一模块的表写 `0.01 mSv`，相差约 500 倍；
+> 低剂量「小于 100 mSv」与中剂量「从 0.1 Sv 起」在边界重叠；`80+ Sv` 的一列没有说明分次与局部；
+> 「200 rem」与 Gy 混用；m42649 把湮没能量说成来自「一个电子或正电子质量」，实际是两个静质量。
+>
+> **还缺**：X 射线的产生（轫致辐射与特征 X 射线）、放射免疫分析的定量、MRI 的自旋/弛豫/梯度编码、
+> 放射生物学机制与修复动力学、具体治疗方案与剂量分割、核事故与应急、食品辐照、医用同位素生产与放射性废物；
+> 粒子与宇宙（标准模型）不在本页的章级清单里，仍记在「原子核」「结合能与质量亏损」条目的缺口表。
+
+> [!IMPORTANT]
+> **第 30 批（2026-10-21）补上结合能与质量亏损、核裂变与核聚变——优先清单第 6 项大部分完成，选必三第 5 章「原子核」仍为 🟡（医学应用缺）。**
+>
+> ```
+> 原子核 → 结合能与质量亏损 → 核裂变与核聚变
+> 原子核 → 核裂变与核聚变
+> ```
+>
+> 「结合能与质量亏损」讲 `BE = Δm c²`、中性原子质量公式、α 粒子的 `0.030378 u → 28.3 MeV → 7.07 MeV/核子`、
+> `BE/A` 曲线与铁峰，以及重核为什么需要更多中子；`Q = ΔBE` 的反应能记账与两位小数复算是本库补写。
+> 「核裂变与核聚变」讲液滴模型、链式反应与临界质量、每次裂变 `200 MeV`（`0.2147 u`、`0.091%`）、
+> 太阳 p-p 链 `26.7 MeV`（`0.711%`）、D-T `17.6 MeV`、库仑势垒与量子隧穿，以及铁峰两侧的放能方向；
+> `k` 因子、每克聚变约为裂变的 `4.1` 倍、`1.5×10⁷ K` 对应约 `1.3 keV` 的平均热动能均为本库复算。
+>
+> **来源**：OpenStax《Physics》第 22 章 `m54574`（Nuclear Fission and Fusion，CC BY 4.0，ev-185）；
+> OpenStax《College Physics 2e》第 31 章 `m42640`（Binding Energy，许可按仓库的 CC BY-NC-SA 4.0 从严处理，ev-186）。
+> 两个模块都通读了 cnxml 源文件，条目只引用定位与短引用。
+>
+> **原文缺陷**：m54574 正文把裂变写成 `the splitting of an atomic bond`，与术语表矛盾；Section Summary 把聚变放能
+> 说成「强核力减小」，与正文的 `BE/A` 解释冲突；每克 `3 到 4 倍` 按 D-T 复算约 `4.1` 倍；压水堆的「水烧干即停堆」
+> 只适用于负空泡系数堆型；聚变堆一节带宣传口吻且引用不全。m42640 把「`BE/A` 越大越稳定」当充分条件；
+> 「最常见元素结合最紧」忽略氢；β⁺ 的电子补偿写 `0.511 MeV`，按原子质量应为 `1.022 MeV`（已对照 `m42633`
+> 的 `Δm=m(parent)−[m(daughter)+2m_e]` 核实）。
+>
+> **还缺**：医学应用（本章剩余的缺口）、反应堆中子动力学与临界计算、裂变产物产额与衰变热、增殖堆与后处理、
+> 惯性约束聚变与点火、托卡马克约束的定量、聚变 `Q` 值、核武器物理、核壳层模型与半经验质量公式、天体核合成。
+
+> [!IMPORTANT]
+> **第 29 批（2026-10-21）补上热机、卡诺循环与熵的统计解释——优先清单第 5 项完成，选必三第 3 章「热力学定律」转 🟢。**
+>
+> ```
+> 热力学第二定律 → 热机与卡诺循环
+> 热力学第二定律 → 熵的统计解释
+> ```
+>
+> 「热机与卡诺循环」讲循环过程 `W = Q_h − Q_c`、效率 `Eff = 1 − Q_c/Q_h`、
+> 第二定律的第二种表述、奥托循环的 `P–V` 图，以及卡诺循环与 `Eff_C = 1 − T_c/T_h`；
+> 燃煤电厂的 40.8% / 1180 MW / 3.7×10⁸ kg CO₂ 与压水堆的 47.6% 均已复算。
+> 「熵的统计解释」讲宏观态与微观态、等概率假设、5 枚与 100 枚硬币、气体例子，
+> 以及 `S = k ln W` 与 `ΔS = k ln(W_f/W_i)`；第二定律因此是统计规律，不是绝对禁令。
+>
+> **来源**：CP2e 第 15 章 `m42234`（Heat Engines and Their Efficiency）、
+> `m42235`（Carnot's Perfect Heat Engine）、`m42238`（Statistical Interpretation of Entropy），
+> 许可按仓库的 **CC BY-NC-SA 4.0** 从严处理，只引用定位与短引用（ev-183/ev-184）。
+>
+> **本库补写**：卡诺比值 `Q_c/Q_h = T_c/T_h` 由可逆循环的熵守恒推出（教材只给结论）；
+> `ΔS = k ln(W_f/W_i)`、概率归一化 `P = W/Ω` 与「熵减概率约 `e^(−ΔS/k)`」也是本库补的。
+>
+> **原文缺陷**：5 枚硬币表把「3 正 2 反」的 5 个微观态重复了一遍（计数 10 正确）；
+> `this expression for s` 用小写 s；「反向熵减约 1/90」是 60/40 宏观态的绝对概率，不是 `W_60/W_50`；
+> 「`ΔS` 为 `10^-21 J/K` 对应 1/10^30」按复算约为 1/3×10^31；「所有 Q 都是正的……Qc 前面带负号」自相矛盾；
+> 喝水鸟不是卡诺热机；「史上最高约 70%」没有来源。
+>
+> **还缺**：热泵与制冷机的 COP、实际循环（柴油/朗肯/布雷顿）的定量、卡诺定理的严格证明、
+> 奥托循环的压缩比公式、自由能、`S = k ln W` 与 `ΔS = Q/T` 的等价性证明。
+
+> [!IMPORTANT]
+> **第 28 批（2026-10-21）补上质谱仪与回旋加速器——优先清单第 22 项完成，选必二第 1 章「安培力与洛伦兹力」转 🟢。**
+>
+> ```
+> 洛伦兹力 → 质谱仪与回旋加速器
+> 电场强度 → 质谱仪与回旋加速器
+> ```
+>
+> 「质谱仪与回旋加速器」讲交叉场速度选择器（`qE = qvB` ⇒ `v = E/B`，与 `q`、`m`、电荷符号都无关）、
+> 质谱仪的三段结构（离子源 → 速度选择器 → 均匀磁场）与 `r ∝ m`（严格说是质荷比）、
+> 回旋加速器的 D 形盒与固定频率（`T = 2πm/(qB)`、`f = qB/(2πm)`），
+> 以及同步加速器为什么要同时调频调场。教材的氧-16/氧-18 分离 `0.173 m` 与质子回旋频率 `18.3 MHz`
+> 均已复算。`K_max = q²B²R²/(2m)`、`r = (m/q)(E/B²)`、同位素分离 `2Δr` 与相对论失步的推理
+> 是本库补写，记在 K2/K3。顺带修正「洛伦兹力」中把周期列为缺口的旧记录——周期在 K2 已经推导。
+>
+> **来源**：CP2e 第 22 章 `m42375`（Force on a Moving Charge in a Magnetic Field）与 `m42388`
+> （More Applications of Magnetism）、第 28 章 `m42718`（Accelerators Create Matter from Energy），
+> 许可按仓库的 **CC BY-NC-SA 4.0** 从严处理，只引用定位与短引用（ev-182）。
+>
+> **Source defects recorded**: m42718 calls Van de Graaff a "Dutch physicist" (he was American, born in
+> Tuscaloosa, Alabama); its AP answer `(c)` does not match its own explanation; m42388's Critical Thinking
+> answer uses `9.11×10⁻¹¹ kg` for the electron mass instead of `9.11×10⁻³¹ kg`, so its radius and time
+> have the wrong exponents; m42718's LHC figures date from around 2010.
+>
+> **还缺**：相对论性回旋加速器（同步回旋加速器）的定量、束流聚焦与发射度、RF 腔与超导磁体的工程、
+> MRI/NMR 的定量、CRT 磁偏转的定量、霍尔效应与 MHD 发电机记在条目缺口表。
+
+> [!IMPORTANT]
+> **第 27 批（2026-10-21）补上静电的防止与利用——优先清单第 21 项完成，必修三第 9 章「静电场及其应用」转 🟢。**
+>
+> ```
+> 电荷 → 静电的防止与利用
+> 电场强度 → 静电的防止与利用
+> ```
+>
+> 「静电的防止与利用」讲静电平衡导体的三条性质（内部场强为零、表面外侧场强垂直、多余电荷全在表面）、
+> 法拉第笼与汽车屏蔽、尖端放电与避雷针（空气击穿场强 `3×10⁶ N/C`）、高压线的光滑表面，
+> 以及静电除尘（去除 99% 以上颗粒）、静电复印/激光打印、静电喷漆、喷墨打印与范德格拉夫起电机；
+> 防止的一侧讲接地、屏蔽、避免场集中与湿度。教材的利用清单按应用逐个叙述，
+> 「用场」与「防场」的二分法是本库的整理，记在条目 K3。
+>
+> **来源**：CP2e 第 18 章 `m42317`（Conductors and Electric Fields in Static Equilibrium）与 `m42329`
+> （Applications of Electrostatics），许可按仓库的 **CC BY-NC-SA 4.0** 从严处理，只引用定位与短引用（ev-181）。
+>
+> **Source defects recorded**: m42317 has the sentence `Air ionizes ions and electrons recombine`
+> (punctuation missing in the original); the exercise sets of m42317 and m42329 are almost entirely
+> point-charge field-and-force problems, with little connection to conductors, shielding or applications.
+>
+> **还缺**：表面电荷密度与曲率的定量关系、导体表面外侧 `E = σ/ε₀`、空腔内有电荷时的接地处理、
+> 雷击先导与保护角、人体静电放电模型、交变场下的屏蔽（趋肤效应）记在条目缺口表。
+
+> [!IMPORTANT]
+> **第 26 批（2026-10-21）补上能源与可持续发展——优先清单第 20 项完成，「电能与能源」转 🟢。**
+>
+> ```
+> 电功与焦耳定律 → 能源与可持续发展
+> ```
+>
+> 「能源与可持续发展」讲可再生与不可再生能源（水、风、太阳、生物质 vs 石油、天然气、煤）、
+> 2020 年世界能源结构（557.1 EJ，化石 83.1%、石油 31.3%、可再生 12.6%、核能 4.3%）、
+> 世界能源消费的增长与国别例子（美国、德国、新西兰、中国、印度）、能源与人均 GDP 的定性关系，
+> 以及**能量守恒定律与「节能」的区别**：能量守恒说的是孤立系统总能量不变，节能说的是减少用能
+> 或提高效率，理由是所有实际转换都把一部分能量降级为废热。教材的「约 85% 化石」「21% 世界石油」
+> 「中国煤 2/3」与 2020 年表的 83.1%、18.7%、56.6% 不一致，按数据年份不同记在 ev-180。
+>
+> **来源**：CP2e 第 7 章 `m42154`（World Energy Use），许可按仓库的 **CC BY-NC-SA 4.0** 从严处理，
+> 只引用定位与短引用（ev-180）。
+>
+> **Source defects recorded**: Egypt's coal cell reads `0.0%` in an EJ column; the table declares
+> `tgroup cols="10"` with 10 colspecs but has 8 cells per row; 8 of 11 country rows do not sum to
+> their totals (Russia 0.4 EJ off); the prose's "10% of U.S. electricity" and the Section Summary's
+> "10% of its energy" are different quantities, and the 2020 table's 10.0% is total energy; the
+> prose calls U.S. renewables "primarily hydro" although other renewables exceed hydro in the 2020
+> table; one figure is dated 2006 while the table is 2020; most exercises are work-and-energy
+> problems unrelated to the section.
+>
+> **还缺**：光伏/风电/核电的技术细节、碳排放定量核算、中国能源政策与课程标准原文、能源统计口径
+> 与年份的统一、储能与电网调度记在条目缺口表。
+
+> [!IMPORTANT]
+> **第 25 批（2026-10-21）补上电功与焦耳定律——优先清单第 19 项完成。**
+>
+> ```
+> 电功率 → 电功与焦耳定律
+> 电阻与欧姆定律 → 电功与焦耳定律
+> ```
+>
+> 「电功与焦耳定律」讲电功 `W = qU = UIt = Pt`、焦耳定律 `Q = I²Rt`、纯电阻电路
+> `W = Q = UIt = I²Rt = U²t/R`、非纯电阻电路 `W = Q + E_其他`（电动机、电解槽；
+> 教材未讨论，本条只作适用范围说明）、千瓦时与电费核算。**焦耳定律的名称与 `W = Q`
+> 的合并由本库补写**，教材只给 `P = I²R` 与 `E = Pt`；车头灯热态 `30.0 W`、冷态
+> `411 W` 与 `34.3 A`、延长线 `1.50 W` 与 `7.50 W`、CFL 算例 `$7.45` 与 `$1.95`
+> 均已复核。
+>
+> **来源**：CP2e 第 20 章 `m42714`（Electric Power and Energy），许可按仓库的
+> **CC BY-NC-SA 4.0** 从严处理，只引用定位与短引用（ev-179）。
+>
+> **Source defects recorded**: the 00-gauge wire exercise (9.266 mm, 1 km, 100 A) credits
+> `25.5 W`, but `R ≈ 0.255 Ω` gives about `2.55×10³ W` — the answer corresponds to 10 A and is
+> off by 100×; the maximum-CFL-price exercise credits `$6.25`, which is the incandescent total,
+> while the CFL purchase price should be `$4.75`; the prose writes `1 kA · V = 1 kW` instead of
+> `1 kV · A`; the exercises section is titled `Problem Exercises` (missing `&`); several
+> exercises give stems only.
+>
+> **还缺**：能源与可持续发展，所以必修三「电能与能源」仍是 🟡；非纯电阻电路的定量功率分配、
+> 交流有效值与功率因数、电容与电感的储能及无功功率、电价机制记在条目缺口表。
+
+> [!IMPORTANT]
+> **第 24 批（2026-10-21）补上闭合电路欧姆定律与内阻——优先清单第 18 项完成。**
+>
+> ```
+> 电阻与欧姆定律 → 闭合电路欧姆定律与内阻
+> 串联与并联 → 闭合电路欧姆定律与内阻
+> 电功率 → 闭合电路欧姆定律与内阻
+> ```
+>
+> 「闭合电路欧姆定律与内阻」讲电动势（无电流时两极间的电势差，不是力）、内阻 `r`、端电压
+> `V = emf − Ir`、闭合电路 `I = emf/(R+r)`、`emf = IR + Ir`、路端电压随外电阻变化、短路电流
+> `emf/r`、充电时端电压高于电动势（12.0 V 电池以 8.00 A 充电、端电压 15.0 V → `r = 0.375 Ω`），
+> 以及相同电源的串联与并联。**输出功率在 `R = r` 时最大、效率 50% 这一结论由本库推导**，教材未给；
+> 电鳗例子按 `0.15 × 5000 = 750 V` 计算，教材的「约 600 V」与其自身数据不符（ev-178）。
+>
+> **来源**：CP2e 第 21 章 `m42357`（Electromotive Force: Terminal Voltage），许可按仓库的
+> **CC BY-NC-SA 4.0** 从严处理，只引用定位与短引用（ev-178）。
+>
+> **Source defects recorded**: the eel passage's 140×5,000 cells of 0.15 V are said to give
+> "approximately 600 V", but each row gives 750 V and the parallel combination still 750 V; the paired
+> exercise with 800 Ω of water gives about 0.93 A rather than the prose's 1 A and has no answer; the
+> exercises section is titled `Problem Exercises` (missing `&`); the second Unreasonable Results item has
+> no answer; several exercises give stems only.
+>
+> **还缺**：电功与焦耳定律、能源与可持续发展，所以必修三「电能与能源」仍是 🟡；非纯电阻电路
+> （电动机）、电容暂态、内阻的温度/老化模型、基尔霍夫一般网络记在条目缺口表。
+
+> [!IMPORTANT]
+> **第 23 批（2026-10-21）补上带电粒子在电场中的运动——优先清单第 17 项完成，必修三「静电场中的能量」转 🟢。**
+>
+> ```
+> 电势能与电势 → 带电粒子在电场中的运动
+> 电场强度 → 带电粒子在电场中的运动
+> 抛体运动 → 带电粒子在电场中的运动
+> 牛顿第二定律 → 带电粒子在电场中的运动
+> ```
+>
+> 「带电粒子在电场中的运动」讲匀强场的 `E = U/d` 与 `F = qE`、从静止加速的 `|q|U = ½mv²`
+> （100 V 电子 `5.93×10⁶ m/s`）、电子伏特与双电荷离子的 `200 eV`、垂直于场射入的类平抛偏转
+> `y = qUL²/(2mdv₀²)` 与 `tan θ = 2y/L`，以及示波管。**非匀强场、相对论修正的定量处理、
+> 示波管的完整结构、边缘场、束流聚焦、加速器原理仍缺**，记在条目的缺口表里。
+>
+> **来源怎么用**：`m42324` 提供加速与电子伏特，`m42326` 提供 `E = V_AB/d`、电子枪与一条隐藏的
+> 抛体类比；**OpenStax 没有给出横向偏转公式**，本条按抛体运动与牛顿第二定律自行推导，并在条目里
+> 写明「不是教材原文」。两段材料都在《College Physics 2e》合集里，许可按仓库的 **CC BY-NC-SA 4.0**
+> 从严处理，只引用定位与短引用（ev-176/ev-177）。
+>
+> **Source defects recorded**: m42326's isoline item ("six lines spaced 5.0 V apart cross a 40 cm path")
+> credits `75 V/m`, but six lines enclose five intervals (ΔV = 25 V), so the literal stem gives `62.5 V/m`
+> and none of the options matches; a hidden Test Prep item says a fourfold range means "100% more mass",
+> whereas fixed transverse deflection gives `x ∝ √m`, so it is 16× the mass (1500% more); the answer to the
+> dropped-particle item depends on a figure absent from the cnxml; `800 KeV` is mis-capitalized; m42324
+> substitutes `q = −1.60×10⁻¹⁹ C` and `V = −100 J/C` together into `√(2qV/m)` (correct value, misleading
+> signs) and gives no answer for the 40 kV exercise. The entry does not carry these over.
+>
+> **Correction (2026-10-21)**: two earlier claims — `Section SummaryThe voltage` / `Section SummaryElectric
+> potential` lacking a space, and `in to move` / `in into` being redundant — are **not source defects**. The
+> raw cnxml has `<title>Section Summary</title>` as a separate element and contains neither `in to move` nor
+> `in into`; both are artifacts of the local strip script concatenating elements. The claims are removed
+> from ev-176/ev-177 and from this note.
+
+> [!IMPORTANT]
+> **第 22 批（2026-10-21）补上电容——优先清单第 16 项完成，但必修三「静电场中的能量」仍是 🟡。**
+>
+> ```
+> 电势能与电势 → 电容
+> 电场强度 → 电容
+> ```
+>
+> 「电容」讲电容器的充电过程（克服已上板的电荷做功，能量储存在板间电场）、`C = Q/V` 与法拉、
+> 真空平行板的 `C₀ = ε₀A/d`（8.9 nF 与 `Q = 2.7×10⁻⁵ C` 两个算例）、电介质的极化与 `C = κC₀`、
+> `κ` 表（特氟龙 2.1 · 纸 3.7 · 水 80 · 钛酸锶 233）、储能 `U = ½CV² = Q²/(2C)`，以及闪光灯
+> `1.0 J` / `1 kW` 算例。**带电粒子在电场中的运动、电容器的串并联、RC 充放电暂态、击穿与漏电、
+> 边缘效应、能量密度 `u = ½ε₀E²`、电介质极化的微观模型、超级电容器与电容式传感器仍缺**，
+> 记在条目的缺口表里。
+>
+> **为什么本章仍是 🟡**：「静电场中的能量」只剩**带电粒子在电场中的运动**未建；本条补的是电容与
+> 电容器的储能，不等于整章完成。优先清单据此新增第 17 项。
+>
+> **Source defects recorded**: m63179's definition sentence drops a preposition (`can store energy an electric
+> field`); its 10 µF / 120 µC example prints `72 mJ` where `U = Q²/(2C) = 0.72 mJ` (100× too large); one
+> capacitance multiple-choice item labels the options `nC` instead of `nF` (the correct value is `2.3 nF`); the
+> dielectric-energy Concept Item and two true/false items never state whether the battery stays connected, although
+> the answer reverses between fixed `Q` and fixed `V`; the 12 µF plate-attraction problem has no correct option
+> (the force is `F = Qσ/(2ε₀) ≈ 5.9×10⁴ N`, and the offered `1.2×10⁵ N` is the missing-½ error); the κ table
+> prints `Silicon oil` for `silicone oil`; a teacher note derives `di` from "two or double" and says a dielectric
+> "can have two electric charges" (the prefix is Greek `dia-`, "through"); and the module's Performance Task
+> compares gravitation with Coulomb's law and has nothing to do with capacitors.
+
+> [!IMPORTANT]
+> **第 21 批（2026-10-21）补上光的偏振——优先清单第 15 项完成，选必一第 4 章「光」转 🟢。**
+>
+> ```
+> 波 → 光的偏振
+> 光的折射 → 光的偏振
+> ```
+>
+> 「光的偏振」讲偏振方向（定义为电场方向）、未偏振光与偏振片、马吕斯定律 `I = I₀cos²θ`
+> （教材未写未偏振光过一片只剩一半，本条由 `cos²θ` 的平均推出 `½I₀`）、强度削减 90% 对应 71.6°、
+> 布儒斯特定律 `tan θ_b = n₂/n₁`（水 53.1°、冕牌玻璃 56.7°、水→冕牌 48.8°、冕牌→水 41.2°）、
+> 反射偏振与散射偏振、旋光性、双折射与二向色性、液晶显示。**圆偏振与椭圆偏振、斯托克斯参量、
+> 菲涅耳反射系数的 s/p 分量、偏振度的定量、旋光性的定量、波片仍缺**，记在条目的缺口表里。
+>
+> **来源与许可**：本批用的是 `m42522`，属《College Physics 2e》第 27 章 Wave Optics §27.8 Polarization，
+> 不在本库常用的《Physics》合集里。仓库 `LICENSE` 与 README 标 **CC BY-NC-SA 4.0**，而 openstax.org
+> 同节页面标 **CC BY 4.0**，两处声明不一致；本库按仓库许可从严处理，**只引用定位与短引用**（ev-174）。
+>
+> **Source defects recorded**: m42522's only Critical Thinking item is a diffraction-grating problem unrelated to
+> polarization; its solution takes the grating spacing as `10⁻⁶ m` where the stem gives `1.0×10⁻⁵ m`, so all four
+> answers are off by a factor of ten, writes `θ = 0.400 = 23.6°` for `θ = sin⁻¹(0.400)`, and mixes in `10⁻⁶ cm`;
+> the prose `The electric field is strong compared with the magnetic field` compares quantities with different units.
+
+> [!IMPORTANT]
+> **第 20 批（2026-10-21）补上全反射——优先清单第 14 项完成，但选必一第 4 章「光」没有转 🟢。**
+>
+> ```
+> 光的折射 → 全反射
+> ```
+>
+> 「全反射」讲临界角 `sin θ_c = n₂/n₁`（仅当 `n₁ > n₂`）、全反射的两个条件、由
+> `sin θ₂ = (n₁/n₂) sin θ₁ > 1` 说明「没有折射光线」、水→空气 48.6° 与金刚石→空气 24.4°，
+> 以及金刚石切工、角反射器、光纤与内窥镜。**色散与彩虹、隐失波、光纤的数值孔径与模式仍缺**，
+> 记在条目的缺口表里。
+>
+> **为什么第 4 章仍是 🟡**：原清单把全反射当作最后一块，但本库
+> [光的干涉与衍射](concepts/光的干涉与衍射.md) 的缺口表已经点名**光的偏振**未建（DIC 显微用的就是偏振光），
+> 而 OpenStax 本合集没有偏振模块。为了不把「原清单跑完」说成「整章覆盖」，本章保持 🟡，
+> 偏振列为优先级 15，需要另找可核的 CC BY 来源。
+>
+> **Source defects recorded**: m54365 prints the fixed value of the speed of light as `2.9972458×10⁸ m/s`
+> (it is `2.99792458×10⁸ m/s`); misspells `indices` as `indicies` twice; the Section Summary says
+> `total internal refraction`; a Key Equations cell begins with a stray `>`; and the corner-reflector passage
+> treats two perpendicular mirrors as a retroreflector, which holds only for rays perpendicular to the fold line
+> (a three-dimensional reflector needs three mutually perpendicular faces). The entry does not carry these over.
+
+> [!IMPORTANT]
+> **第 19 批（2026-10-21）补上光的干涉与衍射——选必一第 4 章「光」只剩全反射。**
+>
+> 两条先修：
+>
+> ```
+> 波 → 光的干涉与衍射
+> 光的折射 → 光的干涉与衍射
+> ```
+>
+> 「光的干涉与衍射」讲 Huygens 原理与波前、双缝的 `d sinθ = mλ` 与 `d sinθ = (m+½)λ`、单缝暗纹
+> `D sinθ = mλ` 与小角形式 `Dy/L = mλ`、`λ_n = λ/n`、光栅方程与白光的级次色散、CD 作为反射光栅、
+> 圆孔衍射与 Rayleigh 判据 `θ = 1.22λ/D`，以及 `633 nm`、`1.56 μm`、`5.97°`、`7.72×10⁻⁴ rad`、
+> `414 nm` 五个算例。**偏振、相干长度与相干时间、双缝强度分布的定量公式、薄膜干涉、单光子干涉的量子解释
+> 仍缺**，记在条目的缺口表里。
+>
+> **全反射仍未建**——选必一第 4 章仍记 🟡，补完 `m54365` 后才转 🟢。
+>
+> **Source defects recorded**: m54371 writes "1,600 in a millimeter" for CD grooves while the same passage gives a
+> 1,600 nm pitch (625 per mm); its Concept Items print the Rayleigh criterion as `θ = λ/D` without the 1.22 that
+> the body text and Key Equations use; m54369's teacher note says "the sign of an angle is always ≥ 1" (the sine is
+> at most 1) and misspells `lamda`; m54369 gives the visible range as 380–750 nm while m54371 gives 380–780 nm.
+> The entry does not carry these over.
+
+> [!IMPORTANT]
+> **第 18 批（2026-10-21）补上波粒二象性——选必三「原子结构和波粒二象性」章转 🟢。**
+>
+> 这一条把光电效应的光子模型接到动量和物质波：
+>
+> ```
+> 光电效应 → 波粒二象性
+> 波 → 波粒二象性
+> ```
+>
+> 「波粒二象性」讲光子动量 `p = h/λ`、`500 nm` 光子与同动量电子的对比（电子动能比光子能量小约五个数量级）、
+> Compton 效应（能量与动量同时守恒，X 射线因波长短才显著）、干涉/衍射与分立能量的并列、
+> 物质波的 `λ = h/p`，以及太阳帆、彗尾与电子显微镜。**Compton 偏移公式、电子衍射实验、
+> 不确定性原理、玻尔模型与氢原子光谱的定量部分仍缺**，记在条目的缺口表里。
+>
+> **如实记原文缺陷**：m54552 说 Compton 获 1929 年诺贝尔物理学奖（实为 1927 年）；
+> 一道习题把 de Broglie 波长写成 `p = hλ`（应为 `λ = h/p`，同模块其他位置都写对）；
+> `500 nm` 例题 (c) 用 `1,456 m/s` 代入，与 (b) 的 `1,459.9 m/s` 不一致，
+> 所得 `9.64×10⁻²⁵ J` 按代入值应约为 `9.66×10⁻²⁵ J`；术语表的 `either a particle or a wave`
+> 与同模块教师提示「光不会选择」相冲突。条目没有沿用这些写法。
+
+> [!IMPORTANT]
+> **第 17 批（2026-10-21）开选必三「原子结构和波粒二象性」章：普朗克量子假设 · 光电效应。**
+>
+> 两条链：
+>
+> ```
+> 波 → 电磁波谱 → 普朗克量子假设 → 光电效应
+> 普朗克量子假设 → 原子结构      （原子结构原先留空的「量子化」先修）
+> ```
+>
+> 「普朗克量子假设」讲黑体谱的两条规律、经典理论在短波端的失败（紫外灾难）、`E = nhf`
+> 与光子能量的三个算例；「光电效应」讲五条实验规律、`KE_max = hf − BE` 与 `BE = hf₀` 的阈值、
+> `KE–f` 图斜率 `h`、`420 nm` 紫光打钙的算例，并把光电管、光敏电阻、太阳能电池、电影声轨列为相关技术
+> （后两者属于内光电效应与光生伏特效应，条目里写明了区别）。
+> **光的波粒二象性仍缺**——选必三第 4 章记为 🟡，补完 `m54552` 后才转 🟢。
+>
+> **如实记原文缺陷**：m54566 的经典式 `I = 2kT/λ²` 指数与量纲都错（瑞利–金斯按波长是 `∝ T/λ⁴`），
+> 术语表把「紫外灾难」说成一种「误解」；m54559 把 `E = hf` 说成「光子或光电子的能量」，
+> eV 换算式写成 `J⋅s`，Key Equations 下标写成 `f_O`，习题写 `bonding energy`，
+> 例题讨论还把 `0.26 eV` 的遏止电压与算出的 `0.25 eV` 并列。条目没有沿用这些写法。
+
+> [!IMPORTANT]
+> **第 16 批（2026-10-21）补上必修三「电路及其应用」的串联与并联——该章转 🟢。**
+>
+> 这一条把欧姆定律接成网络：
+>
+> ```
+> 电阻与欧姆定律 → 串联与并联
+> ```
+>
+> 「串联与并联」讲串联电流相同、电压相加与 `R_eq = ΣR`，并联电压相同、电流相加与 `1/R_eq = Σ1/R`、
+> `R_eq` 小于最小支路电阻、N 个相同 R 并联得 `R/N`，以及七个 `10 Ω` 电阻网络 `160/11 Ω ≈ 14.5 Ω`
+> 与 `10 V` 复杂电路 `104.09 Ω → 0.096 A` 的逐步化简。
+> **闭合电路欧姆定律与内阻、电功与焦耳定律、电容充放电、电桥等非串并联网络仍缺**——
+> 「电能与能源」章仍记为 🟡。
+>
+> **如实记原文缺陷**：m54435 的学习目标有一句重复、选项 `5V` 打成 `5V4`；
+> m54442 的复杂电路例题多写一个 `R`（`25.71 Ω R.`），并把电流说成 `across` 支路。
+> 条目没有沿用这些写法。模块把「理想导线内电压处处相同」与「电池无内阻」当作前提，条目把这两条写明。
+
+> [!IMPORTANT]
+> **第 15 批（2026-10-21）开必修三的「电能与能源」章：先建「电功率」。**
+>
+> 这一条接在欧姆定律之后，把电流做功的速率讲清：
+>
+> ```
+> 电阻与欧姆定律 → 电功率
+> ```
+>
+> 「电功率」讲 `P = IV` 及其量纲推导、`P = V²/R` 与 `P = I²R`、只有电阻耗散功率而电容只储能，
+> 以及教材用支路功率合计 `10.4 W` 与电池 `10.4 W` 相等的能量守恒核算。
+> **电功 `W = UIt`、焦耳定律的独立表述、闭合电路欧姆定律与内阻、能源与可持续发展仍缺**——
+> 所以覆盖度页把第 12 章记为 🟡，不是 🟢。
+>
+> **如实记原文缺陷**：m54446 把家用 `120 V` 说成 `time-averaged power`（电压不是功率，应为有效值电压，
+> 而该模块未讲 RMS）；习题「1 L 水升温 20 °C，用接在 9.0 V 上的 1-kW 电阻加热」需约 `83.6 kJ`，
+> 1 kW 约 84 s，选项 10/20/30/40 min 无一成立。条目没有沿用这两处。
+
+> [!IMPORTANT]
+> **第 14 批（2026-10-21）开选必一的「机械振动」章——选必一不再有整章空白。**
+>
+> 这一条把牛顿第二定律接进往复运动：
+>
+> ```
+> 牛顿第二定律 → 简谐运动 → 单摆
+> ```
+>
+> 「简谐运动」讲胡克定律 `F = −kx`、回复力、振幅/周期/频率、弹簧振子 `T = 2π√(m/k)`；
+> 「单摆」讲小角度下的回复力 `−mg sinθ`、`T = 2π√(L/g)` 与用单摆测 `g`
+> （教材例题 `L = 75.000 cm`、`T = 1.7357 s` ⇒ `g = 9.8281 m/s²`）。
+> **相位与 `x = A cos(ωt + φ)`、简谐运动的能量、阻尼振动、受迫振动与共振仍缺**——
+> 所以覆盖度页把第 2 章记为 🟡，不是 🟢。
+>
+> **如实记原文缺陷**：m54154 的术语表把胡克定律写成 `F = kΔL`（无负号、用 `ΔL`），
+> 与正文的 `F = −kx` 不一致；一处把简谐运动写成 `an object in simple motion`；
+> Performance Task 的教师提示讲的是矢量合成，与简谐运动无关。教材还说张力与周期共用符号 `T`，
+> 并提醒不要混淆。
+
+> [!IMPORTANT]
+> **第 13 批（2026-10-21）开必修二的「抛体运动」章——本库第一条「二维运动」的边，补上覆盖度页的优先级 9。**
+>
+> 这一条把一维运动学接进平面：
+>
+> ```
+> 速度与速率 ─┐
+>             ├─→ 抛体运动
+> 加速度 ─────┘
+> ```
+>
+> 「抛体运动」讲水平与竖直运动独立、`a_x = 0` 与 `a_y = −g`、最大高度 `h = v₀y²/(2g)`、
+> 平抛射程 `R = v₀²sin2θ₀/g`，以及教材的烟花（70.0 m/s、75° ⇒ 233 m、6.90 s、125 m）
+> 与火山岩（25.0 m/s、35°、落点低 20.0 m ⇒ 3.96 s）两个算例。
+> **曲线运动的条件、运动的合成与分解（矢量）仍缺**——后者的前置是数学的「矢量」，
+> 与 [力（高中）](concepts/力-高中.md) 记的是同一处缺口——所以覆盖度页只记为 🟡。
+>
+> **如实记原文缺陷**：m54162 的 Strategy 写 `a_x = 0 and a_y = g`（少一个负号），
+> 而同节解答一律用向上为正的 `−g`；条目按解答采用 `a_y = −g`，并在 K1 写明。
+> 教材未推导「45° 射程最大」，也未给出轨迹方程，条目把这两条标为本库的推导。
+
+> [!IMPORTANT]
+> **第 12 批（2026-10-21）补上选必二最后一章「交变电流」，选必二三章都不再为零。**
+>
+> 这条支线接着电磁感应往应用走：
+>
+> ```
+> 电磁感应定律 → 交变电流 → 变压器 → 远距离输电
+> 电阻与欧姆定律 ───────────────────┘
+> ```
+>
+> 「交变电流」讲发电机 `ε = NABω sinωt`、峰值 `ε₀ = NABω` 与周期频率；「变压器」讲
+> `V_S/V_P = N_S/N_P` 与它的理想化假设；「远距离输电」讲 `P = IV`、`P_loss = I²R_wire` 与分级变压。
+> **有效值（RMS）、电感与电容对交流的影响、三相电、变压器的功率与电流比仍缺**——
+> 所以覆盖度页把第 3 章记为 🟡，不是 🟢。
+>
+> **如实记原文缺陷**：m54467 把最大转矩写成 `wℓB`（漏掉 `N` 与 `I`）；变电站电压一处 5–13 kV、
+> 另一处 5–30 kV；一处说「用 voltage 而非 emf，因为变压器有内阻」，另一处又假设线圈电阻小到 `V_S = ε_S`。
+> 教材还讲了电动机转矩 `τ = NIABsinθ` 与电刷换向，本批未单独建节点，来源已登记在 ev-162。
+
+> [!IMPORTANT]
+> **第 11 批（2026-10-21）补上选必二的「电磁感应」章，并把覆盖度页记了两轮的「磁通量缺」填掉。**
+>
+> 这条支线接在磁场与电路之间：
+>
+> ```
+> 磁场 → 磁通量 → 电磁感应定律 ← 电阻与欧姆定律
+> ```
+>
+> 「磁通量」讲 `Φ = BAcosθ`、韦伯与改变通量的三种方式；「电磁感应定律」讲法拉第定律 `ε = −NΔΦ/Δt`、
+> 楞次定律、`I = ε/R` 与滑块电路的能量守恒。**自感/互感、涡流、动生电动势的洛伦兹力解释仍缺**——
+> 所以覆盖度页只记为 🟡。**选必二现在只剩「交变电流」一章为零。**
+>
+> **如实记两处原文缺陷**：m54456 把韦伯写成 `magnetic field per unit area, or T/m2`
+> （与 `Φ = BAcosθ` 矛盾，应为 T·m²）；术语表把 `induction` 误定义成 `emf` 的定义。
+
+> [!IMPORTANT]
+> **第 10 批（2026-10-21）开选必二的「安培力与洛伦兹力」章，并给本库接上第一条「场 → 力」支线。**
+>
+> 这一批从静电场长出来：
+>
+> ```
+> 电荷 → 库仑定律 → 电场强度 → 磁场 → 安培力
+>                               └─→ 洛伦兹力 ←─ 匀速圆周运动
+> ```
+>
+> 「磁场」讲磁偶极子、磁感线、电流的磁场与特斯拉；「安培力」讲 `F = IℓBsinθ` 与电动机；
+> 「洛伦兹力」讲 `F = qvBsinθ`、不做功与圆周运动。安培力与洛伦兹力互为宏观/微观两面。
+> **带电粒子的圆周运动周期、回旋加速器、质谱仪、磁通量仍缺**——所以覆盖度页只记为 🟡。
+>
+> **如实记一处原文缺陷**：m54465 的例题标题写 `Trajectory of Electron in Magnetic Field`，
+> 题干与解答却按质子（`+1.60×10⁻¹⁹ C`）计算。条目按正文与解答使用，并把不一致写进「洛伦兹力」的 K2。
 
 > [!IMPORTANT]
 > **第 9 批（2026-10-21）开选必三的「原子核」章：先建「原子核」与「放射性衰变」。**

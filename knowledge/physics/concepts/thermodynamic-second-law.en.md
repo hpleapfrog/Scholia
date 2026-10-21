@@ -10,7 +10,7 @@ scope:
   学科: 物理
   学段: 高中
   适用: students who have done the first law and need to judge which processes can happen spontaneously
-  条件: covers total entropy and the direction of spontaneous processes only; heat-engine efficiency, the Carnot cycle, and the statistical interpretation of entropy are out of scope
+  条件: covers total entropy and the direction of spontaneous processes only; heat-engine efficiency and the Carnot cycle are built in [Heat engines and the Carnot cycle](heat-engine-and-carnot-cycle.en.md), and the microscopic explanation is in [Statistical interpretation of entropy](statistical-interpretation-of-entropy.en.md)
 edges:
   先修: ["[First law of thermodynamics](thermodynamic-first-law.en.md)"]
   支持: []
@@ -56,7 +56,9 @@ The **second law of thermodynamics** fixes the direction of spontaneous processe
 | Relation | Entry |
 |---|---|
 | Prerequisite | [First law of thermodynamics](thermodynamic-first-law.en.md) — the first law keeps the energy ledger; the second law gives the direction the ledger allows |
-| Recorded gap | **Heat engines and efficiency (Carnot cycle)**, **the statistical interpretation of entropy (microstates)**, **free energy** are not built in this repo |
+| Follow-up | [Heat engines and the Carnot cycle](heat-engine-and-carnot-cycle.en.md) — the second expression of the second law gives the efficiency ceiling; the Carnot ratio `Q_c/Q_h = T_c/T_h` is derived from entropy conservation around a reversible cycle |
+| Follow-up | [Statistical interpretation of entropy](statistical-interpretation-of-entropy.en.md) — counts microstates to explain why total entropy is "overwhelmingly certain" not to decrease |
+| Recorded gap | **Free energy**, **quantitative heat-pump and refrigerator COPs**, **fluctuation theorems and quantitative estimates of entropy-decrease probabilities in macroscopic systems** are not built in this repo |
 
 ## Argument
 
@@ -75,7 +77,7 @@ The **second law of thermodynamics** fixes the direction of spontaneous processe
 - **Premise**: the textbook's sentence `it actually is possible for the entropy of one part of the universe to decrease, as long as the total change in entropy of the universe increases.`, together with `ΔS_tot = ΔS_syst + ΔS_envir > 0` and the examples of picking up marbles, smelting iron ore into a bridge, and the sun lowering the entropy of local systems on Earth (ev-157)
 - **Reasoning**: to test a process against the second law, draw the boundary wide enough to **include whatever supplies the work**. A refrigerator's compartment loses entropy, but the compressor consumes work and the surroundings gain more entropy; treating only the compartment as "the system" produces the illusion that entropy fell. The textbook makes `spontaneously` the keyword: a cold-to-hot heat transfer **needs work**, so it is non-spontaneous and outside the ban
 - **Evidence**: ev-157
-- **Attacked**: the textbook explains refrigerator-type processes only qualitatively and **gives no quantitative refrigerator example**; "the environment's entropy rises by more" is the repo's qualitative inference from `ΔS = Q/T`, not the textbook's calculation. The quantitative part is recorded as a gap
+- **Attacked**: the textbook explains refrigerator-type processes only qualitatively and **gives no quantitative refrigerator example**; "the environment's entropy rises by more" is the repo's qualitative inference from `ΔS = Q/T`, not the textbook's calculation. The quantitative part — heat-pump and refrigerator COPs — is still not built and is recorded in the gap row
 - **Attribution**: @hpleapfrog · 2026-10-21
 
 ## Change log
@@ -83,3 +85,4 @@ The **second law of thermodynamics** fixes the direction of spontaneous processe
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-21 | Entry created; second node of the 选必三 "laws of thermodynamics" chapter; the entropy of the system is kept separate from total entropy | written after reading m54306 in full (ev-157) | @hpleapfrog |
+| 2026-10-21 | Added follow-up links to "Heat engines and the Carnot cycle" and "Statistical interpretation of entropy", removed the two gaps that are now built, and re-recorded the refrigerator's quantitative part as the heat-pump/refrigerator COP gap | synced after the two entries were added in batch 29 | @hpleapfrog |

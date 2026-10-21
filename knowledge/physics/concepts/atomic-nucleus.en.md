@@ -10,7 +10,7 @@ scope:
   学科: 物理
   学段: 高中
   适用: students who have done "Atomic structure" and need to separate Z / A / isotopes and see why the nucleus does not fly apart
-  条件: covers the composition of the nucleus, nuclide notation, isotopes, and the strong nuclear force only; radioactive decay is a separate entry, and binding energy, fission, and fusion are not built
+  条件: covers the composition of the nucleus, nuclide notation, isotopes, and the strong nuclear force only; radioactive decay, binding energy and mass defect, and nuclear fission and fusion are separate entries
 edges:
   先修: ["[Atomic structure](atomic-structure.en.md)"]
   支持: []
@@ -52,7 +52,9 @@ The **atomic nucleus** consists of protons and neutrons; the two are collectivel
 |---|---|
 | Prerequisite | [Atomic structure](atomic-structure.en.md) — the gold-foil experiment gives "the nucleus is tiny and dense"; this entry asks what the nucleus is made of and why it is stable |
 | Follow-up | [Radioactive decay](radioactive-decay.en.md) — when the balance between the strong force and the electromagnetic force breaks, the nucleus decays to restore it |
-| Recorded gap | **Binding energy and mass defect**, **nuclear fission and fusion**, **quarks and the Standard Model** are not built in this repo |
+| Follow-up | [Binding energy and mass defect](binding-energy-and-mass-defect.en.md) — the nucleus is lighter than its constituent nucleons, and the difference is the binding energy; the `BE/A` curve peaks near iron |
+| Follow-up | [Nuclear fission and fusion](nuclear-fission-and-fusion.en.md) — heavy-nucleus fission and light-nucleus fusion both move toward the `BE/A` peak and therefore release energy |
+| Recorded gap | **quarks and the Standard Model** are not built in this repo |
 
 ## Argument
 
@@ -79,3 +81,4 @@ The **atomic nucleus** consists of protons and neutrons; the two are collectivel
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-21 | Entry created; first node of the 选必三 "atomic nucleus" chapter, attached after "atomic structure" | written after reading m54580 in full (ev-158) | @hpleapfrog |
+| 2026-10-21 | Backfilled after "Binding energy and mass defect" and "Nuclear fission and fusion" were built: two follow-up relations added and both items removed from the gap table | new this round: ev-185/ev-186 | @hpleapfrog |
