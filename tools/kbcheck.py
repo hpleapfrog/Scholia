@@ -483,12 +483,17 @@ def resolve_link(src_path, target):
 
 
 def fm_links(fm, key):
-    """取出 front-matter 里某个键（含缩进块形式）中的 Markdown 链接目标。"""
-    m = re.search(rf"^[ \t]*{key}:\s*(.+)$", fm, re.M)
+    """取出 front-matter 里某个键（含缩进块形式）中的 Markdown 链接目标。
+
+    **`[ \\t]*` 不能写成 `\\s*`**：`\\s` 匹配换行，于是「`先修:` 后面什么都没写、
+    下面是缩进块」会被当成**行内值**，只取到块里的第一条——
+    多行列表的后几项被静默丢掉，而「漏读」不会报错，只会让检查显得通过。
+    """
+    m = re.search(rf"^[ \t]*{key}:[ \t]*(.+)$", fm, re.M)
     if m:
         line = m.group(1)
     else:
-        b = re.search(rf"^[ \t]*{key}:\s*\n((?:[ \t]+.*\n?)*)", fm, re.M)
+        b = re.search(rf"^[ \t]*{key}:[ \t]*\n((?:[ \t]+.*\n?)*)", fm, re.M)
         line = b.group(1) if b else ""
     return re.findall(r"\[[^\]]*\]\(([^)]+)\)", line)
 
@@ -753,7 +758,15 @@ def check_paths(objects, errors, warnings):
     for rel, o in objects.items():
         if o["type"] != "路径":
             continue
-        prose = re.sub(r"```.*?```", "", o["text"], flags=re.S)
+        # **只看正文，不看 front-matter。**
+        # `edges.先修` 里的链接是「外部先修」的声明，不是「本路径引用了它」；
+        # 早先按整篇扫链接，于是声明成外部先修的概念又被当成路径内引用，
+        # 进而要求它的先修也必须在路径内——外部先修等于白声明，还会连锁报错。
+        body = o["text"]
+        fm = parse_front_matter(body)
+        if fm:
+            body = body[body.find("\n---", 3) + 4:]
+        prose = re.sub(r"```.*?```", "", body, flags=re.S)
 
         refs = set()
         for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", prose):

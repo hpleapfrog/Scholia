@@ -540,6 +540,30 @@ def sample_graph01_path_bad(root, _v):
     return False
 
 
+def sample_graph01_block_list(root, _v):
+    """知识点用**多行块**写 `先修`，且第二项指向不存在的文件。
+
+    这是 `fm_links` 的回归样本：早先行内匹配用了 ``\\s*``，会把块里的
+    **第一条**当成行内值、把后面的项全部丢掉——检查看起来通过，其实是没读到。
+    只放一条坏链接、且放在**第二条**，才测得出来。
+    """
+    for p, t in _objects(root):
+        if field_of(t, "type") != "知识点":
+            continue
+        lines = read(p).split(chr(10))
+        for i, line in enumerate(lines):
+            if line.strip().startswith("先修:"):
+                lines[i] = "  先修:"
+                lines.insert(i + 1, '    - "[好](/dev/null)"')
+                lines.insert(i + 2, '    - "[坏](不存在-zzz.md)"')
+                break
+        else:
+            continue
+        write(p, chr(10).join(lines))
+        return True
+    return False
+
+
 def sample_graph01_cycle(root, _v):
     """两个知识点互相当对方的先修（成环）。"""
     concepts = [x for x in _objects(root) if field_of(x[1], "type") == "知识点"]
@@ -1026,6 +1050,7 @@ SAMPLES = [
     ("R-GRAPH-01", "命题加了 先修 边", sample_graph01),
     ("R-GRAPH-01", "两个知识点互为先修（成环）", sample_graph01_cycle),
     ("R-GRAPH-01", "路径的外部先修指向教法", sample_graph01_path_bad),
+    ("R-GRAPH-01", "多行块先修里的第二条是坏链接", sample_graph01_block_list),
     ("R-GRAPH-02", "支持边锚点在目标里不存在", sample_graph02),
     ("R-GRAPH-03", "路径的某个成果无人覆盖", sample_graph03),
     ("R-GRAPH-04", "路径某环节指不出对象", sample_graph04),
@@ -1088,13 +1113,21 @@ def _mktemp():
 
 
 def main():
-    samples = SAMPLES
+    # 同一条（规则, 描述）只跑一次：重复登记不会报错，只会白跑一遍——
+    # 而重复往往是「把一行粘了两次」，正是这类机械操作最容易出的错。
+    seen_pairs, samples = set(), []
+    for s in SAMPLES:
+        k = (s[0], s[1])
+        if k in seen_pairs:
+            continue
+        seen_pairs.add(k)
+        samples.append(s)
     # `--only R-GRAPH`：只跑某条（或某个前缀）规则的样本。
     # 全量跑一次约 1~2 分钟（每个样本都要整跑一次 kbcheck），
     # 而改一条规则时只需要看那一条——**让常用路径变短**比让全量变快更值。
     if "--only" in sys.argv:
         prefix = sys.argv[sys.argv.index("--only") + 1]
-        samples = [s for s in SAMPLES if s[0].startswith(prefix)]
+        samples = [s for s in samples if s[0].startswith(prefix)]
         if not samples:
             print(f"没有以 {prefix!r} 开头的规则样本")
             return 1
