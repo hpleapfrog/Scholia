@@ -27,4 +27,4 @@
 | [coverage-is-not-strength.md](coverage-is-not-strength.md) | 覆盖度「有没有」之外的两层「够不够」；一次**假干净**的列序解析，以及专门盯这种形状的回归样本（退回旧实现 → 报平安的路径 4 条变 2 条） |
 | [status-zero-is-auditable.md](status-zero-is-auditable.md) | `已确证` / `争议` / `已推翻` 全是 0：守卫让 0 变成**可核对的 0** |
 | [out-of-library-prerequisites.md](out-of-library-prerequisites.md) | 库外前置攒到 7 例（Issue #17 的 3–5 例触发条件已过），schema 仍未动 |
-| [entry-cost-phases.md](entry-cost-phases.md) | 录入成本分段实测：4 分钟到的是中文正文，超出的花在双语与登记。**门槛单位已定为「双语一条」**（墙钟 13 分 16 秒，含一次中断 = 至多 2.6 倍，未达标） |
+| [entry-cost-phases.md](entry-cost-phases.md) | 录入成本分段实测：中文正文先完，超出的是双语与登记。**门槛单位已定为「双语一条」**（451 墙钟 13 分 16 秒，含一次中断 = 至多 2.6 倍，未达标）；第三次试测把双语尾部拆成四段（代理计时 61 秒，P1→P10 3 分 44 秒，不能当人类读数） |

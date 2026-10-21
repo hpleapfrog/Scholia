@@ -96,10 +96,10 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **674** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 577 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
+| 对象 / Objects | **675** —— 教法 methods 46 · 知识点 concepts 30 · 命题 claims 578 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 4 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 300 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 27 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
-| 证据 / Evidence | 146（含作废 / void 5） |
+| 学科 / Subjects | 物理 Physics 300 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 28 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
+| 证据 / Evidence | 147（含作废 / void 5） |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -131,7 +131,9 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
    各学科 README 的索引表共 **7 种表头形状**，其中 4 种的列（`证据等级`/`位置`+`错误类型`/`目标`+`自检`/`禁忌`）
    **是内容，不是格式**；证据表分 **3 个批次块**，`定位`列是手写核读记录（正是它抓住那次错标题）。
    **人类计时仍未测**：代理计时把「读完 283 行原文」记成 17 秒，这对人不成立。
-   分段数据、三条结论与压缩范围 → [决策记录](docs/decisions/entry-cost-phases.md)
+   2026-10-21 第三次试测把 P7→P9 拆成四段：**代理墙钟 3 分 44 秒**，其中双语尾部 **61 秒**；
+   但来源小、题目由仓库指定、英文为即时译写，**不是达标读数**——它只证明四段可分、工具链仍不是瓶颈。
+   分段数据、结论与压缩范围 → [决策记录](docs/decisions/entry-cost-phases.md)
 2. `已确证` / `争议` / `已推翻` **全是 0**。这仍然**不是能靠写代码补的缺口**——补的是**人**（复核者、守方）。
    但代码可以**让这个 0 可核对**：新增 `R-SCHEMA-19` 校验三个状态各自的结构前提
    （`已确证` 需 `author` + 变更记录里 **≥2 个不同署名**；`争议` 需 **≥2 论证且有进 `攻击` 边**；

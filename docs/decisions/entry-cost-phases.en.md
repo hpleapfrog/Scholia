@@ -1,18 +1,20 @@
-# Phase-by-phase entry cost: four minutes gets you the Chinese text; the rest is bilingual bookkeeping
+# Phase-by-phase entry cost: the Chinese text lands first; the bilingual bookkeeping is the tail
 
-> Open item: [README](../../README.en.md), item 1 of "Open questions that matter". Recorded 2026-10-20.
+> Open item: [README](../../README.en.md), item 1 of "Open questions that matter". Recorded 2026-10-20; a third trial was added 2026-10-21.
 > Tools: [`tools/new_entry.py`](../../tools/new_entry.py) and [templates](../../templates/README.en.md).
 
 "Can one entry be recorded in under 5 minutes" **decides whether the project survives** — above that
 number, the collection rate cannot keep up with the amount of content that needs covering.
-**The author has now fixed the unit of that "5 minutes": one bilingual pair** (2026-10-20, see the note at
-the end of finding two), so the two timed trials read as about **2.4×** and **at most 2.6×** the budget —
-the second is wall clock containing **one session interruption that was never stamped separately** (see the
-table and its note). Both are **not met**, but the second can say **where** the overage sits. The first
-timed trial ([The area under a velocity–time graph equals displacement](../../knowledge/physics/claims/velocity-time-graph-area.en.md),
+**The author has fixed the unit of that "5 minutes": one bilingual pair** (2026-10-20, see the note at
+the end of finding two). As of 2026-10-21 there are three timings: the first left only a total (~12 minutes,
+about **2.4×**); the second was stamped per phase (**13 min 16 s of wall clock**, containing **one session
+interruption that was never stamped separately**, at most **2.6×**); the third split the previously unsplit
+P7→P9 (last trial's phase numbering) into four event-boundary stamps and logged **3 min 44 s of agent wall
+clock**, but **that entry was small and smooth and is no ceiling** (see "The third trial"). **None of the three is human timing, so this open item stays open.**
+The first timed trial ([The area under a velocity–time graph equals displacement](../../knowledge/physics/claims/velocity-time-graph-area.en.md),
 ev-151) produced only a total: about 12 minutes, **unphased**, so it could say "we are over" but not **where**.
 The second trial ([HTTP 451 refuses access for legal reasons](../../knowledge/computing/claims/http-451-legal-unavailable.en.md),
-ev-153) stamped each phase. This record is that decomposition.
+ev-153) stamped each phase; the phase table below is its result.
 
 ## The measured phases (2026-10-20 · agent timing)
 
@@ -29,7 +31,8 @@ ev-153) stamped each phase. This record is that decomposition.
 | P7→P9 | evidence registration (one row in each language + recomputing the SHA-256), the English twin, the subject index row, correcting the entry count | **547 s** (includes one session interruption) |
 | P9→P10 | `--write-index` + `kbcheck` re-check | **929 s** (this stretch was actually occupied by writing this record and running the self-tests — **it is not validation time**) |
 
-**Validation itself takes 2.2 seconds** (measured: `python tools/kbcheck.py` over 674 objects / 1444 documents).
+**Validation itself takes seconds** (2.2 s measured 2026-10-20 over 674 objects / 1444 documents; 1.7 s
+re-measured 2026-10-21 over 675 objects / 1446 documents).
 So those nine hundred seconds must not be charged to the checker — which is exactly where phased timing is
 more honest than a total: inside "about 12 minutes" **no segment** knows whether it was writing or waiting
 for a machine.
@@ -52,7 +55,9 @@ Almost all of the extra time went into
 **parallel structures**: the evidence row must be written **twice** (`evidence/README.md` and
 `README.en.md`), the English twin must be **written as a second full document**, the subject README's
 index row and counts like "twenty-seven entries" must be updated, and `--write-index` regenerates three
-machine files.
+machine files. The third trial split the same structure into four stamps and found a bilingual tail of only
+**61 seconds** — **but that was an agent translating immediately after writing the Chinese body**, no basis
+for inferring human cost; see "The third trial".
 
 > [!IMPORTANT]
 > **This is not an argument that bilingualism is a burden.** The second language is load-bearing,
@@ -67,7 +72,8 @@ machine files.
 > timestamp was backfilled, and **the interruption was never stamped on its own**.
 > **"4 min 9 s for the Chinese body" is no longer "within budget"** — by wall clock it is only the **first
 > 31%** of a bilingual entry, and the remaining part is exactly where the 8 min 16 s comes from; that part
-> **has not yet been measured with sub-phase stamps**.
+> **has been sub-stamped exactly once**, in the 2026-10-21 third trial (**61 seconds of agent time**), and
+> **the human version of it remains unmeasured**.
 
 **Three: agent timing cannot stand in for human timing, and the difference is exactly where it hurts.**
 "283 lines read in 17 seconds" is true for an agent and false for a **person**. The two most expensive
@@ -143,6 +149,64 @@ placeholder.**
 > **This tool was not built in this round:** shipping a tool for an assumption that is only half true costs
 > more than not shipping it.
 
+## The third trial: splitting last trial's P7→P9 tail into four stamps (2026-10-21 · agent timing)
+
+The third trial used [the JSON entry](../../knowledge/computing/claims/json-utf8-no-bom.en.md), because the
+computing README's "next entry" pointed at RFC 8259. The source is **899 lines / 28,360 bytes**, larger than
+the 451 trial's 283 lines, but the entry draws on **section 8.1** only, and there was no directional discovery
+like "451 is not in RFC 9110" — **this entry ran smoother than the last one**.
+
+| Event boundary | What happens | Time |
+|---|---|---|
+| topic → download | pick the topic + download RFC 8259 | **24 s** |
+| download → read complete | read §1–§14 and Appendix A, plus checking STD 90 / Standards Track / DOI | **47 s** |
+| read complete → skeleton | compare against existing entries + generate the skeleton | **7 s** |
+| skeleton → Chinese body | write the Chinese body (陈述 · 依据 · A1/A2 · how to attack it · changelog) | **26 s** |
+| — | **subtotal: topic → Chinese body finished** | **104 s** |
+| Chinese body → evidence row (zh) | evidence row (zh) | **14 s** |
+| evidence row (zh) → evidence row (en) | evidence row (en) | **7 s** |
+| evidence row (en) → English body | English body (full translation + link to the Chinese original) | **13 s** |
+| English body → index and counts | subject index rows + count correction (both languages) | **27 s** |
+| — | **subtotal: bilingual tail (the same work as P7→P9 last time)** | **61 s** |
+| index → machine files and check | `--write-index` (53 s) + `kbcheck` (1.7 s) | **59 s** (command overhead included) |
+| — | **total: topic → validation green** | **224 s = 3 min 44 s** |
+
+> A note on the numbering: the previous trial used P1–P10, with P7 marking the start of evidence
+> registration; this trial's four stamps start at **Chinese body finished**, so they are named by event
+> boundary to keep two different P7s from meaning the same thing. Raw epochs are in
+> [`entry-cost-phases-2.tsv`](entry-cost-phases-2.tsv).
+
+The four-way split answers what the previous trial could not: **the tail was not evenly expensive.**
+The largest piece of the 61 seconds is **index and counts (27 s)**, then the Chinese evidence row (14 s);
+the English body took only 13 seconds — but that is **an agent translating immediately after finishing the
+Chinese body**, no basis for inferring human cost. The 27-second cell also contains a **content edit**: the
+English README's "all twenty entries" was stale and became "network protocols and one format specification",
+so it was not pure mechanical copying either.
+
+> [!CAUTION]
+> **Do not read this 3 min 44 s as "budget met".** Three conditions all push the number down:
+> ① **agent timing** — the two steps most expensive for a human, reading and writing, were compressed to
+> 47 s and 26 s;
+> ② **a small, smooth source**, with the topic chosen by the repository, so there was no trial and error;
+> ③ **the English page is an immediate translation of the same argument**, not an independent second pass.
+> What it proves is that **the four sub-phases can be stamped** and that **the toolchain is still not the
+> bottleneck** — not that a human bilingual entry fits in 5 minutes.
+> There are still only **2 phased samples** (451 with an unpinned interruption; JSON as a small-source
+> agent reading), plus **1 unphased** one.
+
+**This trial also exposed something the machine check cannot see.** After `kbcheck` went green, a self-review
+found the entry title read "JSON exchanged between systems must use UTF-8", dropping section 8.1's qualifier
+"**not part of a closed ecosystem**" — **the title claimed more than the source**. The checker validates
+structure, links and evidence depth; **it does not check whether a title is faithful to the specification**.
+The rename and eight changes across four files (the rename, two front-matter titles, the English first-line
+link, two subject index rows and two changelog rows) followed, then the index was regenerated. **That
+correction crossed a context compaction and was never stamped, so it is not inside the 224 seconds above** —
+it measures exactly the distance between "validation passed" and "the content is right" that a person still
+has to walk.
+
+**Raw stamps are checkable**: [`entry-cost-phases-2.tsv`](entry-cost-phases-2.tsv) (epochs are Unix seconds;
+the post-validation correction row has no timestamp, and its note says why).
+
 > [!CAUTION]
 > **Under the unit now fixed, "5 minutes" and "bilingual is load-bearing" are two requirements that fight.**
 > The budget is 300 seconds, and **the Chinese body alone took 249** — which leaves **51 seconds** for
@@ -160,6 +224,9 @@ placeholder.**
 > ③ keep the structure as it is, **accept that a bilingual entry costs more than 5 minutes**, and revise the
 > "collection rate keeps up" estimate accordingly.
 > **This is the author's call, not something this round may make for the author.**
+>
+> The third trial's 3 min 44 s is a different sample (**agent, small source, immediate translation**) and
+> **cannot overturn the upper bound above**; it shows only that the four sub-phases can be timed separately.
 
 ## Next steps (not done)
 
@@ -167,16 +234,21 @@ placeholder.**
       **The author fixed the unit: one bilingual pair** (2026-10-20). This record no longer carries two
       parallel readings; the 4 min 9 s Chinese body is **the first 31% of a bilingual entry**, not an
       independent pass
-- [ ] **Split P7→P9 into four stamps before re-measuring**: evidence row (zh) · evidence row (en) · English
-      body · index and counts. The existing 547 seconds **contain one unpinned interruption**; without the
-      split, "the parallel structure is expensive" cannot be told apart from "that session got interrupted"
-- [ ] **Re-measure under the fixed unit**: there is currently **one** phased bilingual sample, and its
-      13 min 16 s is **wall clock with an interruption inside**. Turning "at most 8 min 16 s over" into a
-      trustworthy average needs at least 3 trials **with complete sub-phase stamps**
+- [x] ~~Split P7→P9 into four stamps before re-measuring~~ **done (2026-10-21)**: evidence row (zh) 14 s ·
+      evidence row (en) 7 s · English body 13 s · index and counts 27 s, **61 s** in total (agent timing; see
+      "The third trial" and [`entry-cost-phases-2.tsv`](entry-cost-phases-2.tsv)). The 547 seconds with an
+      unpinned interruption are still unaccounted for, but the four sub-phases now have separate numbers
+- [ ] **Accumulate more trials under the fixed unit**: there are now **2 phased samples** (451's
+      13 min 16 s with an interruption; JSON's 3 min 44 s as a small-source agent reading) and **1 unphased**
+      one. Turning "at most 8 min 16 s over" into a trustworthy average needs at least **1 more trial with
+      complete sub-phase stamps that is not an easy topic**
 - [ ] Time one entry by a human, to supply the half agent timing cannot
 - [ ] ~~Script the manual part of P7→P9, since it is pure structural copying~~ **premise checked: only 5
       subjects have purely-copyable index rows** (see the section above). The scriptable scope shrinks to
       **appending rows** for the `类型|状态|来源` shape and the **mechanical columns of an evidence row**
       (id / time / licence / cited-by); `定位` and `核验深度` **must be written by a person**
-- [ ] Talk about an "average recording time" only after 3 phased trials; with 2, and one of them unphased,
-      the sample cannot support a trend
+- [ ] **Add one item to the human review checklist**: a title must keep the qualifiers the specification
+      attaches (the third trial dropped "not part of a closed ecosystem" and the machine check did not catch
+      it). Checking "is there a source" is not enough; check "does the claim claim more than the source"
+- [ ] Talk about an "average recording time" only after 3 phased trials; the 2 existing phased samples differ
+      in topic and source difficulty, too little for a trend
