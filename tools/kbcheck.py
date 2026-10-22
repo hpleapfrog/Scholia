@@ -851,6 +851,9 @@ def check_path_steps(objects, errors):
                     f"—— 路径是「知识点的编排」，指不出对象的步骤不是环节（R-GRAPH-04）")
 
 
+PATH_COVERAGE = {}      # 路径 rel -> (已覆盖成果数, 声明成果数)
+
+
 def check_path_outcomes(objects, errors, warnings):
     """目标覆盖度 —— 从前是人工判断，这里改成机械校验。
 
@@ -920,6 +923,7 @@ def check_path_outcomes(objects, errors, warnings):
 
         missing = [x for x in declared if x not in covered]
         stats[rel] = (len(declared) - len(missing), len(declared))
+        PATH_COVERAGE[rel] = stats[rel]
 
         thin = [x for x in declared if 0 < steps.get(x, 0) <= 1]
         unread = [x for x in declared if depths.get(x)
@@ -1173,6 +1177,30 @@ def check_section_order(objects, errors):
         if all(p >= 0 for p in pos) and pos != sorted(pos):
             errors.append(
                 f"{rel}: 必备小节顺序应为 {' · '.join(order)}（FORMAT.md §1.3）（R-SCHEMA-05）")
+
+
+def check_readme_path_numbers(objects, errors):
+    """`路径` 在学科 README 表格里手写的「覆盖度 X/Y」必须与**实际算出来的**一致。
+
+    这张表是手写的，每给路径加一步就会旧一次——加一步、忘记改 README，
+    于是页面说 5/5 而实际已经 6/6。**数字和实际不符时，读者信的是页面。**
+    """
+    import re as _re
+    for rel, (got, total) in PATH_COVERAGE.items():
+        p = ROOT / rel
+        rp = p.parent.parent / "README.md"
+        if not rp.exists():
+            continue
+        name = p.name
+        for line in rp.read_text(encoding="utf-8").split(chr(10)):
+            if name not in line or "覆盖度" not in line:
+                continue
+            m = _re.search(r"覆盖度\s*\*{0,2}(\d+)\s*/\s*(\d+)", line)
+            if m and (int(m.group(1)), int(m.group(2))) != (got, total):
+                errors.append(
+                    f"{rp.relative_to(ROOT).as_posix()}: 「{name}」的覆盖度写成 "
+                    f"{m.group(1)}/{m.group(2)}，实际是 {got}/{total}"
+                    f"（R-README-03）")
 
 
 def check_status_docs(errors):
@@ -1624,6 +1652,8 @@ MECH_RULES = [
     ("R-INDEX-01", "三份机器文件（`index.json` / `citations.json` / `evidence.json`）与内容一致（改内容必须重生成）"),
     ("R-INDEX-02", "人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表）"),
     ("R-README-01", "每个对象都在所属学科 README 里登记"),
+    ("R-README-03", "学科 README 路径表里手写的「覆盖度 X/Y」与实际一致"),
+    ("R-README-03", "the coverage figure `X/Y` typed into the subject README path table matches the computed one"),
     ("R-README-02", "学科 README 里手写的状态列与 front-matter 一致"),
     ("R-DOC-01", "状态图例在 FORMAT.md 与 knowledge/README.md 里列全"),
 ]
@@ -2236,6 +2266,7 @@ def check_all():
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
     check_doc_bilingual(errors)
+    check_readme_path_numbers(objects, errors)
     check_type_dir(objects, errors)
     check_status_has_argument(objects, errors)
     check_status_reachability(objects, errors)

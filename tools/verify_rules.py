@@ -806,6 +806,27 @@ def sample_readme01(root, _v):
     return False
 
 
+def sample_readme03(root, _v):
+    """把学科 README 路径表里手写的「覆盖度 X/Y」改大一位。"""
+    import re as _re
+    # 只看**学科** README（knowledge/<subject>/README.md）
+    # —— `knowledge/README.md` 是总索引，那里也有「覆盖度」字样，但不受这条规则管
+    for rp in sorted((root / "knowledge").glob("*/README.md")):
+        lines = read(rp).split(chr(10))
+        for i, line in enumerate(lines):
+            # 必须是**路径表**里的那一行：既提到 paths/ 又有覆盖度数字
+            if "覆盖度" not in line or "paths/" not in line:
+                continue
+            m = _re.search(r"覆盖度\s*\*{0,2}(\d+)\s*/\s*(\d+)", line)
+            if not m:
+                continue
+            lines[i] = line.replace(m.group(0), "覆盖度 %s/%s" % (
+                int(m.group(1)) + 9, m.group(2)), 1)
+            write(rp, chr(10).join(lines))
+            return True
+    return False
+
+
 def sample_doc01(root, _v):
     """FORMAT.md 的状态图例里删掉一个状态词。"""
     p = root / "FORMAT.md"
@@ -1065,6 +1086,8 @@ SAMPLES = [
     ("R-INDEX-01", "citations.json 被改坏", sample_index01),
     ("R-INDEX-02", "README 生成块被塞进一行", sample_index02),
     ("R-README-01", "对象从学科 README 里被删掉", sample_readme01),
+    ("R-README-03", "README 里的覆盖度数字被改大", sample_readme03),
+    ("R-README-03", "README 里的覆盖度数字被改大", sample_readme03),
     ("R-DOC-01", "FORMAT.md 状态图例删掉「已失效」", sample_doc01),
     ("R-SCHEMA-19", "命题一个人署名就写「已确证」", sample_schema19_confirmed, "但全条只有"),
     ("R-SCHEMA-19", "只有一条论证、零攻击边就写「争议」", sample_schema19_disputed, "status=「争议」"),
