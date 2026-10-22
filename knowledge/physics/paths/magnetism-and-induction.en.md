@@ -5,7 +5,7 @@ title: "Magnetism and electromagnetic induction (high school)"
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
-updated: 2026-10-21
+updated: 2026-10-22
 scope:
   学科: 物理
   学段: 高中
@@ -19,6 +19,7 @@ outcomes:
   - o4: use `Φ = BS` and "changing flux" to state when induction occurs
   - o5: use Lenz's law to decide the induced current direction, and say exactly what is being opposed
   - o6: tell motional from induced EMF, and explain why self-induction "lags one step"
+  - o7: use the Lorentz force to explain the division of labour between a mass spectrometer and a cyclotron: one measures mass, the other accelerates repeatedly
 edges:
   先修:
     - "[field strength](../concepts/electric-field.en.md)"
@@ -43,6 +44,7 @@ license: CC-BY-SA-4.0
 | 5 | Induction: only change makes current | [Faraday's law](../concepts/electromagnetic-induction.en.md) | o4, o5 |
 | 6 | Motional vs induced: two kinds of EMF | [eddy currents and motional EMF](../concepts/eddy-currents-and-motional-emf.en.md) | o6 |
 | 7 | Self-induction: current cannot jump | [self and mutual inductance](../concepts/self-and-mutual-inductance.en.md) | o6 |
+| 8 | Instruments: weighing mass and accelerating repeatedly | [mass spectrometer and cyclotron](../concepts/mass-spectrometer-and-cyclotron.en.md) | o7 |
 
 > [!WARNING]
 > **Steps link to concepts; no methods.** A concept order, not a teaching plan.
@@ -56,7 +58,7 @@ license: CC-BY-SA-4.0
 - **Prerequisite gaps**: `magnetic field` (field strength) → `ampere force` / `flux` (magnetic field) →
   `Lorentz force` (magnetic field · circular motion) → `Faraday` (flux · Ohm's law) →
   `eddy & motional` (Faraday · Lorentz) → `self-inductance` (Faraday). Three external prerequisites declared.
-- **Outcome coverage**: `o1`–`o6` covered, **6/6** (step 5 covers o4 and o5; steps 6–7 share o6).
+- **Outcome coverage**: `o1`–`o7` covered, **7/7** (step 5 covers o4 and o5; steps 6–7 share o6; step 8 covers o7).
 
 ### Human judgement
 
@@ -86,3 +88,4 @@ license: CC-BY-SA-4.0
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-21 | Entry created | order from seven concepts' `先修` edges; content from ev-160/161/192/193 | @hpleapfrog |
+| 2026-10-22 | **One step added**: mass spectrometer and cyclotron (o7); coverage 6/6 → **7/7** — which makes the "eight steps is long" critique sharper | it belonged to no path; its prerequisite (Lorentz force) sits inside this chain | @hpleapfrog |

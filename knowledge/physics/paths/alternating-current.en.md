@@ -5,7 +5,7 @@ title: "Alternating current (high school)"
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
-updated: 2026-10-21
+updated: 2026-10-22
 scope:
   学科: 物理
   学段: 高中
@@ -17,12 +17,14 @@ outcomes:
   - o2: state the RMS definition (equivalent heating) and convert between 220 V and the peak
   - o3: say a transformer changes voltage and current but **not** power, and state the ideal assumptions
   - o4: say qualitatively that inductive reactance rises with frequency and capacitive falls, and what that does to AC
+  - o5: explain high-voltage transmission as "step up to cut losses", and why the voltage cannot rise forever
 edges:
   先修:
     - "[electromagnetic induction](../concepts/electromagnetic-induction.en.md)"
     - "[uniform circular motion](../concepts/uniform-circular-motion.en.md)"
     - "[self and mutual inductance](../concepts/self-and-mutual-inductance.en.md)"
     - "[capacitance](../concepts/capacitance.en.md)"
+    - "[resistance and Ohm's law](../concepts/resistance-and-ohms-law.en.md)"
   支持: []
   攻击: []
 evidence: [ev-162, ev-194, ev-195]
@@ -39,6 +41,7 @@ license: CC-BY-SA-4.0
 | 2 | RMS: why 220 V | [RMS values](../concepts/rms-values.en.md) | o2 |
 | 3 | Transformer: voltage changes, power does not | [transformer](../concepts/transformer.en.md) | o3 |
 | 4 | Reactance: AC's "resistance" | [reactance and impedance](../concepts/reactance-and-impedance.en.md) | o4 |
+| 5 | Power to the home: why high voltage | [long-distance transmission](../concepts/power-transmission.en.md) | o5 |
 
 > [!WARNING]
 > **Steps link to concepts; no methods.** A concept order, not a teaching plan.
@@ -50,8 +53,8 @@ license: CC-BY-SA-4.0
 ### Machine-checked (`tools/kbcheck.py`)
 
 - **Prerequisite gaps**: `AC` (induction · circular) → `RMS` (AC) → `transformer` (induction · AC) →
-  `reactance` (AC · RMS · self/mutual · capacitance). Four external prerequisites declared.
-- **Outcome coverage**: `o1`–`o4` covered, **4/4**.
+  `reactance` (AC · RMS · self/mutual · capacitance). Five external prerequisites declared (resistance for transmission losses).
+- **Outcome coverage**: `o1`–`o5` covered, **5/5**.
 
 ### Human judgement
 
@@ -79,3 +82,4 @@ license: CC-BY-SA-4.0
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-21 | Entry created | order from four concepts' `先修` edges; content from ev-162/194/195 | @hpleapfrog |
+| 2026-10-22 | **One step added**: long-distance transmission (o5); coverage 4/4 → **5/5** | it belonged to no path; its prerequisite (transformer) sits inside this chain | @hpleapfrog |

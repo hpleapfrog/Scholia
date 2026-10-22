@@ -5,7 +5,7 @@ title: "Intro electrostatics (high school)"
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
-updated: 2026-10-21
+updated: 2026-10-22
 scope:
   学科: 物理
   学段: 高中
@@ -18,9 +18,13 @@ outcomes:
   - o3: say that **field strength is the force per unit charge**, and explain why the field does not depend on a test charge
   - o4: use the gravitational-potenial analogy to distinguish **electric potential energy** from **electric potential**
   - o5: say that a capacitor stores charge and energy, and that its value is set by geometry and dielectric
+  - o6: treat a charge entering a uniform field perpendicularly as projectile-like motion, and tell an accelerating device from a deflecting one
+  - o7: state the two principles of static protection (grounding · point discharge) and the everyday practice for each
 edges:
   先修:
     - "[mechanical energy](../concepts/conservation-of-mechanical-energy.en.md)"
+    - "[projectile motion](../concepts/projectile-motion.en.md)"
+    - "[Newton's second law](../concepts/newtons-second-law.en.md)"
   支持: []
   攻击: []
 evidence: [ev-083, ev-084, ev-085, ev-086, ev-087, ev-175]
@@ -38,6 +42,8 @@ license: CC-BY-SA-4.0
 | 3 | The "medium" of the force: field and field strength | [electric field strength](../concepts/electric-field.en.md) | o3 |
 | 4 | Energy in the field: potential energy and potential | [electric potential energy and potential](../concepts/electric-potential-energy.en.md) | o4 |
 | 5 | Storing charge and energy: capacitance | [capacitance](../concepts/capacitance.en.md) | o5 |
+| 6 | How a charged particle moves in a field | [charged particle in an electric field](../concepts/charged-particle-in-electric-field.en.md) | o6 |
+| 7 | Preventing and using static charge | [electrostatic prevention and utilisation](../concepts/electrostatic-prevention-and-utilization.en.md) | o7 |
 
 > [!WARNING]
 > **Every step here links straight to a `concept` — this chain has no methods at all.**
@@ -54,8 +60,9 @@ license: CC-BY-SA-4.0
 - **Prerequisite gaps**: `charge` (none) → `Coulomb's law` (charge) → `field strength` (Coulomb) →
   `potential energy / potential` (field strength · **mechanical energy**) → `capacitance`
   (potential energy · field strength). `mechanical energy` is outside this path and is declared above
-  in `edges.先修` as an **external prerequisite**.
-- **Outcome coverage**: `o1`–`o5` covered, **5/5**.
+  in `edges.先修` as an **external prerequisite**. `projectile motion` (the projectile-like treatment)
+  and `Newton's second law` (particle dynamics) are also declared external.
+- **Outcome coverage**: `o1`–`o7` covered, **7/7**.
 
 ### Human judgement
 
@@ -91,3 +98,4 @@ license: CC-BY-SA-4.0
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-21 | Entry created: the electrostatic chain of the 37 new concepts, as one path | order from the five concepts' `先修` edges; content from ev-083–087 and ev-175 | @hpleapfrog |
+| 2026-10-22 | **Two steps added**: charged particle in a field (o6), static prevention and utilisation (o7); coverage 5/5 → **7/7** | neither concept belonged to any path (the "not covered by any path" list) | @hpleapfrog |

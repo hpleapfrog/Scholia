@@ -9,7 +9,7 @@
 <!-- kbcheck:begin -->
 | Subject | Entries |
 |---|---|
-| [Physics](physics/README.en.md) | 353 |
+| [Physics](physics/README.en.md) | 354 |
 | [Life](life/README.en.md) | 8 |
 | [Medicine](medicine/README.en.md) | 8 |
 | [Geography](geography/README.en.md) | 6 |
@@ -20,7 +20,7 @@
 | [Law](law/README.en.md) | 4 |
 | [Mathematics](mathematics/README.en.md) | 308 |
 | [Events (top level)](../events/README.en.md) | 2 |
-| **Total** | **729** |
+| **Total** | **730** |
 <!-- kbcheck:end -->
 
 > [!NOTE]

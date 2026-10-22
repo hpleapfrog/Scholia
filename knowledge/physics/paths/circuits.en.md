@@ -5,7 +5,7 @@ title: "Intro circuits (high school)"
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
-updated: 2026-10-21
+updated: 2026-10-22
 scope:
   学科: 物理
   学段: 高中
@@ -18,6 +18,7 @@ outcomes:
   - o3: compute power and work with `P = UI` and `W = UIt`, and keep J and W apart
   - o4: state Joule's law and when electrical work is **not** equal to heat
   - o5: use the closed-circuit form to explain why terminal voltage drops as current rises
+  - o6: use the chain "electrical work → other forms of energy" to explain efficiency, and say what "saving energy" actually saves
 edges:
   先修: []
   支持: []
@@ -37,6 +38,7 @@ license: CC-BY-SA-4.0
 | 3 | Series and parallel: equivalent resistance | [series and parallel](../concepts/series-and-parallel-circuits.en.md) | o2 |
 | 4 | Work and Joule's law: where work ≠ heat | [electric work and Joule's law](../concepts/electric-work-and-joule-law.en.md) | o4 |
 | 5 | Closed circuit: the source has resistance | [closed-circuit Ohm's law and internal resistance](../concepts/closed-circuit-ohms-law.en.md) | o5 |
+| 6 | Where the energy goes: efficiency and sustainability | [energy resources and sustainability](../concepts/energy-resources-and-sustainability.en.md) | o6 |
 
 > [!WARNING]
 > **Every step links to a concept; there are no methods.** This is a **concept order**, not a
@@ -50,7 +52,7 @@ license: CC-BY-SA-4.0
 - **Prerequisite gaps**: `resistance & Ohm` (none) → `power` / `series & parallel` (resistance) →
   `work & Joule` (power · resistance) → `closed circuit` (resistance · series · power).
   **All prerequisites sit inside the path; none external.**
-- **Outcome coverage**: `o1`–`o5` covered, **5/5**.
+- **Outcome coverage**: `o1`–`o6` covered, **6/6**.
 
 ### Human judgement
 
@@ -79,3 +81,4 @@ license: CC-BY-SA-4.0
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-21 | Entry created | order from the five concepts' `先修` edges; content from ev-016/018/165/166/167/178/179 | @hpleapfrog |
+| 2026-10-22 | **One step added**: energy resources and sustainability (o6); coverage 5/5 → **6/6** | it belonged to no path; its prerequisite sits inside this chain | @hpleapfrog |
