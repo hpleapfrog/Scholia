@@ -431,6 +431,25 @@ OpenStax 教材正文里**内嵌 PhET 模拟**（`<iframe>` + OpenStax 短链，
 > **同一出版社的书，许可可能不同，必须逐本查**——本例中《Physics》是 CC BY，
 > 而同社的《College Physics 2e》和《University Physics》都是 CC BY-NC-SA。
 
+### 怎么取教材原文（Teacher Support）
+
+**`openstax.org` 的页面是 SPA 空壳**——`curl` 回来只有 12 KB 与应用外壳，
+正文（包括 `Teacher Support`）一个字都抓不到。**别在那上面浪费时间。**
+
+原文在源仓库里：
+
+| 要什么 | 去哪 |
+|---|---|
+| 全部模块 | `openstax/osbooks-physics` → `modules/`（目录名就是 `m#####`） |
+| 某一模块的原文 | `modules/<id>/index.cnxml`（raw 下载即用，含 `Teacher Support` 与 `[BL]/[OL]/[AL]` 标记） |
+| 模块属于哪一章 | `collections/physics.collection.xml` |
+
+> [!TIP]
+> `evidence/os-teacher-markers.py` 做的就是这件事（统计标记），
+> 写 `教法` 要读的做法段落也在同一份 cnxml 里。
+
+**许可**：OpenStax《Physics》为 **CC BY 4.0**，可摘引并署名；仍只存**短引用 + 定位**，不整段转载。
+
 ## 原始数据
 
 | 文件 | 内容 | 可复算 | 是证据吗 |

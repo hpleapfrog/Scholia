@@ -430,6 +430,26 @@ But you must distinguish what a given piece of evidence can support:
 > **同一出版社的书，许可可能不同，必须逐本查**——本例中《Physics》是 CC BY，
 > 而同社的《College Physics 2e》和《University Physics》都是 CC BY-NC-SA。
 
+### How to get the textbook text (Teacher Support)
+
+**Pages on `openstax.org` are a SPA shell** — `curl` returns ~12 KB of app scaffolding and none of the
+body text (including `Teacher Support`). Do not spend time there.
+
+The text lives in the source repo:
+
+| What you need | Where |
+|---|---|
+| all modules | `openstax/osbooks-physics` → `modules/` (directory names are `m#####`) |
+| one module | `modules/<id>/index.cnxml` (raw download; contains `Teacher Support` and `[BL]/[OL]/[AL]` tags) |
+| which chapter | `collections/physics.collection.xml` |
+
+> [!TIP]
+> `evidence/os-teacher-markers.py` already walks this path (to count tags); the teaching paragraphs
+> a `教法` entry needs are in the same cnxml.
+
+**Licence**: OpenStax *Physics* is **CC BY 4.0** — short quotations with attribution are fine;
+still store only **short quotes plus locators**, never whole passages.
+
 ## Raw data
 
 | 文件 | 内容 | 可复算 | 是证据吗 |
