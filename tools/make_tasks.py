@@ -125,6 +125,25 @@ def split_fm(path):
     return out, text
 
 
+def concept_to_paths():
+    """知识点 -> 覆盖它的路径标题。
+
+    缺教法的一栏原来是一张平铺的 48 项清单——**知道缺，但不知道该从哪条链补**。
+    按路径归拢之后，一眼能看出「静电学这条链一条教法都没有」。
+    """
+    import re as _re
+    out = {}
+    for p in sorted((ROOT / "knowledge").rglob("paths/*.md")):
+        if p.name.endswith(".en.md"):
+            continue
+        text = p.read_text(encoding="utf-8")
+        fm, body = split_fm(p)
+        title = fm.get("title", p.stem).strip('"')
+        for link in _re.findall(r"\]\(\.\./concepts/([^)#]+)\.md\)", text):
+            out.setdefault(link, []).append(title)
+    return out
+
+
 HEAD = {
     "review": ("三分钟复核",
                "开一个「复核一条」Issue，回答三个是/否。**不需要写内容。**\n"
@@ -140,6 +159,7 @@ HEAD = {
 
 
 def render(t, limit):
+    path_map = concept_to_paths()
     lines = []
     for key in ("review", "translate", "methods", "todo", "coverage"):
         items = t[key]
@@ -147,6 +167,16 @@ def render(t, limit):
         lines.append(f"\n## {title}（{len(items)} 项）\n\n{why}\n")
         if not items:
             lines.append("（无）\n")
+            continue
+        if key == "methods":
+            # 按路径归拢：平铺 48 条只知道「缺」，不知道「该从哪条链补」
+            groups = {}
+            for o in items:
+                for title in path_map.get(Path(o["path"]).stem, ["（未被任何路径覆盖）"]):
+                    groups.setdefault(title, []).append(o)
+            for title, group in sorted(groups.items(), key=lambda kv: -len(kv[1])):
+                names = " · ".join(o["title"] for o in group)
+                lines.append(f"- **{title}** —— 缺 {len(group)} 条：{names}")
             continue
         shown = items[:limit] if limit else items
         for it in shown:
