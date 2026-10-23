@@ -33,8 +33,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / ".cache" / "os"
-RAW = ("https://raw.githubusercontent.com/openstax/osbooks-physics/"
-       "main/modules/{}/index.cnxml")
+# 同一个 m##### 可能在不同的书里：Physics、College Physics、University Physics 各有源仓库。
+# 只试第一个会 404（实测：m42324 / m42344 就不在 osbooks-physics 里）。
+REPOS = ["osbooks-physics", "osbooks-college-physics", "osbooks-university-physics"]
+RAW = "https://raw.githubusercontent.com/openstax/{repo}/main/modules/{mod}/index.cnxml"
 MODULE = re.compile(r"\bm(\d{5})\b")
 
 
@@ -61,18 +63,24 @@ def module_of(concept: Path, evid: dict):
 
 
 def fetch(module: str, refresh=False):
+    """按 REPOS 顺序试，命中即返回 (文本, 实际仓库)。"""
     CACHE.mkdir(parents=True, exist_ok=True)
-    p = CACHE / f"{module}.cnxml"
-    if p.exists() and not refresh:
-        return p.read_text(encoding="utf-8")
-    url = RAW.format(module)
-    try:
-        with urllib.request.urlopen(url, timeout=60) as r:
-            data = r.read().decode("utf-8")
-    except Exception as e:                                   # noqa: BLE001
-        raise SystemExit(f"x 下载失败 {url}\n  {e}")
-    p.write_text(data, encoding="utf-8")
-    return data
+    for name in REPOS:
+        p = CACHE / f"{name}__{module}.cnxml"
+        if p.exists() and not refresh:
+            return p.read_text(encoding="utf-8"), name
+    errors = []
+    for name in REPOS:
+        url = RAW.format(repo=name, mod=module)
+        try:
+            with urllib.request.urlopen(url, timeout=60) as r:
+                data = r.read().decode("utf-8")
+        except Exception as e:                               # noqa: BLE001
+            errors.append(f"{name}: {e}")
+            continue
+        (CACHE / f"{name}__{module}.cnxml").write_text(data, encoding="utf-8")
+        return data, name
+    raise SystemExit("x 三个源仓库都没找到 " + module + chr(10) + "  " + chr(10).join(errors))
 
 
 def teacher_blocks(xml: str):
@@ -104,6 +112,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("concept", nargs="?", help="概念文件名（不含 .md）或路径")
     ap.add_argument("--list", action="store_true", help="列出能定位到模块的概念")
+    ap.add_argument("--scan", action="store_true",
+                    help="扫描「还没有教法」的概念：它们的原文里有没有 Teacher Support")
     ap.add_argument("--refresh", action="store_true", help="强制重新下载")
     ap.add_argument("--max", type=int, default=4, help="最多打印几段")
     args = ap.parse_args()
@@ -116,6 +126,38 @@ def main():
                 continue
             mod, e = module_of(p, evid)
             print(f"{p.stem:<24} {mod or '—':<8} {e or ''}")
+        return 0
+
+    if args.scan:
+        have, lack = [], []
+        covered = set()
+        for mp in (ROOT / "knowledge").rglob("methods/*.md"):
+            if mp.name.endswith(".en.md"):
+                continue
+            fm = mp.read_text(encoding="utf-8")
+            for link in re.findall(r"\[[^\]]*\]\(([^)]+)\)", fm.split("---")[1] if fm.startswith("---") else ""):
+                covered.add(Path(link).stem)
+        for p in concepts():
+            if p.name.endswith(".en.md") or p.stem in covered:
+                continue
+            mod, _e = module_of(p, evid)
+            if not mod:
+                lack.append((p.stem, "无模块定位"))
+                continue
+            try:
+                xml, repo = fetch(mod)
+            except SystemExit:
+                lack.append((p.stem, f"{mod} 取不到"))
+                continue
+            n = len(teacher_blocks(xml))
+            (have if n else lack).append((p.stem, f"{mod} @{repo.replace('osbooks-','')}" if n else f"{mod} 无 Teacher Support"))
+        print(f"有原文可用：{len(have)}（这些可以直接写）")
+        for name, info in have:
+            print(f"  + {name:<26} {info}")
+        print()
+        print(f"需另找来源：{len(lack)}")
+        for name, info in lack:
+            print(f"  - {name:<26} {info}")
         return 0
 
     if not args.concept:
@@ -133,10 +175,16 @@ def main():
     mod, e = module_of(target, evid)
     if not mod:
         raise SystemExit(f"x {target.name} 的 evidence 里没有 m##### 定位，取不到模块")
-    print(f"# {target.stem} —— {mod}（{e}）")
-    print(f"# 源：{RAW.format(mod)}")
+    xml, repo = fetch(mod, args.refresh)
+    print(f"# {target.stem} —— {mod}（{e}）@ {repo}")
+    print(f"# 源：{RAW.format(repo=repo, mod=mod)}")
     print()
-    blocks = teacher_blocks(fetch(mod, args.refresh))
+    blocks = teacher_blocks(xml)
+    if not blocks:
+        print("！这个模块里没有 Teacher Support（也没有 [BL]/[OL]/[AL] 标记）。")
+        print("  这本书可能根本不带教学提示（实测：College Physics 就完全没有）。")
+        print("  写 `教法` 需要另找来源，或者暂时留空——**不要凭印象补**。")
+        return 2
     for b in blocks[:args.max]:
         print("-" * 70)
         print(b)
