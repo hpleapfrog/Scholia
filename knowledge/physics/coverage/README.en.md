@@ -63,6 +63,24 @@ At least three differences are already known:
 >
 > That cannot be filled in by reading textbooks — **it needs classroom data.** **This page records it as a gap.**
 
+### Addendum (2026-10-23): not every concept can get a method from this textbook
+
+The sources are layered — a concept's module does not always contain "how the textbook suggests teaching it":
+
+| Case | Count | Can a `教法` be written |
+|---|---|---|
+| module carries `[BL]/[OL]/[AL]` tags | **17** | yes, and the level comes from the tag |
+| teaching advice present but untagged | **8** | yes, with the level assigned by the author and disclosed |
+| only objectives, or no teacher support at all | **16** | **no** — those were built from **College Physics**, which carries no teacher support |
+
+Tool: `python tools/os_source.py --scan` sorts the gap into these three groups.
+
+> [!IMPORTANT]
+> Those 16 are **not "not yet written" but "not writable from the current evidence base"**.
+> Closing them needs a different source (e.g. a Chinese teacher's edition), or an explicit decision
+> to accept "no teaching practice". Merging "missing" with "cannot be written" makes the gap look
+> easier to close than it is.
+
 ## Suggested priority (the author's view, not a standard)
 
 Ranked by "downstream nodes × size of the gap":
