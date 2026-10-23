@@ -36,8 +36,87 @@ def read(p):
     return io.open(p, encoding="utf-8").read()
 
 
+# ── 改动登记：跑完一个样本就把被碰过的文件复原 ────────────────────────────
+# 早先的做法是**每个样本整份复制仓库**。仓库涨到 700+ 对象之后，一次自测要复制三十多份、
+# 跑三分多钟——慢到没人愿意在改规则时跑它，那它就会真的没人跑。
+# 现在只复制一次，改动前登记原文、跑完复原。
+_OBJ_CACHE = {}   # 副本路径 -> 该副本里所有知识对象的 (路径, 原文)
+_BACKUP = {}      # 路径 -> 原始内容
+_CREATED = []     # 新建出来的文件（复原时删掉）
+
+
 def write(p, s):
-    io.open(p, "w", encoding="utf-8", newline="").write(s)
+    p = Path(p)
+    key = str(p)
+    if key not in _BACKUP:
+        _BACKUP[key] = read(p) if p.exists() else None
+    # **先写临时文件再 replace**，不要原地截断：
+    # 副本是硬链接建出来的，原地 `open("w")` 会**改到原仓库那份文件**。
+    # os.replace 只替换目录项，原文件的另一个名字不受影响。
+    tmp = p.with_name(p.name + ".selftest.tmp")
+    io.open(tmp, "w", encoding="utf-8", newline="").write(s)
+    os.replace(str(tmp), str(p))
+
+
+def remove(p):
+    p = Path(p)
+    key = str(p)
+    if key not in _BACKUP:
+        _BACKUP[key] = read(p) if p.exists() else None
+    if p.exists():
+        p.unlink()
+
+
+def rename(p, new_name):
+    """在**同一目录**下改名（内容不变）。"""
+    p = Path(p)
+    dst = p.parent / new_name
+    if str(dst) not in _BACKUP:
+        _BACKUP[str(dst)] = read(dst) if dst.exists() else None
+    if dst.exists():
+        dst.unlink()
+    os.rename(str(p), str(dst))
+    _CREATED.append(str(p))     # 原路径“消失”了，复原时要写回去
+
+
+def move(p, dst):
+    """把文件移到另一个路径（同目录改名或跨目录搬）。复原时两边都还原。"""
+    p, dst = Path(p), Path(dst)
+    if str(dst) not in _BACKUP:
+        _BACKUP[str(dst)] = read(dst) if dst.exists() else None
+    if str(p) not in _BACKUP:
+        _BACKUP[str(p)] = read(p) if p.exists() else None
+    os.replace(str(p), str(dst))
+
+
+def restore():
+    """把本轮样本碰过的文件全部复原。"""
+    for path, content in list(_BACKUP.items()):
+        p = Path(path)
+        if content is None:
+            p.unlink(missing_ok=True)
+        else:
+            tmp = p.with_name(p.name + ".selftest.tmp")
+            io.open(tmp, "w", encoding="utf-8", newline="").write(content)
+            os.replace(str(tmp), str(p))
+    for path in _CREATED:
+        Path(path).unlink(missing_ok=True)
+    _BACKUP.clear()
+    del _CREATED[:]
+
+
+def _link_or_copy(src, dst):
+    """用**硬链接**建副本；不支持时退回复制。
+
+    为什么：仓库有 1500+ 个文件，Windows 上完整复制一次要 30 秒——
+    自测从「几秒」变成了「几分钟」，那就没人愿意跑了。
+    硬链接复制同一卷上是毫秒级。**代价是所有写入必须先 replace（见 write）**，
+    否则会顺着链接改到原仓库。
+    """
+    try:
+        os.link(src, dst)
+    except OSError:
+        shutil.copy2(src, dst)
 
 
 def front_matter_of(text):
@@ -184,7 +263,13 @@ def _objects(root):
 
     这里刻意**不用正则**：本仓库的写文件通道会把反斜杠转义吃掉（反斜杠加 s 会变成斜杠加 s），
     所以下面一律用「按行切」的字符串操作，不写任何反斜杠转义。
+
+    **结果缓存**：仓库有 1500+ 个 md，每个样本重扫一遍要 30 秒（Windows 上读文件慢）。
+    样本是「挑目标 → 改动 → 复原」，所以扫一遍的结果在整个自测期间都有效。
     """
+    key = str(root)
+    if key in _OBJ_CACHE:
+        return _OBJ_CACHE[key]
     out = []
     for p in sorted((root / "knowledge").rglob("*.md")):
         if p.name.endswith(".en.md"):
@@ -192,6 +277,7 @@ def _objects(root):
         t = read(p)
         if front_matter_of(t)[0] and field_of(t, "id"):
             out.append((p, t))
+    _OBJ_CACHE[key] = out
     return out
 
 
@@ -419,12 +505,16 @@ def sample_schema13(root, _v):
     return False
 
 def _paths(root):
-    """所有路径条目。"""
+    """所有路径条目（同样缓存：见 `_objects`）。"""
+    key = "paths:" + str(root)
+    if key in _OBJ_CACHE:
+        return _OBJ_CACHE[key]
     out = []
     for p in sorted((root / "knowledge").rglob("paths/*.md")):
         if p.name.endswith(".en.md"):
             continue
         out.append((p, read(p)))
+    _OBJ_CACHE[key] = out
     return out
 
 
@@ -437,6 +527,40 @@ def sample_graph01(root, _v):
         if t2:
             write(p, t2)
             return True
+    return False
+
+
+def sample_graph01_path_bad(root, _v):
+    """`路径` 的外部先修指向**教法**（允许路径有先修，但目标仍必须是知识点）。"""
+    for p, t in _paths(root):
+        t2 = set_field(t, "先修", '["[x](../methods/x.md)"]')
+        if t2:
+            write(p, t2)
+            return True
+    return False
+
+
+def sample_graph01_block_list(root, _v):
+    """知识点用**多行块**写 `先修`，且第二项指向不存在的文件。
+
+    这是 `fm_links` 的回归样本：早先行内匹配用了 ``\\s*``，会把块里的
+    **第一条**当成行内值、把后面的项全部丢掉——检查看起来通过，其实是没读到。
+    只放一条坏链接、且放在**第二条**，才测得出来。
+    """
+    for p, t in _objects(root):
+        if field_of(t, "type") != "知识点":
+            continue
+        lines = read(p).split(chr(10))
+        for i, line in enumerate(lines):
+            if line.strip().startswith("先修:"):
+                lines[i] = "  先修:"
+                lines.insert(i + 1, '    - "[好](/dev/null)"')
+                lines.insert(i + 2, '    - "[坏](不存在-zzz.md)"')
+                break
+        else:
+            continue
+        write(p, chr(10).join(lines))
+        return True
     return False
 
 
@@ -549,7 +673,7 @@ def sample_schema16(root, _v):
         dest_dir = p.parent.parent / "methods"
         if not dest_dir.is_dir() or (dest_dir / p.name).exists():
             continue
-        p.rename(dest_dir / p.name)
+        move(p, dest_dir / p.name)
         return True
     return False
 
@@ -577,7 +701,7 @@ def sample_biling01(root, _v):
         dest = p.with_name(p.name.replace(".en.md", "-renamed.en.md"))
         if dest.exists():
             continue
-        p.rename(dest)
+        move(p, dest)
         return True
     return False
 
@@ -679,6 +803,27 @@ def sample_readme01(root, _v):
             continue
         write(rp, txt.replace(p.name, "ZZZ.md"))
         return True
+    return False
+
+
+def sample_readme03(root, _v):
+    """把学科 README 路径表里手写的「覆盖度 X/Y」改大一位。"""
+    import re as _re
+    # 只看**学科** README（knowledge/<subject>/README.md）
+    # —— `knowledge/README.md` 是总索引，那里也有「覆盖度」字样，但不受这条规则管
+    for rp in sorted((root / "knowledge").glob("*/README.md")):
+        lines = read(rp).split(chr(10))
+        for i, line in enumerate(lines):
+            # 必须是**路径表**里的那一行：既提到 paths/ 又有覆盖度数字
+            if "覆盖度" not in line or "paths/" not in line:
+                continue
+            m = _re.search(r"覆盖度\s*\*{0,2}(\d+)\s*/\s*(\d+)", line)
+            if not m:
+                continue
+            lines[i] = line.replace(m.group(0), "覆盖度 %s/%s" % (
+                int(m.group(1)) + 9, m.group(2)), 1)
+            write(rp, chr(10).join(lines))
+            return True
     return False
 
 
@@ -925,6 +1070,8 @@ SAMPLES = [
     ("R-SCHEMA-13", "教法的水平档写成 ZZ", sample_schema13),
     ("R-GRAPH-01", "命题加了 先修 边", sample_graph01),
     ("R-GRAPH-01", "两个知识点互为先修（成环）", sample_graph01_cycle),
+    ("R-GRAPH-01", "路径的外部先修指向教法", sample_graph01_path_bad),
+    ("R-GRAPH-01", "多行块先修里的第二条是坏链接", sample_graph01_block_list),
     ("R-GRAPH-02", "支持边锚点在目标里不存在", sample_graph02),
     ("R-GRAPH-03", "路径的某个成果无人覆盖", sample_graph03),
     ("R-GRAPH-04", "路径某环节指不出对象", sample_graph04),
@@ -939,6 +1086,8 @@ SAMPLES = [
     ("R-INDEX-01", "citations.json 被改坏", sample_index01),
     ("R-INDEX-02", "README 生成块被塞进一行", sample_index02),
     ("R-README-01", "对象从学科 README 里被删掉", sample_readme01),
+    ("R-README-03", "README 里的覆盖度数字被改大", sample_readme03),
+    ("R-README-03", "README 里的覆盖度数字被改大", sample_readme03),
     ("R-DOC-01", "FORMAT.md 状态图例删掉「已失效」", sample_doc01),
     ("R-SCHEMA-19", "命题一个人署名就写「已确证」", sample_schema19_confirmed, "但全条只有"),
     ("R-SCHEMA-19", "只有一条论证、零攻击边就写「争议」", sample_schema19_disputed, "status=「争议」"),
@@ -958,35 +1107,87 @@ def run_check(root):
     return (r.stdout or "") + (r.stderr or "")
 
 
-def main():
-    failures = []
-    for entry in SAMPLES:
-        rule, desc, fn = entry[:3]
-        # 第 4 项（可选）：这条样本要在那份输出里**确实看到**的话。
-        # 有的规则在**未注入的仓库里**就已经报别的数据（例如 R-GRAPH-07 的
-        # 「单环节覆盖」分支）——只 grep 规则 ID 会**假装通过**。写死要看到的句子，
-        # 才证明**这一支**在查。
-        expect = entry[3] if len(entry) > 3 else rule
-        tmp = tempfile.mkdtemp(prefix="scholia_selftest_")
-        repo = Path(tmp) / "repo"
-        try:
-            shutil.copytree(str(ROOT), str(repo),
-                            ignore=shutil.ignore_patterns(".git", "__pycache__"))
-            if not fn(repo, VERBOSE):
-                print(f"SKIP  {rule}  {desc}  ← 没找到可用样本，自测失去覆盖")
-                failures.append((rule, "no-sample"))
-                continue
-            out = run_check(repo)
-            if expect in out:
-                print(f"PASS  {rule}  {desc}")
-            else:
-                print(f"FAIL  {rule}  {desc}  ← 注入后没报这条规则")
-                failures.append((rule, "not-detected"))
-        finally:
-            shutil.rmtree(tmp, ignore_errors=True)
+def _mktemp():
+    """临时副本放在**与仓库同一个卷**上。
 
-    total = len(SAMPLES)
-    rules = {e[0] for e in SAMPLES}
+    这不是洁癖：硬链接不能跨盘，默认临时目录在 C: 而仓库在 D: 时会**静默退回复制**，
+    1500 个文件 30 秒——自测从几秒变成几分钟，然后就没人跑了。
+    """
+    for base in (str(ROOT.parent), None):
+        try:
+            return tempfile.mkdtemp(prefix="scholia_selftest_", dir=base)
+        except OSError:
+            continue
+    return tempfile.mkdtemp(prefix="scholia_selftest_")
+
+
+def _mktemp():
+    """临时副本放在**与仓库同一个卷**上。
+
+    这不是洁癖：硬链接不能跨盘，默认临时目录在 C: 而仓库在 D: 时会**静默退回复制**，
+    1500 个文件 30 秒——自测从几秒变成几分钟，然后就没人跑了。
+    """
+    for base in (str(ROOT.parent), None):
+        try:
+            return tempfile.mkdtemp(prefix="scholia_selftest_", dir=base)
+        except OSError:
+            continue
+    return tempfile.mkdtemp(prefix="scholia_selftest_")
+
+
+def main():
+    # 同一条（规则, 描述）只跑一次：重复登记不会报错，只会白跑一遍——
+    # 而重复往往是「把一行粘了两次」，正是这类机械操作最容易出的错。
+    seen_pairs, samples = set(), []
+    for s in SAMPLES:
+        k = (s[0], s[1])
+        if k in seen_pairs:
+            continue
+        seen_pairs.add(k)
+        samples.append(s)
+    # `--only R-GRAPH`：只跑某条（或某个前缀）规则的样本。
+    # 全量跑一次约 1~2 分钟（每个样本都要整跑一次 kbcheck），
+    # 而改一条规则时只需要看那一条——**让常用路径变短**比让全量变快更值。
+    if "--only" in sys.argv:
+        prefix = sys.argv[sys.argv.index("--only") + 1]
+        samples = [s for s in samples if s[0].startswith(prefix)]
+        if not samples:
+            print(f"没有以 {prefix!r} 开头的规则样本")
+            return 1
+
+    # 复制一次、样本间复原（并发跑过一版，实测没用：瓶颈在复制，不在算）。
+    tmp = _mktemp()
+    repo = Path(tmp) / "repo"
+    failures = []
+    try:
+        shutil.copytree(str(ROOT), str(repo),
+                        ignore=shutil.ignore_patterns(".git", "__pycache__"),
+                        copy_function=_link_or_copy)
+        for idx, entry in enumerate(samples):
+            rule, desc, fn = entry[:3]
+            # 第 4 项（可选）：这条样本要在那份输出里**确实看到**的话。
+            # 有的规则在**未注入的仓库里**就已经报别的数据（例如 R-GRAPH-07 的
+            # 「单环节覆盖」分支）——只 grep 规则 ID 会**假装通过**。写死要看到的句子，
+            # 才证明**这一支**在查。
+            expect = entry[3] if len(entry) > 3 else rule
+            try:
+                if not fn(repo, VERBOSE):
+                    print(f"SKIP  {rule}  {desc}  ← 没找到可用样本，自测失去覆盖")
+                    failures.append((rule, "no-sample"))
+                    continue
+                out = run_check(repo)
+                if expect in out:
+                    print(f"PASS  {rule}  {desc}")
+                else:
+                    print(f"FAIL  {rule}  {desc}  ← 注入后没报这条规则")
+                    failures.append((rule, "not-detected"))
+            finally:
+                restore()
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+    total = len(samples)
+    rules = {e[0] for e in samples}
     print(f"\n{total - len(failures)}/{total} 个样本成功触发（覆盖 {len(rules)} 条规则）")
     return 0 if not failures else 1
 

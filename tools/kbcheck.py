@@ -483,12 +483,17 @@ def resolve_link(src_path, target):
 
 
 def fm_links(fm, key):
-    """取出 front-matter 里某个键（含缩进块形式）中的 Markdown 链接目标。"""
-    m = re.search(rf"^[ \t]*{key}:\s*(.+)$", fm, re.M)
+    """取出 front-matter 里某个键（含缩进块形式）中的 Markdown 链接目标。
+
+    **`[ \\t]*` 不能写成 `\\s*`**：`\\s` 匹配换行，于是「`先修:` 后面什么都没写、
+    下面是缩进块」会被当成**行内值**，只取到块里的第一条——
+    多行列表的后几项被静默丢掉，而「漏读」不会报错，只会让检查显得通过。
+    """
+    m = re.search(rf"^[ \t]*{key}:[ \t]*(.+)$", fm, re.M)
     if m:
         line = m.group(1)
     else:
-        b = re.search(rf"^[ \t]*{key}:\s*\n((?:[ \t]+.*\n?)*)", fm, re.M)
+        b = re.search(rf"^[ \t]*{key}:[ \t]*\n((?:[ \t]+.*\n?)*)", fm, re.M)
         line = b.group(1) if b else ""
     return re.findall(r"\[[^\]]*\]\(([^)]+)\)", line)
 
@@ -687,9 +692,15 @@ def check_graph(objects, errors, warnings):
         for tgt in fm_links(fm, "先修"):
             r = resolve_link(path, tgt)
             dest = objects.get(r) if r else None
-            if t != "知识点":
+            # `路径` 是唯一例外：它的 `先修` 声明的是**外部先修**——
+            # 「这条路径要求你先会的东西，但本路径不教它」。
+            # `check_paths` 一直靠这个字段判「先修缺口」不在路径内，
+            # 而这条检查以前把它一并禁掉了：两条规则互相打架，
+            # 只是此前所有路径的 `先修` 都写成 `[]`，从没撞上。
+            if t not in ("知识点", "路径"):
                 errors.append(
-                    f"{rel}: 只有「知识点」可以有 `先修` 边（FORMAT.md §2），本条 type={t}（R-GRAPH-01）")
+                    f"{rel}: 只有「知识点」（以及声明外部先修的「路径」）可以有 `先修` 边"
+                    f"（FORMAT.md §2），本条 type={t}（R-GRAPH-01）")
             if dest is None:
                 errors.append(f"{rel}: `先修` 指向的不是知识对象 -> {tgt}（R-GRAPH-01）")
             elif dest["type"] != "知识点":
@@ -747,7 +758,15 @@ def check_paths(objects, errors, warnings):
     for rel, o in objects.items():
         if o["type"] != "路径":
             continue
-        prose = re.sub(r"```.*?```", "", o["text"], flags=re.S)
+        # **只看正文，不看 front-matter。**
+        # `edges.先修` 里的链接是「外部先修」的声明，不是「本路径引用了它」；
+        # 早先按整篇扫链接，于是声明成外部先修的概念又被当成路径内引用，
+        # 进而要求它的先修也必须在路径内——外部先修等于白声明，还会连锁报错。
+        body = o["text"]
+        fm = parse_front_matter(body)
+        if fm:
+            body = body[body.find("\n---", 3) + 4:]
+        prose = re.sub(r"```.*?```", "", body, flags=re.S)
 
         refs = set()
         for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", prose):
@@ -832,6 +851,9 @@ def check_path_steps(objects, errors):
                     f"—— 路径是「知识点的编排」，指不出对象的步骤不是环节（R-GRAPH-04）")
 
 
+PATH_COVERAGE = {}      # 路径 rel -> (已覆盖成果数, 声明成果数)
+
+
 def check_path_outcomes(objects, errors, warnings):
     """目标覆盖度 —— 从前是人工判断，这里改成机械校验。
 
@@ -901,6 +923,7 @@ def check_path_outcomes(objects, errors, warnings):
 
         missing = [x for x in declared if x not in covered]
         stats[rel] = (len(declared) - len(missing), len(declared))
+        PATH_COVERAGE[rel] = stats[rel]
 
         thin = [x for x in declared if 0 < steps.get(x, 0) <= 1]
         unread = [x for x in declared if depths.get(x)
@@ -1154,6 +1177,30 @@ def check_section_order(objects, errors):
         if all(p >= 0 for p in pos) and pos != sorted(pos):
             errors.append(
                 f"{rel}: 必备小节顺序应为 {' · '.join(order)}（FORMAT.md §1.3）（R-SCHEMA-05）")
+
+
+def check_readme_path_numbers(objects, errors):
+    """`路径` 在学科 README 表格里手写的「覆盖度 X/Y」必须与**实际算出来的**一致。
+
+    这张表是手写的，每给路径加一步就会旧一次——加一步、忘记改 README，
+    于是页面说 5/5 而实际已经 6/6。**数字和实际不符时，读者信的是页面。**
+    """
+    import re as _re
+    for rel, (got, total) in PATH_COVERAGE.items():
+        p = ROOT / rel
+        rp = p.parent.parent / "README.md"
+        if not rp.exists():
+            continue
+        name = p.name
+        for line in rp.read_text(encoding="utf-8").split(chr(10)):
+            if name not in line or "覆盖度" not in line:
+                continue
+            m = _re.search(r"覆盖度\s*\*{0,2}(\d+)\s*/\s*(\d+)", line)
+            if m and (int(m.group(1)), int(m.group(2))) != (got, total):
+                errors.append(
+                    f"{rp.relative_to(ROOT).as_posix()}: 「{name}」的覆盖度写成 "
+                    f"{m.group(1)}/{m.group(2)}，实际是 {got}/{total}"
+                    f"（R-README-03）")
 
 
 def check_status_docs(errors):
@@ -1591,7 +1638,7 @@ MECH_RULES = [
     ("R-BILING-03", "文档类文件（根级 / 学科 README / 覆盖度 / docs）必须有同名 `.en.md`；`templates/` 与 `.github/` 豁免"),
     ("R-BILING-02", "英译本的 `type` / `status` / `evidence` 与中文原件一致（`M-10` 里可机械化的那一半）"),
     ("R-LINK-03", "英文页面的站内链接指向英文页（该页存在时）；例外：`English version of` 行、指向无译本文件的链接"),
-    ("R-GRAPH-01", "`先修` 只连「知识点」，且无环"),
+    ("R-GRAPH-01", "`先修` 只连「知识点」（`路径` 可声明外部先修），且无环"),
     ("R-GRAPH-02", "`支持` / `攻击` 边的论证锚点存在"),
     ("R-GRAPH-03", "`路径` 每个成果至少被一个环节覆盖（未声明 outcomes 给警告）"),
     ("R-GRAPH-04", "`路径` 每个环节至少连到一个库内对象"),
@@ -1605,6 +1652,8 @@ MECH_RULES = [
     ("R-INDEX-01", "三份机器文件（`index.json` / `citations.json` / `evidence.json`）与内容一致（改内容必须重生成）"),
     ("R-INDEX-02", "人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表）"),
     ("R-README-01", "每个对象都在所属学科 README 里登记"),
+    ("R-README-03", "学科 README 路径表里手写的「覆盖度 X/Y」与实际一致"),
+    ("R-README-03", "the coverage figure `X/Y` typed into the subject README path table matches the computed one"),
     ("R-README-02", "学科 README 里手写的状态列与 front-matter 一致"),
     ("R-DOC-01", "状态图例在 FORMAT.md 与 knowledge/README.md 里列全"),
 ]
@@ -1814,6 +1863,35 @@ def verified_rules():
         return set()
 
 
+def render_physics_methods_block(index, english=False):
+    """物理 README 教法小节的**覆盖统计**——生成，不手写。
+
+    这一页以前只列教法，不列「**还有多少知识点没有人写过怎么讲**」。
+    参数是现成的：知识点数、教法挂到了几个知识点上；差就是缺口。
+    """
+    concepts = [o for o in index["objects"]
+                if o["type"] == "知识点" and o.get("学科") == "物理"]
+    covered = set()
+    for p in (ROOT / "knowledge" / "physics").rglob("methods/*.md"):
+        if p.name.endswith(".en.md"):
+            continue
+        fm = parse_front_matter(p.read_text(encoding="utf-8")) or ""
+        for link in re.findall(r"\[[^\]]*\]\(([^)]+)\)", fm):
+            covered.add(Path(link).stem)
+    hit = sum(1 for o in concepts if Path(o["path"]).stem in covered)
+    miss = len(concepts) - hit
+    if english:
+        lines = ["| Concepts | With a method | Without |", "|---|---|---|",
+                 f"| {len(concepts)} | {hit} | **{miss}** |", "",
+                 "> Generated by `kbcheck.py`. To see *which* concepts lack a method, run "
+                 "`python tools/make_tasks.py` (grouped by path)."]
+    else:
+        lines = ["| 知识点 | 有教法 | 缺教法 |", "|---|---|---|",
+                 f"| {len(concepts)} | {hit} | **{miss}** |", "",
+                 "> 由 `kbcheck.py` 生成。**缺哪些**按路径归拢在 `python tools/make_tasks.py` 里。"]
+    return chr(10).join(lines)
+
+
 def render_rules_block():
     done = verified_rules()
     lines = [
@@ -1869,6 +1947,8 @@ def generated_blocks(objects, events):
         "README.en.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
         "knowledge/README.en.md": render_subject_block_en(index),
+        "knowledge/physics/README.md": render_physics_methods_block(index),
+        "knowledge/physics/README.en.md": render_physics_methods_block(index, english=True),
         "START.md": render_subject_overview_block(index),
         "START.en.md": render_subject_overview_block(index, en=True),
         "docs/RULES.md": render_rules_block(),
@@ -2217,6 +2297,7 @@ def check_all():
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
     check_doc_bilingual(errors)
+    check_readme_path_numbers(objects, errors)
     check_type_dir(objects, errors)
     check_status_has_argument(objects, errors)
     check_status_reachability(objects, errors)

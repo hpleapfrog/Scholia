@@ -15,3 +15,6 @@ __pycache__/
 # 临时文件
 *.tmp
 ~$*
+
+# 教材原文缓存（tools/os_source.py）
+.cache/

@@ -13,6 +13,7 @@
 |---|---|---|
 | `review` 复核 | 状态 `待审` 且有论证、证据已读过全文的条目 | **3 分钟**，不需要写内容 |
 | `translate` 补译本 | `path_en` 为 null 的条目 | 中，需要翻译 |
+| `methods` 缺教法 | 没有任何 `教法` 挂在下面的 `知识点` | 大，需要教材原文 |
 | `todo` 待补 | 正文里写着 `**待补**：` 的条目 | 不定 |
 | `coverage` 覆盖度 | `knowledge/physics/coverage/README.md` 里 🔴 的章 | 大，需要采集与撰写 |
 
@@ -48,6 +49,16 @@ def tasks():
     out = {}
 
     # 复核：状态待审 + 有论证 + 每条证据都读过全文/摘要
+    #
+    # **排序比筛选更要紧**：可用条目已经有几百条，"待审的全都能复核"等于没有任务。
+    # 按「有多少条别的条目先修它」排——下游依赖越多，复核的收益越大。
+    # 这是个启发式，不是判据：它不说明哪条更重要，只说明**改它会影响多少条别的条目**。
+    inbound = {}
+    for o in index["objects"]:
+        for name in o.get("先修") or []:
+            # index 里存的是文件名（`牛顿第二定律.md`），下面查的是 stem——两边要归一
+            inbound[Path(name).stem] = inbound.get(Path(name).stem, 0) + 1
+
     review = []
     for o in index["objects"]:
         if o["status"] != "待审":
@@ -59,6 +70,7 @@ def tasks():
         depths = [evid.get(e, {}).get("核验深度") for e in c.get("证据", [])]
         if depths and all(d in READ_DEPTH for d in depths):
             review.append(o)
+    review.sort(key=lambda o: (-inbound.get(Path(o["path"]).stem, 0), o["title"] or ""))
     out["review"] = review
 
     out["translate"] = [o for o in index["objects"] if not o.get("path_en")]
@@ -84,29 +96,91 @@ def tasks():
                 if len(cells) >= 2:
                     cov.append(cells[1])
     out["coverage"] = cov
+
+    # 缺教法：知识点有了，但没有任何「教法」挂在它下面。
+    # 这是本库模型里最真实的缺口——知识点回答「是什么」，教法才回答「怎么讲」，
+    # 而它**在覆盖度页上完全看不见**（那一页只看知识点有没有）。
+    covered = set()
+    for p in (ROOT / "knowledge").rglob("methods/*.md"):
+        fm, _body = split_fm(p)
+        for link in re.findall(r"\[[^\]]*\]\(([^)]+)\)", fm.get("knowledge_point", "")):
+            covered.add(link.split("/")[-1].removesuffix(".md"))
+    out["methods"] = [o for o in index["objects"]
+                      if o["type"] == "知识点"
+                      and Path(o["path"]).stem not in covered]
+    return out
+
+
+def split_fm(path):
+    """粗读 front-matter 的 `key: value`（本工具只需要 knowledge_point 一行）。"""
+    text = path.read_text(encoding="utf-8")
+    if not text.startswith("---"):
+        return {}, text
+    end = text.find("\n---", 3)
+    fm, out = text[4:end], {}
+    for line in fm.split("\n"):
+        if ":" in line and not line.startswith(" "):
+            k, v = line.split(":", 1)
+            out[k.strip()] = v.strip()
+    return out, text
+
+
+def concept_to_paths():
+    """知识点 -> 覆盖它的路径标题。
+
+    缺教法的一栏原来是一张平铺的 48 项清单——**知道缺，但不知道该从哪条链补**。
+    按路径归拢之后，一眼能看出「静电学这条链一条教法都没有」。
+    """
+    import re as _re
+    out = {}
+    for p in sorted((ROOT / "knowledge").rglob("paths/*.md")):
+        if p.name.endswith(".en.md"):
+            continue
+        text = p.read_text(encoding="utf-8")
+        fm, body = split_fm(p)
+        title = fm.get("title", p.stem).strip('"')
+        for link in _re.findall(r"\]\(\.\./concepts/([^)#]+)\.md\)", text):
+            out.setdefault(link, []).append(title)
     return out
 
 
 HEAD = {
-    "review": ("三分钟复核", "开一个「复核一条」Issue，回答三个是/否。**不需要写内容。**"),
+    "review": ("三分钟复核",
+               "开一个「复核一条」Issue，回答三个是/否。**不需要写内容。**\n"
+               "——按「**有多少条别的条目先修它**」排序：这是启发式，不说明哪条更重要，\n"
+               "只说明改它会影响多少条别的条目。"),
     "translate": ("补英文译本", "按 `id` 派生文件名，与中文原件同目录。"),
     "todo": ("兑现「待补」", "条目自己写下的缺口。"),
     "coverage": ("补覆盖度缺口", "物理按人教版对照仍为 🔴 的章。"),
+    "methods": ("缺教法的知识点",
+                "知识点回答「是什么」，教法回答「怎么讲」。这一栏在覆盖度页上**看不见**——"
+                "那里只数知识点有没有，不数有没有人写过怎么教。"),
 }
 
 
 def render(t, limit):
+    path_map = concept_to_paths()
     lines = []
-    for key in ("review", "translate", "todo", "coverage"):
+    for key in ("review", "translate", "methods", "todo", "coverage"):
         items = t[key]
         title, why = HEAD[key]
         lines.append(f"\n## {title}（{len(items)} 项）\n\n{why}\n")
         if not items:
             lines.append("（无）\n")
             continue
+        if key == "methods":
+            # 按路径归拢：平铺 48 条只知道「缺」，不知道「该从哪条链补」
+            groups = {}
+            for o in items:
+                for title in path_map.get(Path(o["path"]).stem, ["（未被任何路径覆盖）"]):
+                    groups.setdefault(title, []).append(o)
+            for title, group in sorted(groups.items(), key=lambda kv: -len(kv[1])):
+                names = " · ".join(o["title"] for o in group)
+                lines.append(f"- **{title}** —— 缺 {len(group)} 条：{names}")
+            continue
         shown = items[:limit] if limit else items
         for it in shown:
-            if key in ("review", "translate"):
+            if key in ("review", "translate", "methods"):
                 lines.append(f"- `{it['id']}` · {it['title']} — `{it['path']}`")
             elif key == "todo":
                 lines.append(f"- `{it[0]['id']}` · {it[1]}")
@@ -119,12 +193,15 @@ def render(t, limit):
 
 def create_issues(t, limit):
     made = 0
-    for key in ("review", "translate"):
+    for key in ("review", "translate", "methods"):
         for it in t[key][:limit]:
-            title = f"[{'复核' if key == 'review' else '译本'}] {it['title']}"
+            tag = {"review": "复核", "translate": "译本", "methods": "教法"}[key]
+            title = f"[{tag}] {it['title']}"
             body = (f"条目：`{it['id']}`\n\n路径：`{it['path']}`\n\n"
-                    + ("按「复核一条」模板回答三个问题即可。"
-                       if key == "review" else "英文译本文件名由 `id` 派生，与中文原件同目录。"))
+                    + {"review": "按「复核一条」模板回答三个问题即可。",
+                       "translate": "英文译本文件名由 `id` 派生，与中文原件同目录。",
+                       "methods": "这个知识点还没有任何教法条目：缺的是「怎么讲」，"
+                                  "需要教材里有标记的课堂做法（[BL]/[OL]/[AL]）。"}[key])
             r = subprocess.run(["gh", "issue", "create", "--title", title, "--body", body],
                                cwd=str(ROOT), capture_output=True, text=True)
             if r.returncode == 0:

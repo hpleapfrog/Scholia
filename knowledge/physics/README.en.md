@@ -10,17 +10,69 @@ graph LR
   AC["加速度"] --> UCM["匀速圆周运动"]
   UCM --> RA["角加速度与转动运动学"] --> TQ["力矩"]
   W --> M["电磁波谱"]
+  W --> PQ["普朗克量子假设"]
+  M --> PQ
+  PQ --> PE["光电效应"]
+  PE --> WPD["波粒二象性"]
+  W --> WPD
+  PQ --> AT["原子结构"]
   F["参考系"] --> S["速度与速率"] --> P["位置-时间图"]
   R["电阻与欧姆定律"]
   N["力与运动（初中）"]
   I["惯性"]
   L["光的反射"]
+  W --> RF["光的折射"] --> LID["光的干涉与衍射"]
+  RF --> TIR["全反射"]
+  W --> LID
+  W --> POL["光的偏振"]
+  RF --> POL
   E["机械能守恒"]
   K["开普勒定律"]
-  AT["原子结构"]
   WP["功与功率"]
   CH["电荷"] --> CL["库仑定律"] --> EF["电场强度"] --> EP["电势能与电势"]
   E --> EP
+  EP --> C["电容"]
+  EF --> C
+  EP --> CPM["带电粒子在电场中的运动"]
+  EF --> CPM
+  PM --> CPM
+  NSL --> CPM
+  CH --> EPU["静电的防止与利用"]
+  EF --> EPU
+  WP --> T1["热力学第一定律"] --> T2["热力学第二定律"]
+  T2 --> HE["热机与卡诺循环"]
+  T2 --> SE["熵的统计解释"]
+  E --> T1
+  AT --> AN["原子核"] --> RD["放射性衰变"]
+  AN --> BE["结合能与质量亏损"] --> FF["核裂变与核聚变"]
+  RD --> IRM["医学中的电离辐射"]
+  EF --> MF["磁场"] --> AF["安培力"]
+  MF --> LF["洛伦兹力"]
+  UCM --> LF
+  LF --> MSC["质谱仪与回旋加速器"]
+  EF --> MSC
+  MF --> FL["磁通量"] --> EI["电磁感应定律"]
+  R --> EI
+  EI --> SI["自感与互感"]
+  EI --> EC["涡流与动生电动势"]
+  LF --> EC
+  EI --> AC2["交变电流"] --> TR["变压器"] --> PT["远距离输电"]
+  AC2 --> RMS["有效值（RMS）"] --> RX["感抗与容抗"]
+  SI --> RX
+  C --> RX
+  R --> PT
+  S --> PM["抛体运动"]
+  AC --> PM
+  NSL["牛顿第二定律"] --> SHM["简谐运动"] --> SP["单摆"]
+  SHM --> PES["简谐运动的相位与能量"] --> DFO["阻尼振动与受迫振动"]
+  R --> EPW["电功率"]
+  R --> SER["串联与并联"]
+  R --> CCL["闭合电路欧姆定律与内阻"]
+  SER --> CCL
+  EPW --> CCL
+  EPW --> EWJ["电功与焦耳定律"]
+  R --> EWJ
+  EWJ --> ERS["能源与可持续发展"]
 ```
 
 | 知识点 | 学段 | 先修 | 挂在其下的教法 | 误解 |
@@ -35,15 +87,31 @@ graph LR
 | [速度与速率](concepts/speed-and-velocity.en.md) | 高中 | 参考系 | BL/OL · AL 共 2 条 | — |
 | [位置-时间图](concepts/position-time-graph.en.md) | 高中 | 速度与速率 | BL/OL · AL 共 2 条 | — |
 | [加速度](concepts/acceleration.en.md) | 高中 | **速度与速率** | OL · AL 共 2 条 | — |
+| [抛体运动](concepts/projectile-motion.en.md) | 高中 | **速度与速率** · **加速度**（正交分解本身归数学，库里没有） | — | — |
+| [简谐运动](concepts/simple-harmonic-motion.en.md) | 高中 | **牛顿第二定律**（回复力经 `a = F/m` 决定运动） | — | — |
+| [单摆](concepts/simple-pendulum.en.md) | 高中 | **简谐运动** · **力（高中）**（重力的分解） | — | — |
+| [Phase and energy of simple harmonic motion](concepts/phase-and-energy-of-shm.en.md) | 高中 | **Simple harmonic motion** (`F = −kx`, `T = 2π√(m/k)`) | — | — |
+| [Damped and forced oscillation](concepts/damped-and-forced-oscillation.en.md) | 高中 | **Phase and energy of simple harmonic motion** (the baseline for energy loss and resonance) | — | — |
+| [电功率](concepts/electric-power.en.md) | 高中 | **电阻与欧姆定律**（`P = V²/R`、`P = I²R` 由 `V = IR` 代入） | — | — |
+| [串联与并联](concepts/series-and-parallel-circuits.en.md) | 高中 | **电阻与欧姆定律**（各电阻上的 `V = IR` 与等效电阻的定义） | — | — |
+| [Closed-circuit Ohm's law and internal resistance](concepts/closed-circuit-ohms-law.en.md) | 高中 | **电阻与欧姆定律** · **串联与并联** · **电功率** | — | — |
+| [Electric work and Joule's law](concepts/electric-work-and-joule-law.en.md) | 高中 | **电功率** · **电阻与欧姆定律** | — | — |
+| [Energy resources and sustainability](concepts/energy-resources-and-sustainability.en.md) | 高中 | **电功与焦耳定律** | — | — |
 | [光的反射](concepts/reflection-of-light.en.md) | 高中 | —（前置是**初中几何**，不归物理） | BL · AL 共 2 条 | — |
 | [声速与频率](concepts/speed-of-sound.en.md) | 高中 | **波** | BL · AL 共 2 条 | — |
 | [机械能守恒](concepts/conservation-of-mechanical-energy.en.md) | 高中 | — | BL · OL 共 2 条 | 运动物体自然慢下来 |
 | [电磁波谱](concepts/electromagnetic-spectrum.en.md) | 高中 | **波** | BL · OL/AL 共 2 条 | 可见光与不可见辐射有本质不同 |
+| [普朗克量子假设](concepts/planck-quantum-hypothesis.en.md) | 高中 | **波** · **电磁波谱** | — | — |
+| [光电效应](concepts/photoelectric-effect.en.md) | 高中 | **普朗克量子假设** | — | — |
+| [波粒二象性](concepts/wave-particle-duality.en.md) | 高中 | **光电效应** · **波** | — | — |
 | [开普勒定律](concepts/keplers-laws.en.md) | 高中 | — | OL · AL 共 2 条 | — |
 | [万有引力定律](concepts/universal-gravitation.en.md) | 高中 | **开普勒定律** | OL · AL 共 2 条 | 混淆 G 与 g |
-| [原子结构](concepts/atomic-structure.en.md) | 高中 | —（**前置是「量子化」，库里还没有**） | OL 共 3 条 | — |
+| [原子结构](concepts/atomic-structure.en.md) | 高中 | **Planck's quantum hypothesis** (energy quantization; attached 2026-10-21) | OL 共 3 条 | — |
 | [功与功率](concepts/work-and-power.en.md) | 高中 | —（与机械能守恒的关系**尚未定**） | OL · AL 共 2 条 | — |
 | [光的折射](concepts/refraction.en.md) | 初中 / 高中 | **波** | BL · OL · AL 共 3 条 | — |
+| [Total internal reflection](concepts/total-internal-reflection.en.md) | 高中 | **Refraction of light** | — | — |
+| [Light interference and diffraction](concepts/light-interference-and-diffraction.en.md) | 高中 | **Waves** · **Refraction of light** | — | — |
+| [Polarization of light](concepts/polarization.en.md) | 高中 | **Waves** · **Refraction of light** (Brewster's law uses `n`) | — | — |
 | [动量和冲量](concepts/momentum-impulse.en.md) | 高中 | **牛顿第二定律** | AL 共 1 条 | — |
 | [动量守恒定律](concepts/conservation-of-momentum.en.md) | 高中 | **动量和冲量** | OL · AL 共 2 条 | — |
 | [弹性碰撞与非弹性碰撞](concepts/elastic-inelastic-collisions.en.md) | 高中 | **动量守恒定律** · **机械能守恒** | — | — |
@@ -55,6 +123,727 @@ graph LR
 | [库仑定律](concepts/coulombs-law.en.md) | 高中 | **电荷**（教材未写「Review electric charge」，依据是定律定义——见条目 K1） | — | — |
 | [电场强度](concepts/electric-field.en.md) | 高中 | **库仑定律** | — | — |
 | [电势能与电势](concepts/electric-potential-energy.en.md) | 高中 | **电场强度** · **机械能守恒**（势能只在差值上记账） | — | — |
+| [电容](concepts/capacitance.en.md) | 高中 | **电势能与电势** · **电场强度**（`C = Q/V` 与匀强场 `E = V/d`） | — | — |
+| [Motion of a charged particle in an electric field](concepts/charged-particle-in-electric-field.en.md) | 高中 | **电势能与电势** · **电场强度** · **抛体运动** · **牛顿第二定律** | — | — |
+| [Prevention and utilization of static electricity](concepts/electrostatic-prevention-and-utilization.en.md) | 高中 | **电场强度** · **电荷** | — | — |
+| [热力学第一定律](concepts/thermodynamic-first-law.en.md) | 高中 | **Work and power** · **Conservation of mechanical energy** (`W = PΔV` and energy bookkeeping) | — | — |
+| [热力学第二定律](concepts/thermodynamic-second-law.en.md) | 高中 | **First law of thermodynamics** | — | — |
+| [Heat engines and the Carnot cycle](concepts/heat-engine-and-carnot-cycle.en.md) | 高中 | **First law of thermodynamics** · **Second law of thermodynamics**（循环 `ΔU = 0`；第二定律的第二种表述） | — | — |
+| [Statistical interpretation of entropy](concepts/statistical-interpretation-of-entropy.en.md) | 高中 | **Second law of thermodynamics**（`ΔS = Q/T` 与自发方向；本条给它微观基础） | — | — |
+| [原子核](concepts/atomic-nucleus.en.md) | 高中 | **Atomic structure** | — | — |
+| [放射性衰变](concepts/radioactive-decay.en.md) | 高中 | **Atomic nucleus** | — | — |
+| [Binding energy and mass defect](concepts/binding-energy-and-mass-defect.en.md) | 高中 | **Atomic nucleus**（nuclide notation and mass number; `E = (Δm)c²`） | — | — |
+| [Nuclear fission and fusion](concepts/nuclear-fission-and-fusion.en.md) | 高中 | **Binding energy and mass defect** · **Atomic nucleus**（iron peak and `A`、`Z` bookkeeping） | — | — |
+| [Ionizing radiation in medicine](concepts/ionizing-radiation-in-medicine.en.md) | 高中 | **Radioactive decay**（half-life, activity, and β⁺ annihilation） | — | — |
+| [磁场](concepts/magnetic-field.en.md) | 高中 | **Electric field strength**（教材以电场类比引出磁场） | — | — |
+| [安培力](concepts/ampere-force.en.md) | 高中 | **Magnetic field** | — | — |
+| [洛伦兹力](concepts/lorentz-force.en.md) | 高中 | **Magnetic field** · **Uniform circular motion**（垂直于速度的恒力 ⇒ 匀速圆周运动） | — | — |
+| [质谱仪与回旋加速器](concepts/mass-spectrometer-and-cyclotron.en.md) | 高中 | **Lorentz force** · **Electric field strength**（速度选择器的 `qE`；回旋加速器的 `T` 与 `r`） | — | — |
+| [磁通量](concepts/magnetic-flux.en.md) | 高中 | **Magnetic field** | — | — |
+| [电磁感应定律](concepts/electromagnetic-induction.en.md) | 高中 | **Magnetic flux** · **Resistance and Ohm's law**（`I = ε/R`） | — | — |
+| [自感与互感](concepts/self-and-mutual-inductance.en.md) | 高中 | **Electromagnetic induction**（`ε = −NΔΦ/Δt`、Lenz's law） | — | — |
+| [涡流与动生电动势](concepts/eddy-currents-and-motional-emf.en.md) | 高中 | **Electromagnetic induction** · **Lorentz force**（`F = qvB`） | — | — |
+| [交变电流](concepts/alternating-current.en.md) | 高中 | **Electromagnetic induction** · **Uniform circular motion**（`ω`, `v = rω`, `T = 2π/ω`） | — | — |
+| [有效值（RMS）](concepts/rms-values.en.md) | 高中 | **Alternating current**（正弦式 `V = V0 sin 2πft`、峰值与频率） | — | — |
+| [感抗与容抗](concepts/reactance-and-impedance.en.md) | 高中 | **Alternating current** · **RMS values** · **Self-inductance and mutual inductance** · **Capacitance**（`X_L = 2πfL`, `X_C = 1/(2πfC)`） | — | — |
+| [变压器](concepts/transformer.en.md) | 高中 | **Electromagnetic induction** · **Alternating current**（需要变化的磁通） | — | — |
+| [远距离输电](concepts/power-transmission.en.md) | 高中 | **Transformer** · **Resistance and Ohm's law**（`P_loss = I²R_wire`） | — | — |
+
+> [!IMPORTANT]
+> **Batch 34 (2026-10-21) adds RMS values and reactance/impedance — two blocks of item 8 of the priority list are complete, and 选必二 chapter 3 "Alternating current" still lacks three-phase power, so it stays 🟡.**
+>
+> ```
+> 交变电流 → 有效值（RMS） → 感抗与容抗 ← 自感与互感
+>                                        ← 电容
+> ```
+>
+> "RMS values" covers `V = V0 sin 2πft`, `P_ave = ½I0V0`, `I_rms = I0/√2`, `V_rms = V0/√2`, `P_ave = I_rmsV_rms = I_rms²R = V_rms²/R`, the pure-resistor peak power `P0 = 2P_ave`, and the use of rms in transmission loss; the mean-square derivation of `√2` and the average/rms distinction are library additions.
+> "Reactance and impedance" covers `X_L = 2πfL`, `X_C = 1/(2πfC)`, voltage leading by 90° across an inductor and lagging by 90° across a capacitor, series RLC `Z = √(R² + (X_L − X_C)²)`, `f0 = 1/(2π√(LC))`, `cosφ = R/Z`, and `P_ave = I_rmsV_rms cosφ`; the calculus derivations of `X_L`/`X_C` and the leading/lagging criterion are library additions.
+> Recomputed: `170 V`, `P0 = 120 W`, `500 A`, `250 kW`, `0.250%`, `4000 A`, `16.0 MW`, `16.0%`; `X_L(60) = 1.131 Ω`, `X_L(10⁴) = 188.5 Ω`, `X_C(60) = 530.5 Ω`, `X_C(10⁴) = 3.183 Ω`, `Z(60) = 530.9 Ω`, `Z(10⁴) = 189.6 Ω`, `f0 = 1.2995 kHz`, `cosφ = 0.07535`, `φ = 85.68°`, `P(60) = 2.043 W`, `P_res = 360 W`.
+>
+> **Sources**: OpenStax *College Physics 2e* chapter 20, `m42348` (Alternating Current versus Direct Current), and chapter 23, `m42427` (Reactance, Inductive and Capacitive) and `m42431` (RLC Series AC Circuits), all read in full from their cnxml sources; the license is handled conservatively under the repository's **CC BY-NC-SA 4.0** (the openstax.org page for the same book states CC BY 4.0), with locators and short quotes only (ev-194/ev-195).
+>
+> **Source defects**: `m42348` conflates `average` and `rms`, gives `√2` without derivation, and states "AC shocks are more harmful" without citation; `m42427` calls reactance an `effective resistance` and explains `X_L ∝ f` by conflating frequency with rate of change; `m42431` has a `7.50 Hz` exercise whose answers correspond to about 1.0 kHz, and its (c) `26.4 W` is apparent power rather than average power; its glossary turns power factor into an amount.
+>
+> **Still missing**: three-phase power — **none of the available CC BY textbooks (CP2e and University Physics Vol 2) has a corresponding module**, so this needs a user decision on accepting another verifiable source; rms of non-sinusoidal waveforms, true-rms meters, parallel AC networks, complex impedance and phasors, quality factor and passband, and power-factor correction remain in the entries' gap tables.
+
+> [!IMPORTANT]
+> **Batch 33 (2026-10-21) adds self-inductance and mutual inductance, and eddy currents and motional emf — item 7 of the priority list is complete, and 选必二 chapter 2 "Electromagnetic induction" turns 🟢.**
+>
+> ```
+> 磁通量 → 电磁感应定律 → 自感与互感
+>                       ├→ 涡流与动生电动势 ← 洛伦兹力
+>                       └→ 交变电流 → 变压器 → 远距离输电
+> ```
+>
+> "Self-inductance and mutual inductance" covers `ε = −L ΔI/Δt`, `L = NΔΦ/ΔI`, the solenoid `L = μ0N²A/ℓ`, mutual inductance `ε₂ = −M ΔI₁/Δt`, the henry, and `E_ind = ½LI²`; "Eddy currents and motional emf" covers the Lorentz-force and Faraday routes to `ε = Bℓv`, relative motion, eddy currents, magnetic damping, slots and insulators, and the applications in balances, sorting, detectors, brakes, and induction cooktops.
+> Recomputed: `0.632 mH`, `0.284 J`, `1.0×10⁴ V`, `31.25 kV / 125 kJ / 1.56 MW`, `1.97×10⁻² H`, `200 H` and `5.00 °C`; `150 μV`, `7.80 kV`, `0.630 V`, `1.44 V`, `2.22 m/s`, `1.98×10² T`, `θ = 24.2°`.
+>
+> **Sources**: OpenStax *College Physics 2e* chapter 23, modules `m42420` (Inductance), `m42400` (Motional Emf), and `m42404` (Eddy Currents and Magnetic Damping), all read in full from their cnxml sources; the license is handled conservatively under the repository's **CC BY-NC-SA 4.0** (the openstax.org page for the same book states CC BY 4.0; the two disagree), with locators and short quotes only (ev-192/ev-193).
+>
+> **Source defects**: in `m42420` the Section Summary and glossary define `inductance` as mutual inductance; the 1 H example mixes the magnitude with the minus sign; the formulas use finite differences rather than derivatives; the traffic-loop and metal-detector claims are uncited. In `m42400` the body gives only the perpendicular `ε = Bℓv` while an exercise asks for `Bℓv sinθ`; the tethered-satellite `10.0 N` in (a) corresponds with (b) to `78 kW`, against the stated `5.00 kV × 10.0 A = 50 kW`, a factor of `1.56`. In `m42404` the glossary restricts eddy currents to motional emf; "the base must be ferromagnetic" is too strong; "drag proportional to speed" is not derived.
+>
+> **Still missing**: RL transients, inductive reactance `X_L = ωL`, series and parallel inductors, magnetic energy density, geometric calculations of mutual inductance, quantitative core saturation and eddy-current loss, electromagnetic driving (induction and linear motors), engineering design of eddy-current brakes, and the quantitative relation between Hall voltage and carrier sign; RMS values, inductors and capacitors in AC, and three-phase power remain in the gap table of "Alternating current", so chapter 3 stays 🟡 (batch 34 has since filled the first two; only three-phase power remains).
+
+> [!IMPORTANT]
+> **Batch 32 (2026-10-21) adds phase and energy of simple harmonic motion and damped and forced oscillation — item 10 of the priority list is complete, and 选必一 chapter 2 "Mechanical vibration" turns 🟢.**
+>
+> ```
+> 简谐运动 → 简谐运动的相位与能量 → 阻尼振动与受迫振动
+> ```
+>
+> "Phase and energy of simple harmonic motion" covers the circular-motion projection `x = X cos θ`, `θ = ωt`, `ω = 2π/T`,
+> the phase and initial phase `φ` (a library addition), phase difference and time difference `Δt = |Δφ|/ω` (library additions),
+> and `½mv² + ½kx² = ½kX²`, `v = ±ω√(X² − x²)`, `v_max = ωX`, `a_max = ω²X` (library additions).
+> "Damped and forced oscillation" covers the three damping regimes, forced oscillation, natural frequency, and resonance;
+> less damping gives a higher and narrower resonance peak and more damping a lower and broader one; a forced oscillation can keep a constant amplitude when the energy input replaces the dissipation.
+> Recomputed: `v_max = 0.852 m/s`, `E = 19.74 J`, `x/X = √3/2`, `d = 1.59 m`, a 3% amplitude loss per cycle corresponding to about `5.9%` energy loss,
+> `384 J`, `5.00×10⁵ J` with `1.20×10³ s`, and `141 J` for the suspension.
+>
+> **Sources**: OpenStax *College Physics 2e*, Chapter 16, Oscillatory Motion and Waves:
+> `m42244` (Energy and the Simple Harmonic Oscillator), `m42245` (Uniform Circular Motion and Simple Harmonic Motion),
+> `m42246` (Damped Harmonic Motion), and `m42247` (Forced Oscillations and Resonance), all four cnxml sources read in full;
+> the license is handled conservatively under the repository's **CC BY-NC-SA 4.0** (the openstax.org page for the same book states CC BY 4.0, the two disagree),
+> with locators and short quotes only (ev-190/ev-191).
+>
+> **Source defects**: `m42244` and `m42245` have only the zero-initial-phase cosine, with no phase difference or time difference; in the pendulum energy expression `ω` is the angular velocity `dθ/dt`,
+> while the circular-motion expression uses the angular frequency `2π/T` — the same symbol with two meanings; an AP question calls `½kX²` the `internal energy`; the Section Summary renders `v_max` as `Xkm`.
+> `m42246`'s body says critical damping `may overshoot ... only once`, while the caption and glossary say `without overshooting`;
+> the body says underdamped motion returns faster, conflicting with the definition of critical damping as the fastest return; the AP answer `1.698 m` differs from the textbook's own formula's `3.40 m` by about a factor of two.
+> The claim that wind drove the Tacoma Narrows Bridge at its resonant frequency is not verified here and is not treated as established.
+>
+> **Still missing**: experimental measurement of phase difference (Lissajous figures), superposition of different frequencies (beats), the damping equation and exponential time constant, the quality factor `Q`,
+> the quantitative resonance curve and its half-width, the phase lag of a forced oscillation, and the primary engineering report on the Tacoma Narrows Bridge;
+> the pendulum's large-angle period corrections, the conical pendulum, and the physical pendulum remain recorded in the pendulum entry's gap table.
+
+> [!IMPORTANT]
+> **Batch 31 (2026-10-21) adds ionizing radiation in medicine — item 6 of the priority list is complete, and 选必三 chapter 5 "Atomic nucleus" turns 🟢.**
+>
+> ```
+> 放射性衰变 → 医学中的电离辐射
+> ```
+>
+> "Ionizing radiation in medicine" covers tracers and radiopharmaceuticals, `99mTc`'s `0.142 MeV` γ ray and `6.0 h` half-life,
+> the gamma camera / SPECT / PET (the two oppositely directed `0.511 MeV` photons from β⁺ annihilation and coincidence detection),
+> absorbed dose in `Gy` and equivalent dose in `Sv` (`H = D × RBE`), background and diagnostic doses, the therapeutic ratio and
+> geometric convergence in radiotherapy, and protection by shielding, distance, and time. The recomputations here are:
+> one abdomen CT equals about `3.6` years of background, one chest X-ray about `2.6` days, `50–80 Sv` at `2 Sv` per fraction
+> becomes `25–40` fractions, and `0.75 Sv` is `50` times `15 mSv`.
+>
+> **Sources**: OpenStax *College Physics 2e* chapter 32, Medical Applications of Nuclear Physics —
+> `m42649` (Diagnostics and Medical Imaging), `m42652` (Biological Effects of Ionizing Radiation), and
+> `m42654` (Therapeutic Uses of Ionizing Radiation); all three cnxml source files were read in full.
+> The license is handled conservatively under the repository's **CC BY-NC-SA 4.0** (the openstax.org page states
+> CC BY 4.0, so the two disagree), citing locators and short quotations only (ev-187/ev-188/ev-189).
+>
+> **Source defects recorded**: m42654 gives the prostate seeds as `135I` (6 months) and `103Pd` (3 months); that
+> isotope/half-life pairing cannot be verified within the material read here, so this entry does not use it;
+> m42652's body says "about 5 mSv per dental X-ray" while its own table gives `0.01 mSv`, a difference of about 500×;
+> the low-dose band "less than 100 mSv" overlaps the moderate band starting at 0.1 Sv; the `80+ Sv` column does not
+> state fractionation or localization; "200 rem" is mixed with Gy; and m42649 says the annihilation energy comes from
+> "an electron or positron mass" when in fact two rest masses annihilate.
+>
+> **Still missing**: X-ray production (bremsstrahlung and characteristic X-rays), quantitative radioimmunoassay,
+> MRI spins/relaxation/gradient encoding, radiobiological mechanisms and repair kinetics, treatment protocols and
+> fractionation, nuclear accidents and emergency response, food irradiation, and medical-isotope production and waste;
+> particles and the cosmos (the Standard Model) are not on this page's chapter-level list and remain in the gap tables
+> of "Atomic nucleus" and "Binding energy and mass defect".
+
+> [!IMPORTANT]
+> **Batch 30 (2026-10-21) adds binding energy and mass defect, and nuclear fission and fusion — item 6 of the priority list is largely complete, and 选必三 chapter 5 "Atomic nucleus" stays 🟡 (medical applications missing).**
+>
+> ```
+> 原子核 → 结合能与质量亏损 → 核裂变与核聚变
+> 原子核 → 核裂变与核聚变
+> ```
+>
+> "Binding energy and mass defect" covers `BE = Δm c²`, the neutral-atom mass formula, the alpha particle's
+> `0.030378 u → 28.3 MeV → 7.07 MeV per nucleon`, the `BE/A` curve and the iron peak, and why heavy stable
+> nuclei need more neutrons; the `Q = ΔBE` energy ledger and the two-decimal recomputation are library
+> additions. "Nuclear fission and fusion" covers the liquid-drop model, chain reactions and critical mass,
+> `200 MeV` per fission (`0.2147 u`, `0.091%`), the solar p-p chain at `26.7 MeV` (`0.711%`), D-T at
+> `17.6 MeV`, the Coulomb barrier and quantum tunnelling, and the direction of energy release on either side
+> of the iron peak; the `k` factor, the `4.1×` energy per gram of fusion relative to fission, and the
+> `1.3 keV` mean thermal energy at `1.5×10⁷ K` are all recomputed in this library.
+>
+> **Sources**: OpenStax *Physics* chapter 22 `m54574` (Nuclear Fission and Fusion, CC BY 4.0, ev-185);
+> OpenStax *College Physics 2e* chapter 31 `m42640` (Binding Energy, treated conservatively under the
+> repository's CC BY-NC-SA 4.0, ev-186). Both cnxml source files were read in full; the entries cite
+> locators and short quotations only.
+>
+> **Source defects recorded**: m54574's body calls fission `the splitting of an atomic bond`, contradicting
+> its own glossary; its Section Summary explains fusion energy as a "decreased strong nuclear force",
+> contradicting the body's `BE/A` account; its "3 to 4 times" per gram recomputes to about `4.1×` for D-T;
+> its PWR "water boils → chain reaction stops" holds only for negative-void-coefficient designs; its fusion
+> section is promotional and under-cited. m42640 treats "larger `BE/A` ⇒ more stable" as sufficient; its
+> "most common elements have the most tightly bound nuclei" ignores hydrogen; its β⁺ electron compensation of
+> `0.511 MeV` should be `1.022 MeV` when atomic masses are used (verified against `m42633`'s
+> `Δm=m(parent)−[m(daughter)+2m_e]`).
+>
+> **Still missing**: medical applications (the remaining gap in this chapter), reactor neutron kinetics and
+> criticality calculations, fission-product yields and decay heat, breeders and reprocessing, inertial
+> confinement and ignition, quantitative tokamak confinement, fusion `Q`, weapons physics, the shell model
+> and semi-empirical mass formula, and astrophysical nucleosynthesis.
+
+> [!IMPORTANT]
+> **Batch 29 (2026-10-21) adds heat engines, the Carnot cycle, and the statistical interpretation of entropy — item 5 of the priority list is complete, and 选必三 chapter 3 "Laws of thermodynamics" turns 🟢.**
+>
+> ```
+> 热力学第二定律 → 热机与卡诺循环
+> 热力学第二定律 → 熵的统计解释
+> ```
+>
+> "Heat engines and the Carnot cycle" covers the cyclic ledger `W = Q_h − Q_c`, the efficiency
+> `Eff = 1 − Q_c/Q_h`, the second expression of the second law, the Otto cycle's `P–V` diagram, and the
+> Carnot cycle with `Eff_C = 1 − T_c/T_h`; the coal plant's 40.8% / 1180 MW / 3.7×10⁸ kg CO₂ and the
+> pressurised-water reactor's 47.6% are both recomputed. "Statistical interpretation of entropy" covers
+> macrostates and microstates, the equal-probability assumption, the five- and hundred-coin examples,
+> the gas example, and `S = k ln W` with `ΔS = k ln(W_f/W_i)`; the second law is therefore a statistical
+> law, not an absolute ban.
+>
+> **Source**: CP2e ch. 15 `m42234` (Heat Engines and Their Efficiency), `m42235` (Carnot's Perfect Heat
+> Engine), and `m42238` (Statistical Interpretation of Entropy); the license is handled conservatively
+> under the repository's **CC BY-NC-SA 4.0**, with locators and short quotes only (ev-183/ev-184).
+>
+> **Supplied here**: the Carnot ratio `Q_c/Q_h = T_c/T_h` is derived from entropy conservation around a
+> reversible cycle (the textbook gives only the result); `ΔS = k ln(W_f/W_i)`, the normalisation `P = W/Ω`,
+> and "probability of an entropy decrease ≈ `e^(−ΔS/k)`" are also this library's additions.
+>
+> **Source defects**: the five-coin table repeats the five microstates of "3 heads, 2 tails" (the count 10
+> is right); `this expression for s` uses lowercase s; "about 1 in 90" is the absolute probability of the
+> 60/40 macrostate, not `W_60/W_50`; "`ΔS` of `10^-21 J/K` corresponds to 1 in 10^30" recomputes to about
+> 1 in 3×10^31; "all Qs are positive... Qc... preceded by a minus sign" contradicts itself; the drinking
+> bird is not a Carnot engine; "the best-ever achieved of about 70%" has no source.
+>
+> **Still missing**: heat-pump and refrigerator COPs, quantitative real cycles (Diesel/Rankine/Brayton),
+> a rigorous proof of Carnot's theorem, the Otto-cycle compression-ratio formula, free energy, and a proof
+> that `S = k ln W` equals `ΔS = Q/T`.
+
+> [!IMPORTANT]
+> **Batch 28 (2026-10-21) adds mass spectrometers and cyclotrons — item 22 of the priority list is complete, and Elective-2 chapter 1 "Ampere force and Lorentz force" turns 🟢.**
+>
+> ```
+> 洛伦兹力 → 质谱仪与回旋加速器
+> 电场强度 → 质谱仪与回旋加速器
+> ```
+>
+> The entry covers the crossed-field velocity selector (`qE = qvB` ⇒ `v = E/B`, independent of `q`, `m`,
+> and the sign of the charge), the three stages of the mass spectrometer (ion source → velocity selector →
+> uniform magnetic field) and `r ∝ m` (strictly the mass-to-charge ratio), the cyclotron's Dees and fixed
+> frequency (`T = 2πm/(qB)`, `f = qB/(2πm)`), and why a synchrotron must tune frequency and field together.
+> The textbook's oxygen-16/oxygen-18 separation `0.173 m` and the proton cyclotron frequency `18.3 MHz`
+> are both recomputed. `K_max = q²B²R²/(2m)`, `r = (m/q)(E/B²)`, the isotope separation `2Δr`, and the
+> relativistic loss of synchronism are supplied here and flagged in K2/K3. The old note in "Lorentz force"
+> that listed the period as missing is corrected — the period was already derived in K2.
+>
+> **Source**: CP2e ch. 22 `m42375` (Force on a Moving Charge in a Magnetic Field) and `m42388` (More
+> Applications of Magnetism), ch. 28 `m42718` (Accelerators Create Matter from Energy); the license is
+> handled conservatively under the repository's **CC BY-NC-SA 4.0**, with locators and short quotes only
+> (ev-182).
+>
+> **Source defects recorded**: m42718 calls Van de Graaff a "Dutch physicist" (he was American, born in
+> Tuscaloosa, Alabama); its AP answer `(c)` does not match its own explanation; m42388's Critical Thinking
+> answer uses `9.11×10⁻¹¹ kg` for the electron mass instead of `9.11×10⁻³¹ kg`, so its radius and time
+> have the wrong exponents; m42718's LHC figures date from around 2010.
+>
+> **Still missing**: quantitative relativistic cyclotrons (synchrocyclotrons), beam focusing and emittance,
+> RF-cavity and superconducting-magnet engineering, quantitative MRI/NMR, quantitative CRT magnetic
+> deflection, and the Hall effect and MHD generators — listed in the entry's gap table.
+
+> [!IMPORTANT]
+> **Batch 27 (2026-10-21) adds prevention and utilization of static electricity — item 21 of the priority list is complete, and Compulsory-3 chapter 9 "Electrostatics and its applications" turns 🟢.**
+>
+> ```
+> 电荷 → 静电的防止与利用
+> 电场强度 → 静电的防止与利用
+> ```
+>
+> The entry covers the three properties of a conductor in electrostatic equilibrium (zero field inside,
+> field perpendicular to the surface just outside, all excess charge on the surface), the Faraday cage
+> and the car as a shield, point discharge and the lightning rod (air breakdown at `3×10⁶ N/C`), smooth
+> surfaces on high-voltage lines, and electrostatic precipitation (removing over 99% of particles),
+> xerography and laser printing, electrostatic painting, ink-jet printing, and the Van de Graaff
+> generator; the prevention side covers grounding, shielding, avoiding field concentration, and humidity.
+> The textbook presents the uses one by one; the "use the field / block the field" dichotomy is this
+> library's organization, recorded in argument K3.
+>
+> **Source**: CP2e Chapter 18, `m42317` (Conductors and Electric Fields in Static Equilibrium) and
+> `m42329` (Applications of Electrostatics); the license is handled conservatively under the
+> repository's **CC BY-NC-SA 4.0**, using locators and short quotes only (ev-181).
+>
+> **Source defects recorded**: m42317 has the sentence `Air ionizes ions and electrons recombine`
+> (punctuation missing in the original); the exercise sets of m42317 and m42329 are almost entirely
+> point-charge field-and-force problems, with little connection to conductors, shielding or applications.
+>
+> **Still missing**: the quantitative relation between surface charge density and curvature,
+> `E = σ/ε₀` just outside a conductor, grounding when charge is inside a cavity, lightning leaders and
+> the protection angle, human-body electrostatic discharge models, and shielding in alternating fields
+> (skin effect) — all listed in the entry's gap table.
+
+> [!IMPORTANT]
+> **Batch 26 (2026-10-21) adds energy resources and sustainability — item 20 of the priority list is complete, and "electrical energy and energy resources" turns 🟢.**
+>
+> ```
+> 电功与焦耳定律 → 能源与可持续发展
+> ```
+>
+> The entry covers renewable and nonrenewable sources (water, wind, solar, biomass vs oil, natural gas,
+> coal), the 2020 world energy mix (557.1 EJ; fossil 83.1%, oil 31.3%, renewables 12.6%, nuclear 4.3%),
+> world energy growth and country examples (the U.S., Germany, New Zealand, China, India), the qualitative
+> relation between energy and GDP per capita, and **the difference between the law of conservation of
+> energy and "energy conservation"**: the law says the total energy of an isolated system is constant,
+> while energy conservation means using less or converting more efficiently, because every practical
+> conversion degrades part of the energy into waste heat. The textbook's "about 85% fossil", "21% of world
+> oil", and "China's 2/3 coal" disagree with the 2020 table's 83.1%, 18.7%, and 56.6%, a difference of
+> data year recorded in ev-180.
+>
+> **Source**: CP2e Chapter 7, `m42154` (World Energy Use); the license is handled conservatively under
+> the repository's **CC BY-NC-SA 4.0**, using locators and short quotes only (ev-180).
+>
+> **Source defects recorded**: Egypt's coal cell reads `0.0%` in an EJ column; the table declares
+> `tgroup cols="10"` with 10 colspecs but has 8 cells per row; 8 of 11 country rows do not sum to
+> their totals (Russia 0.4 EJ off); the prose's "10% of U.S. electricity" and the Section Summary's
+> "10% of its energy" are different quantities, and the 2020 table's 10.0% is total energy; the
+> prose calls U.S. renewables "primarily hydro" although other renewables exceed hydro in the 2020
+> table; one figure is dated 2006 while the table is 2020; most exercises are work-and-energy
+> problems unrelated to the section.
+>
+> **Still missing**: technical details of photovoltaics, wind, and nuclear power; quantitative carbon
+> accounting; Chinese energy policy and the curriculum standard; unifying the scope and year of
+> energy statistics; and storage and grid dispatch — all listed in the entry's gap table.
+
+> [!IMPORTANT]
+> **Batch 25 (2026-10-21) adds electric work and Joule's law — item 19 of the priority list is complete.**
+>
+> ```
+> 电功率 → 电功与焦耳定律
+> 电阻与欧姆定律 → 电功与焦耳定律
+> ```
+>
+> The entry covers electric work `W = qU = UIt = Pt`, Joule's law `Q = I²Rt`, the pure-resistance
+> result `W = Q = UIt = I²Rt = U²t/R`, the non-resistive relation `W = Q + E_other` (motors,
+> electrolytic cells; not discussed in the textbook, stated here only as a scope condition),
+> and kilowatt-hours and electricity cost. **The name Joule's law and the combination into
+> `W = Q` are supplied here**; the textbook gives only `P = I²R` and `E = Pt`. The headlight's
+> `30.0 W` hot, `411 W` cold, and `34.3 A`; the extension cords' `1.50 W` and `7.50 W`; and the
+> CFL example's `$7.45` and `$1.95` have all been rechecked.
+>
+> **Source**: CP2e Chapter 20, `m42714` (Electric Power and Energy); the license is handled
+> conservatively under the repository's **CC BY-NC-SA 4.0**, using locators and short quotes only (ev-179).
+>
+> **Source defects recorded**: the 00-gauge wire exercise (9.266 mm, 1 km, 100 A) credits
+> `25.5 W`, but `R ≈ 0.255 Ω` gives about `2.55×10³ W` — the answer corresponds to 10 A and is
+> off by 100×; the maximum-CFL-price exercise credits `$6.25`, which is the incandescent total,
+> while the CFL purchase price should be `$4.75`; the prose writes `1 kA · V = 1 kW` instead of
+> `1 kV · A`; the exercises section is titled `Problem Exercises` (missing `&`); several
+> exercises give stems only.
+>
+> **Still missing**: energy resources and sustainability, so Compulsory-3 "electrical energy and
+> energy resources" remains 🟡; quantitative power sharing in non-resistive circuits, RMS values
+> and power factor, energy storage and reactive power of capacitors and inductors, and tariff
+> structures are listed in the entry's gap table.
+
+> [!IMPORTANT]
+> **Batch 24 (2026-10-21) adds closed-circuit Ohm's law and internal resistance — item 18 of the priority list is complete.**
+>
+> ```
+> 电阻与欧姆定律 → 闭合电路欧姆定律与内阻
+> 串联与并联 → 闭合电路欧姆定律与内阻
+> 电功率 → 闭合电路欧姆定律与内阻
+> ```
+>
+> The entry covers emf (the potential difference between the terminals when no current flows, not a force),
+> internal resistance `r`, the terminal voltage `V = emf − Ir`, the closed-circuit law `I = emf/(R+r)`,
+> `emf = IR + Ir`, how the terminal voltage varies with external resistance, the short-circuit current
+> `emf/r`, charging with a terminal voltage above the emf (a 12.0 V battery charged at 8.00 A with a
+> 15.0 V terminal voltage gives `r = 0.375 Ω`), and identical sources in series and parallel.
+> **The maximum output power at `R = r` and the 50% efficiency there are derived here**, not given by the
+> textbook; the eel example uses `0.15 × 5000 = 750 V`, and the textbook's "approximately 600 V" does not
+> follow from its own data (ev-178).
+>
+> **Source**: CP2e Chapter 21, `m42357` (Electromotive Force: Terminal Voltage); the license is handled
+> conservatively under the repository's **CC BY-NC-SA 4.0**, using locators and short quotes only (ev-178).
+>
+> **Source defects recorded**: the eel passage's 140×5,000 cells of 0.15 V are said to give "approximately
+> 600 V", but each row gives 750 V and the parallel combination still 750 V; the paired exercise with 800 Ω
+> of water gives about 0.93 A rather than the prose's 1 A and has no answer; the exercises section is titled
+> `Problem Exercises` (missing `&`); the second Unreasonable Results item has no answer; several exercises
+> give stems only.
+>
+> **Still missing**: electric work and Joule's law, and energy resources and sustainability, so Compulsory-3
+> "electrical energy and energy resources" remains 🟡; non-resistive circuits (motors), capacitor transients,
+> temperature/aging models of internal resistance, and general Kirchhoff networks are listed in the entry's
+> gap table.
+
+> [!IMPORTANT]
+> **Batch 23 (2026-10-21) adds motion of a charged particle in an electric field — item 17 of the priority list is complete, and 必修三 "Energy in an Electric Field" turns 🟢.**
+>
+> ```
+> 电势能与电势 → 带电粒子在电场中的运动
+> 电场强度 → 带电粒子在电场中的运动
+> 抛体运动 → 带电粒子在电场中的运动
+> 牛顿第二定律 → 带电粒子在电场中的运动
+> ```
+>
+> "Motion of a charged particle in an electric field" covers `E = U/d` and `F = qE` in a uniform field,
+> acceleration from rest (`|q|U = ½mv²`, a 100 V electron reaching `5.93×10⁶ m/s`), the electron volt and the
+> `200 eV` gained by a doubly charged ion, projectile-like transverse deflection
+> (`y = qUL²/(2mdv₀²)`, `tan θ = 2y/L`), and the oscilloscope. **Motion in non-uniform fields, quantitative
+> relativistic corrections, the full structure of an oscilloscope, fringing fields, beam focusing, and the
+> theory of accelerators are still missing** and are listed in the entry's gap table.
+>
+> **How the sources are used**: `m42324` supplies acceleration and the electron volt; `m42326` supplies
+> `E = V_AB/d`, the electron gun, and a hidden projectile analogy; **OpenStax gives no transverse-deflection
+> formula**, so the entry derives it from projectile motion and Newton's second law and states explicitly that
+> it is not textbook text. Both modules are in the *College Physics 2e* bundle, so the license is handled
+> conservatively under the repository's **CC BY-NC-SA 4.0**, using locators and short quotes only
+> (ev-176/ev-177).
+>
+> **Source defects recorded**: m42326's isoline item ("six lines spaced 5.0 V apart cross a 40 cm path")
+> credits `75 V/m`, but six lines enclose five intervals (ΔV = 25 V), so the literal stem gives `62.5 V/m`
+> and none of the options matches; a hidden Test Prep item says a fourfold range means "100% more mass",
+> whereas fixed transverse deflection gives `x ∝ √m`, so it is 16× the mass (1500% more); the answer to the
+> dropped-particle item depends on a figure absent from the cnxml; `800 KeV` is mis-capitalized; m42324
+> substitutes `q = −1.60×10⁻¹⁹ C` and `V = −100 J/C` together into `√(2qV/m)` (correct value, misleading
+> signs) and gives no answer for the 40 kV exercise. The entry does not carry these over.
+>
+> **Correction (2026-10-21)**: two earlier claims — `Section SummaryThe voltage` / `Section SummaryElectric
+> potential` lacking a space, and `in to move` / `in into` being redundant — are **not source defects**. The
+> raw cnxml has `<title>Section Summary</title>` as a separate element and contains neither `in to move` nor
+> `in into`; both are artifacts of the local strip script concatenating elements. The claims are removed
+> from ev-176/ev-177 and from this note.
+
+> [!IMPORTANT]
+> **Batch 22 (2026-10-21) adds capacitance — item 16 of the priority list is complete, but 必修三 "Energy in an Electric Field" stays 🟡.**
+>
+> ```
+> 电势能与电势 → 电容
+> 电场强度 → 电容
+> ```
+>
+> "Capacitance" covers charging a capacitor (work is done against the charge already on the plates, and the energy
+> ends up stored in the field between them), `C = Q/V` and the farad, the vacuum parallel-plate result
+> `C₀ = ε₀A/d` with the 8.9 nF and `Q = 2.7×10⁻⁵ C` checks, dielectric polarization and `C = κC₀`, the κ table
+> (Teflon 2.1, paper 3.7, water 80, strontium titanate 233), and the stored energy
+> `U = ½CV² = Q²/(2C)` with the flash-tube example (`1.0 J` delivered in 1 ms, `1 kW`). **Motion of charged
+> particles in an electric field, combinations of capacitors, RC transients, breakdown and leakage, fringing
+> fields, the energy density `u = ½ε₀E²`, the microscopic model of dielectric polarization, and supercapacitors
+> and capacitive sensors are still missing** and are listed in the entry's gap table.
+>
+> **Why the chapter stays 🟡**: "Energy in an Electric Field" still lacks **motion of charged particles in an
+> electric field**; adding capacitance and capacitor energy is not the whole chapter. The priority list therefore
+> gains a new item 17.
+>
+> **Source defects recorded**: m63179's definition sentence drops a preposition (`can store energy an electric
+> field`); its 10 µF / 120 µC example prints `72 mJ` where `U = Q²/(2C) = 0.72 mJ` (100× too large); one
+> capacitance multiple-choice item labels the options `nC` instead of `nF` (the correct value is `2.3 nF`); the
+> dielectric-energy Concept Item and two true/false items never state whether the battery stays connected, although
+> the answer reverses between fixed `Q` and fixed `V`; the 12 µF plate-attraction problem has no correct option
+> (the force is `F = Qσ/(2ε₀) ≈ 5.9×10⁴ N`, and the offered `1.2×10⁵ N` is the missing-½ error); the κ table
+> prints `Silicon oil` for `silicone oil`; a teacher note derives `di` from "two or double" and says a dielectric
+> "can have two electric charges" (the prefix is Greek `dia-`, "through"); and the module's Performance Task
+> compares gravitation with Coulomb's law and has nothing to do with capacitors.
+
+> [!IMPORTANT]
+> **Batch 21 (2026-10-21) adds polarization of light — item 15 of the priority list is complete, and 选必一 chapter 4 "Light" turns 🟢.**
+>
+> ```
+> 波 → 光的偏振
+> 光的折射 → 光的偏振
+> ```
+>
+> "Polarization of light" covers the direction of polarization (defined as the direction of the electric field),
+> unpolarized light and polarizing filters, Malus's law `I = I₀cos²θ` (the textbook never states that unpolarized
+> light loses half its intensity at one filter; this entry derives `½I₀` by averaging `cos²θ`), a 90% intensity
+> reduction giving 71.6°, Brewster's law `tan θ_b = n₂/n₁` (water 53.1°, crown glass 56.7°, water to crown 48.8°,
+> crown to water 41.2°), polarization by reflection and by scattering, optical activity, birefringence and dichroic
+> materials, and liquid-crystal displays. **Circular and elliptical polarization, Stokes parameters, the s- and
+> p-components of the Fresnel coefficients, the degree of polarization, quantitative optical activity, and wave
+> plates are still missing** and are listed in the entry's gap table.
+>
+> **Source and license**: this batch uses `m42522`, from *College Physics 2e*, Chapter 27 (Wave Optics), §27.8
+> Polarization, not from the *Physics* collection used elsewhere in this library. The repository's `LICENSE` and
+> README state **CC BY-NC-SA 4.0**, while the openstax.org page for the same section states **CC BY 4.0**; the two
+> declarations disagree, and this library follows the repository license as the stricter one, using
+> **locators and short quotes only** (ev-174).
+>
+> **Source defects recorded**: m42522's only Critical Thinking item is a diffraction-grating problem unrelated to
+> polarization; its solution takes the grating spacing as `10⁻⁶ m` where the stem gives `1.0×10⁻⁵ m`, so all four
+> answers are off by a factor of ten, writes `θ = 0.400 = 23.6°` for `θ = sin⁻¹(0.400)`, and mixes in `10⁻⁶ cm`;
+> the prose `The electric field is strong compared with the magnetic field` compares quantities with different units.
+
+> [!IMPORTANT]
+> **Batch 20 (2026-10-21) adds total internal reflection — item 14 of the priority list is complete, but 选必一 chapter 4 "Light" does not turn 🟢.**
+>
+> ```
+> 光的折射 → 全反射
+> ```
+>
+> "Total internal reflection" covers the critical angle `sin θ_c = n₂/n₁` (only for `n₁ > n₂`), the two
+> conditions for total internal reflection, the argument that `sin θ₂ = (n₁/n₂) sin θ₁ > 1` leaves no refracted
+> ray, water-to-air 48.6° and diamond-to-air 24.4°, and the diamond cut, corner reflectors, optical fibers, and
+> the endoscope. **Dispersion and the rainbow, evanescent waves, and the numerical aperture and modes of fibers
+> are still missing**, as recorded in the entry's gap table.
+>
+> **Why chapter 4 stays 🟡**: the original checklist treated total internal reflection as the last block, but the
+> gap table of [light interference and diffraction](concepts/light-interference-and-diffraction.en.md) already
+> names **polarization of light** as missing (DIC microscopy uses polarized light), and the OpenStax collection
+> has no polarization module. Rather than call "the original list is done" a complete chapter, the chapter stays
+> 🟡; polarization becomes priority 15 and needs another citable CC BY source.
+>
+> **Source defects recorded**: m54365 prints the fixed value of the speed of light as `2.9972458×10⁸ m/s`
+> (it is `2.99792458×10⁸ m/s`); misspells `indices` as `indicies` twice; the Section Summary says
+> `total internal refraction`; a Key Equations cell begins with a stray `>`; and the corner-reflector passage
+> treats two perpendicular mirrors as a retroreflector, which holds only for rays perpendicular to the fold line
+> (a three-dimensional reflector needs three mutually perpendicular faces). The entry does not carry these over.
+
+> [!IMPORTANT]
+> **Batch 19 (2026-10-21) adds light interference and diffraction — only total internal reflection is left in 选必一 chapter 4 "Light".**
+>
+> Two prerequisites:
+>
+> ```
+> 波 → 光的干涉与衍射
+> 光的折射 → 光的干涉与衍射
+> ```
+>
+> "Light interference and diffraction" covers Huygens's principle and wavefronts; the double-slit conditions
+> `d sinθ = mλ` and `d sinθ = (m+½)λ`; the single-slit minima `D sinθ = mλ` with the small-angle form `Dy/L = mλ`;
+> `λ_n = λ/n`; the grating equation and the order-by-order dispersion of white light; the CD as a reflection
+> grating; circular-aperture diffraction and the Rayleigh criterion `θ = 1.22λ/D`; and five worked figures
+> (`633 nm`, `1.56 μm`, `5.97°`, `7.72×10⁻⁴ rad`, `414 nm`). **Polarization, coherence length and coherence time,
+> the quantitative double-slit intensity formula, thin-film interference, and the quantum account of single-photon
+> interference are still missing**, as recorded in the entry's gap table.
+>
+> **Total internal reflection is still missing** — 选必一 chapter 4 stays 🟡 until `m54365` is built.
+>
+> **Source defects recorded**: m54371 writes "1,600 in a millimeter" for CD grooves while the same passage gives a
+> 1,600 nm pitch (625 per mm); its Concept Items print the Rayleigh criterion as `θ = λ/D` without the 1.22 that
+> the body text and Key Equations use; m54369's teacher note says "the sign of an angle is always ≥ 1" (the sine is
+> at most 1) and misspells `lamda`; m54369 gives the visible range as 380–750 nm while m54371 gives 380–780 nm.
+> The entry does not carry these over.
+
+> [!IMPORTANT]
+> **Batch 18 (2026-10-21) adds wave-particle duality — the 选必三 "atomic structure and wave-particle duality" chapter turns 🟢.**
+>
+> The entry connects the photon model of the photoelectric effect to momentum and matter waves:
+>
+> ```
+> 光电效应 → 波粒二象性
+> 波 → 波粒二象性
+> ```
+>
+> "Wave-particle duality" covers photon momentum `p = h/λ`, the comparison between a `500 nm` photon and an
+> electron of the same momentum (the electron's kinetic energy is about five orders of magnitude smaller), the
+> Compton effect (energy and momentum conserved together; X-rays matter because their wavelength is short),
+> the parallel accounts of interference/diffraction and discrete energy, the matter-wave relation `λ = h/p`,
+> and solar sails, comet tails, and electron microscopes. **The Compton shift formula, electron-diffraction
+> experiments, the uncertainty principle, and the quantitative Bohr model and hydrogen spectrum are still
+> missing**, as recorded in the entry's gap table.
+>
+> **Source defects recorded**: m54552 dates Compton's Nobel Prize to 1929 (it was 1927); one exercise writes the
+> de Broglie wavelength as `p = hλ` (it should be `λ = h/p`; the rest of the module writes it correctly); part (c)
+> of the `500 nm` example substitutes `1,456 m/s` while part (b) gives `1,459.9 m/s`, and the quoted
+> `9.64×10⁻²⁵ J` should be about `9.66×10⁻²⁵ J` for the value substituted; the glossary's `either a particle or
+> a wave` conflicts with the module's own teacher support that light does not choose. The entry does not carry
+> these over.
+
+> [!IMPORTANT]
+> **Batch 17 (2026-10-21) opens the 选必三 "atomic structure and wave-particle duality" chapter with Planck's quantum hypothesis and the photoelectric effect.**
+>
+> Two chains:
+>
+> ```
+> 波 → 电磁波谱 → 普朗克量子假设 → 光电效应
+> 普朗克量子假设 → 原子结构      (the "quantization" prerequisite atomic structure had left empty)
+> ```
+>
+> "Planck's quantum hypothesis" covers the two regularities of the blackbody spectrum, the failure of classical
+> theory at short wavelengths (the ultraviolet catastrophe), `E = nhf`, and three photon-energy examples;
+> "The photoelectric effect" covers the five experimental properties, `KE_max = hf − BE` with the `BE = hf₀`
+> threshold, the `KE–f` graph whose slope is `h`, the 420 nm violet-light/calcium example, and lists photoelectric
+> tubes, photoconductive cells, solar cells, and movie soundtracks as related technologies (the last two belong to
+> the internal photoelectric effect and the photovoltaic effect; the entry states the difference).
+> **Wave-particle duality of light is still missing** — the 选必三 chapter 4 stays 🟡 until `m54552` is built.
+>
+> **Source defects recorded**: m54566's classical formula `I = 2kT/λ²` has both the wrong exponent and the wrong
+> dimensions (Rayleigh–Jeans goes as `∝ T/λ⁴` per wavelength) and its glossary calls the ultraviolet catastrophe a
+> "misconception"; m54559 calls `E = hf` "the energy of a photon or photoelectron", writes the eV conversion as
+> `J⋅s`, uses a capital `f_O` in the Key Equations, says `bonding energy` in an exercise, and places a `0.26 eV`
+> retarding voltage next to a computed `0.25 eV`. The entries do not carry these over.
+
+> [!IMPORTANT]
+> **Batch 16 (2026-10-21) adds series and parallel circuits to the Compulsory-3 "circuits and their applications" chapter — that chapter turns 🟢.**
+>
+> The entry turns Ohm's law into a network:
+>
+> ```
+> 电阻与欧姆定律 → 串联与并联
+> ```
+>
+> "Series and parallel circuits" covers the same current, the adding voltages, and `R_eq = ΣR` in series; the same
+> voltage, the adding currents, and `1/R_eq = Σ1/R` in parallel; `R_eq` below the smallest branch resistance;
+> `R/N` for N identical resistors in parallel; and the stepwise reductions of the seven-resistor `10 Ω` network to
+> `160/11 Ω ≈ 14.5 Ω` and of the `10 V` complex circuit to `104.09 Ω → 0.096 A`.
+> **The closed-circuit Ohm's law with internal resistance, electric work and Joule's law, capacitor charging, and
+> non-series-parallel networks such as bridges are still missing** — so the "electrical energy and energy resources"
+> chapter remains 🟡.
+>
+> **Source defects recorded**: in m54435 one learning objective repeats a phrase and an option prints `5V` as `5V4`;
+> in m54442 the complex-circuit example writes an extra `R` (`25.71 Ω R.`) and says the current is `across` a branch.
+> The entry does not carry these over. The modules assume an ideal wire (same voltage everywhere along it) and a
+> battery with no internal resistance; the entry states both assumptions.
+
+> [!IMPORTANT]
+> **Batch 15 (2026-10-21) opens the 必修三 "electrical energy and energy resources" chapter with "electric power".**
+>
+> The entry attaches after Ohm's law and makes the rate of electric energy transfer explicit:
+>
+> ```
+> 电阻与欧姆定律 → 电功率
+> ```
+>
+> "Electric power" covers `P = IV` and its dimensional derivation, `P = V²/R` and `P = I²R`, the fact that only
+> resistance dissipates power while a capacitor only stores energy, and the textbook's energy-conservation check in
+> which the branches total `10.4 W` and the battery supplies `10.4 W`.
+> **Electric work `W = UIt`, a separate statement of Joule's law, the closed-circuit Ohm's law with internal
+> resistance, and energy resources and sustainability are still missing** — so the coverage page records chapter 12
+> as 🟡, not 🟢.
+>
+> **Source defects recorded**: m54446 calls household `120 V` `time-averaged power` (a voltage is not a power; the
+> correct statement is an RMS voltage, which the module never develops); the exercise "heat 1 L of water by 20 °C with
+> a 1-kW resistor on 9.0 V" needs about `83.6 kJ`, which 1 kW delivers in about 84 s, so none of the options
+> 10/20/30/40 min is correct. The entry does not use either passage.
+
+> [!IMPORTANT]
+> **Batch 14 (2026-10-21) opens the 选必一 "mechanical vibration" chapter — 选必一 no longer has a completely empty chapter.**
+>
+> The edge carries Newton's second law into back-and-forth motion:
+>
+> ```
+> 牛顿第二定律 → 简谐运动 → 单摆
+> ```
+>
+> "Simple harmonic motion" covers Hooke's law `F = −kx`, the restoring force, amplitude/period/frequency, and the spring
+> oscillator's `T = 2π√(m/k)`; "Simple pendulum" covers the small-angle restoring force `−mg sinθ`, `T = 2π√(L/g)`, and
+> measuring `g` with a pendulum (the textbook's example: `L = 75.000 cm`, `T = 1.7357 s` ⇒ `g = 9.8281 m/s²`).
+> **Phase and `x = A cos(ωt + φ)`, the energy of simple harmonic motion, damped oscillation, forced oscillation, and
+> resonance are still missing** — so the coverage page records chapter 2 as 🟡, not 🟢.
+>
+> **Source defects recorded**: the m54154 glossary writes Hooke's law as `F = kΔL` (no minus sign, using `ΔL`), which
+> disagrees with the body's `F = −kx`; one passage calls simple harmonic motion `an object in simple motion`; the
+> Performance Task teacher note is about vector addition and has nothing to do with simple harmonic motion. The module
+> also notes that tension and period share the symbol `T` and warns against confusing them.
+
+> [!IMPORTANT]
+> **Batch 13 (2026-10-21) opens the 必修二 "projectile motion" chapter — the repo's first two-dimensional motion edge, filling priority 9 on the coverage page.**
+>
+> The edge carries one-dimensional kinematics into the plane:
+>
+> ```
+> 速度与速率 ─┐
+>             ├─→ 抛体运动
+> 加速度 ─────┘
+> ```
+>
+> The entry covers the independence of horizontal and vertical motion, `a_x = 0` and `a_y = −g`, the maximum height
+> `h = v₀y²/(2g)`, the level-ground range `R = v₀²sin2θ₀/g`, and the textbook's two worked examples: the firework
+> (70.0 m/s at 75° ⇒ 233 m, 6.90 s, 125 m) and the volcano rock (25.0 m/s at 35°, landing 20.0 m lower ⇒ 3.96 s).
+> **The condition for curved motion and the composition and resolution of motion (vectors) are still missing** — the
+> latter needs the mathematical "vector" node, the same gap recorded on [力（高中）](concepts/force.en.md) — so the coverage
+> page records the chapter as 🟡.
+>
+> **Source defect recorded**: the Strategy in m54162 writes `a_x = 0 and a_y = g` (missing the minus sign), while every
+> solution in the same section uses `−g` with up positive; the entry follows the solutions and states this in K1. The
+> textbook does not derive "45° gives the maximum range" and does not give the trajectory equation; the entry marks both
+> as the repo's own derivations.
+
+> [!IMPORTANT]
+> **Batch 12 (2026-10-21) adds the last empty chapter of 选必二, "alternating current"; none of the three 选必二 chapters is zero any more.**
+>
+> The branch follows induction into applications:
+>
+> ```
+> 电磁感应定律 → 交变电流 → 变压器 → 远距离输电
+> 电阻与欧姆定律 ───────────────────┘
+> ```
+>
+> The AC entry covers the generator `ε = NABω sinωt`, the peak `ε₀ = NABω`, and the period and frequency; the transformer entry
+> covers `V_S/V_P = N_S/N_P` and its idealised assumptions; the transmission entry covers `P = IV`, `P_loss = I²R_wire`,
+> and the staged transformation. **RMS values, inductors and capacitors in AC, three-phase power, and the transformer's
+> power and current relations are still missing** — so the coverage page records chapter 3 as 🟡, not 🟢.
+>
+> **Source defects recorded**: m54467 writes the maximum torque as `wℓB` (dropping `N` and `I`); the substation voltage is
+> 5–13 kV in one passage and 5–30 kV in another; one passage says "voltage rather than emf because transformers have internal
+> resistance" while another assumes the coil resistance is small enough that `V_S = ε_S`. The module also covers the motor
+> torque `τ = NIABsinθ` and brush commutation; this batch did not build a separate node for them, and the source is registered as ev-162.
+
+> [!IMPORTANT]
+> **Batch 11 (2026-10-21) adds the 选必二 "electromagnetic induction" chapter and fills the "magnetic flux missing" gap recorded on the coverage page for two rounds.**
+>
+> The branch links the field to the circuit:
+>
+> ```
+> 磁场 → 磁通量 → 电磁感应定律 ← 电阻与欧姆定律
+> ```
+>
+> The flux entry covers `Φ = BAcosθ`, the weber, and the three ways to change the flux; the induction entry covers Faraday's law
+> `ε = −NΔΦ/Δt`, Lenz's law, `I = ε/R`, and the energy balance of the slider circuit. **Self-inductance/mutual inductance,
+> eddy currents, and the Lorentz-force explanation of motional emf are still missing** — so the coverage page records the chapter as 🟡 only.
+> **Only "alternating current" remains a zero chapter in 选必二.**
+>
+> **Two source defects recorded**: m54456 calls the weber `magnetic field per unit area, or T/m2`
+> (contradicting `Φ = BAcosθ`; it should be T·m²); and its glossary defines `induction` with the definition of `emf`.
+
+> [!IMPORTANT]
+> **Batch 10 (2026-10-21) opens the 选必二 "Ampere force and Lorentz force" chapter and gives the repo its first "field → force" branch.**
+>
+> It grows out of electrostatics:
+>
+> ```
+> 电荷 → 库仑定律 → 电场强度 → 磁场 → 安培力
+>                               └─→ 洛伦兹力 ←─ 匀速圆周运动
+> ```
+>
+> The magnetic-field entry covers dipoles, field lines, fields of currents, and the tesla; the Ampere-force entry covers
+> `F = IℓBsinθ` and motors; the Lorentz-force entry covers `F = qvBsinθ`, zero work, and circular motion.
+> The Ampere force and the Lorentz force are the macroscopic and microscopic sides of the same force.
+> **The period of circular motion, the cyclotron, the mass spectrometer, and magnetic flux are still missing** — so the coverage page records the chapter as 🟡 only.
+>
+> **One source defect recorded**: in m54465 the worked example is titled `Trajectory of Electron in Magnetic Field`,
+> but the stem and solution compute for a proton (`+1.60×10⁻¹⁹ C`). The entries follow the prose and solution, and the inconsistency is recorded in K2 of "Lorentz force".
+
+> [!IMPORTANT]
+> **Batch 9 (2026-10-21) opens the 选必三 "atomic nucleus" chapter with "Atomic nucleus" and "Radioactive decay".**
+>
+> It attaches to the existing "Atomic structure" entry:
+>
+> ```
+> 原子结构 → 原子核 → 放射性衰变
+> ```
+>
+> The nucleus entry covers composition, nuclide notation, isotopes, and the strong nuclear force; the decay entry covers α / β⁻ / γ,
+> conservation of mass number and charge, and half-life. **Binding energy/mass defect, fission and fusion, β⁺/antineutrinos,
+> and medical applications are still missing** — so the coverage page records the chapter as 🟡 only.
+>
+> **Two source defects recorded**: the prose in m54580 gives the strong-force range as `10–15 meters` (the section table says 1 fm);
+> and the alpha-decay energy example substitutes `0.0005631 u` as `0.005631 u`, a factor of 10. The entries use neither number.
+
+> [!IMPORTANT]
+> **Batch 8 (2026-10-21) begins the 选必三 thermal chapter with the first and second laws of thermodynamics.**
+>
+> It attaches to the end of the "work and power → conservation of mechanical energy" energy thread:
+>
+> ```
+> 功与功率 → 机械能守恒 → 热力学第一定律 → 热力学第二定律
+> ```
+>
+> The first law's `先修` points to work and power (where `W = PΔV` comes from) and to conservation of mechanical energy (energy bookkeeping);
+> the second law covers total entropy and the direction of spontaneous processes only. Heat-engine efficiency, the Carnot cycle,
+> and the statistical interpretation of entropy are **still missing** — so 选必三 Chapter 3 is recorded as 🟡 on the coverage page, not 🟢.
+>
+> **Two honest notes**: the textbook does not use the label "state function", so that label is this repo's transcription;
+> and the second-law module gives no quantitative refrigerator example, so the entry records that as a gap instead of supplying one.
 
 > [!IMPORTANT]
 > **Batch 7 (2026-10-05) added the whole "momentum" chapter — the repo's first "force × time" thread.**
@@ -414,6 +1203,14 @@ graph LR
 | [Erratum #20652 in University Physics Volume 1 (Chapter 5): Unit 1 Mechanics: Chapter 5 Newton's Laws of Motion: Section 5.4 Mass and Weight](claims/up1-errata-20652.en.md) | 待审 | OpenStax *University Physics Volume 1* erratum #20652 (`ev-150`) |
 
 ## 教法 (Teaching methods)
+
+<!-- kbcheck:begin -->
+| Concepts | With a method | Without |
+|---|---|---|
+| 71 | 34 | **37** |
+
+> Generated by `kbcheck.py`. To see *which* concepts lack a method, run `python tools/make_tasks.py` (grouped by path).
+<!-- kbcheck:end -->
 
 | Entry | Status | Target audience | `禁忌` (who it does not apply to) |
 |---|---|---|---|
