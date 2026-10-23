@@ -115,6 +115,7 @@ def main():
     ap.add_argument("--scan", action="store_true",
                     help="扫描「还没有教法」的概念：它们的原文里有没有 Teacher Support")
     ap.add_argument("--refresh", action="store_true", help="强制重新下载")
+
     ap.add_argument("--max", type=int, default=4, help="最多打印几段")
     args = ap.parse_args()
 
@@ -129,7 +130,7 @@ def main():
         return 0
 
     if args.scan:
-        have, lack = [], []
+        have, untag, lack = [], [], []
         covered = set()
         for mp in (ROOT / "knowledge").rglob("methods/*.md"):
             if mp.name.endswith(".en.md"):
@@ -149,11 +150,26 @@ def main():
             except SystemExit:
                 lack.append((p.stem, f"{mod} 取不到"))
                 continue
-            n = len(teacher_blocks(xml))
-            (have if n else lack).append((p.stem, f"{mod} @{repo.replace('osbooks-','')}" if n else f"{mod} 无 Teacher Support"))
-        print(f"有原文可用：{len(have)}（这些可以直接写）")
+            # **只数带 [BL]/[OL]/[AL] 的段落**：目标陈述那类 note 也叫 Teacher Support，
+            # 但它不是「教材建议怎么教」。按 note 数量算，会把没做法可写的模块算成「可用」。
+            blocks = teacher_blocks(xml)
+            tagged = sum(1 for b in blocks if re.search(r"\[(BL|OL|AL)\]", b))
+            # 三段：带档位标记（可直接定档）· 有做法但未标档（要自己定档并说明）
+            # · 只有目标陈述或干脆没有（写不了）
+            substantive = [b for b in blocks if len(b) > 260]
+            if tagged:
+                have.append((p.stem, f"{mod} @{repo.replace('osbooks-','')} 标档 {tagged} 段"))
+            elif substantive:
+                untag.append((p.stem, f"{mod} @{repo.replace('osbooks-','')} 未标档 {len(substantive)} 段"))
+            else:
+                lack.append((p.stem, f"{mod} 无做法提示"))
+        print(f"带档位标记：{len(have)}（可直接定档）")
         for name, info in have:
             print(f"  + {name:<26} {info}")
+        print()
+        print(f"有做法但未标档：{len(untag)}（要自己定档并在论证里说明）")
+        for name, info in untag:
+            print(f"  ~ {name:<26} {info}")
         print()
         print(f"需另找来源：{len(lack)}")
         for name, info in lack:
@@ -180,16 +196,17 @@ def main():
     print(f"# 源：{RAW.format(repo=repo, mod=mod)}")
     print()
     blocks = teacher_blocks(xml)
-    if not blocks:
-        print("！这个模块里没有 Teacher Support（也没有 [BL]/[OL]/[AL] 标记）。")
+    usable = [b for b in blocks if re.search(r"\[(BL|OL|AL)\]", b)]
+    if not usable:
+        print("！这个模块里没有带 [BL]/[OL]/[AL] 的做法提示（Teacher Support 里只有目标陈述）。")
         print("  这本书可能根本不带教学提示（实测：College Physics 就完全没有）。")
         print("  写 `教法` 需要另找来源，或者暂时留空——**不要凭印象补**。")
         return 2
-    for b in blocks[:args.max]:
+    for b in usable[:args.max]:
         print("-" * 70)
         print(b)
         print()
-    print(f"（共 {len(blocks)} 段 Teacher Support）")
+    print(f"（共 {len(blocks)} 段 Teacher Support，其中 {len(usable)} 段带档位标记）")
     return 0
 
 
