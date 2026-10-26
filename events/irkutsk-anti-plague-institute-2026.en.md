@@ -5,8 +5,8 @@ title: "Death of a worker at the Irkutsk Anti-Plague Institute (Sep–Oct 2026)"
 status: 持续更新
 author: "@hpleapfrog"
 created: 2026-10-13
-updated: 2026-10-18
-evidence: [ev-064, ev-065, ev-066, ev-067, ev-068]
+updated: 2026-10-26
+evidence: [ev-064, ev-065, ev-066, ev-067, ev-068, ev-196]
 license: CC-BY-SA-4.0
 ---
 
@@ -61,6 +61,8 @@ countries tightened border health checks.
 | 2026-10-09 | As of that date: **no high-threat pathogen** detected among contacts; medical observation stopped | ev-067 |
 | 2026-10-10 | **WHO published DON 2026-DON620**: based on Russia's information, it found **no evidence of ongoing transmission**; but the **cause of death is unconfirmed**, a laboratory-associated exposure "**cannot be fully excluded at this stage**", and confidence in the assessment remains "**limited**" | ev-067 |
 | 2026-10-13 | The Irkutsk regional government **denied** reports of "restrictive measures because of plague", calling them **fake news**; it restated the official findings: the cause of death is "pneumonia of undetermined etiology", no plague case, and nearly 5,000 tests found no dangerous pathogen | see "media reports" below (SIA 10-13) |
+| 2026-10-21 | Rospotrebnadzor issued **Order No. 832** (amending Order No. 485 of 2026-06-22): the 18th CIS inter-state research-and-practice conference on "sanitary protection of the territory against plague and other dangerous infections", hosted by the institute, was **postponed from 10-21/22 to 11-11/12** | ev-196 |
+| 2026-10-22 | Russian media reported the postponement: the conference contract is worth about **RUB 13.15 million** (covering participants' travel, visas, medical insurance, Chinese interpretation, a Lake Baikal excursion, a "gala dinner" and media coverage); **neither the regulator nor the institute explained the reason** | see "Positions" below (media: Lyudi Baikala 10-22 · Meditsinsky Vestnik 10-22, not registered as evidence) |
 
 ### 2. Positions (official line vs media reports)
 
@@ -74,6 +76,7 @@ countries tightened border health checks.
 | **Enforcement** | not mentioned | **FSB officers escorted ambulances transporting contacts for examination** (Lyudi Baikala 10-02, via Kyiv Independent) |
 | **Official tone** | the situation is "stable" / "calm" | Governor Igor Kobzev: "It was a test, but we passed it in worthy fashion" (Moscow Times 10-08) |
 | **Source of infection** | no official account; the worker did not leave the oblast | three theories: lab accident / a Buryatia trip (denied) / a Thailand trip (no evidence) |
+| **Conference postponed** | only the new dates were announced: Order No. 832 of 10-21 moved the conference from 10-21/22 to 11-11/12 (institute website) | on 10-22 media reported the postponement and the contract (about RUB 13.15 million, including a Baikal excursion and a gala dinner); both reports say **no official explanation could be found** (Lyudi Baikala · Meditsinsky Vestnik, neither registered as evidence) |
 
 ### 3. International response
 
@@ -82,6 +85,7 @@ countries tightened border health checks.
 - **United States**: the State Department said it was monitoring closely; on 10-07 it delivered a formal diplomatic complaint (démarche) asking Russia for more information; on 10-06 Trump said he would soon hold a call with Putin to discuss the situation (both per media; the latter via Politico 10-07).
 - **European Union**: on 10-07 (Wednesday) the European Commission and member states discussed the case at the Health Security Meeting (Politico; media).
 - **Neighbouring countries**: Mongolia, Kazakhstan, Uzbekistan, Kyrgyzstan, Tajikistan and Indonesia tightened border/port health checks; the CDC of Hulunbuir in China's Inner Mongolia issued a plague risk advisory; Armenia's prime minister ordered a commission on 10-08 to prevent the importation and spread of plague from Russia (all per media reports).
+- **CIS countries**: the 18th CIS inter-state conference on sanitary protection against plague and other dangerous infections, hosted by the institute and originally scheduled for 10-21/22, was postponed to **11-11/12** by Rospotrebnadzor **Order No. 832 of 10-21** (ev-196); **neither the regulator nor the institute gave a reason** (media reports; see "Positions", not registered as evidence).
 
 ### 4. Unresolved contradictions and open questions
 
@@ -91,6 +95,7 @@ countries tightened border health checks.
 4. **Why hospitalise 189 contacts** for a diagnosis officials call non-contagious — a point questioned from outside.
 5. **Inconsistent sequencing**: Russia told WHO on 10-06 that observation of all contacts had ended, while Rospotrebnadzor said publicly on 10-07 "more than 90%".
 6. **Was the observation period long enough**: WHO says that without a confirmed diagnosis it **cannot independently judge whether 7 days was enough to exclude all plausible causes**.
+7. **Why was the conference postponed**: after the worker's death, the CIS plague conference hosted by the institute was moved days before it was due to open (10-21/22 → 11-11/12), and **neither the regulator nor the institute explained why**. This repo records the sequence only and **does not treat proximity in time as causation** (ev-196; media reports are cited under "Positions" and are not registered as evidence).
 
 > [!NOTE]
 > **This entry records the official line, the media reports and their disagreements only; it does not decide
@@ -106,6 +111,7 @@ countries tightened border health checks.
 | ev-066 | **Official document** | **High** (for this class of claim) | Russia lifted the Irkutsk quarantine (**2026-10-08**, Russian state news agency), via [Kyiv Independent](https://kyivindependent.com/russia-lifts-quarantine-in-irkutsk-region-where-lab-worker-allegedly-died-of-plague/) | Official public action (via media) · **short quotes only; no full text reproduced** |
 | ev-067 | **Official document** | **High** (for this class of claim) | World Health Organization (WHO), *Disease Outbreak News: Pneumonia of undetermined etiology – the Russian Federation*, **published 2026-10-10**, **2026-DON620**, [who.int](https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON620) | Official public release · **short quotes and conclusions only; no full text reproduced** |
 | ev-068 | **Official document** | **High** (for this class of claim) | European Centre for Disease Prevention and Control (ECDC), *ECDC closely monitoring situation following case of pneumonia of unknown origin in Russia*, **published 2026-10-06**, [ecdc.europa.eu](https://www.ecdc.europa.eu/en/news-events/ecdc-closely-monitoring-situation-following-case-pneumonia-unknown-origin-russia) | Official public release · **short quotes and conclusions only; no full text reproduced** |
+| ev-196 | **Official document** | **High** (for this class of claim) | Irkutsk Anti-Plague Institute website, homepage notice (**retrieved 2026-10-26**): citing Rospotrebnadzor **Order No. 832 of 2026-10-21** (amending Order No. 485 of 2026-06-22), it announces that the 18th CIS inter-state conference on sanitary protection against plague and other dangerous infections will be held on **11–12 ноября 2026 г.**, [irknipchi.ru](https://irknipchi.ru/); the conference site's banner now reads "11-12 НОЯБРЯ 2026 года", [conf2026-irkutsk.ru](https://conf2026-irkutsk.ru/) | Official public release (web page) · both orders are hosted on Yandex.Disk and were **not opened by this repo** · **short quotes and conclusions only; no full text reproduced** |
 
 > **What this repo did with these sources**: checked the dates and wording of each official release. **ev-065 / ev-066 are official statements read through media reports**; this repo could not open the two original official release pages — that is stated in the locator column. **ev-067 (the WHO DON) is the most authoritative primary source for this case**, read in full.
 
@@ -117,3 +123,4 @@ countries tightened border health checks.
 | 2026-10-13 | **Expanded collection**: added two sources — WHO DON `2026-DON620` (10-10) and ECDC (10-06); the timeline grew to 15 official rows; added three sections: "Positions", "International response", and "Unresolved contradictions and open questions" | added ev-067 (WHO DON 2026-DON620), ev-068 (ECDC) | @hpleapfrog |
 | 2026-10-14 | **Routine update**: checked through 10-14 — **no new official release** (the latest is still the 10-10 WHO DON); added media-reported details (about 5,000 samples, "community-acquired pneumonia" as the death classification, maternity-hospital screening, 60+ staff confined at the institute, FSB-escorted ambulances, the governor's remark) and enriched "Positions" | media reports added (Moscow Times, UA.NEWS, Kyiv Independent, Independent, etc.; none registered as evidence) | @hpleapfrog |
 | 2026-10-18 | **Routine update**: checked through 10-18 — **no new official release** (the latest is still the 10-10 WHO DON and the WHO event page shows no sub-update; after 10-15 media coverage is recap only); recorded the 10-13 regional-government fake-news denial ("restrictive measures because of plague" were fake), the EU Health Security Meeting on 10-07, Trump's 10-06 call remark, Armenia's 10-08 import-prevention commission and the family's statement that no formal death conclusion has been received (all media); added one line on her research background | media reports (SIA, Politico, The Insider, RFE/RL, StarHit, etc.; none registered as evidence) | @hpleapfrog |
+| 2026-10-26 | **Routine update**: checked through 10-26 — **the cause of death and pathogen results remain unpublished and neither WHO nor ECDC has published anything after 10-18**; recorded one new development: the 18th CIS plague conference hosted by the institute was postponed from 10-21/22 to **11-11/12** by Rospotrebnadzor **Order No. 832 of 10-21** (confirmed on the institute's own site and the conference site), and Russian media reported on 10-22 that the contract is worth about RUB 13.15 million with **no reason given by the regulator or the institute**; added 2 timeline rows, one "Conference postponed" row under "Positions", one "CIS countries" bullet under "International response" and open question 7 | added ev-196 (institute site / conference site); media reports (Lyudi Baikala 10-22 · Meditsinsky Vestnik 10-22) are **not registered as evidence** and appear only in the text and under "Positions" | @hpleapfrog |
