@@ -77,6 +77,13 @@ DEFAULT_AUTHOR = "@hpleapfrog"
 # 与 kbcheck.EN_SLUG_PREFIX 保持一致：英文文件名 = id 末段去掉类型前缀
 EN_SLUG_PREFIX = re.compile(r"^(kp|prop|method|mis|miscon|misconception|path|res|resource|attack)-")
 
+# 可选字段 `外部先修`：与 kbcheck.py 的 EXTERNAL_PREREQ_* 保持一致。
+# 它声明的是**本库没有节点**的前置，不是 `edges.先修` 边。
+EXT_FIELDS = ("名称", "标识", "学科", "学段", "来源")
+EXT_KEY_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+EXT_STAGES = {"小学", "初中", "高中", "大学", "不限"}
+EXT_SOURCE_RE = re.compile(r"^ev-\d+$")
+
 
 def fail(msg):
     print(f"x {msg}", file=sys.stderr)
@@ -171,6 +178,63 @@ def safe_name(title):
     return re.sub(r"\s+", " ", out).strip()
 
 
+def build_external_block(specs):
+    """把重复的 `--external-prereq` 参数拼成 YAML 块。
+
+    每段格式：`名称|标识|学科|学段|来源`。**标识**是稳定 ASCII 键，
+    用来把「同一个前置在多个条目里反复出现」数出来；**来源**必须是一个
+    `ev-###`。生成器只做形状校验，前置是否真实必需仍由人判断（M-12）。
+    """
+    if not specs:
+        return ""
+    # 索引感知复用提示
+    try:
+        idx = json.loads((ROOT / "index.json").read_text(encoding="utf-8"))
+        agg = idx.get("外部先修") or {}
+        bykey = {g.get("标识"): g for g in (agg.get("按标识") or []) if g.get("标识")}
+    except Exception:
+        bykey = {}
+    lines = ["外部先修:"]
+    for spec in specs:
+        parts = [p.strip() for p in spec.split("|")]
+        if len(parts) != 5:
+            raise SystemExit(
+                f"x --external-prereq 需要 5 段（名称|标识|学科|学段|来源）-> {spec!r}")
+        name, key, subject, stage, source = parts
+        if not all(parts):
+            raise SystemExit(f"x --external-prereq 的 5 段都不能为空 -> {spec!r}")
+        if not EXT_KEY_RE.fullmatch(key):
+            raise SystemExit(
+                f"x 外部先修标识只能用小写字母、数字与连字符（如 angle）-> {key!r}")
+        if stage not in EXT_STAGES:
+            raise SystemExit(
+                f"x 外部先修学段必须是 {'/'.join(sorted(EXT_STAGES))} -> {stage!r}")
+        if not EXT_SOURCE_RE.fullmatch(source):
+            raise SystemExit(f"x 外部先修来源必须是单个 ev-### -> {source!r}")
+        if subject not in SUBJECT_SLUGS:
+            print(f"! 警告：外部先修学科 {subject!r} 不在本库已登记学科里 —— "
+                  f"库外前置可以来自未收录学科，但请确认不是笔误", file=sys.stderr)
+        if key in bykey:
+            g = bykey[key]
+            names = "/".join(g.get("名称") or [])
+            cnt = g.get("出现次数", 0)
+            print(f"! 提示：`{key}` 已在库中出现 {cnt} 次（{names}）——优先复用同一标识，避免近似重复键（可用 scholia_external_prereqs 查看）", file=sys.stderr)
+        else:
+            # 简单近似提示（前缀/包含）
+            for k2, g2 in bykey.items():
+                if key and k2 and (key in k2 or k2 in key) and key != k2:
+                    print(f"! 提示：`{key}` 与已有标识 `{k2}`（{('/'.join(g2.get('名称') or []))}）相似，建议复用已有标识以免制造近重复键", file=sys.stderr)
+                    break
+        lines += [
+            f"  - 名称: {name}",
+            f"    标识: {key}",
+            f"    学科: {subject}",
+            f"    学段: {stage}",
+            f"    来源: {source}",
+        ]
+    return "\n".join(lines)
+
+
 def main():
     ap = argparse.ArgumentParser(
         description="生成符合 FORMAT.md 的条目骨架（本库头号未决问题的补丁）",
@@ -188,6 +252,9 @@ def main():
     ap.add_argument("--kp", help="教法专用：指回知识点的相对路径，如 concepts/力-高中.md")
     ap.add_argument("--evidence", default="ev-000",
                     help="证据编号（默认 ev-000 是占位符；必须先在 evidence/README.md 登记真来源）")
+    ap.add_argument("--external-prereq", action="append", default=[],
+                    metavar="名称|标识|学科|学段|来源",
+                    help="可选、可重复：声明一个本库没有节点的前置（不是 `edges.先修`）")
     ap.add_argument("--force", action="store_true", help="允许覆盖已存在的文件")
     args = ap.parse_args()
 
@@ -233,9 +300,12 @@ def main():
 
     if kind == "教法" and not args.level:
         return fail("教法必须用 --level 给水平档（BL / OL / AL，或跨档的「不分档」）")
+    if is_event and args.external_prereq:
+        return fail("事件没有先修，不能使用 --external-prereq")
 
     body = read_template(tpl_name)
     today = datetime.date.today().isoformat()
+    ext_block = build_external_block(args.external_prereq)
     body = (body
             .replace("{{ID}}", oid)
             .replace("{{TITLE}}", args.title)
@@ -248,6 +318,10 @@ def main():
             .replace("{{APPLY}}", "待填：对谁成立")
             .replace("{{CONDITION}}", "待填：在什么条件下成立（含版本 / 生效时间）")
             .replace("{{KPATH}}", kp_rel))
+    if "{{EXTERNAL_PREREQS}}" in body:
+        body = body.replace("{{EXTERNAL_PREREQS}}", ext_block)
+    elif ext_block:
+        body = body.replace("edges:", ext_block + "\nedges:", 1)
 
     target_dir.mkdir(parents=True, exist_ok=True)
     out = target_dir / f"{safe_name(args.title)}.md"
@@ -277,6 +351,9 @@ def main():
             print(f"已自动登记进 {readme.relative_to(ROOT).as_posix()}")
     print(f"英文译本应放在 {en_rel}（文件名由 id 派生；第一行写 "
           f"`> **English version of [`{out.name}`]({out.name}).**`）")
+    if args.external_prereq:
+        print(f"已写入 {len(args.external_prereq)} 条 `外部先修` —— "
+              f"请确认前置是否真的必需（M-12），并确认来源编号已登记")
     print()
     print("还差这几步（跑一遍 kbcheck 就会逐条报出来）")
     print(f"  1. 填 front-matter 的 `适用` / `条件` —— 缺了它，结论会被误用")

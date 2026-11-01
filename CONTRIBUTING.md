@@ -98,7 +98,9 @@ git push origin fix/ohm-law-temperature
 | **新建一条**（自动出骨架 + 登记进学科 README） | `python tools/new_entry.py --type 命题 --subject 物理 --slug ohm-law --title "…"` |
 | 改完规则，验证「规则真的会拦」 | `python tools/verify_rules.py`（全量，约 1–2 分钟） |
 | 只验证**某一条**规则 | `python tools/verify_rules.py --only R-GRAPH`（**约 3 秒**） |
+| 改了 MCP / `make_tasks` / `new_entry` / `review_packet` | `python tools/selftest.py`（真的起进程，约 3 秒） |
 | 不知道能做什么 | `python tools/make_tasks.py --limit 10` |
+| 要复核一条，但不想自己找材料 | `python tools/review_packet.py --id <id>`（**只排版，不替你回答**那三个问题） |
 | 把库挂到 AI（打印可粘贴的配置） | `python tools/scholia_mcp.py --print-config` |
 
 > 报错时会按规则汇总（`R-LINK-01 × 3`），同一条规则的多处错误通常一个改法；
@@ -257,6 +259,8 @@ Issue 标签统一用 `type:*` 与 `triage:*` 前缀，**不要和知识对象�
 - [ ] 我跑过 `python tools/kbcheck.py`，**并且通过**
 - [ ] 我只改了该改的东西，没有顺手重排别人的内容
 - [ ] `front-matter` 11 个字段完整
+- [ ] 如果条目依赖**本库没有节点**的内容，已用可选字段 `外部先修` 声明
+      （五项子字段齐全、`标识` 是稳定 ASCII 键），而不是塞进 `edges.先修` 或只写在正文备注里
 - [ ] 每条证据都有可核验定位，且已登记进 [证据索引](evidence/README.md)，并写明**核验深度**
       （全文 / 摘要 / 仅定位）
 - [ ] 新证据过了**来源三问**（见[证据门槛](evidence/README.md)）：**谁发布**（可问责主体）·

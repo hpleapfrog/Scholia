@@ -5,13 +5,19 @@ title: "Refraction · below grade level: patch the geometry first, then derive n
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-29
 scope:
   学科: 物理
   学段: 初中至高中
   水平档: 低于年级水平（BL）
   适用: students whose concept of an angle is shaky, or who plug numbers into formulas without looking at what they mean
   条件: none
+外部先修:
+  - 名称: the geometric angle
+    标识: angle
+    学科: 数学
+    学段: 初中
+    来源: ev-038
 edges:
   先修: []
   支持: ["[命题：教材内建分组教学变体](../claims/textbook-tiered-guidance.en.md#a3)"]
@@ -45,6 +51,7 @@ The textbook singles this out and denies it.
 >
 > **The textbook told the same thing once in each of two places.** This is evidence that "the geometric angle" is a **real and recurring prerequisite**
 > (and also evidence that this repo lacks that node, see [refraction of light](../concepts/refraction.en.md)).
+> This entry records it as `外部先修` (`angle`), **not as an `edges.先修` edge**.
 
 ### 2 · `n > 1` must be **derived**, not memorized
 
@@ -73,7 +80,7 @@ so **one variable suffices to find the other**.
 | Dimension | Value |
 |---|---|
 | Level tier | **BL** (textbook tag `[BL]`) |
-| Prerequisites | the concept of an angle (**this repo has no corresponding node yet**); can do division |
+| Prerequisites | the concept of an angle (**this repo has no corresponding node yet**; see `外部先修` `angle`); can do division |
 | Cognitive load | low — the textbook deliberately **sidesteps the law of refraction** and only fills in prerequisites |
 
 ## Contraindications
@@ -115,3 +122,4 @@ so **one variable suffices to find the other**.
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the entry (#8 batch conversion · batch 4) | Issue #8 | @hpleapfrog |
+| 2026-10-29 | recorded "the geometric angle" as `外部先修` (`angle`) — an out-of-library prerequisite, no `先修` edge | Issue #17 | AI (DeepSeek V4.1 Flash) · pending @hpleapfrog review |

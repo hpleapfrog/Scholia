@@ -29,6 +29,8 @@
 > (`check_readme_coverage`). Subject READMEs here **missed an entry three times**, which is why
 > both of these are machine-checked now.
 
+**Want to know what each subject lacks most** → [gap report](../docs/GAPS.en.md) (generated; lists concrete entries by gap type).
+
 ## Folder conventions
 
 **Folder names are English** (paths get copied into URLs, where Chinese becomes percent-encoding);

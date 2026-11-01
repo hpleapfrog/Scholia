@@ -5,13 +5,19 @@ title: "Reflection of light · below grade level: patch the geometry first, then
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-29
 scope:
   学科: 物理
   学段: 高中
   水平档: 低于年级水平（BL）
   适用: students with weak geometric foundations, or who are used to taking "reflection" as "bouncing"
   条件: students have learned the concept of an angle
+外部先修:
+  - 名称: the geometric angle
+    标识: angle
+    学科: 数学
+    学段: 初中
+    来源: ev-026
 edges:
   先修: []
   支持: ["[命题：教材内建分组教学变体](../claims/textbook-tiered-guidance.en.md#a3)"]
@@ -48,7 +54,7 @@ if this is not named, students will understand the reflection of light as a ball
 | Dimension | Value |
 |---|---|
 | Level tier | **BL** (textbook tag `[BL]`) |
-| Prerequisites | the geometric concept of **"angle"** — confirm this first, then teach reflection |
+| Prerequisites | the geometric concept of **"angle"** — confirm this first, then teach reflection; recorded as `外部先修` `angle`, not as an `edges.先修` edge |
 | Cognitive load | low — the load sits in **clarifying an existing concept**, not in a new formula |
 
 ## Contraindications
@@ -89,3 +95,4 @@ if this is not named, students will understand the reflection of light as a ball
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the entry (#8 batch conversion · batch 1) | Issue #8 | @hpleapfrog |
+| 2026-10-29 | recorded "the geometric angle" as `外部先修` (`angle`) — an out-of-library prerequisite, no `先修` edge | Issue #17 | AI (DeepSeek V4.1 Flash) · pending @hpleapfrog review |

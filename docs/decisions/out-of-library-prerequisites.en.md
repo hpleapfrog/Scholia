@@ -1,5 +1,11 @@
 # Seven out-of-library prerequisites: Issue #17's trigger has been met, and the schema still was not changed
 
+> [!NOTE]
+> **Landed on 2026-10-29.** This record keeps the pre-review state and option evaluation. The
+> implementation uses **five structured subfields**, not the free text imagined here; the reasons,
+> the seven-case migration and the machine-checked scope are in
+> [out-of-library prerequisites finally have a field](external-prerequisites-field.en.md).
+
 > Open item: [README](../../README.en.md), item 3 of "Open questions that matter".
 > Field notes: [Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)
 > ("`先修` cannot express a prerequisite that lives outside the subject"). Recorded 2026-10-20.

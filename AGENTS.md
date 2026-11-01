@@ -18,6 +18,8 @@
 |---|---|
 | 机器可读的三份文件 | [index.json](index.json)（导航）· [citations.json](citations.json)（按 id 取引用材料）· [evidence.json](evidence.json)（证据登记）——**均为生成物，勿手改** |
 | AI 读取约定（状态、能不能引用、怎么省 token） | [llms.txt](llms.txt) |
+| **还缺什么**（一页看全，生成物） | [docs/GAPS.md](docs/GAPS.md) · 要开工：`python tools/make_tasks.py --limit 3` |
+| **要复核一条**（把来源、证据、三个问题摆到一页） | `python tools/review_packet.py --id <id>`——**只排版，不替你回答** |
 | **MCP server**（可直接挂到 agent） | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) |
 
 **挂到 agent 上：**
@@ -31,7 +33,9 @@
 ```
 
 提供的只读工具：`scholia_stats` · `scholia_search` · `scholia_list` · `scholia_get_object`
-（`part="content"` 只取学习者半，`full` 才连论证）· `scholia_cite` · `scholia_get_evidence` · `scholia_rules`。
+（`part="content"` 只取学习者半，`full` 才连论证）· `scholia_cite` · `scholia_get_evidence` ·
+`scholia_external_prereqs`（按 `标识` 汇总库外前置）· `scholia_gaps`（机器数得出来的缺口，
+与 `docs/GAPS.md` 同源）· `scholia_rules`。
 
 > **引用任何一条时**：连 `status` 与 `来源` 一起给；**`可作事实引用=false`（失据/已推翻/已失效）的不要引用**；
 > 医学条目要把 `适用` / `条件` 连同内容一起给。详见 [llms.txt](llms.txt)。
@@ -44,6 +48,7 @@
 python tools/kbcheck.py                 # 必须通过
 python tools/kbcheck.py --write-index   # 若改了内容：重生成三份机器文件与文档生成块
 python tools/verify_rules.py            # 改了规则：每条规则要有会失败的注入样本
+python tools/selftest.py                # 改了 MCP / make_tasks / new_entry / review_packet：真的起进程跑一遍
 ```
 
 铁律：

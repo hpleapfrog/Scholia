@@ -16,6 +16,7 @@
 | **AI / 程序**（读内容） | [**llms.txt**](llms.txt) + [**index.json**](index.json)（导航）· [**citations.json**](citations.json)（按 id 取引用材料）· [**evidence.json**](evidence.json)（证据登记） |
 | 想把这个库**挂到 agent** | `python tools/scholia_mcp.py --print-config` —— 零依赖 MCP server（只读），配置直接打印出来 |
 | 想**加一条**（贡献者） | [`templates/`](templates/README.md) + `python tools/new_entry.py` —— 一条命令出骨架 |
+| 想知道**还缺什么** | [**docs/GAPS.md**](docs/GAPS.md) —— 一页看全（生成物）；要开工用 `python tools/make_tasks.py` |
 | 想**建自己的一份**（个人） | [`templates/`](templates/README.md) —— 复制骨架即可，不用 fork、不用联网 |
 | 想知道库是怎么做出来的 | 本页往下 |
 
@@ -140,17 +141,20 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
    `已推翻` 需**攻击方可引用**，否则请写 `失据`）。实测：全库 `攻击` 边 4 条，4 个被攻击条目
    **全部满足「≥2 论证」**——差的只是「攻击没有对手」。署名统计是同一件事的另一半：
    `@hpleapfrog` 1379 次，其余三个 `@` 只活在历史变更记录里。→ [决策记录](docs/decisions/status-zero-is-auditable.md)
-3. 前置在学科之外时表达不了（[Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)）：
-   **例数已从 1 攒到 7**——「几何的角」×4（反射 · 反射教法 · 折射 · 折射教法）、
-   「矢量」×2（力-高中 · 加速度）、「角速度矢量方向」×1（匀速圆周运动）；
-   「进阶」也有 3 处实例，正文里甚至自发长出了 `后续` 这个惯例——**「等 3–5 例再动结构」的触发条件已过**。
-   推荐 Issue #17 的**选项 1**（可选字段 `外部先修`，只机检「是否声明过」与「同名反复出现」）。
-   **schema 改动需单独评审，本轮未动**：这里交出的是一次评审的输入，不是评审的结果。
-   → [决策记录](docs/decisions/out-of-library-prerequisites.md)
+3. 前置在学科之外时表达不了（[Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)）
+   —— **已按选项 1 落地**（2026-10-30）：新增可选字段 `外部先修`
+   （`名称` / `标识` / `学科` / `学段` / `来源`），**只机检形状、来源登记与同名复发**；
+   它**不是 `先修` 边**，不参与无环判定。已迁移 7 个条目 / 8 条声明
+   （`angle`×4、`vector`×2、`inverse-trig`×1、`angular-velocity-vector`×1）。
+   同一标识在 ≥2 个对象出现时，[GAPS](docs/GAPS.md) 会把它列进「该建节点了吗」。
+   → [字段决策](docs/decisions/external-prerequisites-field.md) ·
+   [先前的评审输入](docs/decisions/out-of-library-prerequisites.md)
 4. `支持` 边的独立性算不出来；目标覆盖度只算「有没有」，不算「够不够」。**两句都拆成了「能算的一半」与「要人判的一半」**：
    `R-GRAPH-06` 算得出**同一来源标识**（实测：`教材内建分组教学变体#a3` 有 **42 条支持边 · 21 份证据 · 1 个来源标识**——
    本库那句「同一个来源重复 26 次」如今长到 42 条，仍然全出自一本书）；
-   `R-GRAPH-07` 算得出**冗余度与阅读深度**（15 个学习成果全部「有」覆盖，其中 **11 个（73%）只讲一次**）。
+   `R-GRAPH-07` 算得出**冗余度与阅读深度**（17 条路径 · **73 个学习成果全部「有」覆盖，
+   其中 67 个（92%）只讲一次**；实时数字见 [GAPS](docs/GAPS.md) 顶部）。这两个维度现在写进 `index.json` 的 `覆盖度` 字段——
+   所以 agent、任务清单与 [GAPS](docs/GAPS.md) 看到的是同一份事实，而不是只有终端里才有的提示。
    **跨来源是否真独立仍归 `M-03`（人判）**。这一项还留下一次**假干净**的教训：第一版按列位解析编排表，
    把一条读不懂的路径报成「没有冗余问题」——如今这一支有**两条**注入样本，第二条专门把「覆盖」列挤出末列，
    并在**退回第一版实现**时实测到「报出单环节覆盖的路径从 4 条掉到 2 条」
@@ -161,11 +165,16 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 
 ```
 knowledge/        知识对象：知识点 · 命题 · 教法 · 误解 · 路径 · 资源
+events/           事件（与知识对象分开：无论证、无真值）
 index.json        机器入口（导航 + 能不能引用）
 citations.json    引用材料（按 id 取：定位 · 限定 · 免责块）
 evidence.json     证据登记（等级 · 核验深度 · 定位 · 许可）
 evidence/         证据索引与可复算的原始数据
 docs/RULES.md     规则注册表（机械校验 / 人工复核）
+docs/GAPS.md      缺口总览（生成物：还缺什么、先做哪件）
 docs/decisions/   规则的「为什么」——案例 · 事故 · 推断（从规范里搬出，不删）
-tools/            kbcheck.py（校验器）· scholia_mcp.py（MCP server）
+templates/        条目骨架（new_entry.py 从这里取结构）
+tools/            kbcheck.py 校验 · verify_rules.py 规则自测 · gaps.py 缺口计算
+                  make_tasks.py 任务 · new_entry.py 骨架 · review_packet.py 复核包
+                  selftest.py 接口自检 · scholia_mcp.py MCP server
 ```

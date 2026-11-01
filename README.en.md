@@ -16,6 +16,7 @@
 | **An AI / program** reading content | [**llms.txt**](llms.txt) + parse [**index.json**](index.json) — what must not be quoted, each entry's real source |
 | Wiring it into an agent | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) — zero-dependency read-only MCP server |
 | **Adding an entry** (contributor) | [`templates/`](templates/README.en.md) + `python tools/new_entry.py` — one command gives you a valid skeleton |
+| **What's still missing** | [**docs/GAPS.en.md**](docs/GAPS.en.md) — the whole picture on one generated page; to start work, run `python tools/make_tasks.py` |
 | **Building your own** (personal) | [`templates/`](templates/README.en.md) — copy the skeletons; no fork, no network |
 | Curious how it's built | keep reading |
 
@@ -175,20 +176,22 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
    satisfy "≥2 arguments" — the only thing absent is **an opponent for the attack**. The signature census is
    the same fact from the other side: `@hpleapfrog` 1,379 times, the other three handles only in historical
    changelog rows. → [decision record](docs/decisions/status-zero-is-auditable.en.md)
-3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)):
-   **the count has grown from 1 to 7** — "angle in geometry" ×4 (reflection, its teaching method, refraction,
-   its teaching method), "vector" ×2 (force, acceleration), "vector direction of angular velocity" ×1
-   (uniform circular motion); "progression" has 3 instances and the body text even grew a `后续` convention
-   on its own — **the "wait for 3–5 cases" trigger has passed**. Recommended: **option 1** of Issue #17
-   (an optional `外部先修` field; machine-check "was it declared" and "does the same name recur").
-   **A schema change needs its own review and was not made this round**: what is delivered here is an input
-   to that review, not its outcome. → [decision record](docs/decisions/out-of-library-prerequisites.en.md)
+3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17))
+   — **option 1 has landed** (2026-10-30): an optional `外部先修` field
+   (`名称` / `标识` / `学科` / `学段` / `来源`), machine-checked **only** for shape, source registration
+   and recurrence of the same key. It is **not a `先修` edge** and does not enter the acyclicity check.
+   7 entries / 8 declarations have been migrated (`angle`×4, `vector`×2, `inverse-trig`×1,
+   `angular-velocity-vector`×1). When a key appears in ≥2 objects, [GAPS](docs/GAPS.en.md) lists it
+   under “build a node?”. → [field decision](docs/decisions/external-prerequisites-field.en.md) ·
+   [earlier review input](docs/decisions/out-of-library-prerequisites.en.md)
 4. Support-edge independence cannot be computed; goal coverage counts "whether", not "how well".
    **Both sentences were split into a computable half and a human half.** `R-GRAPH-06` computes **the same
    source identifier** (measured: `教材内建分组教学变体#a3` has **42 support edges · 21 pieces of evidence ·
    1 source identifier** — the line "the same source repeated 26 times" has grown to 42, still from one book);
-   `R-GRAPH-07` computes **redundancy and reading depth** (all 15 learning outcomes are covered, but
-   **11 of them, 73%, are taught exactly once**). **Cross-source independence still belongs to `M-03`.**
+   `R-GRAPH-07` computes **redundancy and reading depth** (17 paths · **all 73 learning outcomes are
+   covered, but 67 of them, 92%, are taught exactly once**; live numbers at the top of [GAPS](docs/GAPS.en.md)). Both dimensions are now written into the
+   `覆盖度` field of `index.json`, so agents, the task list and [GAPS](docs/GAPS.en.md) see the same fact
+   instead of a hint that only exists in the terminal. **Cross-source independence still belongs to `M-03`.**
    This item also produced one **falsely clean** lesson: the first version parsed the sequencing table by
    column position and reported an unreadable path as "no redundancy problem". That branch now has **two**
    injected samples, the second one pushing the 覆盖 column off the end of the table, and reverting to the
@@ -200,8 +203,16 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 
 ```
 knowledge/         knowledge objects: concepts · claims · methods · misconceptions · paths · resources
+events/            events (separate from objects: no argument, no truth value)
+index.json         machine entry (navigation + may it be cited)
+citations.json     citation kits, by id (locator · limits · disclaimer)
+evidence.json      evidence registry (grade · verification depth · locator · license)
 evidence/          evidence index and reproducible raw data
 docs/RULES.md      rule registry (mechanically enforced vs. human-reviewed)
+docs/GAPS.md       gap report (generated: what is missing, what to do first)
 docs/decisions/    the "why" behind rules — cases, incidents, inferences (moved out, not deleted)
-tools/             kbcheck.py (validator) · scholia_mcp.py (MCP server)
+templates/         entry skeletons (new_entry.py takes its structure from here)
+tools/             kbcheck.py validator · verify_rules.py rule self-test · gaps.py gap computation
+                   make_tasks.py tasks · new_entry.py scaffolding · review_packet.py review material
+                   selftest.py interface checks · scholia_mcp.py MCP server
 ```

@@ -10,7 +10,7 @@
 > **中文：** 由 [`tools/kbcheck.py`](../tools/kbcheck.py) 生成的规则注册表——**请勿手改**。
 
 <!-- kbcheck:begin -->
-**Mechanically enforced (39, of which 39 have an injected sample)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
+**Mechanically enforced (45, of which 45 have an injected sample)** — enforced by `tools/kbcheck.py`; change a rule, change the check:
 
 > **An injected sample means [`tools/verify_rules.py`](../tools/verify_rules.py) contains a** failing **sample for it.**
 > A rule marked `—` **has a check function that nobody has watched fail** — it may be a no-op.
@@ -36,6 +36,8 @@
 | `R-SCHEMA-16` | a file sits in the folder its `type` maps to (concepts / claims / methods / misconceptions / paths / resources) | ✅ |
 | `R-SCHEMA-17` | 「暂定确认 / 已确证 / 失据 / 已推翻」requires ≥1 argument (an empty set may only be 「待审」) | ✅ |
 | `R-SCHEMA-18` | `updated` matches the last date row in 「变更记录」 | ✅ |
+| `R-SCHEMA-19` | `已确证` needs ≥2 distinct `@` signatures · `争议` needs ≥2 arguments and ≥1 incoming `攻击` edge · `已推翻` needs ≥1 undefeated incoming `攻击` edge (a status cannot be changed by editing one field) | ✅ |
+| `R-SCHEMA-20` | optional field `外部先修`: every item has all five subfields; `标识` is a stable ASCII key and unique within an entry; `学段` uses the enum; `来源` is a single registered `ev-###`; the same `标识` in ≥2 objects → hint 「consider building a node」 | ✅ |
 | `R-EVENT-01` | `事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md` | ✅ |
 | `R-LINK-01` | link targets exist (relative · repo-absolute · YAML `url:`) | ✅ |
 | `R-LINK-02` | anchors exist (heading slug or argument id) | ✅ |
@@ -43,11 +45,13 @@
 | `R-BILING-03` | documents (root / subject READMEs / coverage / docs) must have a same-named `.en.md`; `templates/` and `.github/` exempt | ✅ |
 | `R-BILING-02` | an English edition's `type` / `status` / `evidence` match the Chinese original (the mechanisable half of `M-10`) | ✅ |
 | `R-LINK-03` | links inside an English page point at the English page (when it exists); exempt: `English version of` lines and links to files that have no translation | ✅ |
-| `R-GRAPH-01` | `先修` connects only 知识点, acyclic | ✅ |
+| `R-GRAPH-01` | `先修` connects only 知识点 (a `路径` may declare prerequisites outside the path), acyclic | ✅ |
 | `R-GRAPH-02` | `支持` / `攻击` edge argument anchors exist | ✅ |
 | `R-GRAPH-03` | `路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning) | ✅ |
 | `R-GRAPH-04` | `路径` each 环节 connects to ≥1 in-repo object | ✅ |
 | `R-GRAPH-05` | attack entries in `claims/attacks/` carry at least one `攻击` edge to a specific argument | ✅ |
+| `R-GRAPH-06` | multiple `支持` edges on one argument whose evidence union has ≤1 item, or whose source identifier is a single one → hint 「count is not strength」 | ✅ |
+| `R-GRAPH-07` | each path outcome covered by only 1 step, or its covering entries' evidence tops out at `仅定位`/`未核验` → hint (strength beyond 「is it covered」) | ✅ |
 | `R-EVID-01` | `evidence` id registered and not voided | ✅ |
 | `R-EVID-02` | evidence table `类别` / `等级` / `核验深度` values valid | ✅ |
 | `R-EVID-03` | `暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed) | ✅ |
@@ -55,10 +59,12 @@
 | `R-INDEX-01` | the three machine files (`index.json` / `citations.json` / `evidence.json`) match content (regenerate on change) | ✅ |
 | `R-INDEX-02` | human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table) | ✅ |
 | `R-README-01` | every object registered in its subject README | ✅ |
+| `R-README-03` | the coverage figure `X/Y` typed into the subject README path table matches the computed one | ✅ |
 | `R-README-02` | the hand-written status column in a subject README matches the front-matter | ✅ |
 | `R-DOC-01` | status legend listed in FORMAT.md and knowledge/README.md | ✅ |
+| `R-DOC-02` | the Chinese and English rule registries cover the same id set, and neither repeats an id | ✅ |
 
-**Human-reviewed (11)** — not mechanizable; run the checklist in [CONTRIBUTING](../CONTRIBUTING.en.md):
+**Human-reviewed (12)** — not mechanizable; run the checklist in [CONTRIBUTING](../CONTRIBUTING.en.md):
 
 | ID | Rule |
 |---|---|
@@ -73,4 +79,5 @@
 | `M-09` | adversarial dispatch must include "question whether the evidence really exists" and "question whether the source was fabricated for this citation" |
 | `M-10` | documents stored bilingually (`<name>.md` Chinese + `<id-derived>.en.md` English in the same folder); sync both |
 | `M-11` | new evidence passes the **three source questions**: who publishes it (an accountable body) · which version and when it took effect (the entry claims only that version) · was it made up for this citation (it exists for reasons independent of the claim, and a second source can be found at a different publishing body; same-origin reposts don't count); self-built sites, attribution-free repost pages and identifiers that don't resolve are not registered |
+| `M-12` | the **truth** of an `外部先修` (is this prerequisite really required) and **whether to build a node for it** are human judgements; the machine only checks declaration shape, source registration and recurrence |
 <!-- kbcheck:end -->

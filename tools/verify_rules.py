@@ -837,6 +837,21 @@ def sample_doc01(root, _v):
     return True
 
 
+def sample_doc02(root, _v):
+    """从英文规则表里删掉一条，制造「只有中文有」的差集。
+
+    规则表是**规范的目录**：少一条时，生成页仍然「看起来完整」——
+    只有把两份 ID 集合对起来才会发现。
+    """
+    p = root / "tools" / "kbcheck.py"
+    t = read(p)
+    m = re.search(r'(?m)^    \("R-DOC-01", "status legend listed.*\n', t)
+    if not m:
+        return False
+    write(p, t[:m.start()] + t[m.end():])
+    return True
+
+
 # ── 2026-10-20 新增：状态可达性 / 支持边同源 / 覆盖强度 ──────────────────────
 
 def _claims_with_argument(root):
@@ -1044,6 +1059,143 @@ def sample_graph07b(root, _v):
     return False
 
 
+# ── `外部先修`（R-SCHEMA-20）的样本 ────────────────────────────────────────
+# 字段是可选的：先**动态找一个真的带这个字段的条目**，找不到就 SKIP。
+# 不写死 `光的折射.md`——条目改名后样本会静默失效。
+
+def _external_span(fm):
+    """返回 `(lines, start, end)`：`外部先修` 块在 front-matter 行里的范围。"""
+    lines = fm.split(chr(10))
+    start = next((i for i, line in enumerate(lines)
+                  if line.startswith("外部先修:")), None)
+    if start is None:
+        return None
+    end = start + 1
+    while end < len(lines) and (not lines[end].strip()
+                                or lines[end].startswith((" ", "\t"))):
+        end += 1
+    return lines, start, end
+
+
+def _object_with_external(root, english=False):
+    """挑一个带 `外部先修` 的对象；`english=True` 时返回它的英译本。
+
+    英译本的**文件名由 id 派生**（`refraction.en.md`），不是中文名 + `.en.md`，
+    所以不能从中文路径推英文路径——直接扫 `.en.md`。
+    """
+    if english:
+        for ep in sorted((root / "knowledge").rglob("*.en.md")):
+            et = read(ep)
+            if _external_span(front_matter_of(et)[0]):
+                return ep, et
+        return None, None
+    for p, t in _objects(root):
+        if _external_span(front_matter_of(t)[0]):
+            return p, t
+    return None, None
+
+
+def sample_schema20_missing(root, _v):
+    """`外部先修` 的某一项删掉 `学段`。"""
+    p, t = _object_with_external(root)
+    if not p:
+        return False
+    fm, body = front_matter_of(t)
+    lines, start, end = _external_span(fm)
+    for i in range(start + 1, end):
+        if lines[i].strip().startswith("学段:"):
+            del lines[i]
+            write(p, chr(10).join(lines) + body)
+            return True
+    return False
+
+
+def sample_schema20_badkey(root, _v):
+    """`外部先修.标识` 写成中文，不是 ASCII 稳定键。"""
+    p, t = _object_with_external(root)
+    if not p:
+        return False
+    fm, body = front_matter_of(t)
+    lines, start, end = _external_span(fm)
+    for i in range(start + 1, end):
+        if lines[i].strip().startswith("标识:"):
+            indent = lines[i][:len(lines[i]) - len(lines[i].lstrip())]
+            lines[i] = indent + "标识: 几何角"
+            write(p, chr(10).join(lines) + body)
+            return True
+    return False
+
+
+def sample_schema20_empty(root, _v):
+    """`外部先修:` 声明了却一个列表项都没有。"""
+    p, t = _object_with_external(root)
+    if not p:
+        return False
+    fm, body = front_matter_of(t)
+    lines, start, end = _external_span(fm)
+    write(p, chr(10).join(lines[:start + 1] + lines[end:]) + body)
+    return True
+
+
+def sample_schema20_recurrence(root, _v):
+    """同一个 `标识` 出现在两个不同条目里（应提示「考虑建节点」）。"""
+    picks = []
+    for p, t in _objects(root):
+        fm, _body = front_matter_of(t)
+        if _external_span(fm) is None:
+            picks.append((p, t))
+        if len(picks) == 2:
+            break
+    if len(picks) < 2:
+        return False
+    for p, t in picks:
+        fm, body = front_matter_of(t)
+        m = re.search(r"ev-\d+", fm)
+        src = m.group(0) if m else "ev-001"
+        block = chr(10).join([
+            "外部先修:",
+            "  - 名称: 自测共享前置",
+            "    标识: selftest-shared",
+            "    学科: 数学",
+            "    学段: 初中",
+            "    来源: " + src,
+        ])
+        write(p, fm + chr(10) + block + body)
+    return True
+
+
+def sample_evid01_external(root, _v):
+    """`外部先修.来源` 指向不存在的证据编号。"""
+    p, t = _object_with_external(root)
+    if not p:
+        return False
+    fm, body = front_matter_of(t)
+    lines, start, end = _external_span(fm)
+    for i in range(start + 1, end):
+        if lines[i].strip().startswith("来源:"):
+            indent = lines[i][:len(lines[i]) - len(lines[i].lstrip())]
+            lines[i] = indent + "来源: ev-999"
+            write(p, chr(10).join(lines) + body)
+            return True
+    return False
+
+
+def sample_biling02_external(root, _v):
+    """英译本的 `外部先修.标识` 与中文原件不一致。"""
+    p, t = _object_with_external(root, english=True)
+    if not p:
+        return False
+    fm, body = front_matter_of(t)
+    lines, start, end = _external_span(fm)
+    for i in range(start + 1, end):
+        if lines[i].strip().startswith("标识:"):
+            indent = lines[i][:len(lines[i]) - len(lines[i].lstrip())]
+            lines[i] = indent + "标识: selftest-bilingual"
+            write(p, chr(10).join(lines) + body)
+            return True
+    return False
+
+
 SAMPLES = [
     ("R-SCHEMA-17", "命题写「暂定确认」但 ## 论证 为空", sample_schema17),
     ("R-SCHEMA-18", "「变更记录」里有比 updated 更晚的日期", sample_schema18),
@@ -1087,14 +1239,23 @@ SAMPLES = [
     ("R-INDEX-02", "README 生成块被塞进一行", sample_index02),
     ("R-README-01", "对象从学科 README 里被删掉", sample_readme01),
     ("R-README-03", "README 里的覆盖度数字被改大", sample_readme03),
-    ("R-README-03", "README 里的覆盖度数字被改大", sample_readme03),
     ("R-DOC-01", "FORMAT.md 状态图例删掉「已失效」", sample_doc01),
+    ("R-DOC-02", "英文规则表少一条（中英 ID 集合不一致）", sample_doc02),
     ("R-SCHEMA-19", "命题一个人署名就写「已确证」", sample_schema19_confirmed, "但全条只有"),
     ("R-SCHEMA-19", "只有一条论证、零攻击边就写「争议」", sample_schema19_disputed, "status=「争议」"),
     ("R-SCHEMA-19", "没有未被击倒的攻击就写「已推翻」", sample_schema19_overturned, "status=「已推翻」"),
     ("R-GRAPH-06", "两条支持边引的是同一份证据", sample_graph06, "但证据并集只有"),
     ("R-GRAPH-07", "成果唯一覆盖条目的证据被改成未读", sample_graph07, "证据最高只到"),
     ("R-GRAPH-07", "把「覆盖」列挤出末列后仍要报出单环节覆盖", sample_graph07b, "'o9']"),
+    ("R-SCHEMA-20", "`外部先修` 的某一项缺 `学段`", sample_schema20_missing, "缺子字段"),
+    ("R-SCHEMA-20", "`外部先修.标识` 不是 ASCII 稳定键", sample_schema20_badkey, "必须是 ASCII 稳定键"),
+    ("R-SCHEMA-20", "`外部先修:` 声明了却没有任何条目", sample_schema20_empty, "声明了却没有任何条目"),
+    ("R-SCHEMA-20", "同一个 `标识` 出现在两个条目里", sample_schema20_recurrence,
+     "标识 `selftest-shared` 出现在 2 个条目"),
+    ("R-EVID-01", "`外部先修.来源` 指向不存在的编号", sample_evid01_external,
+     "`外部先修.来源` 引用了索引里没有的编号"),
+    ("R-BILING-02", "英译本的 `外部先修` 与中文原件不一致", sample_biling02_external,
+     "英译本的 `外部先修` 与中文原件不一致"),
 ]
 
 
@@ -1105,20 +1266,6 @@ def run_check(root):
                        cwd=str(root), capture_output=True, text=True,
                        encoding="utf-8", env=env)
     return (r.stdout or "") + (r.stderr or "")
-
-
-def _mktemp():
-    """临时副本放在**与仓库同一个卷**上。
-
-    这不是洁癖：硬链接不能跨盘，默认临时目录在 C: 而仓库在 D: 时会**静默退回复制**，
-    1500 个文件 30 秒——自测从几秒变成几分钟，然后就没人跑了。
-    """
-    for base in (str(ROOT.parent), None):
-        try:
-            return tempfile.mkdtemp(prefix="scholia_selftest_", dir=base)
-        except OSError:
-            continue
-    return tempfile.mkdtemp(prefix="scholia_selftest_")
 
 
 def _mktemp():

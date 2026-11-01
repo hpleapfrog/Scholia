@@ -5,12 +5,18 @@ title: "Uniform circular motion"
 status: 待审
 author: "@hpleapfrog"
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-29
 scope:
   学科: 物理
   学段: 高中
   适用: students who know acceleration and are starting on why the direction of velocity keeps changing
   条件: covers only the **description** of circular motion and its link to centripetal acceleration/force; not angular acceleration or torque (separate entries)
+外部先修:
+  - 名称: vector direction of angular velocity (right-hand rule)
+    标识: angular-velocity-vector
+    学科: 物理
+    学段: 高中
+    来源: ev-080
 edges:
   先修: ["[acceleration](acceleration.en.md)"]
   支持: []
@@ -68,7 +74,12 @@ The corresponding component of the net force is the **centripetal force** `F_c =
 | Prerequisite | [acceleration](acceleration.en.md) — "velocity changes" includes a change of **direction** |
 | Method | [uniform circular motion · cut the string](../methods/ucm-cut-string.en.md) |
 | Misconception | [centrifugal force is a real force](../misconceptions/centrifugal-force-is-real.en.md) |
-| Gap | **the vector direction of ω (right-hand rule) is not developed here**; rotational kinematics (angular acceleration, torque) is a separate entry |
+| Gap | **the vector direction of ω (right-hand rule) is not developed here**; rotational kinematics (angular acceleration, torque) is a separate entry; recorded as `外部先修` `angular-velocity-vector` |
+
+> [!NOTE]
+> **"The vector direction of angular velocity" is an out-of-library prerequisite.** The textbook states that the direction of angular velocity is along the axis of rotation:
+> away from you for clockwise rotation and toward you for counterclockwise rotation, and says mathematics describes this with the right-hand rule (ev-080).
+> This repo does not develop that layer, so it is recorded in `外部先修`, **not as an `edges.先修` edge**.
 
 ## Argument
 
@@ -102,3 +113,4 @@ The corresponding component of the net force is the **centripetal force** `F_c =
 | Date | Change | Basis | By |
 |---|---|---|---|
 | 2026-10-18 | Entry created; first node of the circular-motion chapter | written after reading m54176 and m54181 in full (ev-080 / ev-081) | @hpleapfrog |
+| 2026-10-29 | recorded "vector direction of angular velocity (right-hand rule)" as `外部先修` (`angular-velocity-vector`) — an out-of-library prerequisite, no `先修` edge | Issue #17 | AI (DeepSeek V4.1 Flash) · pending @hpleapfrog review |

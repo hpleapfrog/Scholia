@@ -2,7 +2,7 @@ name: kbcheck
 
 # 只读、零依赖、不要密钥。
 # 触发条件 C 原本要求「等到第一次违规改动」才引入 CI；现在提前启用，
-# 因为校验器已经有 16 项规则，人工每次记得跑的成本高于机器每次跑的成本。
+# 因为校验器已经能机械拦下一整类错误，人工每次记得跑的成本高于机器每次跑的成本。
 on:
   pull_request:
   push:
@@ -23,3 +23,8 @@ jobs:
       # （规则表说「已强制」 ≠ 代码真的在查；2026-10-18 有六条规则能空过）
       - name: 规则自测（注入失败样本）
         run: python tools/verify_rules.py
+      # 接口自检：MCP 真的握手、9 个工具真的能调、make_tasks 的 JSON 真的能解析、
+      # new_entry 真的能在空目录里生成一份合规骨架、review_packet 真的能排版复核材料
+      # （但绝不替人回答那三个问题）。这些都不在 kbcheck 的视野里。
+      - name: 接口自检（真的起进程）
+        run: python tools/selftest.py

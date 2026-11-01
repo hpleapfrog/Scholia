@@ -138,10 +138,14 @@ level into the prerequisite**.
 > **Prerequisite edges connect `知识点` only.** Hard rule, enforced by `tools/kbcheck.py`
 > (background: [Issue #11](https://github.com/hpleapfrog/Scholia/issues/11)).
 >
-> **The one exception is `路径`**: a path's `先修` declares **external prerequisites** —
+> **The one exception is `路径`**: a path's `先修` declares **prerequisites outside the path** —
 > things you should already know before walking it, which the path itself does not teach
 > (e.g. the electrostatics path requires conservation of mechanical energy).
 > These edges must still point at `知识点`.
+>
+> Note: this is **not** the same as the object-level optional field `外部先修` — that one means a
+> prerequisite with **no node in this library**, so no edge can be drawn at all. A path's `先修`
+> still points at an existing `知识点`.
 >
 > The exception was added on 2026-10-21: `check_paths` had always relied on this field to decide
 > that a prerequisite sits outside the path, while the hard rule above banned it for paths —
@@ -248,6 +252,34 @@ license: CC-BY-SA-4.0
 > **The above is a placeholder, not a real entry.** A spec's own example must obey the spec —
 > an earlier version of this block used a fictional author, a **voided** evidence id, and
 > `status: 已确证` (a status that does not exist in this library).
+
+### Optional field `外部先修` (out-of-library prerequisites)
+
+`edges.先修` **may connect only to `知识点` nodes in this library**. When an object depends on
+something the library has **no node for** (refraction depends on the geometric angle, say),
+declare it with the optional `外部先修` field — **do not** invent a node just to draw an edge,
+and **do not** stuff out-of-library content into `edges.先修`.
+
+```yaml
+外部先修:
+  - 名称: 几何中的角          # human-readable name
+    标识: angle               # stable ASCII key; reuse the same key for the same prerequisite
+    学科: 数学
+    学段: 初中                # same enum as scope.学段
+    来源: ev-026              # a single registered ev-###
+```
+
+- **All five subfields are required.** `标识` must match `[a-z0-9][a-z0-9-]*` and be unique within an entry.
+- It is a **declaration, not a graph edge**: it takes no part in the `先修` acyclicity check, and it does
+  **not** mean the node exists in this library.
+- The machine checks only **declaration shape, source registration and recurrence** (`R-SCHEMA-20`);
+  **whether the prerequisite is truly required, and whether to build a node for it, is a human judgement**
+  (`M-12`).
+- When the same `标识` appears in ≥2 objects, the validator hints "consider building a node" —
+  this turns a prose remark into a **countable signal**, not an automatic node.
+
+> Background and the seven migrated cases:
+> [decision record](docs/decisions/external-prerequisites-field.en.md).
 
 ## 4. Status values (constrained by `type`)
 

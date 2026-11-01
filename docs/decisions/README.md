@@ -27,4 +27,7 @@
 | [coverage-is-not-strength.md](coverage-is-not-strength.md) | 覆盖度「有没有」之外的两层「够不够」；一次**假干净**的列序解析，以及专门盯这种形状的回归样本（退回旧实现 → 报平安的路径 4 条变 2 条） |
 | [status-zero-is-auditable.md](status-zero-is-auditable.md) | `已确证` / `争议` / `已推翻` 全是 0：守卫让 0 变成**可核对的 0** |
 | [out-of-library-prerequisites.md](out-of-library-prerequisites.md) | 库外前置攒到 7 例（Issue #17 的 3–5 例触发条件已过），schema 仍未动 |
+| [external-prerequisites-field.md](external-prerequisites-field.md) | 库外前置终于有了字段：为什么是五项结构而非自由文本，七例如何迁入，机器只管声明形状与复发 |
 | [entry-cost-phases.md](entry-cost-phases.md) | 录入成本分段实测：中文正文先完，超出的是双语与登记。**门槛单位已定为「双语一条」**（451 墙钟 13 分 16 秒，含一次中断 = 至多 2.6 倍，未达标）；第三次试测把双语尾部拆成四段（代理计时 61 秒，P1→P10 3 分 44 秒，不能当人类读数） |
+| [gap-dashboard.md](gap-dashboard.md) | 缺口看板：四个出口共用**一个** `compute()`；什么算缺口、什么只归人判；`index.json` schema 5 的 `覆盖度` / `title_en` |
+| [interface-selftest.md](interface-selftest.md) | `kbcheck` 看不见的三个接口：MCP 握手、`make_tasks --json`、`new_entry` 骨架；九条**真起进程**的检查（含复核包只排版、不替人回答） |

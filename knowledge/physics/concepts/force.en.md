@@ -5,11 +5,17 @@ title: "Force (high school)"
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-29
 scope:
   学科: 物理
   学段: 高中
   范围: interaction — forces
+外部先修:
+  - 名称: vectors and vector addition
+    标识: vector
+    学科: 数学
+    学段: 高中
+    来源: ev-041
 
 edges:
   先修: []
@@ -53,7 +59,8 @@ A force produces one of two effects on an object: **changing its state of motion
 > > `Review vectors and how they are represented. Review vector addition.`
 >
 > **This shows that "vectors" is a prerequisite of this section, and it does not belong to physics — it belongs to mathematics.**
-> This repo currently **has no** "vector" node (see below).
+> This repo currently **has no** "vector" node; it is recorded in the front-matter
+> `外部先修` (`vector`), **not as a `先修` edge** (see below).
 
 ## Relations
 
@@ -105,6 +112,8 @@ A force produces one of two effects on an object: **changing its state of motion
 >
 > **It is already treated as a prerequisite in the hints of three modules.** And it belongs to **mathematics**, not physics —
 > this is exactly the situation of [Issue #17](https://github.com/hpleapfrog/Scholia/issues/17) ("`先修` cannot express a prerequisite that lies outside the discipline").
+> **This entry now records it as `外部先修` (`vector`)** — that does not create the node,
+> but "force needs vectors" is no longer buried in the body text.
 >
 > **The reason this repo has not built it, stated honestly**: OpenStax《Physics》**has no** section on vectors
 > (it puts vectors in Chapter 5 "two-dimensional motion" and assumes students already know them),
@@ -137,3 +146,4 @@ A force produces one of two effects on an object: **changing its state of motion
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the entry (#8 batch conversion · batch 6); **closed the break in the `先修` graph where "`F_net` has no upstream"** | user request · Issue #8 | @hpleapfrog |
+| 2026-10-29 | recorded "vectors and vector addition" as `外部先修` (`vector`) — an out-of-library prerequisite, no `先修` edge | Issue #17 | AI (DeepSeek V4.1 Flash) · pending @hpleapfrog review |

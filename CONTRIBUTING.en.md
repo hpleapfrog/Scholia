@@ -66,6 +66,27 @@ git push origin fix/ohm-law-temperature
 # then open a PR on GitHub
 ```
 
+If you touched `tools/scholia_mcp.py`, `make_tasks.py`, `new_entry.py` or `review_packet.py`, also run
+`python tools/selftest.py` — it spawns the real processes (MCP handshake, all nine tools,
+`--json` output, a scaffold in a temp directory, a review packet) instead of importing functions.
+
+### Command reference (zero dependencies, plain `python`)
+
+| What you want | Command |
+|---|---|
+| **Validate** (before every commit) | `python tools/kbcheck.py` |
+| Content changed: regenerate machine files and doc blocks | `python tools/kbcheck.py --write-index` |
+| **Create an entry** (scaffold + register in the subject README) | `python tools/new_entry.py --type 命题 --subject 物理 --slug ohm-law --title "…"` |
+| Rule changed: prove the rule **actually fails** on a bad input | `python tools/verify_rules.py` (full run, 1–2 min) |
+| Check **one** rule only | `python tools/verify_rules.py --only R-GRAPH` (a few seconds) |
+| Touched MCP / `make_tasks` / `new_entry` / `review_packet` | `python tools/selftest.py` (spawns real processes, a few seconds) |
+| Don't know what to do next | `python tools/make_tasks.py --limit 10` |
+| Review one entry without hunting for material | `python tools/review_packet.py --id <id>` (**formats only; it does not answer** the three questions) |
+| Attach the library to an AI (prints a paste-ready config) | `python tools/scholia_mcp.py --print-config` |
+
+> Errors are grouped by rule (`R-LINK-01 × 3`); several hits of one rule usually share a fix.
+> The rule registry is [`docs/RULES.en.md`](docs/RULES.en.md).
+
 Format rules: see [FORMAT.md](FORMAT.en.md). Four key points:
 
 1. **One concept = one `.md` file** (don't merge or split)
@@ -213,6 +234,9 @@ triage and **don't affect conclusions**. (`triage:*` / `type:*` must exist in Se
 - [ ] I ran `python tools/kbcheck.py` and it **passes**
 - [ ] I changed only what needed changing, without reformatting others' content
 - [ ] `front-matter` has all 11 fields
+- [ ] If the entry depends on something **this library has no node for**, I declared it with the optional
+      `外部先修` field (all five subfields present, `标识` a stable ASCII key) rather than forcing it into
+      `edges.先修` or leaving it as a prose remark
 - [ ] Every piece of evidence has a verifiable locator, is registered in the [evidence index](evidence/README.en.md), and states its **verification depth** (full text / abstract / locator-only)
 - [ ] New evidence passed the **three source questions** (see the [evidence threshold](evidence/README.en.md)): **who publishes it** (an accountable body) · **which version and when it took effect** (the entry scopes itself in `scope.条件` and claims only that version) · **was it made up for this citation** (it exists for reasons independent of the claim, with a second source at a different publishing body) —
       self-built sites, attribution-free repost pages and identifiers that don't resolve are **not registered**; several same-origin reposts **do not count as independent corroboration**

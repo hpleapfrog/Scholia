@@ -19,6 +19,8 @@ grade plus rebuttal structure — never by vote.
 |---|---|
 | Three machine-readable files | [index.json](index.json) (navigation) · [citations.json](citations.json) (citation kit by id) · [evidence.json](evidence.json) (evidence registry) — **all generated, never hand-edit** |
 | Reading contract for AI (status, may-it-be-cited, how to save tokens) | [llms.txt](llms.txt) |
+| **What's still missing** (one generated page) | [docs/GAPS.en.md](docs/GAPS.en.md) · to start work: `python tools/make_tasks.py --limit 3` |
+| **Review one entry** (sources, evidence and the three questions on one page) | `python tools/review_packet.py --id <id>` — **formats only; it does not answer for you** |
 | **MCP server** (wire it into an agent) | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) |
 
 **Wire it as an MCP server:**
@@ -33,7 +35,8 @@ grade plus rebuttal structure — never by vote.
 
 Read-only tools: `scholia_stats` · `scholia_search` · `scholia_list` · `scholia_get_object`
 (`part="content"` returns only the reader half; `full` adds the argument) · `scholia_cite` ·
-`scholia_get_evidence` · `scholia_rules`.
+`scholia_get_evidence` · `scholia_external_prereqs` (groups out-of-library prerequisites by `标识`) ·
+`scholia_gaps` (machine-countable gaps, same source as `docs/GAPS.md`) · `scholia_rules`.
 
 > **When citing anything**: give the `status` and the `来源` together; **never cite entries whose
 > `可作事实引用` is false** (失据 / 已推翻 / 已失效); medical entries must be restated with their
@@ -47,6 +50,7 @@ Read-only tools: `scholia_stats` · `scholia_search` · `scholia_list` · `schol
 python tools/kbcheck.py                 # must pass
 python tools/kbcheck.py --write-index   # after content changes: regenerate the three machine files and doc blocks
 python tools/verify_rules.py            # after rule changes: every rule needs a failing injected sample
+python tools/selftest.py                # after touching MCP / make_tasks / new_entry / review_packet: really spawn the processes
 ```
 
 Hard rules:

@@ -5,11 +5,17 @@ title: "Reflection of light"
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-29
 scope:
   学科: 物理
   学段: 高中
   范围: optics
+外部先修:
+  - 名称: the geometric angle
+    标识: angle
+    学科: 数学
+    学段: 初中
+    来源: ev-026
 
 edges:
   先修: []
@@ -43,7 +49,8 @@ Describing reflection requires three equivalent phrases: **right angle / perpend
 > [!IMPORTANT]
 > **This knowledge point has a prerequisite that is geometry, not physics.**
 > The textbook explicitly requires first confirming that students know what an "angle" means in geometry (ev-026).
-> This prerequisite lives in **junior-high geometry**, not in physics.
+> This prerequisite lives in **junior-high geometry**, not in physics. It is recorded in the
+> front-matter `外部先修` (`angle`), **not as an `edges.先修` edge** — this repo has no "geometric angle" node yet.
 
 ## Argument
 
@@ -51,7 +58,7 @@ Describing reflection requires three equivalent phrases: **right angle / perpend
 
 - **Claim**: reflection of light deserves to be a separate knowledge point
 - **Premise**: the textbook gives it its own section and provides three tiers of teaching hints (ev-026)
-- **Reasoning**: it has its own prerequisite (geometry) and its own terminology traps (right angle / perpendicular / normal are equivalent; bouncing is a simplification)
+- **Reasoning**: it has its own prerequisite (geometry, recorded as `外部先修` `angle`) and its own terminology traps (right angle / perpendicular / normal are equivalent; bouncing is a simplification)
 - **Evidence**: ev-026
 - **Attacked**: together with "refraction" and "lenses" it belongs to a single optics section; listing it separately may be over-fine-grained
 - **Attribution**: @hpleapfrog · 2026-10-05
@@ -62,3 +69,4 @@ Describing reflection requires three equivalent phrases: **right angle / perpend
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the entry (#8 batch conversion · batch 1) | Issue #8 | @hpleapfrog |
+| 2026-10-29 | recorded "the geometric angle" as `外部先修` (`angle`) — an out-of-library prerequisite, no `先修` edge | Issue #17 | AI (DeepSeek V4.1 Flash) · pending @hpleapfrog review |
