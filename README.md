@@ -99,11 +99,11 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **9** —— 命题 claims 9 |
+| 对象 / Objects | **10** —— 命题 claims 10 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 医学 Medicine 9 |
-| 证据 / Evidence | 188（含作废 / void 5） |
-| 溯源 / Provenance | **8 / 9（89%）读到全文或摘要** —— T4 3 · T3 5 · T2 1 |
+| 学科 / Subjects | 医学 Medicine 10 |
+| 证据 / Evidence | 189（含作废 / void 5） |
+| 溯源 / Provenance | **9 / 10（90%）读到全文或摘要** —— T4 3 · T3 6 · T2 1 |
 | 已确证 / Confirmed | **2** |
 <!-- kbcheck:end -->
 
