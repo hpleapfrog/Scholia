@@ -637,7 +637,9 @@ def scan_text_files():
     """
     files = []
     for base, dirs, names in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if d not in {".git", "node_modules", "__pycache__"}]
+        # `archive/` 是移出任务范围的旧学科：**留在库里但不参与校验**，
+        # 也不该因为它的旧链接把主库判红。
+        dirs[:] = [d for d in dirs if d not in {".git", "node_modules", "__pycache__", "archive"}]
         for n in names:
             if n.endswith((".md", ".yml", ".yaml")):
                 files.append(Path(base) / n)
