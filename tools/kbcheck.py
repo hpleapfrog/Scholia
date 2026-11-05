@@ -35,7 +35,7 @@ TYPES = {"知识点", "命题", "教法", "误解", "路径", "资源"}
 
 ALLOWED_STATUS = {
     "知识点": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
-    "命题": {"草案", "待审", "争议", "暂定确认", "已确证", "已推翻", "失据", "需复审", "已失效"},
+    "命题": {"草案", "待审", "争议", "暂定确认", "已机审", "已确证", "已推翻", "失据", "需复审", "已失效"},
     "教法": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
     "误解": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
     "资源": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
@@ -142,6 +142,8 @@ STATUS_MEANING = {
     "有效": "当前没有已知的**存活攻击**；**不等于**已被独立复核",
     "争议": "存活集合里存在结论互相冲突的论证",
     "暂定确认": "作者已核对，但**没有非作者的独立复核**",
+    "已机审": "**由 agent 复核过**：来源逐份读过、引文逐条核过（记录在 `## 机审记录`）。"
+              "**不是**人的判断，也**不是** `已确证`",
     "已确证": "本库最高等级：有**非作者**的独立复核。**（截至生成时，全库一条都没有）**",
     "需复审": "刚被改动过，**还没有人重新看过**",
     "已推翻": "已被论证推翻",
@@ -165,6 +167,7 @@ STATUS_EN = {
     "有效": "effective",
     "争议": "disputed",
     "暂定确认": "provisionally confirmed",
+    "已机审": "agent-reviewed",
     "已确证": "confirmed",
     "需复审": "needs re-review",
     "已推翻": "overturned",
@@ -184,6 +187,12 @@ EVENT_STATUS_EN = {
 # 这条链的强度仍是「只核了位置」，不是「4/5 读完了」。
 # 它**不是**第七种 status：不表示真假，也不参与 `暂定确认` 的判定，
 # 所以「0 条已确证」与「98% 全文核读」可以同时成立，且两句话都是真的。
+# `已机审` 的记录字段：**四个都得有**，缺一个就等于没记录（见 R-SCHEMA-19）。
+# 为什么是这四个：模型是谁、什么时候、引文核了几条、**哪些判不了**——
+# 最后一项是这条规则的良心：一份不说自己边界的机审记录，比没有记录更危险。
+AGENT_REVIEW_SECTION = "机审记录"
+AGENT_REVIEW_FIELDS = ("模型", "日期", "引文核验", "限制")
+
 TIER_ORDER = ["T4", "T3", "T2", "T1", "T0"]
 TIER_MEANING = {
     "T4": "**全文核读**：引用的每一份来源都通读过，含定位、许可与版本",
@@ -1788,7 +1797,7 @@ def check_status_has_argument(objects, errors):
     那等于把整套「证据 + 反驳」的机制留了一个后门——**状态可以宣称一件没发生的事**。
     空集只能对应「待审」（从未论证）或「失据」（曾有论证被击倒），而后者本身也必须有论证。
     """
-    need = {"暂定确认", "已确证", "失据", "已推翻"}
+    need = {"暂定确认", "已机审", "已确证", "失据", "已推翻"}
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
         if st in need and not arg_ids(o["text"]):
@@ -1825,6 +1834,7 @@ def check_status_reachability(objects, errors):
 
     | 状态 | 机器要求 | 人仍然要判 |
     |---|---|---|
+    | `已机审` | `## 机审记录` 四栏齐全（模型 · 日期 · 引文核验 · 限制）**且**引用的每份证据都读到 `全文` | 记录里说的核验是否**真的发生过**（M-07） |
     | `已确证` | `author` 与「变更记录」里出现 **≥2 个不同的 `@` 署名** | 第二名署名者是否**真的**独立复核过（AI 不算，M-07） |
     | `争议` | ≥2 条论证 **且** ≥1 条**入边 `攻击`** | 两个存活论证的结论是否**真的冲突** |
     | `已推翻` | ≥1 条**未被击倒**的入边 `攻击` | 攻击方自己站不站得住 |
@@ -1833,9 +1843,39 @@ def check_status_reachability(objects, errors):
     （见 `check_argument_liveness`）——**冲突必须在图上看得见**，否则它只是作者的一句心情。
     """
     atk_in = inbound_edge_map(objects, "攻击")
+    evidence = parse_evidence_index()
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
-        if st == "已确证":
+        if st == "已机审":
+            # 2026-11-05 起，复核不再要求「第三个人」——**agent 也是一名复核者**。
+            # 但它不能自称「人的判断」：所以状态是 `已机审`，不是 `已确证`。
+            # 机器能查的只有「记录齐不齐」与「来源读没读透」，见下面的三条。
+            body = section_body(o["text"], AGENT_REVIEW_SECTION) or ""
+            if not body.strip():
+                errors.append(
+                    f"{rel}: status=「已机审」，但没有 `## {AGENT_REVIEW_SECTION}` —— "
+                    "机审必须留下**可核的记录**，否则它和「把字段改成已确证」没有区别"
+                    "（R-SCHEMA-19）")
+            else:
+                missing = [f for f in AGENT_REVIEW_FIELDS if f not in body]
+                if missing:
+                    errors.append(
+                        f"{rel}: `## {AGENT_REVIEW_SECTION}` 缺 {missing} —— "
+                        f"记录要答得上「谁审的（模型）· 什么时候（日期）· 引文核了几条（引文核验）· "
+                        f"哪些判不了（限制）」（R-SCHEMA-19）")
+            ids = evidence_ids_of(o["fm"])
+            shallow = [e for e in ids
+                       if not evidence.get(e) or evidence[e].get("作废")
+                       or evidence[e].get("核验深度") != "全文"]
+            if shallow:
+                detail = "、".join(
+                    f"{e}（{'索引里没有' if not evidence.get(e) else evidence[e].get('核验深度')}）"
+                    for e in shallow[:4])
+                errors.append(
+                    f"{rel}: status=「已机审」，但引用的证据没有全部读到 `全文` —— {detail}。"
+                    "机审的前提是**每一份来源都通读过**（溯源 T4）：没读透就说「复核过」，"
+                    "复核的只是自己脑子里那版（R-SCHEMA-19）")
+        elif st == "已确证":
             names = set(re.findall(r"@([\w][\w.\-]*)", fm_value(o["fm"], "author") or ""))
             names |= set(re.findall(r"@([\w][\w.\-]*)", section_body(o["text"], "变更记录") or ""))
             if len(names) < 2:
@@ -2105,7 +2145,7 @@ MANUAL_RULES = [
     ("M-04", "`教法` 的 `禁忌` 标注证据强度（强/弱），且与 `风险` 不混"),
     ("M-05", "不上传教材原文或扫描页"),
     ("M-06", "新引用资源逐条核对许可（教材 CC BY ≠ 它嵌的东西也是）"),
-    ("M-07", "AI 攻击需人复核 + 署名披露（AI 不能当「已确证」的复核者）"),
+    ("M-07", "AI 攻击需人复核 + 署名披露（AI **不能**写「已确证」，只能写「已机审」并留四栏记录）"),
     ("M-08", "统计数字不手写（交给 `--write-index` 生成）"),
     ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」与「质疑来源是否为本次引用而伪造」"),
     ("M-10", "文档中英成对存放（`<name>.md` 中文 + 同目录 `<id 派生>.en.md` 英文），改一份同步另一份"),
@@ -2196,6 +2236,7 @@ def render_stats_block(index):
         f"| 学科 / Subjects | {subs} |",
         f"| 证据 / Evidence | {s['证据条数']}（含作废 / void {s['作废证据条数']}） |",
         f"| 溯源 / Provenance | **{deep} / {s['对象总数']}（{deep / total:.0%}）读到全文或摘要** —— {tn} |",
+        f"| 已机审 / Agent-reviewed | **{s['按状态'].get('已机审', 0)}** —— agent 复核：记录四栏齐全 + 来源全读 |",
         f"| 已确证 / Confirmed | **{s['已确证条数']}** |",
     ])
 
@@ -2461,7 +2502,8 @@ def render_gaps_block(data, en=False):
                  f"**{s['事件']}** events")
         if st:
             L.append(f"**{st.get('已确证', 0)} confirmed** · {st.get('暂定确认', 0)} provisional · "
-                     f"{st.get('有效', 0)} valid · {st.get('待审', 0)} awaiting review")
+                     f"{st.get('有效', 0)} valid · {st.get('待审', 0)} awaiting review"
+                     f" · {st.get('已机审', 0)} agent-reviewed")
         if p:
             L.append(f"**{p['条数']}** paths · all **{p['声明']}** learning outcomes covered · "
                      f"**{p['单环节']}** ({p['单环节占比']}%) taught exactly once")
@@ -2476,7 +2518,7 @@ def render_gaps_block(data, en=False):
                  f"**{s['事件']}** 条事件")
         if st:
             L.append(f"**已确证 {st.get('已确证', 0)}** · 暂定确认 {st.get('暂定确认', 0)} · "
-                     f"有效 {st.get('有效', 0)} · 待审 {st.get('待审', 0)}")
+                     f"有效 {st.get('有效', 0)} · 待审 {st.get('待审', 0)} · 已机审 {st.get('已机审', 0)}")
         if p:
             L.append(f"**{p['条数']}** 条路径 · **{p['声明']}** 个学习成果全部有环节覆盖 · "
                      f"**{p['单环节']}** 个（{p['单环节占比']}%）只讲一次")

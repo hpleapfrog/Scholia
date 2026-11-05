@@ -105,7 +105,9 @@ def quotes_of(path, include_blockquotes=False):
     found = [(m.start(), m.group(1)) for m in cands]
     if include_blockquotes:
         for m in re.finditer(r"^> (.{24,400})$", text, re.M):
-            found.append((m.start(), m.group(1).lstrip("> ").strip()))
+            # 引用块里常写成 `> \`the passage\``：反引号是排版，不是引文的一部分。
+            # 不剥掉它，同一条引文会被当成两条——一条命中、一条「未命中」，虚报一个失败。
+            found.append((m.start(), m.group(1).lstrip("> ").strip().strip("`").strip()))
     out, seen = [], set()
     for pos, q in sorted(found):
         q = q.strip()

@@ -881,6 +881,16 @@ def sample_schema19_confirmed(root, _v):
     return False
 
 
+def sample_schema19_agent(root, _v):
+    """命题写「已机审」，但一条 `## 机审记录` 都没有 —— 等于只改了个字段。"""
+    for p, fm, body, _a, n in _claims_with_argument(root):
+        if n < 1 or kv(fm, "status") == "已机审":
+            continue
+        write(p, re.sub(r"(?m)^status:.*$", "status: 已机审", fm, count=1) + body)
+        return True
+    return False
+
+
 def sample_schema19_disputed(root, _v):
     """只有一条论证的命题直接写「争议」——图上没有任何冲突可言。"""
     for p, fm, body, _a, n in _claims_with_argument(root):
@@ -1242,6 +1252,7 @@ SAMPLES = [
     ("R-DOC-01", "FORMAT.md 状态图例删掉「已失效」", sample_doc01),
     ("R-DOC-02", "英文规则表少一条（中英 ID 集合不一致）", sample_doc02),
     ("R-SCHEMA-19", "命题一个人署名就写「已确证」", sample_schema19_confirmed, "但全条只有"),
+    ("R-SCHEMA-19", "写「已机审」却没留机审记录", sample_schema19_agent, "没有 `## 机审记录`"),
     ("R-SCHEMA-19", "只有一条论证、零攻击边就写「争议」", sample_schema19_disputed, "status=「争议」"),
     ("R-SCHEMA-19", "没有未被击倒的攻击就写「已推翻」", sample_schema19_overturned, "status=「已推翻」"),
     ("R-GRAPH-06", "两条支持边引的是同一份证据", sample_graph06, "但证据并集只有"),

@@ -18,13 +18,13 @@ this page look more authoritative than it is — and the first rule of this libr
 
 <!-- kbcheck:begin -->
 **746** objects · **744** citable as fact · **2** not citable · **188** evidence records · **2** events
-**0 confirmed** · 53 provisional · 115 valid · 573 awaiting review
+**0 confirmed** · 53 provisional · 115 valid · 572 awaiting review · 1 agent-reviewed
 **17** paths · all **73** learning outcomes covered · **67** (92%) taught exactly once
 T4 733 · T3 5 · T2 8 — provenance tier (**weakest link** over cited evidence)
 
 | Gap | Count | Why it counts as a gap |
 |---|---|---|
-| **Three-minute review** | 570 | Status is `待审`, the argument is written and the evidence has been read — only a human answering three yes/no questions is missing. |
+| **Three-minute review** | 569 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (`已确证`) or an agent (`已机审`, four-field record). |
 | **Awaiting review, evidence unread** | 3 | Status is `待审`, but at least one cited source is only located, not read (or the argument is missing, or nothing is cited) — a reviewer has nothing to compare against. This is the **precondition** for review, not another kind of review. |
 | **Provenance below T4** | 13 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
 | **Missing English edition** | 0 | No `path_en`: an English reader lands on a Chinese page. |
@@ -36,9 +36,9 @@ T4 733 · T3 5 · T2 8 — provenance tier (**weakest link** over cited evidence
 | **Physics chapters still 🔴** | 2 | Against the PEP catalogue, the whole chapter has no concept entry in this library. |
 
 > One object can appear in several rows — **do not add the counts up**.
-> **The one exact partition:** review 570 + review-blocked 3 = every `待审` entry (573).
+> **The one exact partition:** review 569 + review-blocked 3 = every `待审` entry (572).
 
-### Three-minute review (570)
+### Three-minute review (569)
 
 > Open a “review one entry” issue; no writing needed. Sorted by downstream dependents: editing it affects the most other entries.
 
@@ -52,7 +52,7 @@ T4 733 · T3 5 · T2 8 — provenance tier (**weakest link** over cited evidence
 - `kb:physics:planck-quantum-hypothesis` · Planck's quantum hypothesis — 2 other entries list it as a prerequisite
 - `kb:physics:lorentz-force` · Lorentz force — 2 other entries list it as a prerequisite
 - `kb:physics:thermodynamic-first-law` · First law of thermodynamics — 2 other entries list it as a prerequisite
-- …and 560 more — full list: `python tools/make_tasks.py --json`
+- …and 559 more — full list: `python tools/make_tasks.py --json`
 
 ### Awaiting review, evidence unread (3)
 

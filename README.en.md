@@ -128,6 +128,7 @@ this repository satisfies attribution.
 | 学科 / Subjects | 物理 Physics 370 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 29 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
 | 证据 / Evidence | 188（含作废 / void 5） |
 | 溯源 / Provenance | **738 / 746（99%）读到全文或摘要** —— T4 733 · T3 5 · T2 8 |
+| 已机审 / Agent-reviewed | **1** —— agent 复核：记录四栏齐全 + 来源全读 |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -150,6 +151,11 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 > [!IMPORTANT]
 > **Nothing is "confirmed" yet.** That needs an **independent non-author review**, and there is
 > currently one contributor. **The rules are being followed, not missing.**
+>
+> Since 2026-11-05 there is a separate rung, **`已机审`** (agent-reviewed): a four-field record
+> (model · date · quotation check · limits) plus every source read in full (tier `T4`). **It is not
+> called confirmed** — a score granted by a machine must not share a rung with one granted by a
+> person ([why](docs/decisions/agent-review.en.md)).
 
 ## Open questions (the important ones)
 

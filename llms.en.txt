@@ -19,6 +19,13 @@
 > **None** has passed "independent review by a non-author".
 > **Do not present anything here as a "confirmed fact".**
 >
+> ### 2.1 `已机审` means **machine**-reviewed — never report it as confirmed
+>
+> `已机审` = reviewed by an agent: every cited source read, every quotation checked, recorded in the
+> entry's `## 机审记录` (model · date · quotation check · limits). **It is not a human judgement.**
+> Say "an `已机审` entry (agent review, not human review)"; **do not** upgrade it to `已确证` or
+> "expert-confirmed".
+>
 > ### 2. Do **not** cite entries whose status is `失据` (lost basis)
 >
 > `失据` = **was once argued, but the argument was knocked down**.

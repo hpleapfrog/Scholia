@@ -73,7 +73,7 @@ Hard rules:
    (see CONTRIBUTING, "new-rule threshold").
 4. **Never hard-code drifting numbers** (all statistics come from the script).
 5. **Never upload textbook text or scanned pages** — locators, short quotations and original summaries only.
-6. **AI may attack; AI may never be the reviewer for `已确证`** ([FORMAT.en.md](FORMAT.en.md) §6).
+6. **AI may attack, and may also review — but it may only write `已机审`, never `已确证`** ([FORMAT.en.md](FORMAT.en.md) §6). `已机审` requires a complete `## 机审记录` (model · date · quotation check · limits) **and** every cited source read in full. The `限制` field must not be empty: a review that cannot say what it could not judge is not a review.
 7. **Start new entries from the scaffold**: `python tools/new_entry.py --type <type> --subject <subject> --slug <slug> --title "<title>"`
    — skeletons come from [`templates/`](templates/README.en.md). **Structure to the script, content to you.**
    Run `kbcheck` immediately afterwards; its errors are your to-do list.

@@ -242,6 +242,8 @@ triage and **don't affect conclusions**. (`triage:*` / `type:*` must exist in Se
 - [ ] English quotations were **typed from the source**: `python tools/quote_check.py <entry> --module <m#####>` must report **all hits**. Measured once: three drafts, 18 quotations, **not one of them exists in the cited source** (see [`drafts/README.md`](drafts/README.md))
 - [ ] New evidence passed the **three source questions** (see the [evidence threshold](evidence/README.en.md)): **who publishes it** (an accountable body) · **which version and when it took effect** (the entry scopes itself in `scope.条件` and claims only that version) · **was it made up for this citation** (it exists for reasons independent of the claim, with a second source at a different publishing body) —
       self-built sites, attribution-free repost pages and identifiers that don't resolve are **not registered**; several same-origin reposts **do not count as independent corroboration**
+- [ ] Marking `已机审`? The `## 机审记录` has all four fields (model · date · quotation check · limits)
+      and every cited source was read in full (`限制` must say **what you could not judge** — empty fails)
 - [ ] A new `知识点`'s first body line is `> [!TIP]` (what you'll be able to do)
 - [ ] A new method filled in **水平档** (BL / OL / AL, or `不分档` for cross-level)
 - [ ] A new medical entry filled `scope.条件` and has a `> [!CAUTION]` block at the top of the body

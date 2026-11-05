@@ -63,7 +63,9 @@ python tools/evid.py next               # 要新编号：别自己数（编号�
 3. **改规则要同时改检查**：规则清单在 [`docs/RULES.md`](docs/RULES.md)（由脚本里的 `RULES` 生成）与 [`tools/kbcheck.py`](tools/kbcheck.py) 的检查函数。加规则须有**会失败的注入样本**，写进 [`tools/verify_rules.py`](tools/verify_rules.py)（见 CONTRIBUTING「新规则入库门槛」）。
 4. **不写死会漂移的数字**（统计数字一律由脚本生成）。
 5. **不上传教材原文或扫描页**——只存定位、短引用、原创摘要。
-6. **AI 可以当攻击方，不能当 `已确证` 的复核者**（见 [FORMAT.md](FORMAT.md) §6）。
+6. **AI 可以当攻击方，也可以当复核者 —— 但只能写 `已机审`，不能写 `已确证`**（见 [FORMAT.md](FORMAT.md) §6）。
+   `已机审` 的硬条件：`## 机审记录` 四栏齐全（模型 · 日期 · 引文核验 · 限制）**且**引用的每份证据都读到 `全文`。
+   写记录时，**「限制」一栏不许空**：说得出自己判不了什么，才配叫复核。
 7. **新增条目先用脚手架起手**：`python tools/new_entry.py --type <类型> --subject <学科> --slug <slug> --title "<标题>"`
    —— 骨架来自 [`templates/`](templates/README.md)。**结构交给脚本，内容留给你**；
    生完立刻跑 `kbcheck`，它报的错就是待办清单。

@@ -457,11 +457,31 @@ Rules are dead; people execute them:
 ```
 1. List all arguments of the entry; mark who attacks whom
 2. Compute the surviving set: an argument survives only if all its attackers are defeated
-3. Surviving set agrees      → 已确证 (needs an independent non-author review)
+3. Surviving set agrees      → 已机审 (agent review, recorded) or 已确证 (human, independent non-author)
    Surviving set conflicts   → 争议
    Surviving set empty       → 待审 (never argued) or 失据 (argued, then defeated)
 4. Write status and its grounds into the PR description and the 变更记录 table
 ```
+
+### Who may review: a human, or an agent
+
+**Since 2026-11-05 a third person is no longer required.** One author plus one agent can take an
+entry all the way — the top simply splits into two rungs:
+
+| Reviewer | Status | What the machine checks | What it means |
+|---|---|---|---|
+| **human** (non-author) | `已确证` | `author` plus **≥2 distinct `@` handles** in the change log | another **human** pair of eyes agreed |
+| **agent** | `已机审` | `## 机审记录` complete (model · date · quotation check · limits) **and** provenance tier `T4` (every cited source read in full) | a **reproducible machine review**, not a human judgement |
+
+> [!IMPORTANT]
+> **Why a separate rung instead of handing `已确证` to agents.**
+> The whole value of `已确证` is that a machine did **not** grant it: a reader who sees it knows an
+> independent pair of eyes agreed, independently of any model. Let an agent write it and the rung
+> becomes free — and a free top score is no score.
+>
+> `已机审` is not a demotion: it is stronger than `暂定确认` (author-only) **and reproducible** —
+> the record names the model, the date and how many quotations were checked, so the next person can
+> rerun it. The only thing it is weaker at is **judgement**. That is why it is not called confirmed.
 
 ### "Empty surviving set" has two causes
 

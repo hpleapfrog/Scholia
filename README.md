@@ -104,6 +104,7 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 | 学科 / Subjects | 物理 Physics 370 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 29 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
 | 证据 / Evidence | 188（含作废 / void 5） |
 | 溯源 / Provenance | **738 / 746（99%）读到全文或摘要** —— T4 733 · T3 5 · T2 8 |
+| 已机审 / Agent-reviewed | **1** —— agent 复核：记录四栏齐全 + 来源全读 |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -124,6 +125,10 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 > [!IMPORTANT]
 > **没有一条是「已确证」。** 那需要一名**非作者的独立复核**，而目前只有一位贡献者。
 > **这是规则被遵守，不是内容缺失。**
+>
+> 2026-11-05 起另有一格 **`已机审`**：agent 复核，四栏记录（模型 · 日期 · 引文核验 · 限制）
+> 且来源全读（溯源 `T4`）。**它不叫确证**——机器给的分，不能与人给的分共用一格
+> （[为什么](docs/decisions/agent-review.md)）。
 
 ## 未决（要紧的几条）
 

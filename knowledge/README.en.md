@@ -59,6 +59,7 @@ Subject folders: `physics` `life` `medicine` `geography` `science` `transport` `
 | 草案 / draft | just written, not self-checked |
 | 待审 / pending review | has evidence, waiting for anyone to review it |
 | 暂定确认 / provisionally confirmed | the author checked it, but **no independent non-author review** (claims only) |
+| 已机审 / agent-reviewed | **reviewed by an agent**: every source read, every quotation checked, recorded in `## 机审记录` (claims only) |
 | 已确证 / confirmed | surviving arguments agree (**claims only**) |
 | 失据 / unsupported | once had arguments, **all knocked down**: the claim stands with nothing supporting it (claims only) |
 | 争议 / disputed | surviving arguments conflict; shown side by side, no side taken |

@@ -32,3 +32,4 @@
 | [gap-dashboard.md](gap-dashboard.md) | 缺口看板：四个出口共用**一个** `compute()`；什么算缺口、什么只归人判；`index.json` schema 5 的 `覆盖度` / `title_en` |
 | [interface-selftest.md](interface-selftest.md) | `kbcheck` 看不见的三个接口：MCP 握手、`make_tasks --json`、`new_entry` 骨架；九条**真起进程**的检查（含复核包只排版、不替人回答） |
 | [provenance-tier.md](provenance-tier.md) | `status` 之外的第二把尺子：全库 99% 的来源被通读过却从不显示；为什么不是第七种状态、为什么取最弱一环、以及它对「项目还要不要做」意味着什么 |
+| [agent-review.md](agent-review.md) | 复核不再要求第三个人：为什么另开 `已机审` 而不把 `已确证` 让给机器、四栏记录硬条件、第一条实例，以及什么时候该回退 |

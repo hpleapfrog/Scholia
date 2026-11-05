@@ -56,7 +56,7 @@ TYPE_ORDER = ["知识点", "命题", "教法", "误解", "资源", "路径"]
 TYPE_LABEL = {"知识点": "概念", "命题": "命题", "教法": "教法",
               "误解": "误解", "资源": "资源", "路径": "路径"}
 STATUS_TONE = {
-    "已确证": "ok", "暂定确认": "ok", "有效": "ok",
+    "已确证": "ok", "已机审": "machine", "暂定确认": "ok", "有效": "ok",
     "待审": "wait", "需复审": "warn", "争议": "warn",
     "失据": "bad", "已推翻": "bad", "已失效": "bad", "草案": "wait",
 }
@@ -350,6 +350,7 @@ aside{border-right:1px solid var(--line);display:flex;flex-direction:column;min-
 .item .m{margin-top:3px;font:11px/1.4 var(--mono);color:var(--ink3);display:flex;gap:8px}
 .dot{width:6px;height:6px;border-radius:50%;display:inline-block;vertical-align:1px}
 .d-ok{background:var(--ok)} .d-wait{background:#c9a227} .d-warn{background:#c07000} .d-bad{background:var(--bad)}
+.d-machine{background:var(--accent)}
 
 section{overflow:auto;min-height:0;position:relative}
 #doc{max-width:820px;margin:0 auto;padding:34px 40px 90px}
@@ -361,6 +362,7 @@ h1.t{font-size:29px;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em}
 .b.wait{color:var(--wait);background:var(--wait-soft);border-color:#efe1bb}
 .b.warn{color:#8a5200;background:#fdf0dc;border-color:#f0dcb8}
 .b.bad{color:var(--bad);background:var(--bad-soft);border-color:#f2cfcb}
+.b.machine{color:var(--accent);background:var(--accent-soft);border-color:#d5dcff}
 .b.tier{font-family:var(--mono);letter-spacing:.03em}
 .b.cite-false{color:var(--bad);background:var(--bad-soft);border-color:#f2cfcb}
 .lead{font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);
@@ -442,6 +444,7 @@ const total = st['对象总数'] || D.entries.length;
 $('#kpis').innerHTML = [
   ['对象', total, ''],
   ['全文/摘要核读', Math.round(100*deep/total) + '%', 'hl'],
+  ['已机审', (st['按状态']||{})['已机审'] || 0, ''],
   ['已确证', st['已确证条数'] ?? 0, ''],
   ['证据', st['证据条数'] ?? 0, ''],
   ['学科', Object.keys(st['按学科']||{}).length, ''],
@@ -536,7 +539,9 @@ function graph(){
   }).join('');
   const boxes = nodes.map(n => {
     const [x,y] = pos[n.id], w = Math.max(58, n.label.length*11+18);
-    const c = STATUS_TONE[n.status]==='ok' ? '#0f7a52' : (STATUS_TONE[n.status]==='bad' ? '#a3231d' : '#c9a227');
+    const tone = STATUS_TONE[n.status];
+    const c = tone==='ok' ? '#0f7a52' : (tone==='bad' ? '#a3231d'
+              : (tone==='machine' ? '#2f4bd6' : '#c9a227'));
     return `<g class="gnode" data-id="${esc(n.id)}" transform="translate(${x-w/2},${y-11})">
       <rect width="${w}" height="22" rx="6"/>
       <rect width="4" height="22" rx="2" fill="${c}"/>
@@ -558,7 +563,8 @@ $('#welcome').innerHTML = `
     <b>状态</b>（待审 / 有效 / 暂定确认 / 已确证）回答「有没有站得住的论证」，要人判；
     <b>溯源档</b>（T4–T0）回答「引用的来源被读到了哪一层」，机器算，取最弱一环。
     全库 <b>已确证 ${st['已确证条数'] ?? 0}</b> 条，同时 <b>${Math.round(100*deep/total)}%</b> 的来源被通读过——
-    这两句话都成立。</div>
+    这两句话都成立。顶上还有一格 <b>已机审</b>：agent 复核、四栏记录、来源全读——
+    <b>它是机器给的，所以不叫确证。</b></div>
   <div class="how">
     <div><b>想学一个概念</b>左栏选「概念」，按学科筛。正文在「## 论证」之前的部分就是给你读的。</div>
     <div><b>想核一条</b>点开任意条目，底下是它引用的证据与定位，点「打开来源」直接跳到原文。</div>
