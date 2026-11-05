@@ -2,7 +2,7 @@
 id: kb:physics:attack-work-power
 type: 命题
 title: "Attack: the criterion line and node boundary of 'work and power'"
-status: 暂定确认
+status: 已确证
 author: "AI adversarial subagent (within a DeepSeek Harness session) · reviewed by @hpleapfrog · 2026-10-05"
 created: 2026-10-05
 updated: 2026-10-05

@@ -2,7 +2,7 @@
 id: kb:computing:prop-http-status-code-extensibility
 type: 命题
 title: "An unrecognized HTTP status code is handled as the class's x00, a code outside 100–599 as 5xx, and the reason phrase is only a recommendation"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-12
 updated: 2026-10-12

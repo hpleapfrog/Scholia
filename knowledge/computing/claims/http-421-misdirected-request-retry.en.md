@@ -2,7 +2,7 @@
 id: kb:computing:prop-http-421-misdirected-request-retry
 type: 命题
 title: "An HTTP 421 means the request was misdirected; the client MAY retry on another connection, and a proxy MUST NOT generate it"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-18
 updated: 2026-10-18

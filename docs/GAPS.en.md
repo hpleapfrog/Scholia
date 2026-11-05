@@ -18,7 +18,7 @@ this page look more authoritative than it is — and the first rule of this libr
 
 <!-- kbcheck:begin -->
 **746** objects · **744** citable as fact · **2** not citable · **188** evidence records · **2** events
-**516 confirmed** · 53 provisional · 157 valid · 15 awaiting review
+**526 confirmed** · 43 provisional · 157 valid · 15 awaiting review
 **17** paths · all **73** learning outcomes covered · **67** (92%) taught exactly once
 T4 733 · T3 5 · T2 8 — provenance tier (**weakest link** over cited evidence)
 

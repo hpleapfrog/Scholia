@@ -2,7 +2,7 @@
 id: kb:computing:prop-http-204-cannot-contain-content-or-trailers
 type: 命题
 title: "An HTTP 204 response may contain neither content nor trailers, and is heuristically cacheable by default"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-12
 updated: 2026-10-12
