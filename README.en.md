@@ -128,7 +128,7 @@ this repository satisfies attribution.
 | 学科 / Subjects | 医学 Medicine 9 |
 | 证据 / Evidence | 188（含作废 / void 5） |
 | 溯源 / Provenance | **8 / 9（89%）读到全文或摘要** —— T4 3 · T3 5 · T2 1 |
-| 已确证 / Confirmed | **1** |
+| 已确证 / Confirmed | **2** |
 <!-- kbcheck:end -->
 
 Sources: OpenStax *Physics* (**CC BY**) · Utah Grade-7 Science · publisher errata · AASM clinical

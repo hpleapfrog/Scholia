@@ -18,13 +18,13 @@ this page look more authoritative than it is — and the first rule of this libr
 
 <!-- kbcheck:begin -->
 **9** objects · **9** citable as fact · **0** not citable · **188** evidence records · **2** events
-**1 confirmed** · 7 provisional · 0 valid · 1 awaiting review
+**2 confirmed** · 7 provisional · 0 valid · 0 awaiting review
 **0** paths · all **0** learning outcomes covered · **0** (0%) taught exactly once
 T4 3 · T3 5 · T2 1 — provenance tier (**weakest link** over cited evidence)
 
 | Gap | Count | Why it counts as a gap |
 |---|---|---|
-| **Three-minute review** | 1 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
+| **Three-minute review** | 0 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
 | **Awaiting review, evidence unread** | 0 | Status is `待审`, but at least one cited source is only located, not read (or the argument is missing, or nothing is cited) — a reviewer has nothing to compare against. This is the **precondition** for review, not another kind of review. |
 | **Provenance below T4** | 6 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
 | **Missing English edition** | 1 | No `path_en`: an English reader lands on a Chinese page. |
@@ -36,13 +36,6 @@ T4 3 · T3 5 · T2 1 — provenance tier (**weakest link** over cited evidence)
 | **Physics chapters still 🔴** | 0 | Against the PEP catalogue, the whole chapter has no concept entry in this library. |
 
 > One object can appear in several rows — **do not add the counts up**.
-> **The one exact partition:** review 1 + review-blocked 0 = every `待审` entry (1).
-
-### Three-minute review (1)
-
-> Open a “review one entry” issue; no writing needed. Sorted by downstream dependents: editing it affects the most other entries.
-
-- `kb:med:guideline-gold-2026-abe` · GOLD 2026 调整 A/B/E 分组判据：一次中重度急性加重即足以改变分组
 
 ### Provenance below T4 (6)
 

@@ -104,7 +104,7 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 | 学科 / Subjects | 医学 Medicine 9 |
 | 证据 / Evidence | 188（含作废 / void 5） |
 | 溯源 / Provenance | **8 / 9（89%）读到全文或摘要** —— T4 3 · T3 5 · T2 1 |
-| 已确证 / Confirmed | **1** |
+| 已确证 / Confirmed | **2** |
 <!-- kbcheck:end -->
 
 来源：OpenStax《Physics》(**CC BY**) · Utah 7 年级科学 · 出版社勘误表 · AASM 临床指南 · 随机对照试验（RCT）。

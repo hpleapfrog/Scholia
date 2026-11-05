@@ -2,7 +2,7 @@
 id: kb:med:guideline-gold-2026-abe
 type: 命题
 title: "GOLD 2026 调整 A/B/E 分组判据：一次中重度急性加重即足以改变分组"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-11-05
 updated: 2026-11-05
@@ -59,8 +59,18 @@ GOLD 2026 的官方《Key Changes Summary》写明：**A、B、E 三组的判定
 - **署名**：@hpleapfrog · 2026-11-05
 - **待补**：报告正文（100+ 页）里 A/B/E 的完整判据表未录入；本条只覆盖「调整这件事」与「触发条件」
 
+## 复核记录
+
+- **模型**：DeepSeek-V4.1-Flash（`workbuddy-pdf` 提取 Key Changes PDF 全文，`quote_check` 比对）
+- **日期**：2026-11-05
+- **引文核验**：1 条英文引文，**1 条命中**（逐字，阈值 0.92）；对照 2 页 Key Changes 原文，
+  句尾以 `…` 截断处未补写；「推荐强度/证据等级未标注」一项经全文检索确认（文档内无 GRADE 字样）
+- **限制**：只通读 2 页 Key Changes；**未通读** 100+ 页报告正文，A/B/E 完整判据表未核；
+  未判断该调整在真实队列中的效果
+
 ## 变更记录
 
 | 日期 | 操作 | 依据 | 谁 |
 |---|---|---|---|
 | 2026-11-05 | 建立条目（指南型，按 `templates/指南条目.md`） | ev-079 已读 Key Changes 全文 2 页 | @hpleapfrog |
+| 2026-11-05 | 复核（agent）：引文 1/1 命中 → 已确证 | 见上方「复核记录」 | DeepSeek-V4.1-Flash（agent） |
