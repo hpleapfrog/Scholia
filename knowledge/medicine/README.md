@@ -156,9 +156,10 @@
 | ESC（欧洲心脏病学会） | ESC Clinical Practice Guidelines | `escardio.org/Guidelines` | 200 |
 | IDSA（美国感染病学会） | IDSA Practice Guidelines | `idsociety.org/practice-guideline/practice-guidelines/` | 200 |
 | NICE | NG115 等 | `nice.org.uk/guidance/ng115` | **403（需浏览器）** |
-| KDIGO | 肾脏病指南 | `kdigo.org/guidelines/` | **406（需浏览器）** |
+| KDIGO | 肾脏病指南 | `kdigo.org/guidelines/` | 200（带浏览器头可抓） |
 | ADA | Standards of Care（Diabetes Care 增刊） | `diabetesjournals.org/care/issue/49/Supplement_1` | **403（需浏览器）** |
 | CDC | 鼠疫应急指南 | `cdc.gov/plague/hcp/emergency-guidance/` | **403（需浏览器）** |
 
-> **403/406 不等于没有**，只说明脚本抓不到（反爬）。它们仍是有效来源，
-> 但登记时必须写明「需人工打开核对」，不能按「已读」计。
+> **403 不等于没有**：NICE / ADA / CDC 用 WAF 拦截非浏览器客户端（Cloudflare 一类），
+> **你用人浏览器打开是正常的**，只是我的命令行抓不到。这类来源仍有效，
+> 但登记时必须写「需人工打开核对」，不能按「已读」计。

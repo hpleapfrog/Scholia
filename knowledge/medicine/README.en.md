@@ -153,9 +153,10 @@ With "how to adjust" removed, what remains is **exactly what the repo is best at
 | ESC | Clinical Practice Guidelines | `escardio.org/Guidelines` | 200 |
 | IDSA | Practice Guidelines | `idsociety.org/practice-guideline/practice-guidelines/` | 200 |
 | NICE | NG115 etc. | `nice.org.uk/guidance/ng115` | **403 (browser only)** |
-| KDIGO | Kidney guidelines | `kdigo.org/guidelines/` | **406 (browser only)** |
+| KDIGO | Kidney guidelines | `kdigo.org/guidelines/` | 200 (with browser headers) |
 | ADA | Standards of Care | `diabetesjournals.org/care/issue/49/Supplement_1` | **403 (browser only)** |
 | CDC | Plague emergency guidance | `cdc.gov/plague/hcp/emergency-guidance/` | **403 (browser only)** |
 
-> **403/406 means the script is blocked, not that the source is gone.** Such rows must say
+> **403 does not mean the source is gone.** NICE / ADA / CDC use a WAF that blocks non-browser
+> clients (Cloudflare-style); **your browser opens them fine**, my CLI cannot. Such rows must say
 > "needs a human to open" and may not be counted as read.
