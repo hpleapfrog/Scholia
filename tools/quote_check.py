@@ -119,16 +119,15 @@ def quotes_of(path, include_blockquotes=False):
     cands = list(re.finditer(r"`([^`\n]{%d,400})`" % MIN_CHARS, text))
     found = [(m.start(), m.group(1)) for m in cands]
     if include_blockquotes:
-        for m in re.finditer(r"^> (.{8,400})$", text, re.M):
-            line = m.group(1).strip()
-            # 两种写法都要认：
-            #   ① `> \`the passage\`` —— 整行就是引文，反引号是排版；
-            #   ② `> 教材的例子是 \`a door opens…\`` —— **中文说明 + 行内引文**。
-            # 第 ② 种如果整行拿去比，必然不命中，然后被记成「引文造假」——假阳性比漏检更伤。
-            inner = re.findall(r"`([^`\n]{%d,400})`" % MIN_CHARS, line)
-            found.extend((m.start(), q) for q in inner)
+        # **整段引用块要合成一条**：RFC 的句子按 72 列折行，逐行比对必然失败，
+        # 而失败的形状和「伪造引文」一模一样——这是最危险的一类假阳性。
+        for block in re.finditer(r"(?m)(?:^>.*(?:\n|$))+", text):
+            raw = block.group(0).rstrip("\n")
+            body = " ".join(re.sub(r"^>\s?", "", ln) for ln in raw.split("\n"))
+            inner = re.findall(r"`([^`\n]{%d,400})`" % MIN_CHARS, body)
+            found.extend((block.start(), q) for q in inner)
             if not inner:
-                found.append((m.start(), line.strip("`").strip()))
+                found.append((block.start(), body.strip("`").strip()))
     out, seen = [], set()
     for pos, q in sorted(found):
         q = q.strip()
@@ -234,8 +233,13 @@ def check(entry, sources, threshold):
             ratio = difflib.SequenceMatcher(None, q, s).ratio()
             if ratio > best_r:
                 best_r, best_s = ratio, s
+        # 拼接引文：每一句都在原文里，但**不相邻**——中间被删掉了一段却没打省略号。
+        # 这比「整句找不到」更常见，也更危险：读起来完全像原文。
+        pieces = [normalize(x) for x in re.split(r"(?<=[.?!]) ", q) if len(x) >= 25]
+        spliced = len(pieces) >= 2 and all(x in joined for x in pieces)
         results.append({**item, "命中": best_r >= threshold,
-                        "相似度": round(best_r, 2), "原文": best_s})
+                        "相似度": round(best_r, 2), "原文": best_s,
+                        "拼接": spliced})
     return results
 
 
@@ -302,6 +306,9 @@ def main():
         mark = "OK " if r["命中"] else "XX "
         print(f"{mark}{r['相似度']:.2f}  L{r['line']}  {r['quote'][:96]}")
         if not r["命中"]:
+            if r.get("拼接"):
+                print("      ⚠ 疑似**拼接引文**：每一句都在原文里，但彼此不相邻"
+                      "（中间省略的内容没有标 `…`）")
             print(f"      原文：{r['原文'][:200]}")
         print()
     if hit != len(results):
