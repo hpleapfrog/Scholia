@@ -2,7 +2,7 @@
 id: kb:physics:binding-energy-and-mass-defect
 type: 知识点
 title: "Binding energy and mass defect"
-status: 待审
+status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
 updated: 2026-10-21

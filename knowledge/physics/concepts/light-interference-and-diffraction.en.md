@@ -2,7 +2,7 @@
 id: kb:physics:light-interference-and-diffraction
 type: 知识点
 title: "Light interference and diffraction"
-status: 待审
+status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
 updated: 2026-10-21

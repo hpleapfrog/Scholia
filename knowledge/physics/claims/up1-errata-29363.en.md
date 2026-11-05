@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-29363
 type: 命题
 title: "Erratum #29363 in University Physics Volume 1 (Chapter 4): Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Chapter Review:…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-10826
 type: 命题
 title: "Erratum #10826 in University Physics Volume 1 (Chapter 3): https://openstax.org/books/university-physics-volume-1/pages/3-6-finding-velocit…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

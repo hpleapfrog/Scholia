@@ -2,7 +2,7 @@
 id: kb:physics:statistical-interpretation-of-entropy
 type: 知识点
 title: "Statistical interpretation of entropy"
-status: 待审
+status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
 updated: 2026-10-21

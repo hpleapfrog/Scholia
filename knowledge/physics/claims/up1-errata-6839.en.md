@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-6839
 type: 命题
 title: "Erratum #6839 in University Physics Volume 1 (Chapter 3): problem 57 part (b)"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

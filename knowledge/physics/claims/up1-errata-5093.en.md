@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-5093
 type: 命题
 title: "Erratum #5093 in University Physics Volume 1 (Chapter 2): Problem 28 (g)"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

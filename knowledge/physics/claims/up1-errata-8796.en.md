@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-8796
 type: 命题
 title: "Erratum #8796 in University Physics Volume 1 (Chapter 1): Example 1.7"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

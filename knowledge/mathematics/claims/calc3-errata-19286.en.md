@@ -2,7 +2,7 @@
 id: kb:math:calc3-errata-19286
 type: 命题
 title: "Erratum #19286 in Calculus Volume 3 (Chapter 6): Applications of Integration: Section 6.6 Moments and Centers of Mass"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-24113
 type: 命题
 title: "Erratum #24113 in University Physics Volume 1 (Chapter 3): Unit 1 Mechanics: Chapter 3 Motion Along a Straight Line: Section 3.5 Free Fall"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

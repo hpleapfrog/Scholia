@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-20858
 type: 命题
 title: "Erratum #20858 in University Physics Volume 1 (Chapter 2): Unit 1 Mechanics: Chapter 2 Vectors: Section 2.3 Algebra of Vectors"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

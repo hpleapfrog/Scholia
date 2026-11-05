@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-12985
 type: 命题
 title: "Erratum #12985 in University Physics Volume 1 (Chapter 4): Unit 1. Mechanics: Chapter 4 Motion in Two and Three Dimensions: Section 4.2 Acc…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

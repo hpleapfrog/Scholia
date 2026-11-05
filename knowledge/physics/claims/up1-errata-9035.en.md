@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-9035
 type: 命题
 title: "Erratum #9035 in University Physics Volume 1 (Chapter 1): Section 1.2, \"The Kilogram\""
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

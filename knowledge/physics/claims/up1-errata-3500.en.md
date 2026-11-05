@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-3500
 type: 命题
 title: "Erratum #3500 in University Physics Volume 1 (Chapter 1): Section 6, Example 1.7"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

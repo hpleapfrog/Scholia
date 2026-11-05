@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-17856
 type: 命题
 title: "Erratum #17856 in University Physics Volume 1 (Chapter 4): Unit 1 Mechanics: Chapter 4 Motion in Two and Three Dimensions: Section 4.3 Proj…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

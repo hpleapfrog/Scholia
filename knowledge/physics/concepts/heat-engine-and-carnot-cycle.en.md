@@ -2,7 +2,7 @@
 id: kb:physics:heat-engine-and-carnot-cycle
 type: 知识点
 title: "Heat engines and the Carnot cycle"
-status: 待审
+status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
 updated: 2026-10-21

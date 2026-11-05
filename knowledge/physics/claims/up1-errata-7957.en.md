@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-7957
 type: 命题
 title: "Erratum #7957 in University Physics Volume 1 (Chapter 2): Problem 47 (a), page 930, version 12.5"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

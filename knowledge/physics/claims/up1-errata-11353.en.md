@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-11353
 type: 命题
 title: "Erratum #11353 in University Physics Volume 1 (Chapter 2): Check your understanding 2.7"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

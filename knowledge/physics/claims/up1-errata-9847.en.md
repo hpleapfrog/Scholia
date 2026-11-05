@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-9847
 type: 命题
 title: "Erratum #9847 in University Physics Volume 1 (Chapter 5): Problem 57"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

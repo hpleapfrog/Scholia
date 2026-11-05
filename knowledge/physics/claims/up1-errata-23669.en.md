@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-23669
 type: 命题
 title: "Erratum #23669 in University Physics Volume 1 (Chapter 1): Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.2 Units and Standar…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20
