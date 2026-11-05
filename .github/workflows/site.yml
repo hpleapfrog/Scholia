@@ -1,0 +1,54 @@
+name: site
+
+# 把库生成成一个单文件页面并发布到 GitHub Pages。
+#
+# 为什么要单独一条流水线：`site/index.html` 是**生成物**（≈2.5 MB），
+# 提交进仓库会让每次内容改动都往 Git 里压一份全量副本——
+# 而它只是一个投影，随时可以从 `index.json` 重建。所以它不进版本库，
+# 由 CI 每次从内容现生成、现发布。
+#
+# 启用：仓库 Settings → Pages → Source 选 **GitHub Actions**（只需一次）。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # 生成物必须与内容一致：勘误表是「看起来像数据」的东西，过期了比没有更糟。
+      - name: 勘误导出物是否与内容一致
+        run: python tools/export_errata.py --check
+
+      - name: 生成站点
+        run: python tools/build_site.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
