@@ -17,17 +17,17 @@ this page look more authoritative than it is — and the first rule of this libr
 “the half machines don't judge” is a separate table below.
 
 <!-- kbcheck:begin -->
-**25** objects · **25** citable as fact · **0** not citable · **190** evidence records · **2** events
-**2 confirmed** · 7 provisional · 0 valid · 16 awaiting review
+**30** objects · **30** citable as fact · **0** not citable · **191** evidence records · **2** events
+**2 confirmed** · 7 provisional · 0 valid · 21 awaiting review
 **0** paths · all **0** learning outcomes covered · **0** (0%) taught exactly once
-T4 3 · T3 21 · T2 1 — provenance tier (**weakest link** over cited evidence)
+T4 3 · T3 26 · T2 1 — provenance tier (**weakest link** over cited evidence)
 
 | Gap | Count | Why it counts as a gap |
 |---|---|---|
-| **Three-minute review** | 16 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
+| **Three-minute review** | 21 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
 | **Awaiting review, evidence unread** | 0 | Status is `待审`, but at least one cited source is only located, not read (or the argument is missing, or nothing is cited) — a reviewer has nothing to compare against. This is the **precondition** for review, not another kind of review. |
-| **Provenance below T4** | 22 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
-| **Missing English edition** | 17 | No `path_en`: an English reader lands on a Chinese page. |
+| **Provenance below T4** | 27 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
+| **Missing English edition** | 22 | No `path_en`: an English reader lands on a Chinese page. |
 | **Concepts without a method** | 0 | A concept answers *what it is*; a method answers *how to teach it*. The coverage page counts only the former, so this gap is invisible elsewhere. |
 | **Out-of-library prerequisites** | 0 | The same `外部先修` key appears in ≥2 objects — it recurs in front of several chains. |
 | **Outcomes covered by a single step** | 0 | A learning outcome is covered by exactly one step: if that step fails, the student gets no second chance. |
@@ -36,41 +36,41 @@ T4 3 · T3 21 · T2 1 — provenance tier (**weakest link** over cited evidence)
 | **Physics chapters still 🔴** | 0 | Against the PEP catalogue, the whole chapter has no concept entry in this library. |
 
 > One object can appear in several rows — **do not add the counts up**.
-> **The one exact partition:** review 16 + review-blocked 0 = every `待审` entry (16).
+> **The one exact partition:** review 21 + review-blocked 0 = every `待审` entry (21).
 
-### Three-minute review (16)
+### Three-minute review (21)
 
 > Open a “review one entry” issue; no writing needed. Sorted by downstream dependents: editing it affects the most other entries.
 
 - `kb:med:guideline-idsa-sab-catheter` · IDSA 金葡菌菌血症指南：建议尽早拔除中心静脉导管
+- `kb:med:kdigo-2022-dmckd-1-2-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.2.1（1B）
+- `kb:med:kdigo-2022-dmckd-1-3-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.3.1（1A）
+- `kb:med:kdigo-2022-dmckd-1-4-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.4.1（2A）
+- `kb:med:kdigo-2022-dmckd-4-1-1` · KDIGO 2022 糖尿病合并 CKD 推荐 4.1.1（1B）
+- `kb:med:kdigo-2022-dmckd-4-2-1` · KDIGO 2022 糖尿病合并 CKD 推荐 4.2.1（1B）
 - `kb:med:kdigo-2024-rec-1-1-2-1` · KDIGO 2024 CKD 推荐 1.1.2.1（1B）
 - `kb:med:kdigo-2024-rec-2-2-1` · KDIGO 2024 CKD 推荐 2.2.1（1A）
 - `kb:med:kdigo-2024-rec-3-15-1-1` · KDIGO 2024 CKD 推荐 3.15.1.1（1A）
 - `kb:med:kdigo-2024-rec-3-15-1-2` · KDIGO 2024 CKD 推荐 3.15.1.2（1B）
-- `kb:med:kdigo-2024-rec-3-15-1-3` · KDIGO 2024 CKD 推荐 3.15.1.3（2A）
-- `kb:med:kdigo-2024-rec-3-4-1` · KDIGO 2024 CKD 推荐 3.4.1（2B）
-- `kb:med:kdigo-2024-rec-3-6-1` · KDIGO 2024 CKD 推荐 3.6.1（1B）
-- `kb:med:kdigo-2024-rec-3-6-2` · KDIGO 2024 CKD 推荐 3.6.2（1B）
-- `kb:med:kdigo-2024-rec-3-6-4` · KDIGO 2024 CKD 推荐 3.6.4（1B）
-- …and 6 more — full list: `python tools/make_tasks.py --json`
+- …and 11 more — full list: `python tools/make_tasks.py --json`
 
-### Provenance below T4 (22)
+### Provenance below T4 (27)
 
 > Open that source at its locator, read it, raise `核验深度` to `全文`; or cite a source that has already been read in full.
 
 - `kb:med:prop-hypertension-cn-2024` · The 2024 revision of the Chinese Hypertension Guidelines prescribes ≥140/90 mmHg in the clinic for diagnosis, and <140/90 mmHg (further down to <130/80 mmHg if tolerated) as the target for general patients — T2, weakest: `ev-070`, `ev-074`, `ev-077`, `ev-078`
 - `kb:med:prop-plague-treat-on-suspicion` · For suspected plague, WHO/CDC guidelines prescribe starting treatment without waiting for confirmation, and set explicit time limits for medication, isolation, and contact prophylaxis — T3, weakest: `ev-071`, `ev-072`, `ev-073`
 - `kb:med:guideline-idsa-sab-catheter` · IDSA 金葡菌菌血症指南：建议尽早拔除中心静脉导管 — T3, weakest: `ev-199`
+- `kb:med:kdigo-2022-dmckd-1-2-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.2.1（1B） — T3, weakest: `ev-201`
+- `kb:med:kdigo-2022-dmckd-1-3-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.3.1（1A） — T3, weakest: `ev-201`
+- `kb:med:kdigo-2022-dmckd-1-4-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.4.1（2A） — T3, weakest: `ev-201`
+- `kb:med:kdigo-2022-dmckd-4-1-1` · KDIGO 2022 糖尿病合并 CKD 推荐 4.1.1（1B） — T3, weakest: `ev-201`
+- `kb:med:kdigo-2022-dmckd-4-2-1` · KDIGO 2022 糖尿病合并 CKD 推荐 4.2.1（1B） — T3, weakest: `ev-201`
 - `kb:med:kdigo-2024-rec-1-1-2-1` · KDIGO 2024 CKD 推荐 1.1.2.1（1B） — T3, weakest: `ev-200`
 - `kb:med:kdigo-2024-rec-2-2-1` · KDIGO 2024 CKD 推荐 2.2.1（1A） — T3, weakest: `ev-200`
-- `kb:med:kdigo-2024-rec-3-15-1-1` · KDIGO 2024 CKD 推荐 3.15.1.1（1A） — T3, weakest: `ev-200`
-- `kb:med:kdigo-2024-rec-3-15-1-2` · KDIGO 2024 CKD 推荐 3.15.1.2（1B） — T3, weakest: `ev-200`
-- `kb:med:kdigo-2024-rec-3-15-1-3` · KDIGO 2024 CKD 推荐 3.15.1.3（2A） — T3, weakest: `ev-200`
-- `kb:med:kdigo-2024-rec-3-4-1` · KDIGO 2024 CKD 推荐 3.4.1（2B） — T3, weakest: `ev-200`
-- `kb:med:kdigo-2024-rec-3-6-1` · KDIGO 2024 CKD 推荐 3.6.1（1B） — T3, weakest: `ev-200`
-- …and 12 more — full list: `python tools/make_tasks.py --json`
+- …and 17 more — full list: `python tools/make_tasks.py --json`
 
-### Missing English edition (17)
+### Missing English edition (22)
 
 > The filename is derived from `id` (`<id tail minus type prefix>.en.md`), in the same folder as the Chinese original.
 
@@ -78,13 +78,13 @@ T4 3 · T3 21 · T2 1 — provenance tier (**weakest link** over cited evidence)
 - `kb:med:guideline-idsa-sab-catheter` · IDSA 金葡菌菌血症指南：建议尽早拔除中心静脉导管
 - `kb:med:kdigo-2024-rec-1-1-2-1` · KDIGO 2024 CKD 推荐 1.1.2.1（1B）
 - `kb:med:kdigo-2024-rec-2-2-1` · KDIGO 2024 CKD 推荐 2.2.1（1A）
+- `kb:med:kdigo-2022-dmckd-1-2-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.2.1（1B）
+- `kb:med:kdigo-2022-dmckd-1-3-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.3.1（1A）
+- `kb:med:kdigo-2022-dmckd-1-4-1` · KDIGO 2022 糖尿病合并 CKD 推荐 1.4.1（2A）
+- `kb:med:kdigo-2022-dmckd-4-1-1` · KDIGO 2022 糖尿病合并 CKD 推荐 4.1.1（1B）
+- `kb:med:kdigo-2022-dmckd-4-2-1` · KDIGO 2022 糖尿病合并 CKD 推荐 4.2.1（1B）
 - `kb:med:guideline-kdigo-2024-egfr` · KDIGO 2024：CKD 风险人群首选基于肌酐的 eGFR（1B）
-- `kb:med:kdigo-2024-rec-3-15-1-1` · KDIGO 2024 CKD 推荐 3.15.1.1（1A）
-- `kb:med:kdigo-2024-rec-3-15-1-2` · KDIGO 2024 CKD 推荐 3.15.1.2（1B）
-- `kb:med:kdigo-2024-rec-3-15-1-3` · KDIGO 2024 CKD 推荐 3.15.1.3（2A）
-- `kb:med:kdigo-2024-rec-3-4-1` · KDIGO 2024 CKD 推荐 3.4.1（2B）
-- `kb:med:kdigo-2024-rec-3-6-1` · KDIGO 2024 CKD 推荐 3.6.1（1B）
-- …and 7 more — full list: `python tools/make_tasks.py --json`
+- …and 12 more — full list: `python tools/make_tasks.py --json`
 
 ### Gaps the entries wrote themselves (11)
 
