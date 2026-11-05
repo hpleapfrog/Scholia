@@ -54,8 +54,8 @@
 <!-- kbcheck:begin -->
 | 学科 | 条数 | 里面有什么 | 收什么 |
 |---|---|---|---|
-| [医学](knowledge/medicine/README.md) | 25 | 命题 25 | 临床指南与随机试验的结论；一律以「指南 / 研究规定了 X」表述，**不提供诊疗建议**。 |
-| **合计** | **25** | — | — |
+| [医学](knowledge/medicine/README.md) | 30 | 命题 30 | 临床指南与随机试验的结论；一律以「指南 / 研究规定了 X」表述，**不提供诊疗建议**。 |
+| **合计** | **30** | — | — |
 <!-- kbcheck:end -->
 
 > 上表由 [`tools/kbcheck.py`](tools/kbcheck.py) 从 [`index.json`](index.json) 生成，**不手写**。
