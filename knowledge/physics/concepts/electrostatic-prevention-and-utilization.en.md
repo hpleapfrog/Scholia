@@ -2,7 +2,7 @@
 id: kb:physics:electrostatic-prevention-and-utilization
 type: 知识点
 title: "Prevention and utilization of static electricity"
-status: 待审
+status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
 updated: 2026-10-21

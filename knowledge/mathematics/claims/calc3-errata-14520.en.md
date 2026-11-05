@@ -2,7 +2,7 @@
 id: kb:math:calc3-errata-14520
 type: 命题
 title: "Erratum #14520 in Calculus Volume 3 (Chapter 6): Answer Key: Chapter 6"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-9525
 type: 命题
 title: "Erratum #9525 in University Physics Volume 1 (Chapter 4): section 4 https://cnx.org/contents/1Q9uMg_a@13.41:py6Hulz7@9/4-4-Uniform-Circula…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-6830
 type: 命题
 title: "Erratum #6830 in University Physics Volume 1 (Chapter 5): Problem 47"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

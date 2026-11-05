@@ -18,13 +18,13 @@ this page look more authoritative than it is — and the first rule of this libr
 
 <!-- kbcheck:begin -->
 **746** objects · **744** citable as fact · **2** not citable · **188** evidence records · **2** events
-**1 confirmed** · 53 provisional · 115 valid · 572 awaiting review
+**509 confirmed** · 53 provisional · 147 valid · 32 awaiting review
 **17** paths · all **73** learning outcomes covered · **67** (92%) taught exactly once
 T4 733 · T3 5 · T2 8 — provenance tier (**weakest link** over cited evidence)
 
 | Gap | Count | Why it counts as a gap |
 |---|---|---|
-| **Three-minute review** | 569 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
+| **Three-minute review** | 29 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
 | **Awaiting review, evidence unread** | 3 | Status is `待审`, but at least one cited source is only located, not read (or the argument is missing, or nothing is cited) — a reviewer has nothing to compare against. This is the **precondition** for review, not another kind of review. |
 | **Provenance below T4** | 13 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
 | **Missing English edition** | 0 | No `path_en`: an English reader lands on a Chinese page. |
@@ -36,23 +36,23 @@ T4 733 · T3 5 · T2 8 — provenance tier (**weakest link** over cited evidence
 | **Physics chapters still 🔴** | 2 | Against the PEP catalogue, the whole chapter has no concept entry in this library. |
 
 > One object can appear in several rows — **do not add the counts up**.
-> **The one exact partition:** review 569 + review-blocked 3 = every `待审` entry (572).
+> **The one exact partition:** review 29 + review-blocked 3 = every `待审` entry (32).
 
-### Three-minute review (569)
+### Three-minute review (29)
 
 > Open a “review one entry” issue; no writing needed. Sorted by downstream dependents: editing it affects the most other entries.
 
-- `kb:physics:kp-electric-field` · Electric field — 7 other entries list it as a prerequisite
-- `kb:physics:kp-uniform-circular-motion` · Uniform circular motion — 6 other entries list it as a prerequisite
-- `kb:physics:electromagnetic-induction` · Electromagnetic induction — 5 other entries list it as a prerequisite
-- `kb:physics:alternating-current` · Alternating current — 3 other entries list it as a prerequisite
-- `kb:physics:atomic-nucleus` · Atomic nucleus — 3 other entries list it as a prerequisite
-- `kb:physics:magnetic-field` · Magnetic field — 3 other entries list it as a prerequisite
-- `kb:physics:projectile-motion` · Projectile motion — 2 other entries list it as a prerequisite
-- `kb:physics:planck-quantum-hypothesis` · Planck's quantum hypothesis — 2 other entries list it as a prerequisite
 - `kb:physics:lorentz-force` · Lorentz force — 2 other entries list it as a prerequisite
-- `kb:physics:thermodynamic-first-law` · First law of thermodynamics — 2 other entries list it as a prerequisite
-- …and 559 more — full list: `python tools/make_tasks.py --json`
+- `kb:physics:kp-electric-potential-energy` · Electric potential energy and electric potential — 2 other entries list it as a prerequisite
+- `kb:physics:kp-electric-charge` · Electric charge — 2 other entries list it as a prerequisite
+- `kb:physics:self-and-mutual-inductance` · Self-inductance and mutual inductance — 2 other entries list it as a prerequisite
+- `kb:physics:photoelectric-effect` · The photoelectric effect — 1 other entries list it as a prerequisite
+- `kb:physics:electric-work-and-joule-law` · Electric work and Joule's law — 1 other entries list it as a prerequisite
+- `kb:physics:kp-rotational-kinematics` · Angular acceleration and rotational kinematics — 1 other entries list it as a prerequisite
+- `kb:physics:analogy-stage-attribution-invalid` · With n=2 one cannot attribute among several equally varying variables
+- `kb:physics:kp-torque` · Torque
+- `kb:science:hk-aristo-sci1a-earthquake-map` · Erratum: the 1A volume's earthquake-distribution map has an unreliable data source
+- …and 19 more — full list: `python tools/make_tasks.py --json`
 
 ### Awaiting review, evidence unread (3)
 

@@ -2,7 +2,7 @@
 id: kb:math:calc3-errata-10416
 type: 命题
 title: "Erratum #10416 in Calculus Volume 3 (Chapter 6): Example 6.67 pages 772-773 of pdf file or https://legacy.cnx.org/content/m54004/…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

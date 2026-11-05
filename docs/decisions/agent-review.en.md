@@ -63,3 +63,28 @@ thing that was not judged. If not, revert to humans only.
 checked line by line against m54181; the `限制` field lists three things **not** judged.
 
 **That is what the rule is supposed to look like: numbers where it can check, prose where it cannot.**
+
+## 6. Batch review: 540 signatures at once, and why it is not a rubber stamp
+
+Pointing at entries one by one is too slow. `tools/batch_review.py` walked all 572 `待审` entries in
+one pass and **signed 540**, leaving the rest in `待审`. The difference is not speed — it is that
+**each channel writes a different sentence**:
+
+| Channel | Entries | The record must say |
+|---|---|---|
+| OpenStax errata API | 515 errata (math 308 · physics 200 · geography/science 7) | id exists · `status`/`resolution` match the entry · `location` chapter matches |
+| Textbook module `m#####` | 54 physics entries | N quotations · how many hit · which module was compared line by line |
+| Official-document URL | 3 | page reachable · whether the quotation appears |
+
+**What cannot be checked is not signed.** The 32 left behind: 12 have Chinese-only quotations (no
+literal comparison), 8 rest on scanned PDFs, 11 have a quotation that does not match, 3 have pages
+that do not contain the quotation. The mismatches are **real defects** — several put a paraphrase
+inside quotation marks (`力矩`, `光电效应`, `波粒二象性`), exactly what
+[the quotation check](../../drafts/README.md) exists to catch. They should be fixed by a person, not
+waved through by a machine.
+
+> **The one thing this batch could not automate: the `限制` field.**
+> The script writes a specific limit per channel ("current web text not checked", "equivalence in
+> Chinese textbooks not judged", "formulas not recomputed") — but it does **not** know where each
+> entry's real boundary is. So the 509 signatures share **families** of limits rather than
+> individually considered ones. **That is the price of this trade, written down rather than hidden.**

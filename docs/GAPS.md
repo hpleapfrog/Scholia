@@ -16,13 +16,13 @@
 
 <!-- kbcheck:begin -->
 **746** 条对象 · **744** 条可作事实引用 · **2** 条不可引用 · **188** 条证据 · **2** 条事件
-**已确证 1** · 暂定确认 53 · 有效 115 · 待审 572
+**已确证 509** · 暂定确认 53 · 有效 147 · 待审 32
 **17** 条路径 · **73** 个学习成果全部有环节覆盖 · **67** 个（92%）只讲一次
 T4 733 · T3 5 · T2 8 —— 溯源档（**取最弱一环**，与「已确证」正交）
 
 | 缺口 | 数量 | 为什么算缺口 |
 |---|---|---|
-| **三分钟复核** | 569 | 状态是「待审」，论证已写、证据也读过了 —— 只差**一次复核**。复核者可以是人（署名），也可以是 agent（留四栏 `## 复核记录`），两者都写 `已确证`。 |
+| **三分钟复核** | 29 | 状态是「待审」，论证已写、证据也读过了 —— 只差**一次复核**。复核者可以是人（署名），也可以是 agent（留四栏 `## 复核记录`），两者都写 `已确证`。 |
 | **待审，但复核还开不了口** | 3 | 状态是「待审」，但引用的证据至少有一条只到 `仅定位`/`未核验`（或论证还没写、没引用证据）—— 复核者打开来源也无从判断。这是「复核」的**前置条件**，不是另一种复核。 |
 | **溯源档没到 T4 的条目** | 13 | 引用的来源里**最弱的一份**没有读到全文（`T3` 摘要 / `T2` 仅定位 / `T1` 未核验 / `T0` 无据）。这不是「内容可能不对」，是「顺着它核到底会撞上没读过的地方」。 |
 | **补英文译本** | 0 | 没有 `path_en`：英文读者点进来会落到中文页。 |
@@ -34,23 +34,23 @@ T4 733 · T3 5 · T2 8 —— 溯源档（**取最弱一环**，与「已确证�
 | **物理覆盖度仍为 🔴 的章** | 2 | 对照人教版目录，整章在本库没有任何知识点。 |
 
 > **同一个对象可能同时出现在几行里，别把数量相加**。
-> **唯一不重叠的一对：**三分钟复核 569 + 复核前置 3 = 全部 `待审` 条目（572）。
+> **唯一不重叠的一对：**三分钟复核 29 + 复核前置 3 = 全部 `待审` 条目（32）。
 
-### 三分钟复核（569）
+### 三分钟复核（29）
 
 > 人或 agent 复核一条（agent 用 `tools/review_packet.py` + `tools/quote_check.py`，写完 `## 机审记录`）。按下游依赖数排序。
 
-- `kb:physics:kp-electric-field` · 电场强度 — 7 条别的条目先修它
-- `kb:physics:kp-uniform-circular-motion` · 匀速圆周运动 — 6 条别的条目先修它
-- `kb:physics:electromagnetic-induction` · 电磁感应定律 — 5 条别的条目先修它
-- `kb:physics:alternating-current` · 交变电流 — 3 条别的条目先修它
-- `kb:physics:atomic-nucleus` · 原子核 — 3 条别的条目先修它
-- `kb:physics:magnetic-field` · 磁场 — 3 条别的条目先修它
-- `kb:physics:projectile-motion` · 抛体运动 — 2 条别的条目先修它
-- `kb:physics:planck-quantum-hypothesis` · 普朗克量子假设 — 2 条别的条目先修它
 - `kb:physics:lorentz-force` · 洛伦兹力 — 2 条别的条目先修它
-- `kb:physics:thermodynamic-first-law` · 热力学第一定律 — 2 条别的条目先修它
-- …还有 559 项 —— 完整清单：`python tools/make_tasks.py --json`
+- `kb:physics:kp-electric-potential-energy` · 电势能与电势 — 2 条别的条目先修它
+- `kb:physics:kp-electric-charge` · 电荷 — 2 条别的条目先修它
+- `kb:physics:self-and-mutual-inductance` · 自感与互感 — 2 条别的条目先修它
+- `kb:physics:photoelectric-effect` · 光电效应 — 1 条别的条目先修它
+- `kb:physics:electric-work-and-joule-law` · 电功与焦耳定律 — 1 条别的条目先修它
+- `kb:physics:kp-rotational-kinematics` · 角加速度与转动运动学 — 1 条别的条目先修它
+- `kb:physics:analogy-stage-attribution-invalid` · n=2 无法在多个同样变化的变量之间做归因
+- `kb:physics:kp-torque` · 力矩
+- `kb:science:hk-aristo-sci1a-earthquake-map` · 勘误：1A 冊地震分布图数据来源不可靠
+- …还有 19 项 —— 完整清单：`python tools/make_tasks.py --json`
 
 ### 待审，但复核还开不了口（3）
 

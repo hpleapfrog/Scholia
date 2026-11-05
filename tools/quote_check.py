@@ -80,6 +80,8 @@ def normalize(s):
                  ("\u201c", '"'), ("\u201d", '"'),
                  ("\u00a0", " "), ("\u2009", " "), ("\u202f", " ")]:
         s = s.replace(a, b)
+    # 下标写法在 Markdown 里是 `V_rms`、在 cnxml 里是 `Vrms`：下划线不是文字，去掉再比。
+    s = s.replace("_", "")
     s = re.sub(r"\s+", " ", s)
     return s.strip().lower()
 
@@ -104,10 +106,16 @@ def quotes_of(path, include_blockquotes=False):
     cands = list(re.finditer(r"`([^`\n]{%d,400})`" % MIN_CHARS, text))
     found = [(m.start(), m.group(1)) for m in cands]
     if include_blockquotes:
-        for m in re.finditer(r"^> (.{24,400})$", text, re.M):
-            # 引用块里常写成 `> \`the passage\``：反引号是排版，不是引文的一部分。
-            # 不剥掉它，同一条引文会被当成两条——一条命中、一条「未命中」，虚报一个失败。
-            found.append((m.start(), m.group(1).lstrip("> ").strip().strip("`").strip()))
+        for m in re.finditer(r"^> (.{8,400})$", text, re.M):
+            line = m.group(1).strip()
+            # 两种写法都要认：
+            #   ① `> \`the passage\`` —— 整行就是引文，反引号是排版；
+            #   ② `> 教材的例子是 \`a door opens…\`` —— **中文说明 + 行内引文**。
+            # 第 ② 种如果整行拿去比，必然不命中，然后被记成「引文造假」——假阳性比漏检更伤。
+            inner = re.findall(r"`([^`\n]{%d,400})`" % MIN_CHARS, line)
+            found.extend((m.start(), q) for q in inner)
+            if not inner:
+                found.append((m.start(), line.strip("`").strip()))
     out, seen = [], set()
     for pos, q in sorted(found):
         q = q.strip()
@@ -184,6 +192,12 @@ def check(entry, sources, threshold):
         q = normalize(item["quote"])
         if q and q in joined:
             results.append({**item, "命中": True, "相似度": 1.0, "原文": item["quote"]})
+            continue
+        # 引文里用 `...` / `…` 省略中间部分：**每一段都要在原文里**，否则不算命中。
+        parts = [normalize(x) for x in re.split(r"\.{3}|…", q) if len(normalize(x)) >= 12]
+        if len(parts) > 1 and all(p in joined for p in parts):
+            results.append({**item, "命中": True, "相似度": 1.0,
+                            "原文": "（分段命中：" + " / ".join(x[:40] for x in parts) + "）"})
             continue
         best_r, best_s = 0.0, ""
         for s in sents:

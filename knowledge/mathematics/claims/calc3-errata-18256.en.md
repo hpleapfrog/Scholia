@@ -2,7 +2,7 @@
 id: kb:math:calc3-errata-18256
 type: 命题
 title: "Erratum #18256 in Calculus Volume 3 (Chapter 6): Vector Calculus: Chapter Review: Review Exercises"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

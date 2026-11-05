@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-1993
 type: 命题
 title: "Erratum #1993 in University Physics Volume 1 (Chapter 1): Units and Measurement, Section: The Scope and Scale of Physics"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

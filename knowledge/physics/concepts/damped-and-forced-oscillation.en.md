@@ -2,7 +2,7 @@
 id: kb:physics:damped-and-forced-oscillation
 type: 知识点
 title: "Damped and forced oscillation"
-status: 待审
+status: 有效
 author: "@hpleapfrog"
 created: 2026-10-21
 updated: 2026-10-21

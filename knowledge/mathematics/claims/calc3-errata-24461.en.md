@@ -2,7 +2,7 @@
 id: kb:math:calc3-errata-24461
 type: 命题
 title: "Erratum #24461 in Calculus Volume 3 (Chapter 6): Vector Calculus: Chapter Review: Key Equations"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

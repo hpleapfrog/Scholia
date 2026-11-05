@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-17641
 type: 命题
 title: "Erratum #17641 in University Physics Volume 1 (Chapter 1): Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.5 Estimates and Fer…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

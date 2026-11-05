@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-9848
 type: 命题
 title: "Erratum #9848 in University Physics Volume 1 (Chapter 5): In Chapter 5 (Newton’s Laws of Motion) on problem 36"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

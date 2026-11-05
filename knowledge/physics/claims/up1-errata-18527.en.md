@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-18527
 type: 命题
 title: "Erratum #18527 in University Physics Volume 1 (Chapter 5): Unit 1 Mechanics: Chapter 5 Newton's Laws of Motion: Section 5.5 Newton’s Third…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20

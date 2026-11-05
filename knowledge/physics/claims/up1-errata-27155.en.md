@@ -2,7 +2,7 @@
 id: kb:physics:up1-errata-27155
 type: 命题
 title: "Erratum #27155 in University Physics Volume 1 (Chapter 1): Unit 1 Mechanics: Chapter 1 Units and Measurement: Section 1.1 The Scope and Sca…"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20
