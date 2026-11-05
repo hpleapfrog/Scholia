@@ -881,12 +881,18 @@ def sample_schema19_confirmed(root, _v):
     return False
 
 
-def sample_schema19_agent(root, _v):
-    """命题写「已机审」，但一条 `## 机审记录` 都没有 —— 等于只改了个字段。"""
+def sample_schema19_half_record(root, _v):
+    """写「已确证」：无第二名署名，`## 复核记录` 还缺栏 —— 记录半份等于没记录。"""
     for p, fm, body, _a, n in _claims_with_argument(root):
-        if n < 1 or kv(fm, "status") == "已机审":
+        if n < 1 or kv(fm, "status") == "已确证":
             continue
-        write(p, re.sub(r"(?m)^status:.*$", "status: 已机审", fm, count=1) + body)
+        names = set(re.findall(r"@([\w][\w.\-]*)", fm + body))
+        if len(names) > 1:
+            continue
+        half = ("## 复核记录\n\n- **模型**：selftest\n- **日期**：2026-11-05\n"
+                "- **引文核验**：0/0\n\n## 变更记录")
+        write(p, re.sub(r"(?m)^status:.*$", "status: 已确证", fm, count=1)
+              + body.replace("## 变更记录", half, 1))
         return True
     return False
 
@@ -1251,8 +1257,8 @@ SAMPLES = [
     ("R-README-03", "README 里的覆盖度数字被改大", sample_readme03),
     ("R-DOC-01", "FORMAT.md 状态图例删掉「已失效」", sample_doc01),
     ("R-DOC-02", "英文规则表少一条（中英 ID 集合不一致）", sample_doc02),
-    ("R-SCHEMA-19", "命题一个人署名就写「已确证」", sample_schema19_confirmed, "但全条只有"),
-    ("R-SCHEMA-19", "写「已机审」却没留机审记录", sample_schema19_agent, "没有 `## 机审记录`"),
+    ("R-SCHEMA-19", "命题一个人署名就写「已确证」", sample_schema19_confirmed, "既没有第二名复核者"),
+    ("R-SCHEMA-19", "写「已确证」但复核记录缺栏", sample_schema19_half_record, "缺 ['限制']"),
     ("R-SCHEMA-19", "只有一条论证、零攻击边就写「争议」", sample_schema19_disputed, "status=「争议」"),
     ("R-SCHEMA-19", "没有未被击倒的攻击就写「已推翻」", sample_schema19_overturned, "status=「已推翻」"),
     ("R-GRAPH-06", "两条支持边引的是同一份证据", sample_graph06, "但证据并集只有"),

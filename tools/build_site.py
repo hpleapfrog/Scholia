@@ -56,7 +56,7 @@ TYPE_ORDER = ["知识点", "命题", "教法", "误解", "资源", "路径"]
 TYPE_LABEL = {"知识点": "概念", "命题": "命题", "教法": "教法",
               "误解": "误解", "资源": "资源", "路径": "路径"}
 STATUS_TONE = {
-    "已确证": "ok", "已机审": "machine", "暂定确认": "ok", "有效": "ok",
+    "已确证": "ok", "暂定确认": "ok", "有效": "ok",
     "待审": "wait", "需复审": "warn", "争议": "warn",
     "失据": "bad", "已推翻": "bad", "已失效": "bad", "草案": "wait",
 }
@@ -235,6 +235,7 @@ def build_payload():
             "status": o["status"],
             "tier": o.get("溯源") or "T0",
             "citable": bool(o.get("可作事实引用", True)),
+            "reviewer": o.get("复核者"),
             "path": o["path"],
             "path_en": o.get("path_en"),
             "prereq": o.get("先修") or [],
@@ -444,7 +445,6 @@ const total = st['对象总数'] || D.entries.length;
 $('#kpis').innerHTML = [
   ['对象', total, ''],
   ['全文/摘要核读', Math.round(100*deep/total) + '%', 'hl'],
-  ['已机审', (st['按状态']||{})['已机审'] || 0, ''],
   ['已确证', st['已确证条数'] ?? 0, ''],
   ['证据', st['证据条数'] ?? 0, ''],
   ['学科', Object.keys(st['按学科']||{}).length, ''],
@@ -504,6 +504,7 @@ function open(id){
     badge(e.subject, ''),
     e.stage ? badge(e.stage, '') : '',
     e.citable ? '' : badge('不可作事实引用', 'cite-false'),
+    e.reviewer ? badge('复核者：' + e.reviewer, 'machine') : '',
   ].join('');
   const srcs = e.srcs.length ? `<div class="srcbox"><h3>来源 · ${e.srcs.length}</h3>` +
     e.srcs.map(s => `<div class="src"><div class="id">${esc(s.id)}${s.void?' · 已作废':''}</div>
@@ -563,8 +564,8 @@ $('#welcome').innerHTML = `
     <b>状态</b>（待审 / 有效 / 暂定确认 / 已确证）回答「有没有站得住的论证」，要人判；
     <b>溯源档</b>（T4–T0）回答「引用的来源被读到了哪一层」，机器算，取最弱一环。
     全库 <b>已确证 ${st['已确证条数'] ?? 0}</b> 条，同时 <b>${Math.round(100*deep/total)}%</b> 的来源被通读过——
-    这两句话都成立。顶上还有一格 <b>已机审</b>：agent 复核、四栏记录、来源全读——
-    <b>它是机器给的，所以不叫确证。</b></div>
+    这两句话都成立。<b>已确证不保证是人签的：</b>agent 也可以复核，但那要留四栏记录，
+    而且条目上会标 <b>复核者: agent</b>。</div>
   <div class="how">
     <div><b>想学一个概念</b>左栏选「概念」，按学科筛。正文在「## 论证」之前的部分就是给你读的。</div>
     <div><b>想核一条</b>点开任意条目，底下是它引用的证据与定位，点「打开来源」直接跳到原文。</div>

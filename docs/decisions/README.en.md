@@ -29,4 +29,4 @@
 | [gap-dashboard.md](gap-dashboard.en.md) | the gap dashboard: four exits share **one** `compute()`; what counts as a gap and what stays human; schema 5 adds `覆盖度` / `title_en` |
 | [interface-selftest.md](interface-selftest.en.md) | the three interfaces `kbcheck` cannot see: MCP handshake, `make_tasks --json`, `new_entry` scaffolding; nine checks that **really spawn processes** (including a review packet that formats but never answers) |
 | [provenance-tier.md](provenance-tier.en.md) | A second ruler beside `status`: 99% of the library rests on sources that were read, and nothing showed it; why it is not a seventh status, why the weakest link, and what it means for whether the project should continue |
-| [agent-review.md](agent-review.en.md) | Review no longer needs a third person: why a separate `已机审` rung instead of giving `已确证` to a machine, the four-field requirement, the first instance, and when to roll it back |
+| [agent-review.md](agent-review.en.md) | Who may review: an agent can sign `已确证`. The two-rung compromise the author rejected, the four-field record, how the `复核者` field repays the misreading cost, the first instance, and when to roll it back |

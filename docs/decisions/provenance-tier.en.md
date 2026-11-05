@@ -101,3 +101,10 @@ So the conclusion is not "keep piling up entries". It is two things:
 
 **The metric that decides whether this project continues is not entry 747. It is the first
 non-author.** Until then, "add another subject" and "add 300 more errata" only push the problem back.
+
+> [!NOTE]
+> **Later the same day (2026-11-05)**: "0 confirmed" above is the reading **at the moment of the
+> audit**. A few hours later the reviewer no longer had to be human, and the first `已确证` was signed
+> by an agent (`复核者: agent` in the index) — see [agent-review.md](agent-review.en.md).
+> **The conclusion is unchanged**: what is missing is people, not reading; what changed is that
+> "no third person means nothing reaches the top" is no longer true.

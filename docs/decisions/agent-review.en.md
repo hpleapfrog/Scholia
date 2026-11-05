@@ -1,60 +1,65 @@
-# Agent review: why the top splits in two instead of handing `已确证` to a machine
+# Who may review: an agent can sign `已确证` too
 
-> 2026-11-05, the author decided: **a third person is no longer required.** One author plus one
-> agent must be able to take an entry all the way. This record says how far, and why not all the way.
+> 2026-11-05. Changed twice in one day; this records the **final** version and why it ended there.
 
-## 1. The problem: an unreachable ceiling, and a queue with no exit
+## 1. The problem
 
 | Fact | Number |
 |---|---|
-| `已确证` (confirmed) | **0** — it requires a non-author human, and the library has one contributor |
-| `待审` (pending review) | 570 entries whose argument is written and whose evidence is read to full text; only a review is missing ([GAPS](../GAPS.en.md)) |
+| The bar for `已确证` | one **non-author** reviewer |
+| Contributors | 1 |
+| `待审` (pending review) | 570 entries whose argument is written and whose evidence is read to full text |
 
-This is not a content problem. **`R-GRAPH-07` reports those entries' evidence floor as "full text"** —
-everything the reviewer needs is already on the table. What is stuck is only *who signs*, and the rule
-gave that pen to humans only.
+**This is not a content problem.** Everything a reviewer needs is already on the table
+(`R-GRAPH-07` reports their evidence floor as "full text"); what is stuck is only *who signs*, and the
+rule gave that pen to humans only.
 
-## 2. Three options
+## 2. A compromise was chosen first, then rejected
 
-| Option | Outcome | Why not / why |
+The first design **split the top into two rungs**: humans sign `已确证`, agents sign `已机审`, and the
+two never share a rung. The reasoning, at the time:
+
+> The whole value of `已确证` is that no machine was involved. Let an agent write it and the rung
+> becomes free.
+
+**The author rejected that compromise the same day**: one author plus one agent should be able to take
+an entry to the top, without inventing another rung. The author was right — **two nearly identical
+rungs are indistinguishable to readers and unmemorable to authors.**
+
+## 3. The final shape: one rung, with the cost paid in information
+
+`已确证` now has **two signing paths**:
+
+| Reviewer | What the machine checks | Written into the index |
 |---|---|---|
-| A. Let an agent write `已确证` | 570 confirmations tomorrow | **Worst.** The entire value of `已确证` is that no machine was involved. Let an agent grant it and it becomes indistinguishable from model output — a free top score is no score |
-| B. Keep humans only | stays honest | Admits the library sits at 0 forever and the queue is dead weight. **Honest but useless** |
-| C. **Add a separate rung, `已机审`** | machine review reachable and distinguishable | **Chosen.** Stronger than `暂定确认`, reproducible; weaker than `已确证` in exactly one thing — judgement. So it is not called confirmed |
+| **human** (non-author) | `author` plus **≥2 distinct `@` handles** in the change log | `复核者: 人` |
+| **agent** | a complete `## 复核记录` (model · date · quotation check · limits) | `复核者: agent` |
 
-## 3. Hard conditions for `已机审` (all machine-checked)
+**Both paths require provenance tier `T4`** (every cited source read in full).
 
-1. `## 机审记录` with **all four fields**: `模型` · `日期` · `引文核验` · `限制`;
-2. **provenance tier = `T4`**: every cited source read in full (claiming "reviewed" without reading is
-   reviewing your own memory of it);
-3. an `## 论证` section (`R-SCHEMA-17`);
-4. the `限制` field **must not be empty**: a review that cannot say what it could not judge is not a
-   review. This is not a moral requirement — it is what makes the record usable to the next reviewer.
+> [!IMPORTANT]
+> **The real cost of letting an agent sign is not "the score gets cheap" — it is that readers will
+> misread it.** Someone who sees `已确证` assumes a person looked. So the cost must be repaid in
+> **information**, not in adjectives: `复核者` is a **field** in `index.json` and `citations.json`,
+> surfaced by the site and the MCP server. **An `已确证` without that field is a violation**
+> (`R-SCHEMA-19` guarantees it is always computed).
 
-`R-SCHEMA-19` enforces 1–2 (and the argument requirement), with an injected failing sample in
-`tools/verify_rules.py` ("writes 已机审 without a record").
+## 4. Why those four fields
 
-## 4. What it does not do
+`模型` · `日期` · `引文核验` · `限制`. The first three are **reproducible** credentials: who, when, how
+many quotations checked. The fourth is the conscience of the rule:
 
-- **No judgement.** A machine review answers only "does the source say this" and "does the conclusion
-  exceed that passage". Discipline-specific applicability, textbook-system differences and teaching
-  effectiveness go into `限制`, never into a conclusion.
-- **No impersonation.** `llms.txt` requires `已机审` to be reported as "agent review, not human review".
-- **No automatic promotion.** Turning an `已机审` entry into `已确证` still requires a second `@`
-  signature; there is no automatic path between the rungs.
+- `限制` saying "limited capability" = **a platitude**, and the rule has failed;
+- `限制` saying "whether PEP textbooks use the same phrasing was not checked" = **usable** — the next
+  person knows where to continue.
+
+**The test**: open an `已确证` with `复核者: agent` and see whether its `限制` names a specific
+thing that was not judged. If not, revert to humans only.
 
 ## 5. The first instance
 
-[向心力不是一种新的力](../../knowledge/physics/claims/centripetal-is-not-a-new-force.en.md): `待审` → `已机审`.
-Five English quotations, five hits (threshold 0.92, each 1.00), checked line by line against m54181;
-the `限制` field lists three things **not** judged (whether PEP textbooks phrase it the same way,
-whether Chinese teaching already treats centripetal force as a force kind, and the boundary of the
-non-inertial-frame paragraph). **That is what the rule is supposed to look like: numbers where it can
-check, prose where it cannot.**
+[向心力不是一种新的力](../../knowledge/physics/claims/centripetal-is-not-a-new-force.en.md):
+`待审` → `已确证`, `复核者: agent`. Five English quotations, five hits (threshold 0.92, each 1.00),
+checked line by line against m54181; the `限制` field lists three things **not** judged.
 
-## 6. When to roll this back
-
-If `已机审` becomes a one-click pass — `限制` filled with platitudes, `引文核验` reduced to a number
-with nothing to compare against — **the rule has failed and should revert to humans only**.
-The test is simple: **open an `已机审` entry and see whether its `限制` names a specific thing that
-was not judged.**
+**That is what the rule is supposed to look like: numbers where it can check, prose where it cannot.**

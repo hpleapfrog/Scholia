@@ -35,7 +35,7 @@ TYPES = {"知识点", "命题", "教法", "误解", "路径", "资源"}
 
 ALLOWED_STATUS = {
     "知识点": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
-    "命题": {"草案", "待审", "争议", "暂定确认", "已机审", "已确证", "已推翻", "失据", "需复审", "已失效"},
+    "命题": {"草案", "待审", "争议", "暂定确认", "已确证", "已推翻", "失据", "需复审", "已失效"},
     "教法": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
     "误解": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
     "资源": {"草案", "待审", "有效", "争议", "需复审", "已失效"},
@@ -142,9 +142,8 @@ STATUS_MEANING = {
     "有效": "当前没有已知的**存活攻击**；**不等于**已被独立复核",
     "争议": "存活集合里存在结论互相冲突的论证",
     "暂定确认": "作者已核对，但**没有非作者的独立复核**",
-    "已机审": "**由 agent 复核过**：来源逐份读过、引文逐条核过（记录在 `## 机审记录`）。"
-              "**不是**人的判断，也**不是** `已确证`",
-    "已确证": "本库最高等级：有**非作者**的独立复核。**（截至生成时，全库一条都没有）**",
+    "已确证": "本库最高等级：有一名**非作者**的复核者按规则核过。"
+              "复核者可以是人，也可以是 agent——**是谁写在 `复核者` 字段上**",
     "需复审": "刚被改动过，**还没有人重新看过**",
     "已推翻": "已被论证推翻",
     "失据": "**曾有论证，但被击倒了** —— 主张还在，**当前没有任何支撑它的论证**",
@@ -167,7 +166,6 @@ STATUS_EN = {
     "有效": "effective",
     "争议": "disputed",
     "暂定确认": "provisionally confirmed",
-    "已机审": "agent-reviewed",
     "已确证": "confirmed",
     "需复审": "needs re-review",
     "已推翻": "overturned",
@@ -187,10 +185,10 @@ EVENT_STATUS_EN = {
 # 这条链的强度仍是「只核了位置」，不是「4/5 读完了」。
 # 它**不是**第七种 status：不表示真假，也不参与 `暂定确认` 的判定，
 # 所以「0 条已确证」与「98% 全文核读」可以同时成立，且两句话都是真的。
-# `已机审` 的记录字段：**四个都得有**，缺一个就等于没记录（见 R-SCHEMA-19）。
+# agent 复核（写 `已确证` 的第二条通道）必须留的记录字段：**四个都得有**，缺一个就等于没记录。
 # 为什么是这四个：模型是谁、什么时候、引文核了几条、**哪些判不了**——
-# 最后一项是这条规则的良心：一份不说自己边界的机审记录，比没有记录更危险。
-AGENT_REVIEW_SECTION = "机审记录"
+# 最后一项是这条规则的良心：一份不说自己边界的复核记录，比没有记录更危险。
+AGENT_REVIEW_SECTION = "复核记录"
 AGENT_REVIEW_FIELDS = ("模型", "日期", "引文核验", "限制")
 
 TIER_ORDER = ["T4", "T3", "T2", "T1", "T0"]
@@ -281,6 +279,23 @@ def parse_evidence_index():
     return out
 
 
+def reviewer_kind(o):
+    """`已确证` 是**谁**签的：`"人"` / `"agent"` / `None`。
+
+    这一格不能省。2026-11-05 起 agent 也能写 `已确证`，于是「已确证」这三个字
+    不再自动等于「有一个人类看过」。**读者有权一眼看出是谁**——
+    所以它被算成一个字段，而不是藏在正文某一段里。
+    """
+    names = set(re.findall(r"@([\w][\w.\-]*)", fm_value(o["fm"], "author") or ""))
+    names |= set(re.findall(r"@([\w][\w.\-]*)",
+                            section_body(o["text"], "变更记录") or ""))
+    if len(names) >= 2:
+        return "人"
+    if (section_body(o["text"], AGENT_REVIEW_SECTION) or "").strip():
+        return "agent"
+    return None
+
+
 def provenance_tier(ids, evidence):
     """一条对象踩到的**最弱一环**读到了哪一层（T0–T4）。
 
@@ -364,6 +379,9 @@ def build_indexes(objects, events):
             # 与 `status` **正交**：状态要人判，这一维机器算得出。
             "溯源": provenance_tier(ids, evidence),
         }
+        # `复核者` 只在这一格有意义时出现：其它状态没有「谁签的」这回事。
+        if st == "已确证":
+            entry["复核者"] = reviewer_kind(o)
         # 英文标题：让英文页面与英文检索能**用英文叫出这条**，而不是把中文标题
         # 塞给英文读者。只读一次 en 文件的前 4 KB（front-matter 一定在里面）。
         if _en_exists:
@@ -412,6 +430,8 @@ def build_indexes(objects, events):
                 "学段": e["学段"],
                 "来源": src_list([e["来源"]])[0] if e["来源"] else "",
             } for e in ext]
+        if st == "已确证":
+            cite["复核者"] = entry.get("复核者")
         cites[_id] = cite
 
     by_type, by_status, by_subject = collections.Counter(), collections.Counter(), collections.Counter()
@@ -500,6 +520,9 @@ def build_indexes(objects, events):
         ],
         "状态含义": STATUS_MEANING,
         "状态英文": STATUS_EN,
+        "复核者含义": "`已确证` 条目的 `复核者`：`人` = 有一名非作者的人类署名；"
+                      "`agent` = 由 agent 复核并留下四栏 `## 复核记录`。"
+                      "**两者都是 `已确证`，但来源不同——转述时请照抄这个字段。**",
         "溯源档含义": TIER_MEANING,
         "溯源档英文": TIER_EN,
         "溯源档怎么算": "取该对象 `citations.json` 里全部 `证据` 的**最弱一环**"
@@ -1797,7 +1820,7 @@ def check_status_has_argument(objects, errors):
     那等于把整套「证据 + 反驳」的机制留了一个后门——**状态可以宣称一件没发生的事**。
     空集只能对应「待审」（从未论证）或「失据」（曾有论证被击倒），而后者本身也必须有论证。
     """
-    need = {"暂定确认", "已机审", "已确证", "失据", "已推翻"}
+    need = {"暂定确认", "已确证", "失据", "已推翻"}
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
         if st in need and not arg_ids(o["text"]):
@@ -1834,8 +1857,7 @@ def check_status_reachability(objects, errors):
 
     | 状态 | 机器要求 | 人仍然要判 |
     |---|---|---|
-    | `已机审` | `## 机审记录` 四栏齐全（模型 · 日期 · 引文核验 · 限制）**且**引用的每份证据都读到 `全文` | 记录里说的核验是否**真的发生过**（M-07） |
-    | `已确证` | `author` 与「变更记录」里出现 **≥2 个不同的 `@` 署名** | 第二名署名者是否**真的**独立复核过（AI 不算，M-07） |
+    | `已确证` | 两条通道**之一**：①`author` 与「变更记录」里 **≥2 个不同 `@` 署名**；②`## 复核记录` 四栏齐全（模型 · 日期 · 引文核验 · 限制）。**两条通道都要求**引用的每份证据读到 `全文` | 记录里说的核验是否**真的发生过**（M-07） |
     | `争议` | ≥2 条论证 **且** ≥1 条**入边 `攻击`** | 两个存活论证的结论是否**真的冲突** |
     | `已推翻` | ≥1 条**未被击倒**的入边 `攻击` | 攻击方自己站不站得住 |
 
@@ -1846,23 +1868,26 @@ def check_status_reachability(objects, errors):
     evidence = parse_evidence_index()
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
-        if st == "已机审":
-            # 2026-11-05 起，复核不再要求「第三个人」——**agent 也是一名复核者**。
-            # 但它不能自称「人的判断」：所以状态是 `已机审`，不是 `已确证`。
-            # 机器能查的只有「记录齐不齐」与「来源读没读透」，见下面的三条。
+        if st == "已确证":
+            # 两条署名通道（2026-11-05 决定）：**人或 agent 都可以复核**。
+            # 机器只查「署名/记录在不在」，判断仍归 M-07。
+            names = set(re.findall(r"@([\w][\w.\-]*)", fm_value(o["fm"], "author") or ""))
+            names |= set(re.findall(r"@([\w][\w.\-]*)", section_body(o["text"], "变更记录") or ""))
             body = section_body(o["text"], AGENT_REVIEW_SECTION) or ""
-            if not body.strip():
-                errors.append(
-                    f"{rel}: status=「已机审」，但没有 `## {AGENT_REVIEW_SECTION}` —— "
-                    "机审必须留下**可核的记录**，否则它和「把字段改成已确证」没有区别"
-                    "（R-SCHEMA-19）")
-            else:
-                missing = [f for f in AGENT_REVIEW_FIELDS if f not in body]
-                if missing:
+            missing = [f for f in AGENT_REVIEW_FIELDS if f not in body] if body.strip() else None
+            record_ok = bool(body.strip()) and not missing
+            if len(names) < 2 and not record_ok:
+                if body.strip() and missing:
                     errors.append(
-                        f"{rel}: `## {AGENT_REVIEW_SECTION}` 缺 {missing} —— "
+                        f"{rel}: status=「已确证」，`## {AGENT_REVIEW_SECTION}` 缺 {missing} —— "
                         f"记录要答得上「谁审的（模型）· 什么时候（日期）· 引文核了几条（引文核验）· "
                         f"哪些判不了（限制）」（R-SCHEMA-19）")
+                else:
+                    errors.append(
+                        f"{rel}: status=「已确证」，但既没有第二名复核者的 `@` 署名，"
+                        f"也没有 `## {AGENT_REVIEW_SECTION}` —— `已确证` 必须能追到**是谁核的**："
+                        "在「变更记录」里写下复核者（人），或留一份四栏记录（agent）"
+                        "（R-SCHEMA-19）")
             ids = evidence_ids_of(o["fm"])
             shallow = [e for e in ids
                        if not evidence.get(e) or evidence[e].get("作废")
@@ -1872,17 +1897,9 @@ def check_status_reachability(objects, errors):
                     f"{e}（{'索引里没有' if not evidence.get(e) else evidence[e].get('核验深度')}）"
                     for e in shallow[:4])
                 errors.append(
-                    f"{rel}: status=「已机审」，但引用的证据没有全部读到 `全文` —— {detail}。"
-                    "机审的前提是**每一份来源都通读过**（溯源 T4）：没读透就说「复核过」，"
+                    f"{rel}: status=「已确证」，但引用的证据没有全部读到 `全文` —— {detail}。"
+                    "确证的前提是**每一份来源都通读过**（溯源 T4）：没读透就说「复核过」，"
                     "复核的只是自己脑子里那版（R-SCHEMA-19）")
-        elif st == "已确证":
-            names = set(re.findall(r"@([\w][\w.\-]*)", fm_value(o["fm"], "author") or ""))
-            names |= set(re.findall(r"@([\w][\w.\-]*)", section_body(o["text"], "变更记录") or ""))
-            if len(names) < 2:
-                errors.append(
-                    f"{rel}: status=「已确证」，但全条只有 {len(names)} 个 `@` 署名 —— "
-                    "`已确证` 需要**一名非作者的独立复核**，请在「变更记录」里写下复核人"
-                    f"（不是作者本人；AI 复核不计，见 M-07）（R-SCHEMA-19）")
         elif st == "争议":
             n_args = len(arg_ids(o["text"]))
             if n_args < 2 or not atk_in.get(rel):
@@ -2145,7 +2162,7 @@ MANUAL_RULES = [
     ("M-04", "`教法` 的 `禁忌` 标注证据强度（强/弱），且与 `风险` 不混"),
     ("M-05", "不上传教材原文或扫描页"),
     ("M-06", "新引用资源逐条核对许可（教材 CC BY ≠ 它嵌的东西也是）"),
-    ("M-07", "AI 攻击需人复核 + 署名披露（AI **不能**写「已确证」，只能写「已机审」并留四栏记录）"),
+    ("M-07", "AI 攻击需人复核 + 署名披露（AI **可以**复核并写「已确证」，但必须留四栏 `## 复核记录`；复核者是谁由 `复核者` 字段披露）"),
     ("M-08", "统计数字不手写（交给 `--write-index` 生成）"),
     ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」与「质疑来源是否为本次引用而伪造」"),
     ("M-10", "文档中英成对存放（`<name>.md` 中文 + 同目录 `<id 派生>.en.md` 英文），改一份同步另一份"),
@@ -2236,7 +2253,6 @@ def render_stats_block(index):
         f"| 学科 / Subjects | {subs} |",
         f"| 证据 / Evidence | {s['证据条数']}（含作废 / void {s['作废证据条数']}） |",
         f"| 溯源 / Provenance | **{deep} / {s['对象总数']}（{deep / total:.0%}）读到全文或摘要** —— {tn} |",
-        f"| 已机审 / Agent-reviewed | **{s['按状态'].get('已机审', 0)}** —— agent 复核：记录四栏齐全 + 来源全读 |",
         f"| 已确证 / Confirmed | **{s['已确证条数']}** |",
     ])
 
@@ -2502,8 +2518,7 @@ def render_gaps_block(data, en=False):
                  f"**{s['事件']}** events")
         if st:
             L.append(f"**{st.get('已确证', 0)} confirmed** · {st.get('暂定确认', 0)} provisional · "
-                     f"{st.get('有效', 0)} valid · {st.get('待审', 0)} awaiting review"
-                     f" · {st.get('已机审', 0)} agent-reviewed")
+                     f"{st.get('有效', 0)} valid · {st.get('待审', 0)} awaiting review")
         if p:
             L.append(f"**{p['条数']}** paths · all **{p['声明']}** learning outcomes covered · "
                      f"**{p['单环节']}** ({p['单环节占比']}%) taught exactly once")
@@ -2518,7 +2533,7 @@ def render_gaps_block(data, en=False):
                  f"**{s['事件']}** 条事件")
         if st:
             L.append(f"**已确证 {st.get('已确证', 0)}** · 暂定确认 {st.get('暂定确认', 0)} · "
-                     f"有效 {st.get('有效', 0)} · 待审 {st.get('待审', 0)} · 已机审 {st.get('已机审', 0)}")
+                     f"有效 {st.get('有效', 0)} · 待审 {st.get('待审', 0)}")
         if p:
             L.append(f"**{p['条数']}** 条路径 · **{p['声明']}** 个学习成果全部有环节覆盖 · "
                      f"**{p['单环节']}** 个（{p['单环节占比']}%）只讲一次")

@@ -18,13 +18,13 @@ this page look more authoritative than it is — and the first rule of this libr
 
 <!-- kbcheck:begin -->
 **746** objects · **744** citable as fact · **2** not citable · **188** evidence records · **2** events
-**0 confirmed** · 53 provisional · 115 valid · 572 awaiting review · 1 agent-reviewed
+**1 confirmed** · 53 provisional · 115 valid · 572 awaiting review
 **17** paths · all **73** learning outcomes covered · **67** (92%) taught exactly once
 T4 733 · T3 5 · T2 8 — provenance tier (**weakest link** over cited evidence)
 
 | Gap | Count | Why it counts as a gap |
 |---|---|---|
-| **Three-minute review** | 569 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (`已确证`) or an agent (`已机审`, four-field record). |
+| **Three-minute review** | 569 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
 | **Awaiting review, evidence unread** | 3 | Status is `待审`, but at least one cited source is only located, not read (or the argument is missing, or nothing is cited) — a reviewer has nothing to compare against. This is the **precondition** for review, not another kind of review. |
 | **Provenance below T4** | 13 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
 | **Missing English edition** | 0 | No `path_en`: an English reader lands on a Chinese page. |

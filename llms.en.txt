@@ -19,12 +19,12 @@
 > **None** has passed "independent review by a non-author".
 > **Do not present anything here as a "confirmed fact".**
 >
-> ### 2.1 `已机审` means **machine**-reviewed — never report it as confirmed
+> ### 2.1 When citing `已确证`, give the `复核者` field too
 >
-> `已机审` = reviewed by an agent: every cited source read, every quotation checked, recorded in the
-> entry's `## 机审记录` (model · date · quotation check · limits). **It is not a human judgement.**
-> Say "an `已机审` entry (agent review, not human review)"; **do not** upgrade it to `已确证` or
-> "expert-confirmed".
+> `已确证` means a non-author reviewer checked it — **the reviewer may be human or an agent**.
+> Agent-reviewed entries carry a `## 复核记录` (model · date · quotation check · limits) and the
+> index says `复核者: agent`. Quote that field: "an `已确证` entry (reviewer: agent)".
+> **Do not** turn agent review into "human review" — that is exactly why the field exists.
 >
 > ### 2. Do **not** cite entries whose status is `失据` (lost basis)
 >
@@ -52,7 +52,7 @@
 > | `T0` | a cited record is void, or the id cannot be found |
 >
 > **`status` and `溯源` are two rulers; neither replaces the other.** `status=待审` says
-> "no non-author review yet"; `溯源=T4` says "every source was read in full". Report only the
+> "no review yet"; `溯源=T4` says "every source was read in full". Report only the
 > first and readers hear "nobody checked"; report only the second and they hear "already
 > reviewed". **Both together is the honest statement.**
 >

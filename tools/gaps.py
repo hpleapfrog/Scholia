@@ -46,9 +46,9 @@ READ_DEPTH = {"全文", "摘要"}
 # 字段：key / 中文名 / 英文名 / 中文为什么 / 英文为什么 / 中文怎么做 / 英文怎么做
 GROUPS = [
     ("review", "三分钟复核", "Three-minute review",
-     "状态是「待审」，论证已写、证据也读过了 —— 只差**一次复核**：人或 agent。人走 `已确证`，agent 走 `已机审`（留四栏记录）。",
+     "状态是「待审」，论证已写、证据也读过了 —— 只差**一次复核**。复核者可以是人（署名），也可以是 agent（留四栏 `## 复核记录`），两者都写 `已确证`。",
      "Status is `待审`, the argument is written and the evidence has been read — "
-     "only one review is missing: by a human (`已确证`) or an agent (`已机审`, four-field record).",
+     "only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`.",
      "人或 agent 复核一条（agent 用 `tools/review_packet.py` + `tools/quote_check.py`，写完 `## 机审记录`）。按下游依赖数排序。",
      "Open a “review one entry” issue; no writing needed. Sorted by downstream dependents: "
      "editing it affects the most other entries."),

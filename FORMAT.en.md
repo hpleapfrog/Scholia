@@ -315,14 +315,14 @@ nobody has read; an average hides exactly that.
 > [!IMPORTANT]
 > **The tier is not a seventh `status` and does not feed the `status` computation.**
 > It does not say "true"; it says "can you follow this to the end and actually verify it".
-> That is why "**0 confirmed**" and "**99% at T3 or above**" can both hold, and both are true —
+> That is why "**confirmed only in a handful of cases**" and "**most entries at T3 or above**" can both hold —
 > the status column simply cannot show this difference, which is the whole point of having a second one.
 >
 > `tools/kbcheck.py` writes it into `index.json` (`objects[].溯源`) and `citations.json`
 > (`by_id.<id>.溯源`), **never into an entry's front-matter**: a hand-written derived value drifts,
 > and the only value of this dimension is that it is correct.
 
-When citing, **give it together with `status`**: "`status=待审` (written, no non-author review) ·
+When citing, **give it together with `status`**: "`status=待审` (written, no review yet) ·
 `溯源=T4` (every cited source read in full)" is closer to the truth than either half alone.
 
 ### Extra required field for 教法 (methods)
@@ -457,7 +457,7 @@ Rules are dead; people execute them:
 ```
 1. List all arguments of the entry; mark who attacks whom
 2. Compute the surviving set: an argument survives only if all its attackers are defeated
-3. Surviving set agrees      → 已机审 (agent review, recorded) or 已确证 (human, independent non-author)
+3. Surviving set agrees      → 已确证 (reviewer: a non-author human, or an agent with a record)
    Surviving set conflicts   → 争议
    Surviving set empty       → 待审 (never argued) or 失据 (argued, then defeated)
 4. Write status and its grounds into the PR description and the 变更记录 table
@@ -466,22 +466,26 @@ Rules are dead; people execute them:
 ### Who may review: a human, or an agent
 
 **Since 2026-11-05 a third person is no longer required.** One author plus one agent can take an
-entry all the way — the top simply splits into two rungs:
+entry all the way to `已确证` — **but who signed it must be readable.**
 
-| Reviewer | Status | What the machine checks | What it means |
-|---|---|---|---|
-| **human** (non-author) | `已确证` | `author` plus **≥2 distinct `@` handles** in the change log | another **human** pair of eyes agreed |
-| **agent** | `已机审` | `## 机审记录` complete (model · date · quotation check · limits) **and** provenance tier `T4` (every cited source read in full) | a **reproducible machine review**, not a human judgement |
+| Reviewer | What the machine checks | What the reader sees |
+|---|---|---|
+| **human** (non-author) | `author` plus **≥2 distinct `@` handles** in the change log | `复核者: 人` |
+| **agent** | a complete `## 复核记录` (model · date · quotation check · limits) | `复核者: agent` |
+
+**Both paths must clear the same evidence bar: provenance tier `T4`** (every cited source read in
+full). Claiming "reviewed" without reading is reviewing your own memory of it.
 
 > [!IMPORTANT]
-> **Why a separate rung instead of handing `已确证` to agents.**
-> The whole value of `已确证` is that a machine did **not** grant it: a reader who sees it knows an
-> independent pair of eyes agreed, independently of any model. Let an agent write it and the rung
-> becomes free — and a free top score is no score.
+> **Why keep the `复核者` field at all.**
+> Because `已确证` no longer automatically means "a human looked at this". The cost of letting an
+> agent sign is not that the score gets cheap — it is that **readers will misread it**. So the cost
+> is repaid in information: who signed, how many quotations were checked, and what could not be
+> judged are all in the index, visible to anyone.
 >
-> `已机审` is not a demotion: it is stronger than `暂定确认` (author-only) **and reproducible** —
-> the record names the model, the date and how many quotations were checked, so the next person can
-> rerun it. The only thing it is weaker at is **judgement**. That is why it is not called confirmed.
+> The `限制` field **must not be empty**. A machine review that names its own boundary is worth more
+> than one pretending to have none; and **platitudes ("limited capability") are the signal that this
+> rule has failed** — at which point it should revert to humans only.
 
 ### "Empty surviving set" has two causes
 
