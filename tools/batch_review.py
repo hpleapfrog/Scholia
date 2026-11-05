@@ -133,7 +133,12 @@ def is_formula(q):
     """公式/符号串：有 `=` 且词少。它们在 cnxml 里是 MathML，文字提取后必然对不上——
     把它算「引文造假」是假阳性，算「已核」是自欺。单列一栏，写进 `限制`。"""
     words = re.findall(r"[A-Za-z][A-Za-z'\-]+", q)
-    return "=" in q and len(words) <= 14
+    nonspace = sum(1 for c in q if not c.isspace()) or 1
+    letters = sum(1 for c in q if c.isalpha())
+    # 两条都要看：**含 `=` 且字母占比低、或词很少**。只看词数会把
+    # `the energy of a photon or photoelectron to be E = hf` 这种**英文句子**误判成公式，
+    # 然后整条记成「没有可核的引文」——那是漏检，比误报更难发现。
+    return "=" in q and (letters / nonspace < 0.6 or len(words) <= 6)
 
 
 def check_modules(entry_path, ids):

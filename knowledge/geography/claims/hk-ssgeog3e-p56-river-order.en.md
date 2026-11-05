@@ -2,7 +2,7 @@
 id: kb:geog:hk-ssgeog3e-p56-river-order
 type: 命题
 title: "Erratum: p.56 「河盆等級」 should be 「河流等級」"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-05
 updated: 2026-10-05

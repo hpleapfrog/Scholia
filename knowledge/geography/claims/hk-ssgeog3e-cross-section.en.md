@@ -2,7 +2,7 @@
 id: kb:geog:hk-ssgeog3e-cross-section
 type: 命题
 title: "Erratum: 「橫切面 cross-section」 should be 「cross section」"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-05
 updated: 2026-10-05

@@ -2,7 +2,7 @@
 id: kb:geog:hk-ssgeog3e-p13-typo
 type: 命题
 title: "Erratum: p.13 「道路的度」 should be 「道路的長度」"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-05
 updated: 2026-10-05

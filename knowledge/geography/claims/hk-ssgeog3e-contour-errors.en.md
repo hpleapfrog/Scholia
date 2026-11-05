@@ -2,7 +2,7 @@
 id: kb:geog:hk-ssgeog3e-contour-errors
 type: 命题
 title: "Erratum: systematic contour-label errors on topographic maps (at least 6)"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-05
 updated: 2026-10-05

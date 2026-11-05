@@ -2,7 +2,7 @@
 id: kb:physics:method-ucm-cut-string
 type: 教法
 title: "Uniform circular motion · any level: cut the string and ask where it goes"
-status: 待审
+status: 有效
 author: "@hpleapfrog"
 created: 2026-10-18
 updated: 2026-10-18
@@ -17,7 +17,7 @@ edges:
   支持: []
   攻击: []
 knowledge_point: ["[uniform circular motion](../concepts/uniform-circular-motion.en.md)"]
-evidence: [ev-081]
+evidence: [ev-081, ev-082]
 license: CC-BY-SA-4.0
 ---
 

@@ -2,7 +2,7 @@
 id: kb:geog:hk-ssgeog3e-p45-map-ref
 type: 命题
 title: "Erratum: p.45 「清水灣」 map extract is misreferenced"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-05
 updated: 2026-10-05
