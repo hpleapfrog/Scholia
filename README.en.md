@@ -16,6 +16,9 @@
 | **An AI / program** reading content | [**llms.txt**](llms.txt) + parse [**index.json**](index.json) — what must not be quoted, each entry's real source |
 | Wiring it into an agent | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) — zero-dependency read-only MCP server |
 | **Adding an entry** (contributor) | [`templates/`](templates/README.en.md) + `python tools/new_entry.py` — one command gives you a valid skeleton |
+| Want the **errata as data** (teachers · textbook editors) | [`exports/errata.csv`](exports/errata.csv) — every errata in the library in one table (count lives in the file, **never hard-coded here**); regenerate with `python tools/export_errata.py` |
+| Want **one page** instead of a pile of files | `python tools/build_site.py` → open `site/index.html` (single file, zero dependencies, searchable) |
+| **What's still missing** | [**docs/GAPS.en.md**](docs/GAPS.en.md) — the whole picture on one generated page; to start work, run `python tools/make_tasks.py` |
 | **Building your own** (personal) | [`templates/`](templates/README.en.md) — copy the skeletons; no fork, no network |
 | Curious how it's built | keep reading |
 
@@ -124,7 +127,8 @@ this repository satisfies attribution.
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
 | 学科 / Subjects | 物理 Physics 370 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 29 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
 | 证据 / Evidence | 188（含作废 / void 5） |
-| 已确证 / Confirmed | **0** |
+| 溯源 / Provenance | **738 / 746（99%）读到全文或摘要** —— T4 733 · T3 5 · T2 8 |
+| 已确证 / Confirmed | **1** |
 <!-- kbcheck:end -->
 
 Sources: OpenStax *Physics* (**CC BY**) · Utah Grade-7 Science · publisher errata · AASM clinical
@@ -136,8 +140,19 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 > it is **never hand-written** — a hand-written number drifts, and a drifting number is an assertion.
 
 > [!IMPORTANT]
-> **Nothing is "confirmed" yet.** That needs an **independent non-author review**, and there is
-> currently one contributor. **The rules are being followed, not missing.**
+> **Two rulers live in that table — do not read them as one.**
+> The `Confirmed` row says **how many entries cleared a review**; the `provenance` row says **the
+> sources were read**. Both hold at once, and reporting either alone misleads: the first alone reads as
+> "nobody checked", the second alone as "already reviewed". The provenance tier takes the
+> **weakest link** (the shallowest-read of all cited evidence); definition in
+> [FORMAT §4](FORMAT.en.md). **The machine computes it; `已确证` is given by a human — that line does not move.**
+
+> [!IMPORTANT]
+> **The bar for `已确证` has not moved, but the reviewer no longer has to be human.** Since
+> 2026-11-05 an agent may sign: it must leave a four-field `## 复核记录` (model · date · quotation
+> check · limits) and clear provenance tier `T4` (every cited source read in full). **Who signed is
+> written into the `复核者` field**, because `已确证` no longer automatically means "a human looked
+> at it" ([why](docs/decisions/agent-review.en.md)).
 
 ## Open questions (the important ones)
 
@@ -175,20 +190,22 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
    satisfy "≥2 arguments" — the only thing absent is **an opponent for the attack**. The signature census is
    the same fact from the other side: `@hpleapfrog` 1,379 times, the other three handles only in historical
    changelog rows. → [decision record](docs/decisions/status-zero-is-auditable.en.md)
-3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)):
-   **the count has grown from 1 to 7** — "angle in geometry" ×4 (reflection, its teaching method, refraction,
-   its teaching method), "vector" ×2 (force, acceleration), "vector direction of angular velocity" ×1
-   (uniform circular motion); "progression" has 3 instances and the body text even grew a `后续` convention
-   on its own — **the "wait for 3–5 cases" trigger has passed**. Recommended: **option 1** of Issue #17
-   (an optional `外部先修` field; machine-check "was it declared" and "does the same name recur").
-   **A schema change needs its own review and was not made this round**: what is delivered here is an input
-   to that review, not its outcome. → [decision record](docs/decisions/out-of-library-prerequisites.en.md)
+3. Prerequisites outside the subject cannot be expressed ([Issue #17](https://github.com/hpleapfrog/Scholia/issues/17))
+   — **option 1 has landed** (2026-10-30): an optional `外部先修` field
+   (`名称` / `标识` / `学科` / `学段` / `来源`), machine-checked **only** for shape, source registration
+   and recurrence of the same key. It is **not a `先修` edge** and does not enter the acyclicity check.
+   7 entries / 8 declarations have been migrated (`angle`×4, `vector`×2, `inverse-trig`×1,
+   `angular-velocity-vector`×1). When a key appears in ≥2 objects, [GAPS](docs/GAPS.en.md) lists it
+   under “build a node?”. → [field decision](docs/decisions/external-prerequisites-field.en.md) ·
+   [earlier review input](docs/decisions/out-of-library-prerequisites.en.md)
 4. Support-edge independence cannot be computed; goal coverage counts "whether", not "how well".
    **Both sentences were split into a computable half and a human half.** `R-GRAPH-06` computes **the same
    source identifier** (measured: `教材内建分组教学变体#a3` has **42 support edges · 21 pieces of evidence ·
    1 source identifier** — the line "the same source repeated 26 times" has grown to 42, still from one book);
-   `R-GRAPH-07` computes **redundancy and reading depth** (all 15 learning outcomes are covered, but
-   **11 of them, 73%, are taught exactly once**). **Cross-source independence still belongs to `M-03`.**
+   `R-GRAPH-07` computes **redundancy and reading depth** (17 paths · **all 73 learning outcomes are
+   covered, but 67 of them, 92%, are taught exactly once**; live numbers at the top of [GAPS](docs/GAPS.en.md)). Both dimensions are now written into the
+   `覆盖度` field of `index.json`, so agents, the task list and [GAPS](docs/GAPS.en.md) see the same fact
+   instead of a hint that only exists in the terminal. **Cross-source independence still belongs to `M-03`.**
    This item also produced one **falsely clean** lesson: the first version parsed the sequencing table by
    column position and reported an unreadable path as "no redundancy problem". That branch now has **two**
    injected samples, the second one pushing the 覆盖 column off the end of the table, and reverting to the
@@ -200,8 +217,21 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
 
 ```
 knowledge/         knowledge objects: concepts · claims · methods · misconceptions · paths · resources
+events/            events (separate from objects: no argument, no truth value)
+index.json         machine entry (navigation + may it be cited)
+citations.json     citation kits, by id (locator · limits · disclaimer)
+evidence.json      evidence registry (grade · verification depth · locator · license)
 evidence/          evidence index and reproducible raw data
 docs/RULES.md      rule registry (mechanically enforced vs. human-reviewed)
+docs/GAPS.md       gap report (generated: what is missing, what to do first)
 docs/decisions/    the "why" behind rules — cases, incidents, inferences (moved out, not deleted)
-tools/             kbcheck.py (validator) · scholia_mcp.py (MCP server)
+templates/         entry skeletons (new_entry.py takes its structure from here)
+tools/             kbcheck.py validator · verify_rules.py rule self-test · gaps.py gap computation
+                   make_tasks.py tasks · new_entry.py scaffolding · review_packet.py review material
+                   selftest.py interface checks · scholia_mcp.py MCP server
+                   quote_check.py quotation audit · evid.py id allocation
+                   export_errata.py errata export · build_site.py single-file site
+                   (artifact goes to site/, not in version control)
+drafts/            unfinished drafts: not knowledge objects, not in the index
+exports/           generated data: errata.csv (every errata in the library) · errata.json
 ```

@@ -25,6 +25,12 @@ from pathlib import Path
 # 仓库根目录（本文件在 tools/ 下）
 ROOT = Path(__file__).resolve().parent.parent
 
+# 同目录的 `gaps.py`：缺口清单的**唯一**计算入口。
+# `docs/GAPS.md` 的生成块、`make_tasks.py`、MCP 的 `scholia_gaps` 都走它——
+# 四处呈现、一个脑子，否则「页面说 37、任务清单说 35」这种矛盾没人发现。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gaps  # noqa: E402  同目录、只读、零依赖
+
 TYPES = {"知识点", "命题", "教法", "误解", "路径", "资源"}
 
 ALLOWED_STATUS = {
@@ -54,6 +60,10 @@ REQUIRED_SECTIONS = {
 # 因此：事件**不进** `objects`、不进学科统计、没有「论证」段、没有任何边。
 EVENT_TYPE = "事件"
 EVENT_DIR = "events/"
+
+# 库外的未核稿：**不是知识对象**，不参与配对、不参与状态统计。
+# 它存在是因为「删掉别人的稿子」比「把它放错地方」更糟（见 drafts/README.md）。
+DRAFT_DIR = "drafts/"
 EVENT_FIELDS = ["id", "type", "title", "status", "author", "created",
                 "updated", "evidence", "license"]
 EVENT_SECTIONS = ["陈述", "依据", "变更记录"]
@@ -68,6 +78,14 @@ ALLOWED_STAGES = {"小学", "初中", "高中", "大学", "不限"}
 ALLOWED_LEVEL_CODES = {"BL", "OL", "AL"}
 LEVEL_UNDIVIDED = "不分档"
 LEVEL_ALLOWED = ALLOWED_LEVEL_CODES | {LEVEL_UNDIVIDED}
+
+# 可选字段 `外部先修`：声明「要懂这条，先会 X」，而 X 在本库**没有节点**。
+# 它与 `edges.先修` 分开：后者是**库内图**上的边，前者只是**声明**（见 FORMAT.md §3）。
+# `标识` 是稳定 ASCII 键，用来把「同一个前置在多个条目里反复出现」数出来。
+EXTERNAL_PREREQ_KEY = "外部先修"
+EXTERNAL_PREREQ_FIELDS = ("名称", "标识", "学科", "学段", "来源")
+EXTERNAL_PREREQ_ID = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+EXTERNAL_PREREQ_SOURCE = re.compile(r"^ev-\d+$")
 
 # 指向本仓库自身的绝对链接（Issue 模板里出现过）。
 # 它们必须和相对链接一样被校验——否则改标题就会悄悄改坏一个链接，而没人发现。
@@ -124,7 +142,8 @@ STATUS_MEANING = {
     "有效": "当前没有已知的**存活攻击**；**不等于**已被独立复核",
     "争议": "存活集合里存在结论互相冲突的论证",
     "暂定确认": "作者已核对，但**没有非作者的独立复核**",
-    "已确证": "本库最高等级：有**非作者**的独立复核。**（截至生成时，全库一条都没有）**",
+    "已确证": "本库最高等级：有一名**非作者**的复核者按规则核过。"
+              "复核者可以是人，也可以是 agent——**是谁写在 `复核者` 字段上**",
     "需复审": "刚被改动过，**还没有人重新看过**",
     "已推翻": "已被论证推翻",
     "失据": "**曾有论证，但被击倒了** —— 主张还在，**当前没有任何支撑它的论证**",
@@ -157,6 +176,35 @@ STATUS_EN = {
 EVENT_STATUS_EN = {
     "持续更新": "ongoing",
     "已封存": "archived",
+}
+
+# ── 溯源档：机器算得出、又不冒充真值的那一维 ────────────────────────────────
+# `status` 回答「有没有站得住的论证」（要人判），`溯源档` 回答
+# 「它踩的每一份来源，被读到了哪一层」（机器可算）。
+# 取**最弱一环**：一条论证引了 5 份来源、4 份读完，剩 1 份只核了位置——
+# 这条链的强度仍是「只核了位置」，不是「4/5 读完了」。
+# 它**不是**第七种 status：不表示真假，也不参与 `暂定确认` 的判定，
+# 所以「0 条已确证」与「98% 全文核读」可以同时成立，且两句话都是真的。
+# agent 复核（写 `已确证` 的第二条通道）必须留的记录字段：**四个都得有**，缺一个就等于没记录。
+# 为什么是这四个：模型是谁、什么时候、引文核了几条、**哪些判不了**——
+# 最后一项是这条规则的良心：一份不说自己边界的复核记录，比没有记录更危险。
+AGENT_REVIEW_SECTION = "复核记录"
+AGENT_REVIEW_FIELDS = ("模型", "日期", "引文核验", "限制")
+
+TIER_ORDER = ["T4", "T3", "T2", "T1", "T0"]
+TIER_MEANING = {
+    "T4": "**全文核读**：引用的每一份来源都通读过，含定位、许可与版本",
+    "T3": "**摘要核读**：最弱的一份只读到摘要",
+    "T2": "**仅定位**：最弱的一份只核了「这一页有没有这段」，没有通读",
+    "T1": "**未核验**：最弱的一份登记了，但没有人打开过",
+    "T0": "**无据**：引用的证据里有一条已作废，或索引里根本没有这个编号",
+}
+TIER_EN = {
+    "T4": "**read in full** — every cited source was read end to end (locator, licence, version)",
+    "T3": "**read as summary** — the weakest cited source was read only as a summary",
+    "T2": "**located only** — the weakest source was checked for “is this passage here”, not read",
+    "T1": "**unverified** — the weakest source is registered but nobody has opened it",
+    "T0": "**no basis** — a cited evidence record is void, or the id is not in the registry",
 }
 
 # 每个学科的覆盖说明（手写；**不写数字**，数字由 objects 自动统计在旁边）
@@ -231,6 +279,45 @@ def parse_evidence_index():
     return out
 
 
+def reviewer_kind(o):
+    """`已确证` 是**谁**签的：`"人"` / `"agent"` / `None`。
+
+    这一格不能省。2026-11-05 起 agent 也能写 `已确证`，于是「已确证」这三个字
+    不再自动等于「有一个人类看过」。**读者有权一眼看出是谁**——
+    所以它被算成一个字段，而不是藏在正文某一段里。
+    """
+    names = set(re.findall(r"@([\w][\w.\-]*)", fm_value(o["fm"], "author") or ""))
+    names |= set(re.findall(r"@([\w][\w.\-]*)",
+                            section_body(o["text"], "变更记录") or ""))
+    if len(names) >= 2:
+        return "人"
+    if (section_body(o["text"], AGENT_REVIEW_SECTION) or "").strip():
+        return "agent"
+    return None
+
+
+def provenance_tier(ids, evidence):
+    """一条对象踩到的**最弱一环**读到了哪一层（T0–T4）。
+
+    为什么取最弱而不取平均、不取最多：一条论证的可核性由它**最薄的那份来源**
+    决定。5 份来源里 4 份读完、1 份只核了位置，读者顺着最薄的那份一路核下去，
+    就会撞上「这里其实没人读过」。平均分会把这件事藏起来。
+
+    **它不回答「对不对」**，只回答「顺着它能不能一路核到底」。所以它既能与
+    「0 条已确证」共存，也不构成对 `status` 的任何背书。
+    """
+    depths = []
+    for e in ids:
+        rec = evidence.get(e)
+        if not rec or rec.get("作废"):
+            return "T0"
+        depths.append(DEPTH_RANK.get(rec.get("核验深度"), 0))
+    if not depths:
+        return "T0"
+    worst = min(depths)
+    return {4: "T4", 3: "T3", 2: "T2", 1: "T1"}.get(worst, "T0")
+
+
 def build_indexes(objects, events):
     """生成**三份**机器可读文件 —— 每份只装一件事。
 
@@ -260,13 +347,20 @@ def build_indexes(objects, events):
         return out
 
     objs, cites = [], {}
+    ext_groups = collections.defaultdict(lambda: {
+        "名称": set(), "学科": set(), "学段": set(), "对象": []})
+    # 路径强度：R-GRAPH-07 的两个维度（单环节 / 证据薄）写进索引，
+    # 否则它只活在终端提示里——agent 与任务清单都看不见。
+    path_stats = path_outcome_stats(objects)
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
-        ids = re.findall(r"ev-\d+", o["fm"])
+        ids = evidence_ids_of(o["fm"])
+        ext = external_prereqs_of(o["fm"])
         pre_h = o["text"].split("\n## ", 1)[0]
         _id = fm_value(o["fm"], "id")
         _en = en_path(rel, _id) if _id else None
-        objs.append({
+        _en_exists = bool(_en and (ROOT / _en).exists())
+        entry = {
             "id": _id,
             "type": o["type"],
             "title": fm_value(o["fm"], "title"),
@@ -275,15 +369,51 @@ def build_indexes(objects, events):
             # 英文译本的路径（文件名由 id 派生）；没有译本时为 null。
             # **AI 引用时说中文页还是英文页要说得出来**——只给一个 path，
             # 英文读者会被送去中文文件。
-            "path_en": _en if _en and (ROOT / _en).exists() else None,
+            "path_en": _en if _en_exists else None,
             "学科": fm_nested(o["fm"], "学科"),
             "学段": fm_nested(o["fm"], "学段"),
             "可作事实引用": st not in NOT_CITABLE,
             "先修": [Path(x).name for x in fm_links(o["fm"], "先修")],
             "论证": sorted(arg_ids(o["text"])),
-        })
-        cites[_id] = {
+            # 最弱一环读到了哪一层：T4 全文 / T3 摘要 / T2 仅定位 / T1 未核验 / T0 无据。
+            # 与 `status` **正交**：状态要人判，这一维机器算得出。
+            "溯源": provenance_tier(ids, evidence),
+        }
+        # `复核者` 只在这一格有意义时出现：其它状态没有「谁签的」这回事。
+        if st == "已确证":
+            entry["复核者"] = reviewer_kind(o)
+        # 英文标题：让英文页面与英文检索能**用英文叫出这条**，而不是把中文标题
+        # 塞给英文读者。只读一次 en 文件的前 4 KB（front-matter 一定在里面）。
+        if _en_exists:
+            head = (ROOT / _en).read_text(encoding="utf-8")[:4000]
+            m = re.search(r"^title:\s*(.+)$", head, re.M)
+            if m:
+                entry["title_en"] = m.group(1).strip().strip('"')
+        # 路径的覆盖度：`已覆盖/声明` 是「有没有」，`单环节成果` 是「够不够」。
+        # 只在**声明了 outcomes** 的路径上写——没声明时这个数字没有意义。
+        if o["type"] == "路径":
+            d = path_stats.get(rel) or {}
+            if d.get("声明"):
+                cov = {"已覆盖": d["已覆盖"], "声明": d["声明"]}
+                if d["单环节"]:
+                    cov["单环节成果"] = d["单环节"]
+                if d["证据薄"]:
+                    cov["证据薄成果"] = d["证据薄"]
+                entry["覆盖度"] = cov
+        # 可选字段：没有就不写，避免给 700+ 条对象各加一个空数组。
+        if ext:
+            entry["外部先修"] = ext
+            for e in ext:
+                g = ext_groups[e["标识"]]
+                g["名称"].add(e["名称"])
+                g["学科"].add(e["学科"])
+                g["学段"].add(e["学段"])
+                if _id not in g["对象"]:
+                    g["对象"].append(_id)
+        objs.append(entry)
+        cite = {
             "status": st,
+            "溯源": provenance_tier(ids, evidence),
             "证据": ids,
             "来源": src_list(ids),
             "适用": fm_nested(o["fm"], "适用"),
@@ -292,17 +422,30 @@ def build_indexes(objects, events):
             "引用时须写明": (f"state={st}"
                         + ("；本库判定它**没有说话算数的论证**" if st in NOT_CITABLE else "")),
         }
+        if ext:
+            cite["外部先修"] = [{
+                "名称": e["名称"],
+                "标识": e["标识"],
+                "学科": e["学科"],
+                "学段": e["学段"],
+                "来源": src_list([e["来源"]])[0] if e["来源"] else "",
+            } for e in ext]
+        if st == "已确证":
+            cite["复核者"] = entry.get("复核者")
+        cites[_id] = cite
 
     by_type, by_status, by_subject = collections.Counter(), collections.Counter(), collections.Counter()
+    by_tier = collections.Counter()
     for x in objs:
         by_type[x["type"]] += 1
         by_status[x["status"]] += 1
         by_subject[x["学科"].split(" ")[0]] += 1
+        by_tier[x["溯源"]] += 1
 
     # 事件：与 objects 并列的一节。只有证据，没有论证、没有边。
     events_list = []
     for rel, o in sorted(events.items()):
-        ids = re.findall(r"ev-\d+", o["fm"])
+        ids = evidence_ids_of(o["fm"])
         _eid = fm_value(o["fm"], "id")
         _een = en_path(rel, _eid) if _eid else None
         events_list.append({
@@ -324,13 +467,33 @@ def build_indexes(objects, events):
                         "事件只记录官方发布了什么，**不可作真值判断**"),
         }
 
+    ext_summary = {
+        "说明": "`objects[].外部先修` 声明的是**本库没有对应节点**的前置："
+                "它只说明「要懂这条，先会 X」，**不是 `先修` 边**，也不表示 X 已在库内。"
+                "同一个 `标识` 在 ≥2 个对象里出现时，说明该考虑为它建一个知识点节点。",
+        "按标识": [{
+            "标识": k,
+            "名称": sorted(g["名称"]),
+            "学科": sorted(g["学科"]),
+            "学段": sorted(g["学段"]),
+            "出现次数": len(g["对象"]),
+            "对象": g["对象"],
+        } for k, g in sorted(ext_groups.items())],
+    }
+
     index = {
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。运行 `python tools/kbcheck.py --write-index` 重新生成。",
-        "schema_version": 3,
+        "schema_version": 6,
         "repo": "https://github.com/hpleapfrog/Scholia",
         "读到这个文件的 AI 请注意": [
             "**本库是跨学科的**，覆盖程度**按学科差别很大**；它**不只做物理**。",
             "**本库没有任何一条处于 `已确证`。** 不要把这里的任何内容当作『已确证的事实』转述。",
+            "每条对象还有一个与 `status` **正交**的 `溯源`（T0–T4）：它说的是"
+            "**引用的来源被读到了哪一层**（取最弱一环），不是真假。"
+            "`T4`＝引用的每一份来源都通读过；`T2`=最弱那份只核了位置；"
+            "`T1`=登记了但没人打开过；`T0`=有作废或查不到的编号。"
+            "**引用时请连它一起给出**——「T4 · 全书通读」与「T2 · 只核了位置」"
+            "对读者是完全不同的承诺，而 `status` 这一栏看不出这个差别。",
             "`可作事实引用=false` 的条目（状态为 失据/已推翻/已失效）**不要引用**。",
             "**判断「本库有没有 X」要查本文件的 `objects`，不要凭印象。**",
             "**不要整读 `index.json` 之外的东西**：本文件只回答「有什么、能不能引」。"
@@ -341,6 +504,9 @@ def build_indexes(objects, events):
             "每条对象有两个路径：`path` 是**中文正本**，`path_en` 是**英文译本**"
             "（文件名由 `id` 派生，同目录；没有译文时为 null）。"
             "**给英文读者引用时请用 `path_en`，不要把中文文件名发给对方。**",
+            "`objects[].外部先修` 是**本库没有节点**的前置（名称/标识/学科/学段/来源），"
+            "**不是 `先修` 边**；它只说明「要懂这条，先会 X」。"
+            "同一个 `标识` 在多个对象里出现，说明该考虑建节点，而不是说本库已经有 X。",
             "本文件顶层的 `事件` 与 `objects` **是两回事**：`objects` 是知识对象"
             "（命题/知识点/…），`事件` 是**按时间记录事实**的另一类记录，"
             "**不含论证、不可作真值判断**；引用事件时给 `status`（持续更新/已封存）"
@@ -354,17 +520,28 @@ def build_indexes(objects, events):
         ],
         "状态含义": STATUS_MEANING,
         "状态英文": STATUS_EN,
+        "复核者含义": "`已确证` 条目的 `复核者`：`人` = 有一名非作者的人类署名；"
+                      "`agent` = 由 agent 复核并留下四栏 `## 复核记录`。"
+                      "**两者都是 `已确证`，但来源不同——转述时请照抄这个字段。**",
+        "溯源档含义": TIER_MEANING,
+        "溯源档英文": TIER_EN,
+        "溯源档怎么算": "取该对象 `citations.json` 里全部 `证据` 的**最弱一环**"
+                        "（`evidence.json` 的 `核验深度`）：任一条作废或查不到 → T0。"
+                        "它**不是** `status`：不表示真假，不参与「已确证」判定。",
         "事件状态含义": EVENT_STATUS_MEANING,
         "事件状态英文": EVENT_STATUS_EN,
         "统计": {
             "对象总数": len(objs),
             "按类型": dict(by_type),
             "按状态": dict(by_status),
+            "按溯源档": {k: by_tier[k] for k in TIER_ORDER if by_tier.get(k)},
             "按学科": dict(by_subject),
             "已确证条数": by_status.get("已确证", 0),
             "事件条数": len(events_list),
             "证据条数": len(evidence),
             "作废证据条数": sum(1 for r in evidence.values() if r["作废"]),
+            "外部先修标识数": len(ext_groups),
+            "外部先修声明数": sum(len(v["对象"]) for v in ext_groups.values()),
         },
         "known_limits": {
             "总览": "本库是**跨学科**的，**各学科覆盖程度差别很大**。"
@@ -378,6 +555,7 @@ def build_indexes(objects, events):
                     "记录的是「这本教材建议怎么教」，**不是**「这样教有效」。",
             "程序性知识": "本库**不装**「怎么做一件事」的流程（见 FORMAT.md「本库不装什么」）。",
         },
+        "外部先修": ext_summary,
         "objects": objs,
         "事件": events_list,
     }
@@ -385,7 +563,7 @@ def build_indexes(objects, events):
     citations = {
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。**按 id 取一条**，不要整份读。"
                     "这里装的是引用时要写进去的东西：定位、限定、免责块位置。",
-        "schema_version": 1,
+        "schema_version": 3,
         "by_id": cites,
     }
 
@@ -498,10 +676,139 @@ def fm_links(fm, key):
     return re.findall(r"\[[^\]]*\]\(([^)]+)\)", line)
 
 
+SCOPE_KEYS = ("学科", "学段", "适用", "条件", "水平档", "范围")
+
+
 def fm_nested(fm, key):
-    """取 front-matter 里可能是缩进（如 scope 下）的键值。"""
+    """取 front-matter 里可能是缩进（如 scope 下）的键值。
+
+    **优先在 `scope:` 块里找。** 可选字段 `外部先修` 的每个列表项也带 `学科` / `学段`，
+    而它们说的是**前置**的学科与学段，不是本条对象的。若全局取第一个匹配，
+    把 `外部先修` 写在 `scope` 前面就会让对象的学科/学段被前置的值顶掉——
+    这种错误不会报错，只会让索引与医学/学段检查悄悄用错值。
+    """
+    if key in SCOPE_KEYS:
+        m = re.search(r"^scope:[ \t]*\n((?:[ \t]+.*\n?)*)", fm, re.M)
+        if m:
+            mm = re.search(rf"^[ \t]+{key}:\s*(.+)$", m.group(1), re.M)
+            if mm:
+                return mm.group(1).strip()
     m = re.search(rf"^[ \t]*{key}:\s*(.+)$", fm, re.M)
     return m.group(1).strip() if m else ""
+
+
+def _parse_external_block(fm):
+    """把可选字段 `外部先修` 解析成 `(found, raw_entries, problems)`。
+
+    `raw_entries` 每项形如 `{"line": 行号, "fields": {子字段: 值}}`；
+    **不在这里判合法性**——格式错误要由 `check_external_prereqs` 带规则 ID 报出来，
+    而索引生成只需要能读出来的部分（坏样本会在校验里失败，不会静默进索引）。
+
+    只支持块列表：
+
+    ```yaml
+    外部先修:
+      - 名称: 几何中的角
+        标识: angle
+        学科: 数学
+        学段: 初中
+        来源: ev-026
+    ```
+
+    行内值只接受 `[]`，但空声明仍会由 `check_external_prereqs` 按「声明了却没有任何条目」
+    报错——没有库外前置就删掉字段。写成别的行内值会报问题，因为本库的解析器不装 YAML，
+    无法可靠处理行内 map 列表。
+    """
+    lines = fm.split("\n")
+    start = next((i for i, line in enumerate(lines)
+                  if re.match(r"^外部先修:[ \t]*(.*)$", line)), None)
+    if start is None:
+        return False, [], []
+
+    inline = re.match(r"^外部先修:[ \t]*(.*)$", lines[start]).group(1).strip()
+    # `外部先修: # 说明` / `外部先修: [] # 没有` 都是合法 YAML；注释不参与判断。
+    inline = re.split(r"(?:^|\s+)#", inline, maxsplit=1)[0].strip()
+    problems = []
+    if inline and inline != "[]":
+        problems.append((start + 1, "`外部先修` 必须是缩进列表（或 `[]`），不能写成行内值"))
+        return True, [], problems
+
+    entries, cur = [], None
+    for i in range(start + 1, len(lines)):
+        line = lines[i]
+        if not line.strip():
+            continue
+        if not line.startswith((" ", "\t")):
+            break
+        stripped = line.lstrip()
+        if stripped.startswith("-"):
+            if cur is not None:
+                entries.append(cur)
+            cur = {"line": i + 1, "fields": {}}
+            rest = stripped[1:].strip()
+            if rest:
+                if ":" not in rest:
+                    problems.append((i + 1, "`-` 后面必须是 `子字段: 值`"))
+                else:
+                    k, v = rest.split(":", 1)
+                    cur["fields"][k.strip()] = v.strip()
+            continue
+        if cur is None:
+            problems.append((i + 1, "`外部先修` 的子字段必须写在 `-` 列表项下"))
+            continue
+        if ":" not in stripped:
+            problems.append((i + 1, "`外部先修` 列表项内必须是 `子字段: 值`"))
+            continue
+        k, v = stripped.split(":", 1)
+        k = k.strip()
+        if k in cur["fields"]:
+            problems.append((i + 1, f"同一项里重复子字段 `{k}`"))
+        cur["fields"][k] = v.strip()
+    if cur is not None:
+        entries.append(cur)
+
+    if inline == "[]" and entries:
+        problems.append((start + 1, "`外部先修: []` 后面不能再跟列表项"))
+    return True, entries, problems
+
+
+def _clean_external_value(v):
+    """去掉首尾空白、成对引号与 YAML 行内注释。
+
+    FORMAT 的示例在值后面写了 `# ...` 注释；用户复制示例时，注释不能
+    变成 `来源` / `学段` 的一部分。YAML 里 `#` 只有前面有空白时才是注释，
+    所以只按「空白 + #」切；引号内的 `#` 保留。
+    """
+    v = (v or "").strip()
+    if not v:
+        return ""
+    quote = v[0] if v[0] in "\"'" else ""
+    if quote:
+        end = v.find(quote, 1)
+        if end != -1:
+            return v[1:end].strip()
+    v = re.split(r"\s+#", v, maxsplit=1)[0].strip()
+    return v.strip('"').strip("'").strip()
+
+
+def external_prereqs_of(fm):
+    """取出**结构完整**的 `外部先修` 条目（供索引与双语比对使用）。
+
+    缺子字段的条目在这里被跳过；它们会由 `check_external_prereqs` 报错。
+    """
+    _found, raw, _problems = _parse_external_block(fm)
+    out = []
+    for e in raw:
+        f = {k: _clean_external_value(v) for k, v in e["fields"].items()}
+        if all(f.get(k) for k in EXTERNAL_PREREQ_FIELDS):
+            out.append({k: f[k] for k in EXTERNAL_PREREQ_FIELDS})
+    return out
+
+
+def external_source_ids(fm):
+    """`外部先修.来源` 里的证据编号（与对象自己的 `evidence` 分开）。"""
+    return [e["来源"] for e in external_prereqs_of(fm)
+            if EXTERNAL_PREREQ_SOURCE.fullmatch(e["来源"])]
 
 
 # YAML 里**不能作为裸标量（plain scalar）开头**的指示符。
@@ -692,14 +999,14 @@ def check_graph(objects, errors, warnings):
         for tgt in fm_links(fm, "先修"):
             r = resolve_link(path, tgt)
             dest = objects.get(r) if r else None
-            # `路径` 是唯一例外：它的 `先修` 声明的是**外部先修**——
+            # `路径` 是唯一例外：它的 `先修` 声明的是**路径外前置**——
             # 「这条路径要求你先会的东西，但本路径不教它」。
             # `check_paths` 一直靠这个字段判「先修缺口」不在路径内，
             # 而这条检查以前把它一并禁掉了：两条规则互相打架，
             # 只是此前所有路径的 `先修` 都写成 `[]`，从没撞上。
             if t not in ("知识点", "路径"):
                 errors.append(
-                    f"{rel}: 只有「知识点」（以及声明外部先修的「路径」）可以有 `先修` 边"
+                    f"{rel}: 只有「知识点」（以及声明路径外前置的「路径」）可以有 `先修` 边"
                     f"（FORMAT.md §2），本条 type={t}（R-GRAPH-01）")
             if dest is None:
                 errors.append(f"{rel}: `先修` 指向的不是知识对象 -> {tgt}（R-GRAPH-01）")
@@ -759,9 +1066,9 @@ def check_paths(objects, errors, warnings):
         if o["type"] != "路径":
             continue
         # **只看正文，不看 front-matter。**
-        # `edges.先修` 里的链接是「外部先修」的声明，不是「本路径引用了它」；
-        # 早先按整篇扫链接，于是声明成外部先修的概念又被当成路径内引用，
-        # 进而要求它的先修也必须在路径内——外部先修等于白声明，还会连锁报错。
+        # `edges.先修` 里的链接是「路径外前置」的声明，不是「本路径引用了它」；
+        # 早先按整篇扫链接，于是声明成路径外前置的概念又被当成路径内引用，
+        # 进而要求它的先修也必须在路径内——路径外前置等于白声明，还会连锁报错。
         body = o["text"]
         fm = parse_front_matter(body)
         if fm:
@@ -783,19 +1090,19 @@ def check_paths(objects, errors, warnings):
                     if kr and objects.get(kr, {}).get("type") == "知识点":
                         refs.add(kr)
 
-        external = set()
+        outside = set()
         for tgt in fm_links(o["fm"], "先修"):
             r = resolve_link(o["path"], tgt)
             if r:
-                external.add(r)
+                outside.add(r)
 
         for r in sorted(refs):
             for p in fm_links(objects[r]["fm"], "先修"):
                 pr = resolve_link(objects[r]["path"], p)
-                if pr and pr not in refs and pr not in external:
+                if pr and pr not in refs and pr not in outside:
                     errors.append(
                         f"{rel}: 先修缺口 —— 引用了「{Path(r).stem}」，"
-                        f"但它的先修「{Path(pr).stem}」不在本路径内，也未声明为外部先修")
+                        f"但它的先修「{Path(pr).stem}」不在本路径内，也未声明为路径外前置")
 
         # 路径跨学段提示
         pstage = stages_of(o)
@@ -854,23 +1161,19 @@ def check_path_steps(objects, errors):
 PATH_COVERAGE = {}      # 路径 rel -> (已覆盖成果数, 声明成果数)
 
 
-def check_path_outcomes(objects, errors, warnings):
-    """目标覆盖度 —— 从前是人工判断，这里改成机械校验。
+def path_outcome_stats(objects):
+    """每条路径的成果覆盖：数量 + 两个「够不够」维度。**纯计算，不报错。**
 
-    路径在 front-matter 声明 `outcomes`（可观测的学习成果，编号 o1/o2/…），
-    并在 `## 编排` 表里为每个环节标注它覆盖哪些成果。校验器检查：
-    每个声明的成果是否至少被一个环节覆盖。
+    为什么要单独拎出来：`R-GRAPH-07` 原本只在终端打印提示——
+    读者、agent 和任务清单都看不见「这条路径只有一个环节覆盖」。
+    算一次、写进 `index.json`，同一条事实才能被所有下游用上
+    （`scholia_search` 能看见，`make_tasks.py` 能派活，`docs/GAPS.md` 能统计）。
 
-    **「有没有」之外再算两个可查的维度**（这是「够不够」里**机器能算**的那部分，
-    教学上够不够仍要人判）：
-
-    1. **冗余度**：这个成果被**几个环节**覆盖。只有 1 个环节 = 一处讲砸就没有第二次机会
-    2. **读没读过**：覆盖它的这些条目，其证据的**最高核验深度**
-       （`仅定位` / `未核验` 的覆盖，说到底是「排了个位置」，不是「有依据地覆盖」）
+    返回 `{路径 rel: {声明, 已覆盖, 缺覆盖, 单环节, 证据薄, 深度上限, 覆盖外}}`。
+    `声明` 为 0 表示这条路径没写 `outcomes`（覆盖度仍只能人工判断）。
     """
     ev = parse_evidence_index()
-    stats = {}
-    strength = {}
+    out = {}
     for rel, o in objects.items():
         if o["type"] != "路径":
             continue
@@ -878,11 +1181,6 @@ def check_path_outcomes(objects, errors, warnings):
         m = re.search(r"^outcomes:\s*\n((?:[ \t]+.*\n?)*)", o["fm"], re.M)
         block = m.group(1) if m else ""
         declared = re.findall(r"\b(o\d+)\b", block)
-
-        if not declared:
-            warnings.append(
-                f"{rel}: 未声明 `outcomes` —— 目标覆盖度无法机械校验（仍是人工判断）")
-            continue
 
         body = section_body(o["text"], "编排") or ""
         covered = set(re.findall(r"\b(o\d+)\b", body))
@@ -922,9 +1220,6 @@ def check_path_outcomes(objects, errors, warnings):
                             depths[oid].append(d)
 
         missing = [x for x in declared if x not in covered]
-        stats[rel] = (len(declared) - len(missing), len(declared))
-        PATH_COVERAGE[rel] = stats[rel]
-
         thin = [x for x in declared if 0 < steps.get(x, 0) <= 1]
         unread = [x for x in declared if depths.get(x)
                   and max((DEPTH_RANK.get(d, 0) for d in depths[x])) <= DEPTH_RANK["仅定位"]]
@@ -932,24 +1227,61 @@ def check_path_outcomes(objects, errors, warnings):
         # 而真相是「所有覆盖条目的证据都读到了 全文」——两者要让读者分得清。
         per_outcome_best = [max((DEPTH_RANK.get(d, 0) for d in depths[x]), default=0)
                             for x in declared if depths.get(x)]
-        ceiling = DEPTH_NAME.get(min(per_outcome_best), "") if per_outcome_best else ""
-        strength[rel] = (thin, unread, ceiling)
-        if thin:
+        out[rel] = {
+            "声明": len(declared),
+            "已覆盖": len(declared) - len(missing),
+            "缺覆盖": missing,
+            "单环节": thin,
+            "证据薄": unread,
+            "深度上限": DEPTH_NAME.get(min(per_outcome_best), "") if per_outcome_best else "",
+            "覆盖外": sorted(covered - set(declared)),
+        }
+    return out
+
+
+def check_path_outcomes(objects, errors, warnings):
+    """目标覆盖度 —— 从前是人工判断，这里改成机械校验。
+
+    路径在 front-matter 声明 `outcomes`（可观测的学习成果，编号 o1/o2/…），
+    并在 `## 编排` 表里为每个环节标注它覆盖哪些成果。校验器检查：
+    每个声明的成果是否至少被一个环节覆盖。
+
+    **「有没有」之外再算两个可查的维度**（这是「够不够」里**机器能算**的那部分，
+    教学上够不够仍要人判）：
+
+    1. **冗余度**：这个成果被**几个环节**覆盖。只有 1 个环节 = 一处讲砸就没有第二次机会
+    2. **读没读过**：覆盖它的这些条目，其证据的**最高核验深度**
+       （`仅定位` / `未核验` 的覆盖，说到底是「排了个位置」，不是「有依据地覆盖」）
+    """
+    data = path_outcome_stats(objects)
+    stats = {}
+    strength = {}
+    for rel, d in data.items():
+        if not d["声明"]:
             warnings.append(
-                f"{rel}: 成果 {thin} **只由一个环节覆盖** —— "
+                f"{rel}: 未声明 `outcomes` —— 目标覆盖度无法机械校验（仍是人工判断）")
+            continue
+
+        stats[rel] = (d["已覆盖"], d["声明"])
+        PATH_COVERAGE[rel] = stats[rel]
+        strength[rel] = (d["单环节"], d["证据薄"], d["深度上限"])
+
+        if d["单环节"]:
+            warnings.append(
+                f"{rel}: 成果 {d['单环节']} **只由一个环节覆盖** —— "
                 "覆盖度是「有没有」，冗余度是「够不够」的第一层（R-GRAPH-07）")
-        if unread:
+        if d["证据薄"]:
             warnings.append(
-                f"{rel}: 成果 {unread} 的覆盖条目**证据最高只到 `仅定位`/`未核验`** —— "
+                f"{rel}: 成果 {d['证据薄']} 的覆盖条目**证据最高只到 `仅定位`/`未核验`** —— "
                 "位置排上了，依据还没读过（R-GRAPH-07）")
 
-        if missing:
+        if d["缺覆盖"]:
             errors.append(
-                f"{rel}: 目标覆盖度不足 —— 以下学习成果没有任何环节覆盖: {missing}（R-GRAPH-03）")
-        extra = covered - set(declared)
-        if extra:
+                f"{rel}: 目标覆盖度不足 —— 以下学习成果没有任何环节覆盖: "
+                f"{d['缺覆盖']}（R-GRAPH-03）")
+        if d["覆盖外"]:
             errors.append(
-                f"{rel}: 编排里覆盖了未声明的成果编号: {sorted(extra)}（R-GRAPH-03）")
+                f"{rel}: 编排里覆盖了未声明的成果编号: {d['覆盖外']}（R-GRAPH-03）")
 
     return stats, strength
 
@@ -994,14 +1326,111 @@ def check_evidence_ids(objects, events, errors):
             void.add(m.group(1).lower())
 
     for rel, o in {**objects, **events}.items():
-        ids = re.findall(r"ev-\d+", o["fm"], re.I)
-        for ev in sorted({x.lower() for x in ids}):
+        own = {x.lower() for x in evidence_ids_of(o["fm"])}
+        ext = {x.lower() for x in external_source_ids(o["fm"])} - own
+        for ev in sorted(own):
             if ev not in known:
                 errors.append(f"{rel}: `evidence` 引用了索引里没有的编号 -> {ev}（R-EVID-01）")
             elif ev in void:
                 errors.append(
                     f"{rel}: `evidence` 引用了**已作废**的编号 -> {ev}"
                     f"（作废的证据不能再来支撑结论）（R-EVID-01）")
+        for ev in sorted(ext):
+            if ev not in known:
+                errors.append(
+                    f"{rel}: `外部先修.来源` 引用了索引里没有的编号 -> {ev}（R-EVID-01）")
+            elif ev in void:
+                errors.append(
+                    f"{rel}: `外部先修.来源` 引用了**已作废**的编号 -> {ev}"
+                    f"（作废的证据不能再来声明前置）（R-EVID-01）")
+
+
+def check_external_prereqs(objects, errors, warnings):
+    """R-SCHEMA-20：可选字段 `外部先修` 的形状、枚举、来源格式与复发提示。
+
+    **它只管「声明得是否完整」，不管「这个前置是否真的必需」。**
+    后者是内容判断，和 `M-03` 一样留给人；本字段的价值是把「库里没有 X 节点，
+    但 N 个条目都需要它」从**正文里的一句备注**变成**可查询、可计数的声明**。
+
+    报错（阻塞）：
+    - `外部先修:` 声明了却没有任何列表项；
+    - 列表项缺五个子字段之一、出现未知子字段、同一项重复子字段；
+    - `标识` 不是 `[a-z0-9][a-z0-9-]*`，或在同一条目里重复；
+    - `学段` 不是枚举值；
+    - `来源` 不是单个 `ev-###`（编号是否存在/作废由 `R-EVID-01` 管）。
+
+    提示（不阻塞）：
+    - 同一个 `标识` 在 ≥2 个对象里出现 —— 「该考虑建节点」；
+    - 同一个 `名称` 配了不同 `标识` —— 可能是同一前置被写成了两个键；
+    - `学科` 不在本库已登记的学科里 —— 不阻塞（库外前置本来就可能来自未收录学科），
+      但要求确认不是笔误。
+    """
+    seen = collections.defaultdict(list)      # 标识 -> [(rel, 名称)]
+    names = collections.defaultdict(set)      # 名称 -> {标识}
+    for rel, o in sorted(objects.items()):
+        found, raw, problems = _parse_external_block(o["fm"])
+        for line, msg in problems:
+            errors.append(f"{rel}: {msg}（front-matter 第 {line} 行）（R-SCHEMA-20）")
+        if not found:
+            continue
+        if not raw and not problems:
+            errors.append(
+                f"{rel}: `外部先修` 声明了却没有任何条目 —— "
+                "没有库外前置就删掉这个字段；有就写成缩进列表（R-SCHEMA-20）")
+        local_ids = set()
+        for e in raw:
+            f = {k: _clean_external_value(v) for k, v in e["fields"].items()}
+            line = e["line"]
+            unknown = [k for k in f if k not in EXTERNAL_PREREQ_FIELDS]
+            missing = [k for k in EXTERNAL_PREREQ_FIELDS if not f.get(k)]
+            if unknown:
+                errors.append(
+                    f"{rel}: `外部先修` 第 {line} 行有未知子字段 {unknown} —— "
+                    f"只允许 {list(EXTERNAL_PREREQ_FIELDS)}（R-SCHEMA-20）")
+            if missing:
+                errors.append(
+                    f"{rel}: `外部先修` 第 {line} 行缺子字段 {missing} —— "
+                    "五项都要写：名称 / 标识 / 学科 / 学段 / 来源（R-SCHEMA-20）")
+                continue
+            key, name = f["标识"], f["名称"]
+            if not EXTERNAL_PREREQ_ID.fullmatch(key):
+                errors.append(
+                    f"{rel}: `外部先修.标识` 必须是 ASCII 稳定键 "
+                    f"`[a-z0-9][a-z0-9-]*` -> {key!r}（R-SCHEMA-20）")
+            if key in local_ids:
+                errors.append(
+                    f"{rel}: `外部先修.标识` 在同一条目里重复 -> {key!r}（R-SCHEMA-20）")
+            local_ids.add(key)
+            if f["学段"] not in ALLOWED_STAGES:
+                errors.append(
+                    f"{rel}: `外部先修.学段` 取值非法 -> {f['学段']!r}"
+                    "（允许 小学/初中/高中/大学/不限，单个值）（R-SCHEMA-20）")
+            if not EXTERNAL_PREREQ_SOURCE.fullmatch(f["来源"]):
+                errors.append(
+                    f"{rel}: `外部先修.来源` 必须是单个 `ev-###` -> {f['来源']!r}"
+                    "（R-SCHEMA-20）")
+            if f["学科"] not in SUBJECT_SLUGS:
+                warnings.append(
+                    f"{rel}: `外部先修.学科` = {f['学科']!r} 不在本库已登记的学科里 —— "
+                    "库外前置可以来自未收录学科，但请确认不是笔误（R-SCHEMA-20）")
+            if key and name:
+                seen[key].append((rel, name))
+                names[name].add(key)
+
+    for key, uses in sorted(seen.items()):
+        rels = sorted({rel for rel, _ in uses})
+        if len(rels) < 2:
+            continue
+        shown = "、".join(Path(r).stem for r in rels)
+        warnings.append(
+            f"`外部先修` 标识 `{key}` 出现在 {len(rels)} 个条目（{shown}）—— "
+            "同一个前置反复出现，考虑为它建一个知识点节点（R-SCHEMA-20）")
+
+    for name, keys in sorted(names.items()):
+        if len(keys) > 1:
+            warnings.append(
+                f"`外部先修.名称` {name!r} 配了 {len(keys)} 个不同标识 "
+                f"{sorted(keys)} —— 若指同一个前置，请统一 `标识`（R-SCHEMA-20）")
 
 
 def check_readme_coverage(objects, errors):
@@ -1069,8 +1498,20 @@ def anchor_ok(rel, anchor):
 # ── 单对象规则（此前只写在 FORMAT.md 里，没有机械检查）─────────────────────
 
 def evidence_ids_of(fm):
-    m = re.search(r"^evidence:\s*(.+)$", fm, re.M)
-    return re.findall(r"ev-\d+", m.group(1)) if m else []
+    """取**对象自己的** `evidence` 编号（不含 `外部先修.来源`）。
+
+    `外部先修` 也有 `来源: ev-###`，所以**不能**再对整个 front-matter 做
+    `re.findall("ev-\\d+")`：那会把「前置的来源」算成本条的论证证据，
+    进而污染 `citations.json`、`R-EVID-03` 与中英译本的一致性比对。
+
+    行内 `[ev-001, ev-002]` 与块列表都认——块列表是 YAML 的合法写法，
+    早先只认行内，会把块写法误报成「无来源」。
+    """
+    m = re.search(r"^evidence:[ \t]*(.+)$", fm, re.M)
+    if m and m.group(1).strip():
+        return re.findall(r"ev-\d+", m.group(1))
+    b = re.search(r"^evidence:[ \t]*\n((?:[ \t]+.*\n?)*)", fm, re.M)
+    return re.findall(r"ev-\d+", b.group(1)) if b else []
 
 
 def check_evidence_nonempty(objects, errors):
@@ -1215,6 +1656,28 @@ def check_status_docs(errors):
             errors.append(f"{rel}: 状态图例不全，缺 {missing}（R-DOC-01）")
 
 
+def check_rule_registry(errors):
+    """R-DOC-02：中英两份规则注册表必须覆盖同一组 ID，且各自没有重复。
+
+    这两张表生成 `docs/RULES.md` / `docs/RULES.en.md`。多一行、少一行，
+    生成结果看上去都「有规则」——只有把 ID 集合对起来，才会发现英文页少了
+    四条、中文页把一条英文描述粘进了中文表。规则表是**规范的目录**，
+    目录缺项比正文缺项更难发现，因为读者不知道缺了什么。
+    """
+    for label, rules in (("MECH_RULES", MECH_RULES), ("MECH_RULES_EN", MECH_RULES_EN),
+                         ("MANUAL_RULES", MANUAL_RULES), ("MANUAL_RULES_EN", MANUAL_RULES_EN)):
+        ids = [rid for rid, _ in rules]
+        dup = sorted({r for r in ids if ids.count(r) > 1})
+        if dup:
+            errors.append(f"{label}: 规则 ID 重复 {dup}（R-DOC-02）")
+    for label, zh, en in (("机械校验", MECH_RULES, MECH_RULES_EN),
+                          ("人工复核", MANUAL_RULES, MANUAL_RULES_EN)):
+        a, b = {r for r, _ in zh}, {r for r, _ in en}
+        if a != b:
+            errors.append(
+                f"{label}规则中英不一致：仅中文 {sorted(a - b)}，仅英文 {sorted(b - a)}（R-DOC-02）")
+
+
 def check_license(objects, errors):
     """知识内容统一 CC BY-SA 4.0（见 LICENSE）。"""
     for rel, o in objects.items():
@@ -1320,7 +1783,7 @@ def check_evidence_verified_support(objects, errors):
         st = fm_value(o["fm"], "status")
         if st not in CONFIRMING_STATUSES:
             continue
-        ids = re.findall(r"ev-\d+", o["fm"])
+        ids = evidence_ids_of(o["fm"])
         known = {e: ev[e] for e in ids if e in ev and not ev[e]["作废"]}
         if not known:
             continue                      # 缺编号 / 作废由 R-EVID-01 管
@@ -1394,7 +1857,7 @@ def check_status_reachability(objects, errors):
 
     | 状态 | 机器要求 | 人仍然要判 |
     |---|---|---|
-    | `已确证` | `author` 与「变更记录」里出现 **≥2 个不同的 `@` 署名** | 第二名署名者是否**真的**独立复核过（AI 不算，M-07） |
+    | `已确证` | 两条通道**之一**：①`author` 与「变更记录」里 **≥2 个不同 `@` 署名**；②`## 复核记录` 四栏齐全（模型 · 日期 · 引文核验 · 限制）。**两条通道都要求**引用的每份证据读到 `全文` | 记录里说的核验是否**真的发生过**（M-07） |
     | `争议` | ≥2 条论证 **且** ≥1 条**入边 `攻击`** | 两个存活论证的结论是否**真的冲突** |
     | `已推翻` | ≥1 条**未被击倒**的入边 `攻击` | 攻击方自己站不站得住 |
 
@@ -1402,16 +1865,41 @@ def check_status_reachability(objects, errors):
     （见 `check_argument_liveness`）——**冲突必须在图上看得见**，否则它只是作者的一句心情。
     """
     atk_in = inbound_edge_map(objects, "攻击")
+    evidence = parse_evidence_index()
     for rel, o in sorted(objects.items()):
         st = fm_value(o["fm"], "status")
         if st == "已确证":
+            # 两条署名通道（2026-11-05 决定）：**人或 agent 都可以复核**。
+            # 机器只查「署名/记录在不在」，判断仍归 M-07。
             names = set(re.findall(r"@([\w][\w.\-]*)", fm_value(o["fm"], "author") or ""))
             names |= set(re.findall(r"@([\w][\w.\-]*)", section_body(o["text"], "变更记录") or ""))
-            if len(names) < 2:
+            body = section_body(o["text"], AGENT_REVIEW_SECTION) or ""
+            missing = [f for f in AGENT_REVIEW_FIELDS if f not in body] if body.strip() else None
+            record_ok = bool(body.strip()) and not missing
+            if len(names) < 2 and not record_ok:
+                if body.strip() and missing:
+                    errors.append(
+                        f"{rel}: status=「已确证」，`## {AGENT_REVIEW_SECTION}` 缺 {missing} —— "
+                        f"记录要答得上「谁审的（模型）· 什么时候（日期）· 引文核了几条（引文核验）· "
+                        f"哪些判不了（限制）」（R-SCHEMA-19）")
+                else:
+                    errors.append(
+                        f"{rel}: status=「已确证」，但既没有第二名复核者的 `@` 署名，"
+                        f"也没有 `## {AGENT_REVIEW_SECTION}` —— `已确证` 必须能追到**是谁核的**："
+                        "在「变更记录」里写下复核者（人），或留一份四栏记录（agent）"
+                        "（R-SCHEMA-19）")
+            ids = evidence_ids_of(o["fm"])
+            shallow = [e for e in ids
+                       if not evidence.get(e) or evidence[e].get("作废")
+                       or evidence[e].get("核验深度") != "全文"]
+            if shallow:
+                detail = "、".join(
+                    f"{e}（{'索引里没有' if not evidence.get(e) else evidence[e].get('核验深度')}）"
+                    for e in shallow[:4])
                 errors.append(
-                    f"{rel}: status=「已确证」，但全条只有 {len(names)} 个 `@` 署名 —— "
-                    "`已确证` 需要**一名非作者的独立复核**，请在「变更记录」里写下复核人"
-                    f"（不是作者本人；AI 复核不计，见 M-07）（R-SCHEMA-19）")
+                    f"{rel}: status=「已确证」，但引用的证据没有全部读到 `全文` —— {detail}。"
+                    "确证的前提是**每一份来源都通读过**（溯源 T4）：没读透就说「复核过」，"
+                    "复核的只是自己脑子里那版（R-SCHEMA-19）")
         elif st == "争议":
             n_args = len(arg_ids(o["text"]))
             if n_args < 2 or not atk_in.get(rel):
@@ -1541,11 +2029,19 @@ def check_bilingual_fields(objects, events, en_fm, errors):
         if fm_value(fm, "status") != fm_value(z["fm"], "status"):
             errors.append(f"{rel}: 英译本 status=「{fm_value(fm, 'status')}」"
                           f"与中文原件「{fm_value(z['fm'], 'status')}」不一致（R-BILING-02）")
-        en_ev = sorted(set(re.findall(r"ev-\d+", fm or "")))
-        zh_ev = sorted(set(re.findall(r"ev-\d+", z["fm"])))
+        en_ev = sorted(set(evidence_ids_of(fm or "")))
+        zh_ev = sorted(set(evidence_ids_of(z["fm"])))
         if en_ev != zh_ev:
             errors.append(f"{rel}: 英译本 evidence={en_ev} 与中文原件 {zh_ev} 不一致"
                           f"（R-BILING-02）")
+        # `名称` 可以翻译，但稳定键 / 学科 / 学段 / 来源是结构，必须一致。
+        def ext_sig(x):
+            return sorted((e["标识"], e["学科"], e["学段"], e["来源"])
+                          for e in external_prereqs_of(x))
+        if ext_sig(fm or "") != ext_sig(z["fm"]):
+            errors.append(
+                f"{rel}: 英译本的 `外部先修` 与中文原件不一致"
+                f"（比较 标识/学科/学段/来源，`名称` 可翻译）（R-BILING-02）")
 
 
 def check_attack_has_edge(objects, errors):
@@ -1631,6 +2127,7 @@ MECH_RULES = [
     ("R-SCHEMA-17", "「暂定确认 / 已确证 / 失据 / 已推翻」必须有 ≥1 条论证（空集只能写「待审」）"),
     ("R-SCHEMA-18", "`updated` 与「变更记录」最后一行的日期一致"),
     ("R-SCHEMA-19", "`已确证` 需 ≥2 个不同的 `@` 署名 · `争议` 需 ≥2 条论证且 ≥1 条入边 `攻击` · `已推翻` 需 ≥1 条未被击倒的入边 `攻击`（状态不能只靠改一个字段）"),
+    ("R-SCHEMA-20", "可选字段 `外部先修`：每项五个子字段齐全；`标识` 为 ASCII 稳定键且同条目不重复；`学段` 用枚举；`来源` 为单个已登记 `ev-###`；同一 `标识` 在 ≥2 个对象出现 → 提示「考虑建节点」"),
     ("R-EVENT-01", "`事件` 单开顶层 `events/`，与 `objects` **分开**：`type`=事件、`status` 只用持续更新/已封存、必填段 陈述/依据/变更记录、**无论证、无任何边**、`id` 前缀 `kb:event:`、`evidence` 非空；且每个事件须登记在 `events/README.md`"),
     ("R-LINK-01", "链接目标存在（相对链接 · 指向本仓库的绝对链接 · YAML `url:`）"),
     ("R-LINK-02", "锚点存在（标题 slug 或论证 ID）"),
@@ -1638,7 +2135,7 @@ MECH_RULES = [
     ("R-BILING-03", "文档类文件（根级 / 学科 README / 覆盖度 / docs）必须有同名 `.en.md`；`templates/` 与 `.github/` 豁免"),
     ("R-BILING-02", "英译本的 `type` / `status` / `evidence` 与中文原件一致（`M-10` 里可机械化的那一半）"),
     ("R-LINK-03", "英文页面的站内链接指向英文页（该页存在时）；例外：`English version of` 行、指向无译本文件的链接"),
-    ("R-GRAPH-01", "`先修` 只连「知识点」（`路径` 可声明外部先修），且无环"),
+    ("R-GRAPH-01", "`先修` 只连「知识点」（`路径` 可声明路径外前置），且无环"),
     ("R-GRAPH-02", "`支持` / `攻击` 边的论证锚点存在"),
     ("R-GRAPH-03", "`路径` 每个成果至少被一个环节覆盖（未声明 outcomes 给警告）"),
     ("R-GRAPH-04", "`路径` 每个环节至少连到一个库内对象"),
@@ -1653,9 +2150,9 @@ MECH_RULES = [
     ("R-INDEX-02", "人类文档的生成块与来源一致（README 统计 · START 学科总览 · knowledge 索引 · 物理覆盖度统计 · 规则表）"),
     ("R-README-01", "每个对象都在所属学科 README 里登记"),
     ("R-README-03", "学科 README 路径表里手写的「覆盖度 X/Y」与实际一致"),
-    ("R-README-03", "the coverage figure `X/Y` typed into the subject README path table matches the computed one"),
     ("R-README-02", "学科 README 里手写的状态列与 front-matter 一致"),
     ("R-DOC-01", "状态图例在 FORMAT.md 与 knowledge/README.md 里列全"),
+    ("R-DOC-02", "规则注册表中英两份的 ID 集合相同，且各自没有重复 ID"),
 ]
 
 MANUAL_RULES = [
@@ -1665,11 +2162,12 @@ MANUAL_RULES = [
     ("M-04", "`教法` 的 `禁忌` 标注证据强度（强/弱），且与 `风险` 不混"),
     ("M-05", "不上传教材原文或扫描页"),
     ("M-06", "新引用资源逐条核对许可（教材 CC BY ≠ 它嵌的东西也是）"),
-    ("M-07", "AI 攻击需人复核 + 署名披露（AI 不能当「已确证」的复核者）"),
+    ("M-07", "AI 攻击需人复核 + 署名披露（AI **可以**复核并写「已确证」，但必须留四栏 `## 复核记录`；复核者是谁由 `复核者` 字段披露）"),
     ("M-08", "统计数字不手写（交给 `--write-index` 生成）"),
     ("M-09", "对抗任务派发必须包含「质疑证据是否真实存在」与「质疑来源是否为本次引用而伪造」"),
     ("M-10", "文档中英成对存放（`<name>.md` 中文 + 同目录 `<id 派生>.en.md` 英文），改一份同步另一份"),
     ("M-11", "注册证据过**来源三问**：谁发布的（可问责主体）· 是哪个版本、什么时候生效（条目只声明该版本如此）· 是不是为这次引用现造的（有独立于本主张而存在的理由，且能在不同发布主体处找到第二来源；同源转载不算）；自建站点 / 无主体转载页 / 反查不到的标识符不登记"),
+    ("M-12", "`外部先修` 的**真实性**（这条前置是否真的必需）与**是否该为它建节点**由人判断；机器只查声明形状、来源登记与同名复发"),
 ]
 
 MECH_RULES_EN = [
@@ -1691,6 +2189,8 @@ MECH_RULES_EN = [
     ("R-SCHEMA-16", "a file sits in the folder its `type` maps to (concepts / claims / methods / misconceptions / paths / resources)"),
     ("R-SCHEMA-17", "「暂定确认 / 已确证 / 失据 / 已推翻」requires ≥1 argument (an empty set may only be 「待审」)"),
     ("R-SCHEMA-18", "`updated` matches the last date row in 「变更记录」"),
+    ("R-SCHEMA-19", "`已确证` needs ≥2 distinct `@` signatures · `争议` needs ≥2 arguments and ≥1 incoming `攻击` edge · `已推翻` needs ≥1 undefeated incoming `攻击` edge (a status cannot be changed by editing one field)"),
+    ("R-SCHEMA-20", "optional field `外部先修`: every item has all five subfields; `标识` is a stable ASCII key and unique within an entry; `学段` uses the enum; `来源` is a single registered `ev-###`; the same `标识` in ≥2 objects → hint 「consider building a node」"),
     ("R-EVENT-01", "`事件` lives top-level in `events/`, **separate** from `objects`: `type`=event, `status` only 持续更新/已封存, required sections 陈述/依据/变更记录, **no argument and no edges**, `id` prefix `kb:event:`, non-empty `evidence`; each event must be registered in `events/README.md`"),
     ("R-LINK-01", "link targets exist (relative · repo-absolute · YAML `url:`)"),
     ("R-LINK-02", "anchors exist (heading slug or argument id)"),
@@ -1698,11 +2198,13 @@ MECH_RULES_EN = [
     ("R-BILING-03", "documents (root / subject READMEs / coverage / docs) must have a same-named `.en.md`; `templates/` and `.github/` exempt"),
     ("R-BILING-02", "an English edition's `type` / `status` / `evidence` match the Chinese original (the mechanisable half of `M-10`)"),
     ("R-LINK-03", "links inside an English page point at the English page (when it exists); exempt: `English version of` lines and links to files that have no translation"),
-    ("R-GRAPH-01", "`先修` connects only 知识点, acyclic"),
+    ("R-GRAPH-01", "`先修` connects only 知识点 (a `路径` may declare prerequisites outside the path), acyclic"),
     ("R-GRAPH-02", "`支持` / `攻击` edge argument anchors exist"),
     ("R-GRAPH-03", "`路径` each outcome covered by ≥1 环节 (undeclared outcomes → warning)"),
     ("R-GRAPH-04", "`路径` each 环节 connects to ≥1 in-repo object"),
     ("R-GRAPH-05", "attack entries in `claims/attacks/` carry at least one `攻击` edge to a specific argument"),
+    ("R-GRAPH-06", "multiple `支持` edges on one argument whose evidence union has ≤1 item, or whose source identifier is a single one → hint 「count is not strength」"),
+    ("R-GRAPH-07", "each path outcome covered by only 1 step, or its covering entries' evidence tops out at `仅定位`/`未核验` → hint (strength beyond 「is it covered」)"),
     ("R-EVID-01", "`evidence` id registered and not voided"),
     ("R-EVID-02", "evidence table `类别` / `等级` / `核验深度` values valid"),
     ("R-EVID-03", "`暂定确认` / `已确证` needs ≥1 evidence with `核验深度` of `全文` / `摘要` (unread can't be confirmed)"),
@@ -1710,8 +2212,10 @@ MECH_RULES_EN = [
     ("R-INDEX-01", "the three machine files (`index.json` / `citations.json` / `evidence.json`) match content (regenerate on change)"),
     ("R-INDEX-02", "human-doc generated blocks match their source (README stats · START subject overview · knowledge index · physics coverage stats · rule table)"),
     ("R-README-01", "every object registered in its subject README"),
+    ("R-README-03", "the coverage figure `X/Y` typed into the subject README path table matches the computed one"),
     ("R-README-02", "the hand-written status column in a subject README matches the front-matter"),
     ("R-DOC-01", "status legend listed in FORMAT.md and knowledge/README.md"),
+    ("R-DOC-02", "the Chinese and English rule registries cover the same id set, and neither repeats an id"),
 ]
 
 MANUAL_RULES_EN = [
@@ -1726,6 +2230,7 @@ MANUAL_RULES_EN = [
     ("M-09", "adversarial dispatch must include \"question whether the evidence really exists\" and \"question whether the source was fabricated for this citation\""),
     ("M-10", "documents stored bilingually (`<name>.md` Chinese + `<id-derived>.en.md` English in the same folder); sync both"),
     ("M-11", "new evidence passes the **three source questions**: who publishes it (an accountable body) · which version and when it took effect (the entry claims only that version) · was it made up for this citation (it exists for reasons independent of the claim, and a second source can be found at a different publishing body; same-origin reposts don't count); self-built sites, attribution-free repost pages and identifiers that don't resolve are not registered"),
+    ("M-12", "the **truth** of an `外部先修` (is this prerequisite really required) and **whether to build a node for it** are human judgements; the machine only checks declaration shape, source registration and recurrence"),
 ]
 
 
@@ -1734,6 +2239,12 @@ def render_stats_block(index):
     by, sub = s["按类型"], s["按学科"]
     types = " · ".join(f"{k} {TYPE_EN[k]} {by[k]}" for k in TYPE_ORDER if by.get(k))
     subs = " · ".join(f"{k} {SUBJECT_EN[k]} {sub[k]}" for k in SUBJECT_ORDER if sub.get(k))
+    tier = s.get("按溯源档") or {}
+    total = s["对象总数"] or 1
+    # 溯源档：**取最弱一环**。这一行是「0 条已确证」的另一半——
+    # 只报状态，读者会把「待审」读成「没核过」；两个数并排出现才是完整的事实。
+    tn = " · ".join(f"{k} {tier[k]}" for k in TIER_ORDER if tier.get(k))
+    deep = tier.get("T4", 0) + tier.get("T3", 0)
     return "\n".join([
         "| | |",
         "|---|---|",
@@ -1741,6 +2252,7 @@ def render_stats_block(index):
         f"| 事件 / Events | **{s.get('事件条数', 0)}** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |",
         f"| 学科 / Subjects | {subs} |",
         f"| 证据 / Evidence | {s['证据条数']}（含作废 / void {s['作废证据条数']}） |",
+        f"| 溯源 / Provenance | **{deep} / {s['对象总数']}（{deep / total:.0%}）读到全文或摘要** —— {tn} |",
         f"| 已确证 / Confirmed | **{s['已确证条数']}** |",
     ])
 
@@ -1940,8 +2452,192 @@ def render_rules_block_en():
     return "\n".join(lines)
 
 
+GAPS_TOP = 10      # 每组在页面上最多列几条；完整清单交给 make_tasks
+
+
+def _gap_item_line(key, it, en=False):
+    """`docs/GAPS.md` 里一行的写法。**不加链接**：这一页是仪表盘，不是索引。"""
+    if key == "external":
+        n = it["出现次数"]
+        if en:
+            # 英文页面只给稳定标识：名称来自中文条目，硬翻会造出一个不存在的英文名。
+            return f"`{it['标识']}` — {n} objects"
+        names = " / ".join(it.get("名称") or [it["标识"]])
+        return f"`{it['标识']}`（{names}）—— {n} 个对象"
+    if key == "coverage":
+        return it["章"]
+    # 英文页面优先用英文标题（`title_en`）；没有就退回中文标题——
+    # 宁可显示中文，也不要显示一个编出来的英文名。
+    title = (it.get("title_en") or it["title"]) if en else it["title"]
+    if key == "todo":
+        # 标题常常就是一整句命题，这里只留够认人的长度；要全文去条目里看。
+        short = title if len(title) <= 48 else title[:48] + "…"
+        line = it["行"] if len(it["行"]) <= 96 else it["行"][:96] + "…"
+        if en:
+            return f"`{it['id']}` · {short} — body: {line}"
+        return f"`{it['id']}` · {short} —— {line}"
+    if key in ("path-thin", "path-shallow"):
+        outs = ", ".join(it["成果"]) if en else "、".join(it["成果"])
+        return f"{title} —— {outs}"
+    if key == "review":
+        dep = it.get("下游依赖", 0)
+        tail = (f" — {dep} other entries list it as a prerequisite" if en
+                else f" — {dep} 条别的条目先修它") if dep else ""
+        return f"`{it['id']}` · {title}{tail}"
+    if key == "review-blocked":
+        evs = ", ".join(f"`{e}`" for e in it.get("未读证据") or [])
+        if it.get("无论证"):
+            why = "argument not written" if en else "论证未写"
+        elif it.get("无证据"):
+            why = "no evidence cited" if en else "没有引用证据"
+        else:
+            why = f"evidence unread: {evs}" if en else f"证据未读：{evs}"
+        return f"`{it['id']}` · {title} — {why}" if en else f"`{it['id']}` · {title} —— {why}"
+    if key == "provenance":
+        evs = ", ".join(f"`{e}`" for e in it.get("薄证据") or []) or "—"
+        tier = it.get("溯源", "?")
+        return (f"`{it['id']}` · {title} — {tier}, weakest: {evs}" if en
+                else f"`{it['id']}` · {title} —— {tier}，最弱：{evs}")
+    return f"`{it['id']}` · {title}"
+
+
+def render_gaps_block(data, en=False):
+    """`docs/GAPS.md` 的生成块：**一页看全库缺什么**。
+
+    这一页不是「待办清单的复制品」——它是**同一份计算**的另一种排法：
+    上面一张表回答「哪类缺口有多大」，下面每组列前 10 条回答「从哪条开始」。
+    完整清单（含 JSON）在 `python tools/make_tasks.py`，两者共用 `gaps.compute()`。
+    """
+    s = data["统计"]
+    p = s.get("路径成果") or {}
+    st = s.get("状态") or {}
+    L = []
+    if en:
+        L.append(f"**{s['对象']}** objects · **{s['可作事实引用']}** citable as fact · "
+                 f"**{s['不可作事实引用']}** not citable · **{s['证据']}** evidence records · "
+                 f"**{s['事件']}** events")
+        if st:
+            L.append(f"**{st.get('已确证', 0)} confirmed** · {st.get('暂定确认', 0)} provisional · "
+                     f"{st.get('有效', 0)} valid · {st.get('待审', 0)} awaiting review")
+        if p:
+            L.append(f"**{p['条数']}** paths · all **{p['声明']}** learning outcomes covered · "
+                     f"**{p['单环节']}** ({p['单环节占比']}%) taught exactly once")
+        tr = s.get("溯源") or {}
+        if tr:
+            L.append(" · ".join(f"{k} {tr[k]}" for k in TIER_ORDER if tr.get(k))
+                     + " — provenance tier (**weakest link** over cited evidence)")
+        L += ["", "| Gap | Count | Why it counts as a gap |", "|---|---|---|"]
+    else:
+        L.append(f"**{s['对象']}** 条对象 · **{s['可作事实引用']}** 条可作事实引用 · "
+                 f"**{s['不可作事实引用']}** 条不可引用 · **{s['证据']}** 条证据 · "
+                 f"**{s['事件']}** 条事件")
+        if st:
+            L.append(f"**已确证 {st.get('已确证', 0)}** · 暂定确认 {st.get('暂定确认', 0)} · "
+                     f"有效 {st.get('有效', 0)} · 待审 {st.get('待审', 0)}")
+        if p:
+            L.append(f"**{p['条数']}** 条路径 · **{p['声明']}** 个学习成果全部有环节覆盖 · "
+                     f"**{p['单环节']}** 个（{p['单环节占比']}%）只讲一次")
+        tr = s.get("溯源") or {}
+        if tr:
+            L.append(" · ".join(f"{k} {tr[k]}" for k in TIER_ORDER if tr.get(k))
+                     + " —— 溯源档（**取最弱一环**，与「已确证」正交）")
+        L += ["", "| 缺口 | 数量 | 为什么算缺口 |", "|---|---|---|"]
+
+    for key in data["顺序"]:
+        g = data["分组"][key]
+        L.append(f"| **{g['名称_en'] if en else g['名称']}** | {g['数量']} | "
+                 f"{g['为什么_en'] if en else g['为什么']} |")
+
+    L.append("")
+    L.append("> " + ("One object can appear in several rows — **do not add the counts up**."
+                     if en else
+                     "**同一个对象可能同时出现在几行里，别把数量相加**。"))
+    r = data["分组"]["review"]["数量"]
+    rb = data["分组"]["review-blocked"]["数量"]
+    pending = (s.get("状态") or {}).get("待审")
+    if pending is not None:
+        L.append("> " + (f"**The one exact partition:** review {r} + review-blocked {rb} "
+                         f"= every `待审` entry ({pending})." if en else
+                         f"**唯一不重叠的一对：**三分钟复核 {r} + 复核前置 {rb} "
+                         f"= 全部 `待审` 条目（{pending}）。"))
+
+    for key in data["顺序"]:
+        g = data["分组"][key]
+        items = g["条目"]
+        if not items:
+            continue
+        name = g["名称_en"] if en else g["名称"]
+        how = g["怎么做_en"] if en else g["怎么做"]
+        L += ["", f"### {name} ({g['数量']})" if en else f"### {name}（{g['数量']}）", "",
+              f"> {how}", ""]
+        for it in items[:GAPS_TOP]:
+            L.append("- " + _gap_item_line(key, it, en))
+        if len(items) > GAPS_TOP:
+            rest = len(items) - GAPS_TOP
+            L.append(f"- …and {rest} more — full list: `python tools/make_tasks.py --json`"
+                     if en else
+                     f"- …还有 {rest} 项 —— 完整清单：`python tools/make_tasks.py --json`")
+    return "\n".join(L)
+
+
+def _rough_k(payload):
+    """整份文件的**数量级** token 估计：字符数 ÷ 3.2。
+
+    这不是计费口径，也不假装是。它存在的唯一目的，是让「整读一份」与
+    「按 id 取一条」的差距**有一个可核对的数字**——旧版手写的 ≈14k 在
+    条目涨到 746 条后已经差了七倍，而没有任何检查会发现。
+    """
+    raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n"
+    return max(1, round(len(raw) / 3.2 / 1000))
+
+
+def render_machine_files_block(built, en=False):
+    """`llms.txt` 的「三份文件多大」表——**生成物**，不手写。
+
+    这张表曾经手写 `≈14k / ≈18k / ≈9k`。库涨到 746 条对象后，真实值是
+    `≈96k / ≈158k / ≈38k`：**同一段文字在教人省 token，却把成本少报了一个数量级。**
+    数字会漂，所以数字必须由脚本写。
+    """
+    idx, cit, ev = built["index.json"], built["citations.json"], built["evidence.json"]
+    if en:
+        lines = [
+            "| File | Holds | Entries | Whole file ≈ tokens |",
+            "|---|---|---|---|",
+            f"| [`index.json`](index.json) | navigation + whether it may be cited | "
+            f"{len(idx['objects'])} objects · {len(idx['事件'])} events | **≈{_rough_k(idx)}k** |",
+            f"| [`citations.json`](citations.json) | citation kit, **by id** | "
+            f"{len(cit['by_id'])} entries | **≈{_rough_k(cit)}k** |",
+            f"| [`evidence.json`](evidence.json) | evidence registry | "
+            f"{len(ev['entries'])} entries | **≈{_rough_k(ev)}k** |",
+            "",
+            "> Generated by `tools/kbcheck.py` (characters ÷ 3.2 — a **rough order of magnitude**, "
+            "not a billing figure). The point is the ratio: one `scholia_cite` is ≈160 tokens.",
+        ]
+    else:
+        lines = [
+            "| 文件 | 装什么 | 条目 | 整份 ≈ tokens |",
+            "|---|---|---|---|",
+            f"| [`index.json`](index.json) | 导航 + 能不能引用 | "
+            f"{len(idx['objects'])} 条对象 · {len(idx['事件'])} 条事件 | **≈{_rough_k(idx)}k** |",
+            f"| [`citations.json`](citations.json) | 引用材料，**按 id 取** | "
+            f"{len(cit['by_id'])} 条 | **≈{_rough_k(cit)}k** |",
+            f"| [`evidence.json`](evidence.json) | 证据登记 | "
+            f"{len(ev['entries'])} 条 | **≈{_rough_k(ev)}k** |",
+            "",
+            "> 由 `tools/kbcheck.py` 生成（字符数 ÷ 3.2，**数量级**而已，不是计费口径）。"
+            "重点在比例：`scholia_cite` 取一条 ≈160 tokens。",
+        ]
+    return "\n".join(lines)
+
+
 def generated_blocks(objects, events):
-    index = build_index(objects, events)
+    built = build_indexes(objects, events)
+    index = built["index.json"]
+    # 缺口只算一次：`docs/GAPS.md` 与 `make_tasks.py` / MCP 共用同一个 `gaps.compute()`
+    gap_data = gaps.compute(index,
+                            built["citations.json"]["by_id"],
+                            built["evidence.json"]["entries"],
+                            root=ROOT)
     blocks = {
         "README.md": render_stats_block(index),
         "README.en.md": render_stats_block(index),
@@ -1953,6 +2649,10 @@ def generated_blocks(objects, events):
         "START.en.md": render_subject_overview_block(index, en=True),
         "docs/RULES.md": render_rules_block(),
         "docs/RULES.en.md": render_rules_block_en(),
+        "docs/GAPS.md": render_gaps_block(gap_data),
+        "docs/GAPS.en.md": render_gaps_block(gap_data, en=True),
+        "llms.txt": render_machine_files_block(built),
+        "llms.en.txt": render_machine_files_block(built, en=True),
     }
     cov = render_coverage_block()
     if cov:
@@ -2019,7 +2719,7 @@ def check_event_object(fm, text, rel, ids, events, errors):
         ids[i] = rel
 
     # 事件没有边：不安全
-    for key in ("edges", "先修", "支持", "攻击"):
+    for key in ("edges", "先修", "支持", "攻击", EXTERNAL_PREREQ_KEY):
         if re.search(rf"^[ \t]*{key}:", fm, re.M):
             errors.append(
                 f"{rel}: `事件` 不应有 `{key}`（事件记录事实，不分先修、不支持、不攻击）（R-EVENT-01）")
@@ -2086,6 +2786,8 @@ def check_bilingual_pairs(objects, events, en_docs, errors, warnings):
 
     seen = set()
     for rel, oid in sorted(en_docs.items()):
+        if rel.startswith(DRAFT_DIR):
+            continue
         name = rel.split("/")[-1]
         # README 与规格文档（FORMAT / CONTRIBUTING / docs/…）本来就没有 id，
         # 它们不是「某个条目的译本」，不参与配对。
@@ -2229,7 +2931,10 @@ def check_all():
         links = re.findall(r"\[([^\]]*)\]\(([^)]+)\)", prose)
         # YAML 里的 `url:`（Issue 模板的 contact_links 用过）也要查——
         # 它同样指向本仓库，改标题一样会改坏它。
-        links += [(u, u) for u in re.findall(r"^\s*url:\s*(\S+)", text, re.M)]
+        # **但 GitHub Actions 的 `url: ${{ steps... }}` 不是链接**：按 `\S+` 截出来会是
+        # `${{` 这一截，于是流水线文件一加进来就报一条假断链。带 `{` 的一律跳过。
+        links += [(u, u) for u in re.findall(r"^\s*url:\s*(\S+)", text, re.M)
+                  if "{" not in u]
         # R-LINK-03 的豁免：`English version of …` 行是有意指向中文正本的约定行
         en_pointer = set()
         for _ln in prose.splitlines():
@@ -2275,6 +2980,7 @@ def check_all():
     check_arguments(objects, errors)
     check_argument_liveness(objects, warnings)
     check_evidence_ids(objects, events, errors)
+    check_external_prereqs(objects, errors, warnings)
     check_readme_coverage(objects, errors)
     check_paths(objects, errors, warnings)
     check_path_steps(objects, errors)
@@ -2293,6 +2999,7 @@ def check_all():
     check_author(objects, errors)
     check_section_order(objects, errors)
     check_status_docs(errors)
+    check_rule_registry(errors)
     check_license(objects, errors)
     check_id_prefix(objects, errors)
     check_evidence_table(errors)
@@ -2373,6 +3080,7 @@ def main():
     print("  · `支持` / `攻击` 边都落在具体论证上（锚点存在）")
     print("  · 每条路径的「先修缺口」已机械校验（无缺口）")
     print("  · `已确证` / `争议` / `已推翻` 的结构前提已校验（R-SCHEMA-19）")
+    print("  · 可选字段 `外部先修` 的形状 / 枚举 / 来源 / 复发提示已校验（R-SCHEMA-20）")
     for rel, (cov, total) in sorted(stats.items()):
         thin, unread, ceiling = strength.get(rel, ([], [], ""))
         bits = []

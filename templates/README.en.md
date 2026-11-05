@@ -86,6 +86,7 @@ The first line of an English page is fixed:
 | `{{SUBJECT}}` `{{STAGE}}` `{{LEVEL}}` | subject (optionally with a direction) · stage enum · level | script defaults, **you verify** |
 | `{{APPLY}}` `{{CONDITION}}` | **for whom · under what conditions** (without these, every conclusion gets misused) | **you** |
 | `{{KPATH}}` | relative path from a method back to its concept | **you** |
+| `{{EXTERNAL_PREREQS}}` | optional: the out-of-library prerequisite block (`名称 / 标识 / 学科 / 学段 / 来源`). Leave empty if none | script, from repeated `--external-prereq`; **you verify** |
 
 ## What the checker will still block (on purpose)
 

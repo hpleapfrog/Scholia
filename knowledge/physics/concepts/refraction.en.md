@@ -5,11 +5,22 @@ title: "Refraction of light"
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-29
 scope:
   学科: 物理
   学段: 初中至高中
   范围: propagation of light
+外部先修:
+  - 名称: the geometric angle
+    标识: angle
+    学科: 数学
+    学段: 初中
+    来源: ev-038
+  - 名称: inverse trigonometric functions
+    标识: inverse-trig
+    学科: 数学
+    学段: 高中
+    来源: ev-038
 
 edges:
   先修: ["[知识点：波](waves.en.md)"]
@@ -64,7 +75,8 @@ license: CC-BY-SA-4.0
 > | 3 | **The two have different difficulties.** Reflection's difficulty is **geometry** (the normal, where the angle is measured from); refraction's difficulty additionally includes **inverse trigonometric functions** (`sin⁻¹` is not an exponent) and the physical meaning of `n` |
 >
 > **And the shared prerequisite is itself a new finding**: this repo currently **has no** prerequisite node for "the geometric angle",
-> while **both entries say in their `禁忌` that they need it**. This is a recorded gap (see below).
+> while **both entries say in their `禁忌` that they need it**. It is now recorded in this entry's
+> `外部先修` (`angle`), **not as a `先修` edge** — the gap remains, but it is queryable (see below).
 
 ## Argument
 
@@ -96,7 +108,11 @@ license: CC-BY-SA-4.0
 > | [reflection of light](reflection-of-light.en.md) | students who have not yet established the geometric concept of an "angle" |
 > | **this entry** | the same — the textbook **taught it again** in this module |
 >
-> **Two nodes are already waiting for it, and it does not exist.** This is the same kind of situation as [wave](waves.en.md)
+> **This entry's `外部先修` records two out-of-library prerequisites: `angle` (the geometric angle, junior high) and
+> `inverse-trig` (inverse trigonometric functions, high school).** Both belong to mathematics, not physics;
+> recording them is not the same as building nodes — this repo still has neither.
+>
+> **Two entries are already waiting for "the geometric angle", and it does not exist.** This is the same kind of situation as [wave](waves.en.md)
 > (the prerequisite edge could not be attached), **but this round's trade-off is stated honestly**:
 > I **do not** have a textbook source for it (OpenStax《Physics》 does not teach the geometry of angles on its own),
 > so building it would produce a **node with no basis**.
@@ -108,3 +124,4 @@ license: CC-BY-SA-4.0
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the entry (#8 batch conversion · batch 4); **answered the merge question in [reflection of light](reflection-of-light.en.md)'s `K7`** | Issue #8 | @hpleapfrog |
+| 2026-10-29 | recorded "the geometric angle" and "inverse trigonometric functions" as `外部先修` (`angle` / `inverse-trig`) — out-of-library prerequisites, no `先修` edge | Issue #17 | AI (DeepSeek V4.1 Flash) · pending @hpleapfrog review |

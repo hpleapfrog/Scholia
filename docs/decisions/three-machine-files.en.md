@@ -5,6 +5,12 @@
 > Decided **2026-10-18**. The rule itself lives in `llms.txt` ("Machine entry point"); this page
 > records **why**.
 
+> [!NOTE]
+> **Updated 2026-10-30**: after the library reached 746 objects, the three files are now about
+> **96k / 158k / 38k tokens**, not the 14k / 18k / 9k below. The numbers here are a **snapshot from
+> the decision**; current sizes are in the generated table in `llms.txt`. "`index.json` can still be
+> read whole" has expired with them — a 96k read is not thrift, it is luxury.
+
 ## What it was
 
 One `index.json` held everything: `objects` (each with `来源`, `适用`, `条件`, `论证`),

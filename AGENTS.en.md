@@ -19,6 +19,8 @@ grade plus rebuttal structure — never by vote.
 |---|---|
 | Three machine-readable files | [index.json](index.json) (navigation) · [citations.json](citations.json) (citation kit by id) · [evidence.json](evidence.json) (evidence registry) — **all generated, never hand-edit** |
 | Reading contract for AI (status, may-it-be-cited, how to save tokens) | [llms.txt](llms.txt) |
+| **What's still missing** (one generated page) | [docs/GAPS.en.md](docs/GAPS.en.md) · to start work: `python tools/make_tasks.py --limit 3` |
+| **Review one entry** (sources, evidence and the three questions on one page) | `python tools/review_packet.py --id <id>` — **formats only; it does not answer for you** |
 | **MCP server** (wire it into an agent) | [`tools/scholia_mcp.py`](tools/scholia_mcp.py) |
 
 **Wire it as an MCP server:**
@@ -33,7 +35,8 @@ grade plus rebuttal structure — never by vote.
 
 Read-only tools: `scholia_stats` · `scholia_search` · `scholia_list` · `scholia_get_object`
 (`part="content"` returns only the reader half; `full` adds the argument) · `scholia_cite` ·
-`scholia_get_evidence` · `scholia_rules`.
+`scholia_get_evidence` · `scholia_external_prereqs` (groups out-of-library prerequisites by `标识`) ·
+`scholia_gaps` (machine-countable gaps, same source as `docs/GAPS.md`) · `scholia_rules`.
 
 > **When citing anything**: give the `status` and the `来源` together; **never cite entries whose
 > `可作事实引用` is false** (失据 / 已推翻 / 已失效); medical entries must be restated with their
@@ -47,6 +50,9 @@ Read-only tools: `scholia_stats` · `scholia_search` · `scholia_list` · `schol
 python tools/kbcheck.py                 # must pass
 python tools/kbcheck.py --write-index   # after content changes: regenerate the three machine files and doc blocks
 python tools/verify_rules.py            # after rule changes: every rule needs a failing injected sample
+python tools/selftest.py                # after touching MCP / make_tasks / new_entry / review_packet: really spawn the processes
+python tools/quote_check.py <entry> --module <m#####>   # after touching English quotations: each one must **really be in the source**
+python tools/evid.py next               # need a new id: don't count by hand (ids are global; hand-counting can't see other branches)
 ```
 
 Hard rules:
@@ -67,7 +73,7 @@ Hard rules:
    (see CONTRIBUTING, "new-rule threshold").
 4. **Never hard-code drifting numbers** (all statistics come from the script).
 5. **Never upload textbook text or scanned pages** — locators, short quotations and original summaries only.
-6. **AI may attack; AI may never be the reviewer for `已确证`** ([FORMAT.en.md](FORMAT.en.md) §6).
+6. **AI may attack and may also review, and it may write `已确证`** ([FORMAT.en.md](FORMAT.en.md) §6). The bar: a complete `## 复核记录` (model · date · quotation check · limits) **and** every cited source read in full; the index then marks the entry `复核者: agent`, so readers can see it was **not signed by a human**. The `限制` field must not be empty: a review that cannot say what it could not judge is not a review.
 7. **Start new entries from the scaffold**: `python tools/new_entry.py --type <type> --subject <subject> --slug <slug> --title "<title>"`
    — skeletons come from [`templates/`](templates/README.en.md). **Structure to the script, content to you.**
    Run `kbcheck` immediately afterwards; its errors are your to-do list.

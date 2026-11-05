@@ -7,8 +7,9 @@
 > You don't need to know how it's built to use it.
 
 > [!TIP]
-> **Are you an AI or a program?** Skip this page — go to [`llms.txt`](llms.txt) and parse the
-> machine entry [`index.json`](index.json). There it says **what must not be quoted as fact**.
+> **Are you an AI or a program?** Skip this page — go to [`llms.txt`](llms.txt).
+> It says **what must not be quoted as fact**, and **how to fetch one entry by id**
+> (`index.json` is large now; do not read it whole).
 
 ## In one sentence
 
@@ -41,6 +42,7 @@ It **never decides "what is true".** It only guarantees that every claim carries
 | **Someone who found an error** | section 6. **"You're wrong" is the most welcome thing here**, and you don't need Git |
 | **Someone who wants to reuse it** | knowledge content is [CC BY-SA 4.0](LICENSE) — attribution is enough |
 | **Someone who wants their own copy** | section 7 — fork with full history, or just use the templates in your own folder |
+| **Someone who wants to help add one** | see the [**gap report**](docs/GAPS.en.md), then claim a task with `python tools/make_tasks.py --limit 3` |
 
 ## 2. What's in it now
 

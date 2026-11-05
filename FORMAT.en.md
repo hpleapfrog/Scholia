@@ -138,10 +138,14 @@ level into the prerequisite**.
 > **Prerequisite edges connect `知识点` only.** Hard rule, enforced by `tools/kbcheck.py`
 > (background: [Issue #11](https://github.com/hpleapfrog/Scholia/issues/11)).
 >
-> **The one exception is `路径`**: a path's `先修` declares **external prerequisites** —
+> **The one exception is `路径`**: a path's `先修` declares **prerequisites outside the path** —
 > things you should already know before walking it, which the path itself does not teach
 > (e.g. the electrostatics path requires conservation of mechanical energy).
 > These edges must still point at `知识点`.
+>
+> Note: this is **not** the same as the object-level optional field `外部先修` — that one means a
+> prerequisite with **no node in this library**, so no edge can be drawn at all. A path's `先修`
+> still points at an existing `知识点`.
 >
 > The exception was added on 2026-10-21: `check_paths` had always relied on this field to decide
 > that a prerequisite sits outside the path, while the hard rule above banned it for paths —
@@ -249,6 +253,34 @@ license: CC-BY-SA-4.0
 > an earlier version of this block used a fictional author, a **voided** evidence id, and
 > `status: 已确证` (a status that does not exist in this library).
 
+### Optional field `外部先修` (out-of-library prerequisites)
+
+`edges.先修` **may connect only to `知识点` nodes in this library**. When an object depends on
+something the library has **no node for** (refraction depends on the geometric angle, say),
+declare it with the optional `外部先修` field — **do not** invent a node just to draw an edge,
+and **do not** stuff out-of-library content into `edges.先修`.
+
+```yaml
+外部先修:
+  - 名称: 几何中的角          # human-readable name
+    标识: angle               # stable ASCII key; reuse the same key for the same prerequisite
+    学科: 数学
+    学段: 初中                # same enum as scope.学段
+    来源: ev-026              # a single registered ev-###
+```
+
+- **All five subfields are required.** `标识` must match `[a-z0-9][a-z0-9-]*` and be unique within an entry.
+- It is a **declaration, not a graph edge**: it takes no part in the `先修` acyclicity check, and it does
+  **not** mean the node exists in this library.
+- The machine checks only **declaration shape, source registration and recurrence** (`R-SCHEMA-20`);
+  **whether the prerequisite is truly required, and whether to build a node for it, is a human judgement**
+  (`M-12`).
+- When the same `标识` appears in ≥2 objects, the validator hints "consider building a node" —
+  this turns a prose remark into a **countable signal**, not an automatic node.
+
+> Background and the seven migrated cases:
+> [decision record](docs/decisions/external-prerequisites-field.en.md).
+
 ## 4. Status values (constrained by `type`)
 
 | `type` | allowed `status` |
@@ -261,6 +293,37 @@ license: CC-BY-SA-4.0
 > **知识点, 教法, 误解, 路径, 资源 may not use `已确证` (confirmed).** They are organizational or
 > conditional; there is no single correct answer. Allowing it for methods would admit a unique
 > optimal method. **Only `命题` may be `已确证`.**
+
+### Provenance tier: the second ruler beside `status`
+
+`status` answers "is there an argument that survives attack" — **a human judgement**. It cannot
+answer a different question: **how far was each cited source actually read.** That one the machine
+can answer, and the answer is the **provenance tier** (`溯源档`).
+
+| Tier | Meaning | How it is computed |
+|---|---|---|
+| `T4` | read in full | **every** cited evidence record has `核验深度 = 全文` |
+| `T3` | read as summary | the weakest one is `摘要` |
+| `T2` | located only | the weakest one is `仅定位` ("is this passage here", not read) |
+| `T1` | unverified | the weakest one is `未核验` (registered, never opened) |
+| `T0` | no basis | a cited record is **void**, or the id is not in the registry |
+
+**The rule is the weakest link — not the average, not the best one.** Five sources with four read
+end to end and one merely located still send a reader who follows the thinnest one into a place
+nobody has read; an average hides exactly that.
+
+> [!IMPORTANT]
+> **The tier is not a seventh `status` and does not feed the `status` computation.**
+> It does not say "true"; it says "can you follow this to the end and actually verify it".
+> That is why "**confirmed only in a handful of cases**" and "**most entries at T3 or above**" can both hold —
+> the status column simply cannot show this difference, which is the whole point of having a second one.
+>
+> `tools/kbcheck.py` writes it into `index.json` (`objects[].溯源`) and `citations.json`
+> (`by_id.<id>.溯源`), **never into an entry's front-matter**: a hand-written derived value drifts,
+> and the only value of this dimension is that it is correct.
+
+When citing, **give it together with `status`**: "`status=待审` (written, no review yet) ·
+`溯源=T4` (every cited source read in full)" is closer to the truth than either half alone.
 
 ### Extra required field for 教法 (methods)
 
@@ -394,11 +457,35 @@ Rules are dead; people execute them:
 ```
 1. List all arguments of the entry; mark who attacks whom
 2. Compute the surviving set: an argument survives only if all its attackers are defeated
-3. Surviving set agrees      → 已确证 (needs an independent non-author review)
+3. Surviving set agrees      → 已确证 (reviewer: a non-author human, or an agent with a record)
    Surviving set conflicts   → 争议
    Surviving set empty       → 待审 (never argued) or 失据 (argued, then defeated)
 4. Write status and its grounds into the PR description and the 变更记录 table
 ```
+
+### Who may review: a human, or an agent
+
+**Since 2026-11-05 a third person is no longer required.** One author plus one agent can take an
+entry all the way to `已确证` — **but who signed it must be readable.**
+
+| Reviewer | What the machine checks | What the reader sees |
+|---|---|---|
+| **human** (non-author) | `author` plus **≥2 distinct `@` handles** in the change log | `复核者: 人` |
+| **agent** | a complete `## 复核记录` (model · date · quotation check · limits) | `复核者: agent` |
+
+**Both paths must clear the same evidence bar: provenance tier `T4`** (every cited source read in
+full). Claiming "reviewed" without reading is reviewing your own memory of it.
+
+> [!IMPORTANT]
+> **Why keep the `复核者` field at all.**
+> Because `已确证` no longer automatically means "a human looked at this". The cost of letting an
+> agent sign is not that the score gets cheap — it is that **readers will misread it**. So the cost
+> is repaid in information: who signed, how many quotations were checked, and what could not be
+> judged are all in the index, visible to anyone.
+>
+> The `限制` field **must not be empty**. A machine review that names its own boundary is worth more
+> than one pretending to have none; and **platitudes ("limited capability") are the signal that this
+> rule has failed** — at which point it should revert to humans only.
 
 ### "Empty surviving set" has two causes
 

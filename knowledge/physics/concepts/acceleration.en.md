@@ -5,11 +5,17 @@ title: Acceleration
 status: 有效
 author: "@hpleapfrog"
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-29
 scope:
   学科: 物理
   学段: 高中
   范围: description of motion
+外部先修:
+  - 名称: vectors
+    标识: vector
+    学科: 数学
+    学段: 高中
+    来源: ev-039
 
 edges:
   先修: ["[知识点：速度与速率](speed-and-velocity.en.md)"]
@@ -60,6 +66,11 @@ a = Δv / Δt = (v_f − v_0) / (t_f − t_0)
 > The textbook gives no formula-based explanation; what it gives is a **visualization you can say out loud** —
 > "the velocity arrow is getting shorter".
 
+> [!NOTE]
+> **This node also has a mathematical prerequisite: vectors.**
+> The textbook's `[AL]` hint first asks "how much students remember about vectors: what does a vector arrow represent, and which quantities are vectors and which are scalars" (ev-039).
+> This repo has no "vector" node, so it is recorded in `外部先修` (`vector`), **not as an `edges.先修` edge**.
+
 ## Relations
 
 | Object | Entry | Note |
@@ -107,3 +118,4 @@ a = Δv / Δt = (v_f − v_0) / (t_f − t_0)
 | Date | Action | Basis | Who |
 |---|---|---|---|
 | 2026-10-05 | established the entry (#8 batch conversion · batch 5: "complete through Chinese high school") | user request · Issue #8 | @hpleapfrog |
+| 2026-10-29 | recorded "vectors" as `外部先修` (`vector`) — the textbook's `[AL]` hint asks for a vector review, and this repo has no node | Issue #17 | AI (DeepSeek V4.1 Flash) · pending @hpleapfrog review |

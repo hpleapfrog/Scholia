@@ -16,6 +16,9 @@
 | **AI / 程序**（读内容） | [**llms.txt**](llms.txt) + [**index.json**](index.json)（导航）· [**citations.json**](citations.json)（按 id 取引用材料）· [**evidence.json**](evidence.json)（证据登记） |
 | 想把这个库**挂到 agent** | `python tools/scholia_mcp.py --print-config` —— 零依赖 MCP server（只读），配置直接打印出来 |
 | 想**加一条**（贡献者） | [`templates/`](templates/README.md) + `python tools/new_entry.py` —— 一条命令出骨架 |
+| 想**直接拿勘误数据**（教师 · 教材编辑 · 写书的人） | [`exports/errata.csv`](exports/errata.csv) —— 全库勘误一个表（行数见文件，**不在文档里写死**）；`python tools/export_errata.py` 重生成 |
+| 想**看一页**而不是读一堆文件 | `python tools/build_site.py` → 打开 `site/index.html`（单文件、零依赖、可搜索） |
+| 想知道**还缺什么** | [**docs/GAPS.md**](docs/GAPS.md) —— 一页看全（生成物）；要开工用 `python tools/make_tasks.py` |
 | 想**建自己的一份**（个人） | [`templates/`](templates/README.md) —— 复制骨架即可，不用 fork、不用联网 |
 | 想知道库是怎么做出来的 | 本页往下 |
 
@@ -83,7 +86,7 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 署名见各条目 `author` 字段与提交历史；复用时保留一条指向本仓库的链接即满足。
 
 > [!CAUTION]
-> - **这不是教材，也不是教学处方。**「已确证」不表示绝对正确——**且目前一条都没有**（见下）。
+> - **这不是教材，也不是教学处方。**「已确证」不表示绝对正确——它只表示**有一名复核者按规则核过**（见下）。
 > - **`争议` 是诚实的结果，不是缺陷。** 教法全部是条件性的，用前必核对「禁忌」栏。
 > - **绝不上传教材原文或扫描页**，只存定位、短引用与原创摘要——事实不受版权保护，表达受。
 > - **医学条目带人群限定与免责块**，转述时必须连同限定一起给出。
@@ -100,7 +103,8 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
 | 学科 / Subjects | 物理 Physics 370 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 29 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
 | 证据 / Evidence | 188（含作废 / void 5） |
-| 已确证 / Confirmed | **0** |
+| 溯源 / Provenance | **738 / 746（99%）读到全文或摘要** —— T4 733 · T3 5 · T2 8 |
+| 已确证 / Confirmed | **1** |
 <!-- kbcheck:end -->
 
 来源：OpenStax《Physics》(**CC BY**) · Utah 7 年级科学 · 出版社勘误表 · AASM 临床指南 · 随机对照试验（RCT）。
@@ -111,8 +115,17 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 > 手写的数字会漂移，而漂移的数字就是断言。
 
 > [!IMPORTANT]
-> **没有一条是「已确证」。** 那需要一名**非作者的独立复核**，而目前只有一位贡献者。
-> **这是规则被遵守，不是内容缺失。**
+> **表里有两把尺子，别把它们读成一把。**
+> `已确证` 那一行说的是**有几条拿到了复核**；`溯源` 那一行说的是**来源逐份读过**。
+> 两个数同时成立，而且只报其中一个都会误导：只报前者，读者以为「没人核过」；
+> 只报后者，读者以为「已经复核」。溯源档取**最弱一环**（引用的每一份证据里读得最浅的那份），
+> 定义见 [FORMAT §4](FORMAT.md)。**它是机器算的，`已确证` 是人给的——这条界线不能动。**
+
+> [!IMPORTANT]
+> **`已确证` 的门槛不变，但复核者不再限于人。** 2026-11-05 起，agent 也能签：
+> 条件是留一份四栏 `## 复核记录`（模型 · 日期 · 引文核验 · 限制）+ 溯源 `T4`（每份来源都读到全文）。
+> **是谁签的写在 `复核者` 字段上**，读者一眼能看到 —— 因为「已确证」这三个字
+> 从此不再自动等于「有一个人类看过」（[为什么](docs/decisions/agent-review.md)）。
 
 ## 未决（要紧的几条）
 
@@ -134,23 +147,26 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
    2026-10-21 第三次试测把 P7→P9 拆成四段：**代理墙钟 3 分 44 秒**，其中双语尾部 **61 秒**；
    但来源小、题目由仓库指定、英文为即时译写，**不是达标读数**——它只证明四段可分、工具链仍不是瓶颈。
    分段数据、结论与压缩范围 → [决策记录](docs/decisions/entry-cost-phases.md)
-2. `已确证` / `争议` / `已推翻` **全是 0**。这仍然**不是能靠写代码补的缺口**——补的是**人**（复核者、守方）。
+2. `争议` / `已推翻` **仍是 0**，`已确证` 只有极少数（且由 agent 签）。这仍然**不是能靠写代码补的缺口**——补的是**人**（复核者、守方）。
    但代码可以**让这个 0 可核对**：新增 `R-SCHEMA-19` 校验三个状态各自的结构前提
    （`已确证` 需 `author` + 变更记录里 **≥2 个不同署名**；`争议` 需 **≥2 论证且有进 `攻击` 边**；
    `已推翻` 需**攻击方可引用**，否则请写 `失据`）。实测：全库 `攻击` 边 4 条，4 个被攻击条目
    **全部满足「≥2 论证」**——差的只是「攻击没有对手」。署名统计是同一件事的另一半：
    `@hpleapfrog` 1379 次，其余三个 `@` 只活在历史变更记录里。→ [决策记录](docs/decisions/status-zero-is-auditable.md)
-3. 前置在学科之外时表达不了（[Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)）：
-   **例数已从 1 攒到 7**——「几何的角」×4（反射 · 反射教法 · 折射 · 折射教法）、
-   「矢量」×2（力-高中 · 加速度）、「角速度矢量方向」×1（匀速圆周运动）；
-   「进阶」也有 3 处实例，正文里甚至自发长出了 `后续` 这个惯例——**「等 3–5 例再动结构」的触发条件已过**。
-   推荐 Issue #17 的**选项 1**（可选字段 `外部先修`，只机检「是否声明过」与「同名反复出现」）。
-   **schema 改动需单独评审，本轮未动**：这里交出的是一次评审的输入，不是评审的结果。
-   → [决策记录](docs/decisions/out-of-library-prerequisites.md)
+3. 前置在学科之外时表达不了（[Issue #17](https://github.com/hpleapfrog/Scholia/issues/17)）
+   —— **已按选项 1 落地**（2026-10-30）：新增可选字段 `外部先修`
+   （`名称` / `标识` / `学科` / `学段` / `来源`），**只机检形状、来源登记与同名复发**；
+   它**不是 `先修` 边**，不参与无环判定。已迁移 7 个条目 / 8 条声明
+   （`angle`×4、`vector`×2、`inverse-trig`×1、`angular-velocity-vector`×1）。
+   同一标识在 ≥2 个对象出现时，[GAPS](docs/GAPS.md) 会把它列进「该建节点了吗」。
+   → [字段决策](docs/decisions/external-prerequisites-field.md) ·
+   [先前的评审输入](docs/decisions/out-of-library-prerequisites.md)
 4. `支持` 边的独立性算不出来；目标覆盖度只算「有没有」，不算「够不够」。**两句都拆成了「能算的一半」与「要人判的一半」**：
    `R-GRAPH-06` 算得出**同一来源标识**（实测：`教材内建分组教学变体#a3` 有 **42 条支持边 · 21 份证据 · 1 个来源标识**——
    本库那句「同一个来源重复 26 次」如今长到 42 条，仍然全出自一本书）；
-   `R-GRAPH-07` 算得出**冗余度与阅读深度**（15 个学习成果全部「有」覆盖，其中 **11 个（73%）只讲一次**）。
+   `R-GRAPH-07` 算得出**冗余度与阅读深度**（17 条路径 · **73 个学习成果全部「有」覆盖，
+   其中 67 个（92%）只讲一次**；实时数字见 [GAPS](docs/GAPS.md) 顶部）。这两个维度现在写进 `index.json` 的 `覆盖度` 字段——
+   所以 agent、任务清单与 [GAPS](docs/GAPS.md) 看到的是同一份事实，而不是只有终端里才有的提示。
    **跨来源是否真独立仍归 `M-03`（人判）**。这一项还留下一次**假干净**的教训：第一版按列位解析编排表，
    把一条读不懂的路径报成「没有冗余问题」——如今这一支有**两条**注入样本，第二条专门把「覆盖」列挤出末列，
    并在**退回第一版实现**时实测到「报出单环节覆盖的路径从 4 条掉到 2 条」
@@ -161,11 +177,20 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 
 ```
 knowledge/        知识对象：知识点 · 命题 · 教法 · 误解 · 路径 · 资源
+events/           事件（与知识对象分开：无论证、无真值）
 index.json        机器入口（导航 + 能不能引用）
 citations.json    引用材料（按 id 取：定位 · 限定 · 免责块）
 evidence.json     证据登记（等级 · 核验深度 · 定位 · 许可）
 evidence/         证据索引与可复算的原始数据
 docs/RULES.md     规则注册表（机械校验 / 人工复核）
+docs/GAPS.md      缺口总览（生成物：还缺什么、先做哪件）
 docs/decisions/   规则的「为什么」——案例 · 事故 · 推断（从规范里搬出，不删）
-tools/            kbcheck.py（校验器）· scholia_mcp.py（MCP server）
+templates/        条目骨架（new_entry.py 从这里取结构）
+tools/            kbcheck.py 校验 · verify_rules.py 规则自测 · gaps.py 缺口计算
+                  make_tasks.py 任务 · new_entry.py 骨架 · review_packet.py 复核包
+                  selftest.py 接口自检 · scholia_mcp.py MCP server
+                  quote_check.py 引文核验 · evid.py 编号分配 · export_errata.py 勘误导出
+                  build_site.py 单文件站点（生成物在 site/，不进版本库）
+drafts/           未核完的稿子：不是知识对象，不进索引（见 drafts/README.md）
+exports/          生成的数据表：errata.csv（全库勘误）· errata.json
 ```
