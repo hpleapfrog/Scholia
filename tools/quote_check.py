@@ -117,7 +117,13 @@ def quotes_of(path, include_blockquotes=False):
     """
     text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
     cands = list(re.finditer(r"`([^`\n]{%d,400})`" % MIN_CHARS, text))
-    found = [(m.start(), m.group(1)) for m in cands]
+    # **表格里的反引号不是引文**：那是文件路径、哈希、注册表行（`rfc-editor.org/...`、
+    # `451 / Unavailable For Legal Reasons / RFC 7725`）。把它们当引文去比，
+    # 只会得到一堆「引文未在原文中出现」的假阳性。
+    def _in_table(pos):
+        start = text.rfind("\n", 0, pos) + 1
+        return text[start:start + 1] == "|"
+    found = [(m.start(), m.group(1)) for m in cands if not _in_table(m.start())]
     if include_blockquotes:
         # **整段引用块要合成一条**：RFC 的句子按 72 列折行，逐行比对必然失败，
         # 而失败的形状和「伪造引文」一模一样——这是最危险的一类假阳性。
