@@ -7,9 +7,9 @@
 <!-- kbcheck:begin -->
 | 学科 | 条目数 |
 |---|---|
-| [医学](medicine/README.md) | 15 |
+| [医学](medicine/README.md) | 25 |
 | [事件（顶层）](../events/README.md) | 2 |
-| **合计** | **15** |
+| **合计** | **25** |
 <!-- kbcheck:end -->
 
 > [!NOTE]

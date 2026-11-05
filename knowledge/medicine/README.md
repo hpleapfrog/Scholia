@@ -158,6 +158,26 @@
 
 | [KDIGO 2024 CKD 推荐 3.6.2（1B）](claims/指南-KDIGO3.6.2.md) | 命题 | 待审 | **高（KDIGO 原文，1B）** |
 
+| [KDIGO 2024 CKD 推荐 3.4.1（2B）](claims/指南-KDIGO3.4.1.md) | 命题 | 待审 | **高（KDIGO 原文，2B）** |
+
+| [KDIGO 2024 CKD 推荐 3.6.4（1B）](claims/指南-KDIGO3.6.4.md) | 命题 | 待审 | **高（KDIGO 原文，1B）** |
+
+| [KDIGO 2024 CKD 推荐 3.7.1（1A）](claims/指南-KDIGO3.7.1.md) | 命题 | 待审 | **高（KDIGO 原文，1A）** |
+
+| [KDIGO 2024 CKD 推荐 3.7.2（1A）](claims/指南-KDIGO3.7.2.md) | 命题 | 待审 | **高（KDIGO 原文，1A）** |
+
+| [KDIGO 2024 CKD 推荐 3.7.3（2B）](claims/指南-KDIGO3.7.3.md) | 命题 | 待审 | **高（KDIGO 原文，2B）** |
+
+| [KDIGO 2024 CKD 推荐 3.8.1（2A）](claims/指南-KDIGO3.8.1.md) | 命题 | 待审 | **高（KDIGO 原文，2A）** |
+
+| [KDIGO 2024 CKD 推荐 3.9.1（1B）](claims/指南-KDIGO3.9.1.md) | 命题 | 待审 | **高（KDIGO 原文，1B）** |
+
+| [KDIGO 2024 CKD 推荐 3.15.1.1（1A）](claims/指南-KDIGO3.15.1.1.md) | 命题 | 待审 | **高（KDIGO 原文，1A）** |
+
+| [KDIGO 2024 CKD 推荐 3.15.1.2（1B）](claims/指南-KDIGO3.15.1.2.md) | 命题 | 待审 | **高（KDIGO 原文，1B）** |
+
+| [KDIGO 2024 CKD 推荐 3.15.1.3（2A）](claims/指南-KDIGO3.15.1.3.md) | 命题 | 待审 | **高（KDIGO 原文，2A）** |
+
 ## 指南来源登记（2026-11-05 实测可达）
 
 本库只收**可定位到发布方原文**的指南。下表是首批登记，状态一栏是**当天实测的 HTTP 结果**——
