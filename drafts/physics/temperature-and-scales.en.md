@@ -88,8 +88,8 @@ A **temperature difference** converts differently: `ΔT_F = (9/5) ΔT_C`, while 
 |---|---|
 | Follow-up | [Kinetic-molecular theory](molecular-kinetic-theory.en.md) — connects temperature to the average translational kinetic energy of molecules; this entry gives only the operational definition, and the microscopic model is developed there |
 | Follow-up | [Gas laws and the ideal-gas equation](gas-laws-and-ideal-gas-equation.en.md) — ratios such as `p/T` and `V/T` hold only when `T` is in kelvin |
-| Follow-up | [First law of thermodynamics](../../knowledge/physics/concepts/thermodynamic-first-law.en.md) — the bookkeeping of heat `Q`, work `W`, and internal energy `ΔU`; this entry distinguishes the concepts but does no energy calculation |
-| Follow-up | [Statistical interpretation of entropy](../../knowledge/physics/concepts/statistical-interpretation-of-entropy.en.md) — the statistical meaning of temperature, entropy, and absolute zero |
+| Follow-up | [First law of thermodynamics](../../archive/knowledge/physics/concepts/thermodynamic-first-law.en.md) — the bookkeeping of heat `Q`, work `W`, and internal energy `ΔU`; this entry distinguishes the concepts but does no energy calculation |
+| Follow-up | [Statistical interpretation of entropy](../../archive/knowledge/physics/concepts/statistical-interpretation-of-entropy.en.md) — the statistical meaning of temperature, entropy, and absolute zero |
 | Recorded gap | **The zeroth law** has no entry of its own; **heat capacity and heat calculations**, **quantitative conduction/convection/radiation**, **ITS-90**, **quantum degenerate temperatures**, and **negative absolute temperature** are not built. This entry stops at "what temperature is, how it is measured, and how scales convert" |
 
 ## Argument

@@ -17,10 +17,10 @@
 
 | 路径 | 覆盖 | 只由一个环节覆盖的成果 |
 |---|---|---|
-| [万有引力与天体-高中](../../knowledge/physics/paths/万有引力与天体-高中.md) | 3/3 | `o1` `o3` |
-| [力与运动-高中](../../knowledge/physics/paths/力与运动-高中.md) | 4/4 | `o3` `o4` |
-| [功功率与机械能-高中](../../knowledge/physics/paths/功功率与机械能-高中.md) | 4/4 | `o1` `o2` `o3` `o4` |
-| [运动学入门-BL](../../knowledge/physics/paths/运动学入门-BL.md) | 4/4 | `o2` `o3` `o4` |
+| [万有引力与天体-高中](../../archive/knowledge/physics/paths/万有引力与天体-高中.md) | 3/3 | `o1` `o3` |
+| [力与运动-高中](../../archive/knowledge/physics/paths/力与运动-高中.md) | 4/4 | `o3` `o4` |
+| [功功率与机械能-高中](../../archive/knowledge/physics/paths/功功率与机械能-高中.md) | 4/4 | `o1` `o2` `o3` `o4` |
+| [运动学入门-BL](../../archive/knowledge/physics/paths/运动学入门-BL.md) | 4/4 | `o2` `o3` `o4` |
 
 **15 个成果全部「有」覆盖，其中 11 个（73%）只讲一次。**
 「有没有」与「够不够」的差距不是措辞，是 73% 的编排。
@@ -33,7 +33,7 @@
 
 第一版把成果编号**只从表格最后一列取**。
 四条路径里有三条的「覆盖」列就在最后一列，于是它们正常报出单环节覆盖；
-[运动学入门-BL](../../knowledge/physics/paths/运动学入门-BL.md) 的表头是
+[运动学入门-BL](../../archive/knowledge/physics/paths/运动学入门-BL.md) 的表头是
 `| # | 环节 | 条目 | 覆盖 | 时长 |`，**最后一列是时长**——那一行永远取不到 `o\d+`，
 `steps` 全空，于是 `thin` 也全空。
 
@@ -91,4 +91,4 @@
 - [ ] `sample_graph07b` 只盯**这一种**形状。自测里其余按列位取值的地方已为同样的理由改成扫全部单元格，
       但「每个解析器配一条形状样本」不是能无限扩下去的路子——**长治久安的处置是：不按列位读 Markdown 表格**
 - [ ] 教学上「够不够」的正门是**前后测数据**，本库没有（见
-      [教材内建分组教学变体](../../knowledge/physics/claims/教材内建分组教学变体.md) 的同类缺口）
+      [教材内建分组教学变体](../../archive/knowledge/physics/claims/教材内建分组教学变体.md) 的同类缺口）

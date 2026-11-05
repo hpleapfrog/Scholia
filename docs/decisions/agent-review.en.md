@@ -58,7 +58,7 @@ thing that was not judged. If not, revert to humans only.
 
 ## 5. The first instance
 
-[向心力不是一种新的力](../../knowledge/physics/claims/centripetal-is-not-a-new-force.en.md):
+[向心力不是一种新的力](../../archive/knowledge/physics/claims/centripetal-is-not-a-new-force.en.md):
 `待审` → `已确证`, `复核者: agent`. Five English quotations, five hits (threshold 0.92, each 1.00),
 checked line by line against m54181; the `限制` field lists three things **not** judged.
 

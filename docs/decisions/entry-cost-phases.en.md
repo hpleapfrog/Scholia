@@ -11,9 +11,9 @@ about **2.4×**); the second was stamped per phase (**13 min 16 s of wall clock*
 interruption that was never stamped separately**, at most **2.6×**); the third split the previously unsplit
 P7→P9 (last trial's phase numbering) into four event-boundary stamps and logged **3 min 44 s of agent wall
 clock**, but **that entry was small and smooth and is no ceiling** (see "The third trial"). **None of the three is human timing, so this open item stays open.**
-The first timed trial ([The area under a velocity–time graph equals displacement](../../knowledge/physics/claims/velocity-time-graph-area.en.md),
+The first timed trial ([The area under a velocity–time graph equals displacement](../../archive/knowledge/physics/claims/velocity-time-graph-area.en.md),
 ev-151) produced only a total: about 12 minutes, **unphased**, so it could say "we are over" but not **where**.
-The second trial ([HTTP 451 refuses access for legal reasons](../../knowledge/computing/claims/http-451-legal-unavailable.en.md),
+The second trial ([HTTP 451 refuses access for legal reasons](../../archive/knowledge/computing/claims/http-451-legal-unavailable.en.md),
 ev-153) stamped each phase; the phase table below is its result.
 
 ## The measured phases (2026-10-20 · agent timing)
@@ -151,7 +151,7 @@ placeholder.**
 
 ## The third trial: splitting last trial's P7→P9 tail into four stamps (2026-10-21 · agent timing)
 
-The third trial used [the JSON entry](../../knowledge/computing/claims/json-utf8-no-bom.en.md), because the
+The third trial used [the JSON entry](../../archive/knowledge/computing/claims/json-utf8-no-bom.en.md), because the
 computing README's "next entry" pointed at RFC 8259. The source is **899 lines / 28,360 bytes**, larger than
 the 451 trial's 283 lines, but the entry draws on **section 8.1** only, and there was no directional discovery
 like "451 is not in RFC 9110" — **this entry ran smoother than the last one**.

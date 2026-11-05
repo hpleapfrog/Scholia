@@ -20,34 +20,34 @@ touched**.
 
 | # | Entry | The prerequisite it needs | Whose subject | How it is expressed today |
 |---|---|---|---|---|
-| 1 | [Reflection of light](../../knowledge/physics/concepts/reflection-of-light.en.md) | the geometric meaning of "angle" | Mathematics (junior-secondary geometry) | a WARNING in the body: "this concept has a prerequisite that is geometry, not physics"; `先修: []` |
-| 2 | [Reflection · BL teaching method](../../knowledge/physics/methods/reflection-bl-geometry.en.md) | same | same | a row in the 关联 table: `先修｜"angle" in geometry`; `条件: the student has learned the concept of angle` |
-| 3 | [Refraction](../../knowledge/physics/concepts/refraction.en.md) | angle **and inverse trigonometry** (`sin⁻¹` is not a power) | Mathematics | "the library lacks a 'geometric angle' prerequisite node" + "the 先修 edge cannot be attached" |
-| 4 | [Refraction · BL teaching method](../../knowledge/physics/methods/refraction-bl-geometry.en.md) | the concept of angle | Mathematics | `先修｜angle (**no such node in this library yet**); being able to do division` |
-| 5 | [Force (senior secondary)](../../knowledge/physics/concepts/force.en.md) | **vectors and vector addition** | Mathematics | WARNING: "'vector' is a prerequisite of this section, and it is not physics' — it belongs to mathematics", plus why the node does not exist |
-| 6 | [Acceleration](../../knowledge/physics/concepts/acceleration.en.md) | vectors (the textbook's `[AL]` note: `See how much memory students remember about vectors`) | Mathematics | mentioned in prose only; nothing to link to |
-| 7 | [Uniform circular motion](../../knowledge/physics/concepts/uniform-circular-motion.en.md) | **the vector direction of angular velocity (right-hand rule)** | Mathematics / competition-level physics | a 关联 row: `前置缺口｜not developed in this library` |
+| 1 | [Reflection of light](../../archive/knowledge/physics/concepts/reflection-of-light.en.md) | the geometric meaning of "angle" | Mathematics (junior-secondary geometry) | a WARNING in the body: "this concept has a prerequisite that is geometry, not physics"; `先修: []` |
+| 2 | [Reflection · BL teaching method](../../archive/knowledge/physics/methods/reflection-bl-geometry.en.md) | same | same | a row in the 关联 table: `先修｜"angle" in geometry`; `条件: the student has learned the concept of angle` |
+| 3 | [Refraction](../../archive/knowledge/physics/concepts/refraction.en.md) | angle **and inverse trigonometry** (`sin⁻¹` is not a power) | Mathematics | "the library lacks a 'geometric angle' prerequisite node" + "the 先修 edge cannot be attached" |
+| 4 | [Refraction · BL teaching method](../../archive/knowledge/physics/methods/refraction-bl-geometry.en.md) | the concept of angle | Mathematics | `先修｜angle (**no such node in this library yet**); being able to do division` |
+| 5 | [Force (senior secondary)](../../archive/knowledge/physics/concepts/force.en.md) | **vectors and vector addition** | Mathematics | WARNING: "'vector' is a prerequisite of this section, and it is not physics' — it belongs to mathematics", plus why the node does not exist |
+| 6 | [Acceleration](../../archive/knowledge/physics/concepts/acceleration.en.md) | vectors (the textbook's `[AL]` note: `See how much memory students remember about vectors`) | Mathematics | mentioned in prose only; nothing to link to |
+| 7 | [Uniform circular motion](../../archive/knowledge/physics/concepts/uniform-circular-motion.en.md) | **the vector direction of angular velocity (right-hand rule)** | Mathematics / competition-level physics | a 关联 row: `前置缺口｜not developed in this library` |
 
 **The trigger condition has been passed**, and these are not seven copies of one sentence: the same "angle"
 is written separately in **four** entries — reflection, the reflection teaching method, refraction, the
 refraction teaching method (the textbook states the **same `[BL]` note twice**, in `ev-026` and `ev-038`).
 **Recurrence is itself evidence that a node is warranted** — an inference already written into
-[Refraction](../../knowledge/physics/concepts/refraction.en.md) that nobody acted on.
+[Refraction](../../archive/knowledge/physics/concepts/refraction.en.md) that nobody acted on.
 
 ## "Progression" is growing the same way
 
 | Entry | Relation | Status quo |
 |---|---|---|
-| [Inertia](../../knowledge/physics/concepts/inertia.en.md) | junior-secondary "forces and motion" → senior-secondary inertia: **progression, not prerequisite** | the author ruled "therefore no edge"; the reason lives in the body |
-| [Forces and motion (junior)](../../knowledge/physics/concepts/forces-and-motion-jhs.en.md) | reference frame / speed & velocity: "an obvious progression relation" | unresolved: whether `先修` may cross stages has no precedent |
-| [Uniform circular motion](../../knowledge/physics/concepts/uniform-circular-motion.en.md) | two `后续` rows: angular acceleration & rotational kinematics, torque | **the body already grew a `后续` convention on its own** — it simply never entered the schema |
+| [Inertia](../../archive/knowledge/physics/concepts/inertia.en.md) | junior-secondary "forces and motion" → senior-secondary inertia: **progression, not prerequisite** | the author ruled "therefore no edge"; the reason lives in the body |
+| [Forces and motion (junior)](../../archive/knowledge/physics/concepts/forces-and-motion-jhs.en.md) | reference frame / speed & velocity: "an obvious progression relation" | unresolved: whether `先修` may cross stages has no precedent |
+| [Uniform circular motion](../../archive/knowledge/physics/concepts/uniform-circular-motion.en.md) | two `后续` rows: angular acceleration & rotational kinematics, torque | **the body already grew a `后续` convention on its own** — it simply never entered the schema |
 
 > [!NOTE]
 > A mechanical entry point already exists **and has never fired**: `check_graph` warns on `先修` edges whose
 > stage sets are disjoint, and the warning text asks exactly "confirm this is a conceptual prerequisite,
 > not a **progression** relation". The corpus has 23 `先修` edges and **0 of them trigger the warning** —
 > not because cross-stage relations are absent, but because entries like
-> [Inertia](../../knowledge/physics/concepts/inertia.en.md) that were judged "progression" **choose not to
+> [Inertia](../../archive/knowledge/physics/concepts/inertia.en.md) that were judged "progression" **choose not to
 > build the edge**. **So the moment that judgement is made, the machine stops seeing it**: the warning's
 > input is a human brain, its output is "no edge" — and "no edge" is **exactly the same shape** as
 > "nobody ever considered this".

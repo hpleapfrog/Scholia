@@ -143,7 +143,7 @@ So "22.4 L" belongs only to the old `1 atm` STP; with the new `1 bar` standard, 
 | Prerequisite | [Temperature and temperature scales](temperature-and-scales.en.md) — the ratio laws require `T` in kelvin; the Celsius zero cannot enter a ratio directly |
 | Follow-up | [Kinetic-molecular theory](molecular-kinetic-theory.en.md) — explains these empirical laws through molecular collisions and gives the microscopic relation between `u_rms` and temperature |
 | Follow-up | Solids and liquids (not yet built in this library) — moves from the ideal gas to condensed phases with intermolecular forces |
-| Follow-up | [First law of thermodynamics](../../knowledge/physics/concepts/thermodynamic-first-law.en.md) — gas work `W = pΔV`, internal energy, and heat bookkeeping |
+| Follow-up | [First law of thermodynamics](../../archive/knowledge/physics/concepts/thermodynamic-first-law.en.md) — gas work `W = pΔV`, internal energy, and heat bookkeeping |
 | Recorded gap | **Real gases and the van der Waals equation**, **compressibility factor `Z`**, **quantitative Dalton partial pressures**, **gas diffusion and effusion (Graham's law)**, and **critical temperature and phase diagrams** are not built; the Chinese textbook locator for the law names is also not in the library, as noted under "To be checked" above |
 
 ## Argument

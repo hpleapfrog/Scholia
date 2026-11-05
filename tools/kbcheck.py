@@ -2645,8 +2645,6 @@ def generated_blocks(objects, events):
         "README.en.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
         "knowledge/README.en.md": render_subject_block_en(index),
-        "knowledge/physics/README.md": render_physics_methods_block(index),
-        "knowledge/physics/README.en.md": render_physics_methods_block(index, english=True),
         "START.md": render_subject_overview_block(index),
         "START.en.md": render_subject_overview_block(index, en=True),
         "docs/RULES.md": render_rules_block(),
@@ -2656,6 +2654,11 @@ def generated_blocks(objects, events):
         "llms.txt": render_machine_files_block(built),
         "llms.en.txt": render_machine_files_block(built, en=True),
     }
+    # 物理 README 与覆盖度页随学科一起归档：存在才生成，否则跳过（不再要求文件必须在）。
+    for rel, body in (("knowledge/physics/README.md", render_physics_methods_block(index)),
+                      ("knowledge/physics/README.en.md", render_physics_methods_block(index, english=True))):
+        if (ROOT / rel).exists():
+            blocks[rel] = body
     cov = render_coverage_block()
     if cov:
         blocks["knowledge/physics/coverage/README.md"] = cov

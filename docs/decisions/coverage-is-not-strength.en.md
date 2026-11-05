@@ -19,10 +19,10 @@ and both were added (`R-GRAPH-07`):
 
 | Path | Coverage | Outcomes covered by a single step |
 |---|---|---|
-| [Gravitation and the sky (high school)](../../knowledge/physics/paths/gravitation.en.md) | 3/3 | `o1` `o3` |
-| [Forces and motion (high school)](../../knowledge/physics/paths/forces-and-motion-hs.en.md) | 4/4 | `o3` `o4` |
-| [Work, power and mechanical energy (high school)](../../knowledge/physics/paths/energy-work.en.md) | 4/4 | `o1` `o2` `o3` `o4` |
-| [Kinematics intro (below grade level)](../../knowledge/physics/paths/kinematics-intro-bl.en.md) | 4/4 | `o2` `o3` `o4` |
+| [Gravitation and the sky (high school)](../../archive/knowledge/physics/paths/gravitation.en.md) | 3/3 | `o1` `o3` |
+| [Forces and motion (high school)](../../archive/knowledge/physics/paths/forces-and-motion-hs.en.md) | 4/4 | `o3` `o4` |
+| [Work, power and mechanical energy (high school)](../../archive/knowledge/physics/paths/energy-work.en.md) | 4/4 | `o1` `o2` `o3` `o4` |
+| [Kinematics intro (below grade level)](../../archive/knowledge/physics/paths/kinematics-intro-bl.en.md) | 4/4 | `o2` `o3` `o4` |
 
 **All 15 outcomes are "covered", and 11 of them (73%) are taught exactly once.** The gap between "is it
 there" and "is it enough" is not wording — it is 73% of the sequencing.
@@ -36,7 +36,7 @@ not **the outcome was taught well**.
 
 The first version read outcome ids **only from the last column** of the table. Three of the four paths do
 have 覆盖 as the last column, so they reported single-step coverage normally.
-[Kinematics intro](../../knowledge/physics/paths/kinematics-intro-bl.en.md) uses
+[Kinematics intro](../../archive/knowledge/physics/paths/kinematics-intro-bl.en.md) uses
 `| # | 环节 | 条目 | 覆盖 | 时长 |` — **its last column is duration**. Those rows never yielded an `o\d+`,
 `steps` stayed empty, and so did `thin`.
 
@@ -99,4 +99,4 @@ against a throwaway copy:
       converted to scan-all-cells for the same reason, but a shape sample per parser is not how this scales —
       the durable fix is "never index a Markdown column by position"
 - [ ] The front door to pedagogical "enough" is **pre/post test data**, which this library does not have
-      (see the matching gap in [textbook built-in tiered variants](../../knowledge/physics/claims/textbook-tiered-guidance.en.md))
+      (see the matching gap in [textbook built-in tiered variants](../../archive/knowledge/physics/claims/textbook-tiered-guidance.en.md))
