@@ -143,3 +143,19 @@ With "how to adjust" removed, what remains is **exactly what the repo is best at
 | 2026-10-14 | added [intensive BP lowering (SPRINT)](claims/sprint-intensive-bp.en.md) (`ev-070` SPRINT trial, abstract checked); **the subject's first cardiovascular proposition**, broadening beyond the earlier four that were all respiratory/critical-care | ev-070 registered; topic selected against the subject boundary | @hpleapfrog |
 | 2026-10-14 | added [treat before confirming plague](claims/plague-treat-on-suspicion.en.md) (`ev-071` WHO manual, `ev-072` CDC emergency guidance, `ev-073` CDC MMWR recommendation report - all checked at abstract level); originating question: "when plague comes back, what is needed?"; **the discipline's 6th proposition and its first one led by guideline text rather than trials** | `ev-071` · `ev-072` · `ev-073` registered, then topic selected within the discipline boundary | @hpleapfrog |
 | 2026-10-16 | registered `ev-074`–`ev-077`, **four standard textbooks** (all `仅定位`: no copy in hand), and `ev-078` · `ev-079`, **one Chinese and one foreign treatment guideline** (both `摘要`); added [blood-pressure targets in the 2024 Chinese hypertension guideline](claims/hypertension-cn-2024.en.md) (`ev-078` guideline text + existing `ev-070` SPRINT + two textbook backgrounds) and [COPD diagnosis and treatment in GOLD 2026](claims/copd-gold-2026.en.md) (`ev-079` pocket guide and key-changes summary + two textbook backgrounds); **the discipline's 7th and 8th propositions, extending coverage from respiratory/critical-care/cardiovascular to hypertension and COPD, and the first time textbook evidence enters the ledger** | arose from the task of collecting foreign and Chinese medical treatment guidelines and four standard textbooks; `ev-074`–`ev-079` registered, then topic selected within the discipline boundary; key passages of the guidelines read and checked sentence by sentence | @hpleapfrog |
+
+## Guideline sources (reachability measured 2026-11-05)
+
+| Publisher | Family | URL | HTTP |
+|---|---|---|---|
+| GOLD | GOLD Reports / Pocket Guide | `goldcopd.org/2026-gold-report-and-pocket-guide/` | 200 |
+| WHO | Plague surveillance, diagnosis, prevention and control | `who.int/publications/i/item/9789240090422` | 200 |
+| ESC | Clinical Practice Guidelines | `escardio.org/Guidelines` | 200 |
+| IDSA | Practice Guidelines | `idsociety.org/practice-guideline/practice-guidelines/` | 200 |
+| NICE | NG115 etc. | `nice.org.uk/guidance/ng115` | **403 (browser only)** |
+| KDIGO | Kidney guidelines | `kdigo.org/guidelines/` | **406 (browser only)** |
+| ADA | Standards of Care | `diabetesjournals.org/care/issue/49/Supplement_1` | **403 (browser only)** |
+| CDC | Plague emergency guidance | `cdc.gov/plague/hcp/emergency-guidance/` | **403 (browser only)** |
+
+> **403/406 means the script is blocked, not that the source is gone.** Such rows must say
+> "needs a human to open" and may not be counted as read.

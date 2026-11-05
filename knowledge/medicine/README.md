@@ -143,3 +143,22 @@
 | 2026-10-14 | 新增 [强化降压 SPRINT](claims/强化降压SPRINT.md)（`ev-070` SPRINT 试验摘要核对）；**本学科第一条心血管命题**，拓宽此前 4 条均为呼吸/重症的覆盖面 | ev-070 登记入库后按学科边界选题 | @hpleapfrog |
 | 2026-10-14 | 新增 [疑似鼠疫不等确诊即治疗](claims/疑似鼠疫不等确诊即治疗.md)（`ev-071` WHO 手册、`ev-072` CDC 应急指南、`ev-073` CDC MMWR 推荐报告，均摘要级核对）；起因是一个提问「当流行病鼠疫再次来袭，需要什么？」；**本学科第 6 条命题、首条以指南原文（而非试验）为主的命题** | `ev-071` · `ev-072` · `ev-073` 登记入库后按学科边界选题 | @hpleapfrog |
 | 2026-10-16 | 同批登记 `ev-074`～`ev-077` **四本经典教材**（均 `仅定位`：未取得原书）与 `ev-078` · `ev-079` **中外两份治疗指南**（均 `摘要` 级）；新增 [中国高血压指南 2024 降压目标](claims/中国高血压指南2024降压目标.md)（`ev-078` 指南原文 + `ev-070` 既有 SPRINT + 两本教材背景）与 [GOLD 2026 慢阻肺诊疗](claims/GOLD2026慢阻肺诊疗.md)（`ev-079` 口袋指南与关键变化摘要 + 两本教材背景）；**本学科第 7、8 条命题，覆盖面从呼吸/重症/心血管扩到高血压与慢阻肺，教材层面首次入账** | 起因是收集「中外医学治疗指南与四本经典教材」的任务；`ev-074`～`ev-079` 登记入库后按学科边界选题；打开指南关键段落原文逐句核对 | @hpleapfrog |
+
+## 指南来源登记（2026-11-05 实测可达）
+
+本库只收**可定位到发布方原文**的指南。下表是首批登记，状态一栏是**当天实测的 HTTP 结果**——
+不是「据说有」，而是「现在打得开」。
+
+| 发布方 | 指南族 | 地址 | 实测 |
+|---|---|---|---|
+| GOLD（慢阻肺全球倡议） | GOLD Reports / Pocket Guide | `goldcopd.org/2026-gold-report-and-pocket-guide/` | 200 |
+| WHO | 鼠疫监测、诊断、预防与控制手册 | `who.int/publications/i/item/9789240090422` | 200 |
+| ESC（欧洲心脏病学会） | ESC Clinical Practice Guidelines | `escardio.org/Guidelines` | 200 |
+| IDSA（美国感染病学会） | IDSA Practice Guidelines | `idsociety.org/practice-guideline/practice-guidelines/` | 200 |
+| NICE | NG115 等 | `nice.org.uk/guidance/ng115` | **403（需浏览器）** |
+| KDIGO | 肾脏病指南 | `kdigo.org/guidelines/` | **406（需浏览器）** |
+| ADA | Standards of Care（Diabetes Care 增刊） | `diabetesjournals.org/care/issue/49/Supplement_1` | **403（需浏览器）** |
+| CDC | 鼠疫应急指南 | `cdc.gov/plague/hcp/emergency-guidance/` | **403（需浏览器）** |
+
+> **403/406 不等于没有**，只说明脚本抓不到（反爬）。它们仍是有效来源，
+> 但登记时必须写明「需人工打开核对」，不能按「已读」计。
