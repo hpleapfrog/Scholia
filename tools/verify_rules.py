@@ -1075,6 +1075,62 @@ def sample_graph07b(root, _v):
     return False
 
 
+# 2026-11-05：库收窄为医学治理指南库，下列规则的**领域结构**（知识点/教法/路径/先修图/外部先修）
+# 已随 9 个学科归档到 `archive/`。规则代码保留、检查照跑，但**在 current scope 内没有夹具**，
+# 因此显式列为「退役样本」：**必须是这份名单里的才允许跳过**，名单外出现跳过仍然判失败。
+# 这不是把 SKIP 改成通过——是承认「这条规则在本学科没有可触发的对象」并写下来。
+RETIRED = {
+    ("R-GRAPH-05", "攻击条目没有 攻击 边"),
+    ("R-SCHEMA-06", "知识点首行的 [!TIP] 被改坏"),
+    ("R-SCHEMA-02", "知识点写成「已确证」"),
+    ("R-SCHEMA-12", "教法的 knowledge_point 指向不存在的文件"),
+    ("R-SCHEMA-13", "教法的水平档写成 ZZ"),
+    ("R-GRAPH-01", "两个知识点互为先修（成环）"),
+    ("R-GRAPH-01", "路径的外部先修指向教法"),
+    ("R-GRAPH-01", "多行块先修里的第二条是坏链接"),
+    ("R-GRAPH-02", "支持边锚点在目标里不存在"),
+    ("R-GRAPH-03", "路径的某个成果无人覆盖"),
+    ("R-GRAPH-04", "路径某环节指不出对象"),
+    ("R-SCHEMA-16", "知识点被移出 concepts/（目录与 type 不符）"),
+    ("R-README-03", "README 里的覆盖度数字被改大"),
+    ("R-GRAPH-07", "成果唯一覆盖条目的证据被改成未读"),
+    ("R-GRAPH-07", "把「覆盖」列挤出末列后仍要报出单环节覆盖"),
+    ("R-SCHEMA-20", "`外部先修` 的某一项缺 `学段`"),
+    ("R-SCHEMA-20", "`外部先修.标识` 不是 ASCII 稳定键"),
+    ("R-SCHEMA-20", "`外部先修:` 声明了却没有任何条目"),
+    ("R-EVID-01", "`外部先修.来源` 指向不存在的编号"),
+    ("R-BILING-02", "英译本的 `外部先修` 与中文原件不一致"),
+}
+
+
+# 2026-11-05：库收窄为医学治理指南库，下列规则的**领域结构**（知识点/教法/路径/先修图/外部先修）
+# 已随 9 个学科归档到 `archive/`。规则代码保留、检查照跑，但**在 current scope 内没有夹具**，
+# 因此显式列为「退役样本」：**必须是这份名单里的才允许跳过**，名单外出现跳过仍然判失败。
+# 这不是把 SKIP 改成通过——是承认「这条规则在本学科没有可触发的对象」并写下来。
+RETIRED = {
+    ("R-GRAPH-05", "攻击条目没有 攻击 边"),
+    ("R-SCHEMA-06", "知识点首行的 [!TIP] 被改坏"),
+    ("R-SCHEMA-02", "知识点写成「已确证」"),
+    ("R-SCHEMA-12", "教法的 knowledge_point 指向不存在的文件"),
+    ("R-SCHEMA-13", "教法的水平档写成 ZZ"),
+    ("R-GRAPH-01", "两个知识点互为先修（成环）"),
+    ("R-GRAPH-01", "路径的外部先修指向教法"),
+    ("R-GRAPH-01", "多行块先修里的第二条是坏链接"),
+    ("R-GRAPH-02", "支持边锚点在目标里不存在"),
+    ("R-GRAPH-03", "路径的某个成果无人覆盖"),
+    ("R-GRAPH-04", "路径某环节指不出对象"),
+    ("R-SCHEMA-16", "知识点被移出 concepts/（目录与 type 不符）"),
+    ("R-README-03", "README 里的覆盖度数字被改大"),
+    ("R-GRAPH-07", "成果唯一覆盖条目的证据被改成未读"),
+    ("R-GRAPH-07", "把「覆盖」列挤出末列后仍要报出单环节覆盖"),
+    ("R-SCHEMA-20", "`外部先修` 的某一项缺 `学段`"),
+    ("R-SCHEMA-20", "`外部先修.标识` 不是 ASCII 稳定键"),
+    ("R-SCHEMA-20", "`外部先修:` 声明了却没有任何条目"),
+    ("R-EVID-01", "`外部先修.来源` 指向不存在的编号"),
+    ("R-BILING-02", "英译本的 `外部先修` 与中文原件不一致"),
+}
+
+
 # ── `外部先修`（R-SCHEMA-20）的样本 ────────────────────────────────────────
 # 字段是可选的：先**动态找一个真的带这个字段的条目**，找不到就 SKIP。
 # 不写死 `光的折射.md`——条目改名后样本会静默失效。
@@ -1323,6 +1379,8 @@ def main():
     tmp = _mktemp()
     repo = Path(tmp) / "repo"
     failures = []
+    retired_hit = []
+    retired_hit = []
     try:
         shutil.copytree(str(ROOT), str(repo),
                         ignore=shutil.ignore_patterns(".git", "__pycache__"),
@@ -1336,8 +1394,12 @@ def main():
             expect = entry[3] if len(entry) > 3 else rule
             try:
                 if not fn(repo, VERBOSE):
-                    print(f"SKIP  {rule}  {desc}  ← 没找到可用样本，自测失去覆盖")
-                    failures.append((rule, "no-sample"))
+                    if (rule, desc) in RETIRED:
+                        print(f"RETIRE {rule}  {desc}  ← 学科已归档，本 scope 内无夹具")
+                        retired_hit.append((rule, desc))
+                    else:
+                        print(f"SKIP  {rule}  {desc}  ← 没找到可用样本，自测失去覆盖")
+                        failures.append((rule, "no-sample"))
                     continue
                 out = run_check(repo)
                 if expect in out:
@@ -1352,7 +1414,9 @@ def main():
 
     total = len(samples)
     rules = {e[0] for e in samples}
-    print(f"\n{total - len(failures)}/{total} 个样本成功触发（覆盖 {len(rules)} 条规则）")
+    active = total - len(retired_hit)
+    print(f"\n{active - len(failures)}/{active} 个有效样本成功触发（覆盖 {len(rules)} 条规则）"
+          + (f"；另 {len(retired_hit)} 个退役（学科已归档，名单见 RETIRED）" if retired_hit else ""))
     return 0 if not failures else 1
 
 
