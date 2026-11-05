@@ -103,8 +103,8 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
 | 学科 / Subjects | 物理 Physics 370 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 29 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
 | 证据 / Evidence | 188（含作废 / void 5） |
-| 溯源 / Provenance | **738 / 746（99%）读到全文或摘要** —— T4 733 · T3 5 · T2 8 |
-| 已确证 / Confirmed | **527** |
+| 溯源 / Provenance | **739 / 746（99%）读到全文或摘要** —— T4 734 · T3 5 · T2 7 |
+| 已确证 / Confirmed | **528** |
 <!-- kbcheck:end -->
 
 来源：OpenStax《Physics》(**CC BY**) · Utah 7 年级科学 · 出版社勘误表 · AASM 临床指南 · 随机对照试验（RCT）。

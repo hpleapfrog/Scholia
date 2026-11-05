@@ -2,7 +2,7 @@
 id: kb:med:prop-copd-gold-2026
 type: 命题
 title: GOLD 2026 prescribes post-bronchodilator FEV1/FVC < 0.7 to confirm COPD, and lowers the E-group and treatment-escalation threshold to "≥1 moderate or severe exacerbation in the previous year"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-16
 updated: 2026-10-16
@@ -15,7 +15,7 @@ edges:
   先修: []
   支持: []
   攻击: []
-evidence: [ev-074, ev-075, ev-079]
+evidence: [ev-079]
 license: CC-BY-SA-4.0
 ---
 
