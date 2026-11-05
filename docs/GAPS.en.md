@@ -17,17 +17,17 @@ this page look more authoritative than it is — and the first rule of this libr
 “the half machines don't judge” is a separate table below.
 
 <!-- kbcheck:begin -->
-**11** objects · **11** citable as fact · **0** not citable · **190** evidence records · **2** events
-**2 confirmed** · 7 provisional · 0 valid · 2 awaiting review
+**15** objects · **15** citable as fact · **0** not citable · **190** evidence records · **2** events
+**2 confirmed** · 7 provisional · 0 valid · 6 awaiting review
 **0** paths · all **0** learning outcomes covered · **0** (0%) taught exactly once
-T4 3 · T3 7 · T2 1 — provenance tier (**weakest link** over cited evidence)
+T4 3 · T3 11 · T2 1 — provenance tier (**weakest link** over cited evidence)
 
 | Gap | Count | Why it counts as a gap |
 |---|---|---|
-| **Three-minute review** | 2 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
+| **Three-minute review** | 6 | Status is `待审`, the argument is written and the evidence has been read — only one review is missing: by a human (signature) or an agent (four-field `## 复核记录`) — either can write `已确证`. |
 | **Awaiting review, evidence unread** | 0 | Status is `待审`, but at least one cited source is only located, not read (or the argument is missing, or nothing is cited) — a reviewer has nothing to compare against. This is the **precondition** for review, not another kind of review. |
-| **Provenance below T4** | 8 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
-| **Missing English edition** | 3 | No `path_en`: an English reader lands on a Chinese page. |
+| **Provenance below T4** | 12 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
+| **Missing English edition** | 7 | No `path_en`: an English reader lands on a Chinese page. |
 | **Concepts without a method** | 0 | A concept answers *what it is*; a method answers *how to teach it*. The coverage page counts only the former, so this gap is invisible elsewhere. |
 | **Out-of-library prerequisites** | 0 | The same `外部先修` key appears in ≥2 objects — it recurs in front of several chains. |
 | **Outcomes covered by a single step** | 0 | A learning outcome is covered by exactly one step: if that step fails, the student gets no second chance. |
@@ -36,35 +36,46 @@ T4 3 · T3 7 · T2 1 — provenance tier (**weakest link** over cited evidence)
 | **Physics chapters still 🔴** | 0 | Against the PEP catalogue, the whole chapter has no concept entry in this library. |
 
 > One object can appear in several rows — **do not add the counts up**.
-> **The one exact partition:** review 2 + review-blocked 0 = every `待审` entry (2).
+> **The one exact partition:** review 6 + review-blocked 0 = every `待审` entry (6).
 
-### Three-minute review (2)
+### Three-minute review (6)
 
 > Open a “review one entry” issue; no writing needed. Sorted by downstream dependents: editing it affects the most other entries.
 
 - `kb:med:guideline-idsa-sab-catheter` · IDSA 金葡菌菌血症指南：建议尽早拔除中心静脉导管
+- `kb:med:kdigo-2024-rec-1-1-2-1` · KDIGO 2024 CKD 推荐 1.1.2.1（1B）
+- `kb:med:kdigo-2024-rec-2-2-1` · KDIGO 2024 CKD 推荐 2.2.1（1A）
+- `kb:med:kdigo-2024-rec-3-6-1` · KDIGO 2024 CKD 推荐 3.6.1（1B）
+- `kb:med:kdigo-2024-rec-3-6-2` · KDIGO 2024 CKD 推荐 3.6.2（1B）
 - `kb:med:guideline-kdigo-2024-egfr` · KDIGO 2024：CKD 风险人群首选基于肌酐的 eGFR（1B）
 
-### Provenance below T4 (8)
+### Provenance below T4 (12)
 
 > Open that source at its locator, read it, raise `核验深度` to `全文`; or cite a source that has already been read in full.
 
 - `kb:med:prop-hypertension-cn-2024` · The 2024 revision of the Chinese Hypertension Guidelines prescribes ≥140/90 mmHg in the clinic for diagnosis, and <140/90 mmHg (further down to <130/80 mmHg if tolerated) as the target for general patients — T2, weakest: `ev-070`, `ev-074`, `ev-077`, `ev-078`
 - `kb:med:prop-plague-treat-on-suspicion` · For suspected plague, WHO/CDC guidelines prescribe starting treatment without waiting for confirmation, and set explicit time limits for medication, isolation, and contact prophylaxis — T3, weakest: `ev-071`, `ev-072`, `ev-073`
 - `kb:med:guideline-idsa-sab-catheter` · IDSA 金葡菌菌血症指南：建议尽早拔除中心静脉导管 — T3, weakest: `ev-199`
+- `kb:med:kdigo-2024-rec-1-1-2-1` · KDIGO 2024 CKD 推荐 1.1.2.1（1B） — T3, weakest: `ev-200`
+- `kb:med:kdigo-2024-rec-2-2-1` · KDIGO 2024 CKD 推荐 2.2.1（1A） — T3, weakest: `ev-200`
+- `kb:med:kdigo-2024-rec-3-6-1` · KDIGO 2024 CKD 推荐 3.6.1（1B） — T3, weakest: `ev-200`
+- `kb:med:kdigo-2024-rec-3-6-2` · KDIGO 2024 CKD 推荐 3.6.2（1B） — T3, weakest: `ev-200`
 - `kb:med:guideline-kdigo-2024-egfr` · KDIGO 2024：CKD 风险人群首选基于肌酐的 eGFR（1B） — T3, weakest: `ev-200`
 - `kb:med:prop-ardsnet-low-tidal-volume` · For ARDS patients, low-tidal-volume ventilation reduces mortality — T3, weakest: `ev-048`
 - `kb:med:prop-proseva-prone-positioning` · In severe ARDS, early prone positioning reduces mortality — T3, weakest: `ev-069`
-- `kb:med:prop-osa-pap-titration` · For obstructive sleep apnea, adult PAP titration has guideline-prescribed starting pressures, escalation rules, and target criteria — T3, weakest: `ev-050`
-- `kb:med:prop-sprint-intensive-bp` · In high-cardiovascular-risk adults without diabetes, intensive BP lowering reduces major CV events and all-cause death, but raises some adverse events — T3, weakest: `ev-070`
+- …and 2 more — full list: `python tools/make_tasks.py --json`
 
-### Missing English edition (3)
+### Missing English edition (7)
 
 > The filename is derived from `id` (`<id tail minus type prefix>.en.md`), in the same folder as the Chinese original.
 
 - `kb:med:guideline-gold-2026-abe` · GOLD 2026 调整 A/B/E 分组判据：一次中重度急性加重即足以改变分组
 - `kb:med:guideline-idsa-sab-catheter` · IDSA 金葡菌菌血症指南：建议尽早拔除中心静脉导管
+- `kb:med:kdigo-2024-rec-1-1-2-1` · KDIGO 2024 CKD 推荐 1.1.2.1（1B）
+- `kb:med:kdigo-2024-rec-2-2-1` · KDIGO 2024 CKD 推荐 2.2.1（1A）
 - `kb:med:guideline-kdigo-2024-egfr` · KDIGO 2024：CKD 风险人群首选基于肌酐的 eGFR（1B）
+- `kb:med:kdigo-2024-rec-3-6-1` · KDIGO 2024 CKD 推荐 3.6.1（1B）
+- `kb:med:kdigo-2024-rec-3-6-2` · KDIGO 2024 CKD 推荐 3.6.2（1B）
 
 ### Gaps the entries wrote themselves (11)
 

@@ -150,6 +150,14 @@
 
 | [KDIGO 2024：CKD 风险人群首选基于肌酐的 eGFR（1B）](claims/指南-KDIGO2024-CKD-eGFR.md) | 命题 | 待审 | **高（KDIGO 推荐 1.1.2.1，含 GRADE）** |
 
+| [KDIGO 2024 CKD 推荐 1.1.2.1（1B）](claims/指南-KDIGO1.1.2.1.md) | 命题 | 待审 | **高（KDIGO 原文，1B）** |
+
+| [KDIGO 2024 CKD 推荐 2.2.1（1A）](claims/指南-KDIGO2.2.1.md) | 命题 | 待审 | **高（KDIGO 原文，1A）** |
+
+| [KDIGO 2024 CKD 推荐 3.6.1（1B）](claims/指南-KDIGO3.6.1.md) | 命题 | 待审 | **高（KDIGO 原文，1B）** |
+
+| [KDIGO 2024 CKD 推荐 3.6.2（1B）](claims/指南-KDIGO3.6.2.md) | 命题 | 待审 | **高（KDIGO 原文，1B）** |
+
 ## 指南来源登记（2026-11-05 实测可达）
 
 本库只收**可定位到发布方原文**的指南。下表是首批登记，状态一栏是**当天实测的 HTTP 结果**——

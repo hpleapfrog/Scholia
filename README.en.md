@@ -123,11 +123,11 @@ this repository satisfies attribution.
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **11** —— 命题 claims 11 |
+| 对象 / Objects | **15** —— 命题 claims 15 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 医学 Medicine 11 |
+| 学科 / Subjects | 医学 Medicine 15 |
 | 证据 / Evidence | 190（含作废 / void 5） |
-| 溯源 / Provenance | **10 / 11（91%）读到全文或摘要** —— T4 3 · T3 7 · T2 1 |
+| 溯源 / Provenance | **14 / 15（93%）读到全文或摘要** —— T4 3 · T3 11 · T2 1 |
 | 已确证 / Confirmed | **2** |
 <!-- kbcheck:end -->
 

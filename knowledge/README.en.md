@@ -9,9 +9,9 @@
 <!-- kbcheck:begin -->
 | Subject | Entries |
 |---|---|
-| [Medicine](medicine/README.en.md) | 11 |
+| [Medicine](medicine/README.en.md) | 15 |
 | [Events (top level)](../events/README.en.md) | 2 |
-| **Total** | **11** |
+| **Total** | **15** |
 <!-- kbcheck:end -->
 
 > [!NOTE]
