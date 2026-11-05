@@ -99,9 +99,9 @@
 <!-- kbcheck:begin -->
 | 文件 | 装什么 | 条目 | 整份 ≈ tokens |
 |---|---|---|---|
-| [`index.json`](index.json) | 导航 + 能不能引用 | 10 条对象 · 2 条事件 | **≈3k** |
-| [`citations.json`](citations.json) | 引用材料，**按 id 取** | 12 条 | **≈13k** |
-| [`evidence.json`](evidence.json) | 证据登记 | 189 条 | **≈38k** |
+| [`index.json`](index.json) | 导航 + 能不能引用 | 11 条对象 · 2 条事件 | **≈3k** |
+| [`citations.json`](citations.json) | 引用材料，**按 id 取** | 13 条 | **≈13k** |
+| [`evidence.json`](evidence.json) | 证据登记 | 190 条 | **≈39k** |
 
 > 由 `tools/kbcheck.py` 生成（字符数 ÷ 3.2，**数量级**而已，不是计费口径）。重点在比例：`scholia_cite` 取一条 ≈160 tokens。
 <!-- kbcheck:end -->
