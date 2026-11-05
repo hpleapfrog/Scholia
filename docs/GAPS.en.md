@@ -20,11 +20,13 @@ this page look more authoritative than it is — and the first rule of this libr
 **746** objects · **744** citable as fact · **2** not citable · **188** evidence records · **2** events
 **0 confirmed** · 53 provisional · 115 valid · 573 awaiting review
 **17** paths · all **73** learning outcomes covered · **67** (92%) taught exactly once
+T4 733 · T3 5 · T2 8 — provenance tier (**weakest link** over cited evidence)
 
 | Gap | Count | Why it counts as a gap |
 |---|---|---|
 | **Three-minute review** | 570 | Status is `待审`, the argument is written and the evidence has been read — only a human answering three yes/no questions is missing. |
 | **Awaiting review, evidence unread** | 3 | Status is `待审`, but at least one cited source is only located, not read (or the argument is missing, or nothing is cited) — a reviewer has nothing to compare against. This is the **precondition** for review, not another kind of review. |
+| **Provenance below T4** | 13 | The **weakest** cited source was not read in full (`T3` summary / `T2` located only / `T1` unverified / `T0` no basis). This does not mean the content is wrong — it means a reader following the chain hits a place nobody has read. |
 | **Missing English edition** | 0 | No `path_en`: an English reader lands on a Chinese page. |
 | **Concepts without a method** | 37 | A concept answers *what it is*; a method answers *how to teach it*. The coverage page counts only the former, so this gap is invisible elsewhere. |
 | **Out-of-library prerequisites** | 2 | The same `外部先修` key appears in ≥2 objects — it recurs in front of several chains. |
@@ -59,6 +61,22 @@ this page look more authoritative than it is — and the first rule of this libr
 - `kb:life:prop-carried-item-limits` · Beijing subway sets hard size and weight limits on items passengers carry — evidence unread: `ev-043`
 - `kb:physics:ohm-law-scope-placement` · Where textbooks place the limitations of Ohm's law — evidence unread: `ev-001`
 - `kb:physics:voltage-symbol-u-v` · The U vs V voltage-symbol difference between Chinese and English textbooks — evidence unread: `ev-001`
+
+### Provenance below T4 (13)
+
+> Open that source at its locator, read it, raise `核验深度` to `全文`; or cite a source that has already been read in full.
+
+- `kb:med:prop-hypertension-cn-2024` · The 2024 revision of the Chinese Hypertension Guidelines prescribes ≥140/90 mmHg in the clinic for diagnosis, and <140/90 mmHg (further down to <130/80 mmHg if tolerated) as the target for general patients — T2, weakest: `ev-070`, `ev-074`, `ev-077`, `ev-078`
+- `kb:med:prop-copd-gold-2026` · GOLD 2026 prescribes post-bronchodilator FEV1/FVC < 0.7 to confirm COPD, and lowers the E-group and treatment-escalation threshold to "≥1 moderate or severe exacerbation in the previous year — T2, weakest: `ev-074`, `ev-075`, `ev-079`
+- `kb:physics:resource-phet-forces-and-motion-basics` · PhET simulation 'Forces and Motion: Basics' — T2, weakest: `ev-029`
+- `kb:physics:resource-phet-my-solar-system` · PhET simulation 'My Solar System' — T2, weakest: `ev-032`
+- `kb:life:resource-bj-subway-passenger-rules` · 《北京市轨道交通乘客守则》 (official document) — T2, weakest: `ev-043`
+- `kb:life:prop-carried-item-limits` · Beijing subway sets hard size and weight limits on items passengers carry — T2, weakest: `ev-043`
+- `kb:physics:ohm-law-scope-placement` · Where textbooks place the limitations of Ohm's law — T2, weakest: `ev-001`
+- `kb:physics:voltage-symbol-u-v` · The U vs V voltage-symbol difference between Chinese and English textbooks — T2, weakest: `ev-001`
+- `kb:med:prop-plague-treat-on-suspicion` · For suspected plague, WHO/CDC guidelines prescribe starting treatment without waiting for confirmation, and set explicit time limits for medication, isolation, and contact prophylaxis — T3, weakest: `ev-071`, `ev-072`, `ev-073`
+- `kb:med:prop-ardsnet-low-tidal-volume` · For ARDS patients, low-tidal-volume ventilation reduces mortality — T3, weakest: `ev-048`
+- …and 3 more — full list: `python tools/make_tasks.py --json`
 
 ### Concepts without a method (37)
 

@@ -16,6 +16,8 @@
 | **AI / 程序**（读内容） | [**llms.txt**](llms.txt) + [**index.json**](index.json)（导航）· [**citations.json**](citations.json)（按 id 取引用材料）· [**evidence.json**](evidence.json)（证据登记） |
 | 想把这个库**挂到 agent** | `python tools/scholia_mcp.py --print-config` —— 零依赖 MCP server（只读），配置直接打印出来 |
 | 想**加一条**（贡献者） | [`templates/`](templates/README.md) + `python tools/new_entry.py` —— 一条命令出骨架 |
+| 想**直接拿勘误数据**（教师 · 教材编辑 · 写书的人） | [`exports/errata.csv`](exports/errata.csv) —— 全库勘误一个表（行数见文件，**不在文档里写死**）；`python tools/export_errata.py` 重生成 |
+| 想**看一页**而不是读一堆文件 | `python tools/build_site.py` → 打开 `site/index.html`（单文件、零依赖、可搜索） |
 | 想知道**还缺什么** | [**docs/GAPS.md**](docs/GAPS.md) —— 一页看全（生成物）；要开工用 `python tools/make_tasks.py` |
 | 想**建自己的一份**（个人） | [`templates/`](templates/README.md) —— 复制骨架即可，不用 fork、不用联网 |
 | 想知道库是怎么做出来的 | 本页往下 |
@@ -101,6 +103,7 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
 | 学科 / Subjects | 物理 Physics 370 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 29 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
 | 证据 / Evidence | 188（含作废 / void 5） |
+| 溯源 / Provenance | **738 / 746（99%）读到全文或摘要** —— T4 733 · T3 5 · T2 8 |
 | 已确证 / Confirmed | **0** |
 <!-- kbcheck:end -->
 
@@ -110,6 +113,13 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 > [!NOTE]
 > **上表由 `kbcheck.py` 生成**（唯一来源是 [`index.json`](index.json)），**不手写**——
 > 手写的数字会漂移，而漂移的数字就是断言。
+
+> [!IMPORTANT]
+> **表里有两把尺子，别把它们读成一把。**
+> `已确证` 那一行说的是**没有人**做过非作者复核；`溯源` 那一行说的是**来源逐份读过**。
+> 两个数同时成立，而且只报其中一个都会误导：只报前者，读者以为「没人核过」；
+> 只报后者，读者以为「已经复核」。溯源档取**最弱一环**（引用的每一份证据里读得最浅的那份），
+> 定义见 [FORMAT §4](FORMAT.md)。**它是机器算的，`已确证` 是人给的——这条界线不能动。**
 
 > [!IMPORTANT]
 > **没有一条是「已确证」。** 那需要一名**非作者的独立复核**，而目前只有一位贡献者。
@@ -177,4 +187,8 @@ templates/        条目骨架（new_entry.py 从这里取结构）
 tools/            kbcheck.py 校验 · verify_rules.py 规则自测 · gaps.py 缺口计算
                   make_tasks.py 任务 · new_entry.py 骨架 · review_packet.py 复核包
                   selftest.py 接口自检 · scholia_mcp.py MCP server
+                  quote_check.py 引文核验 · evid.py 编号分配 · export_errata.py 勘误导出
+                  build_site.py 单文件站点（生成物在 site/，不进版本库）
+drafts/           未核完的稿子：不是知识对象，不进索引（见 drafts/README.md）
+exports/          生成的数据表：errata.csv（全库勘误）· errata.json
 ```

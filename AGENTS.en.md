@@ -51,6 +51,8 @@ python tools/kbcheck.py                 # must pass
 python tools/kbcheck.py --write-index   # after content changes: regenerate the three machine files and doc blocks
 python tools/verify_rules.py            # after rule changes: every rule needs a failing injected sample
 python tools/selftest.py                # after touching MCP / make_tasks / new_entry / review_packet: really spawn the processes
+python tools/quote_check.py <entry> --module <m#####>   # after touching English quotations: each one must **really be in the source**
+python tools/evid.py next               # need a new id: don't count by hand (ids are global; hand-counting can't see other branches)
 ```
 
 Hard rules:

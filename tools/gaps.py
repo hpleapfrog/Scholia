@@ -61,6 +61,15 @@ GROUPS = [
      "打开该证据的定位，读完并把 `核验深度` 改成 `摘要`/`全文`；或换一份已读过的来源。",
      "Open the source at its locator, read it, raise `核验深度` to `摘要`/`全文`; "
      "or cite a source that has already been read."),
+    ("provenance", "溯源档没到 T4 的条目", "Provenance below T4",
+     "引用的来源里**最弱的一份**没有读到全文（`T3` 摘要 / `T2` 仅定位 / `T1` 未核验 / `T0` 无据）。"
+     "这不是「内容可能不对」，是「顺着它核到底会撞上没读过的地方」。",
+     "The **weakest** cited source was not read in full (`T3` summary / `T2` located only / "
+     "`T1` unverified / `T0` no basis). This does not mean the content is wrong — it means "
+     "a reader following the chain hits a place nobody has read.",
+     "打开那条证据的定位读一遍，把 `核验深度` 提到 `全文`；或换一条已读过的来源。",
+     "Open that source at its locator, read it, raise `核验深度` to `全文`; "
+     "or cite a source that has already been read in full."),
     ("translate", "补英文译本", "Missing English edition",
      "没有 `path_en`：英文读者点进来会落到中文页。",
      "No `path_en`: an English reader lands on a Chinese page.",
@@ -234,6 +243,23 @@ def compute(index, cites=None, evid=None, root=ROOT):
                   "path": o["path"]}
                  for o in objs if not o.get("path_en")]
 
+    # 溯源档低于 T4：最弱一环没读到全文。列出**是哪几条证据**拖低的——
+    # 只说「这条不够好」没有用，要说「去读 ev-043」。
+    provenance = []
+    for o in objs:
+        tier = o.get("溯源")
+        if tier in (None, "T4"):
+            continue
+        ev_ids = list((cites.get(o["id"]) or {}).get("证据") or [])
+        weak = [e for e in ev_ids
+                if e not in evid or evid[e].get("作废")
+                or evid[e].get("核验深度") != "全文"]
+        provenance.append({"id": o["id"], "title": o["title"],
+                           "title_en": o.get("title_en"), "path": o["path"],
+                           "path_en": o.get("path_en"), "溯源": tier,
+                           "薄证据": weak})
+    provenance.sort(key=lambda x: (x["溯源"], -(len(x["薄证据"])), x["title"] or ""))
+
     covered = _methods_cover(root)
     methods = [{"id": o["id"], "title": o["title"], "title_en": o.get("title_en"),
                 "path": o["path"]}
@@ -261,6 +287,7 @@ def compute(index, cites=None, evid=None, root=ROOT):
     items = {
         "review": review,
         "review-blocked": review_blocked,
+        "provenance": provenance,
         "translate": translate,
         "methods": methods,
         "external": external,
@@ -297,6 +324,7 @@ def compute(index, cites=None, evid=None, root=ROOT):
             "证据": stats.get("证据条数", len(evid)),
             "事件": stats.get("事件条数", len(index.get("事件") or [])),
             "状态": stats.get("按状态") or {},
+            "溯源": stats.get("按溯源档") or {},
             "路径成果": path_stats,
             "缺口合计": sum(g["数量"] for g in groups.values()),
         },

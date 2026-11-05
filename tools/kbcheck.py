@@ -60,6 +60,10 @@ REQUIRED_SECTIONS = {
 # 因此：事件**不进** `objects`、不进学科统计、没有「论证」段、没有任何边。
 EVENT_TYPE = "事件"
 EVENT_DIR = "events/"
+
+# 库外的未核稿：**不是知识对象**，不参与配对、不参与状态统计。
+# 它存在是因为「删掉别人的稿子」比「把它放错地方」更糟（见 drafts/README.md）。
+DRAFT_DIR = "drafts/"
 EVENT_FIELDS = ["id", "type", "title", "status", "author", "created",
                 "updated", "evidence", "license"]
 EVENT_SECTIONS = ["陈述", "依据", "变更记录"]
@@ -173,6 +177,29 @@ EVENT_STATUS_EN = {
     "已封存": "archived",
 }
 
+# ── 溯源档：机器算得出、又不冒充真值的那一维 ────────────────────────────────
+# `status` 回答「有没有站得住的论证」（要人判），`溯源档` 回答
+# 「它踩的每一份来源，被读到了哪一层」（机器可算）。
+# 取**最弱一环**：一条论证引了 5 份来源、4 份读完，剩 1 份只核了位置——
+# 这条链的强度仍是「只核了位置」，不是「4/5 读完了」。
+# 它**不是**第七种 status：不表示真假，也不参与 `暂定确认` 的判定，
+# 所以「0 条已确证」与「98% 全文核读」可以同时成立，且两句话都是真的。
+TIER_ORDER = ["T4", "T3", "T2", "T1", "T0"]
+TIER_MEANING = {
+    "T4": "**全文核读**：引用的每一份来源都通读过，含定位、许可与版本",
+    "T3": "**摘要核读**：最弱的一份只读到摘要",
+    "T2": "**仅定位**：最弱的一份只核了「这一页有没有这段」，没有通读",
+    "T1": "**未核验**：最弱的一份登记了，但没有人打开过",
+    "T0": "**无据**：引用的证据里有一条已作废，或索引里根本没有这个编号",
+}
+TIER_EN = {
+    "T4": "**read in full** — every cited source was read end to end (locator, licence, version)",
+    "T3": "**read as summary** — the weakest cited source was read only as a summary",
+    "T2": "**located only** — the weakest source was checked for “is this passage here”, not read",
+    "T1": "**unverified** — the weakest source is registered but nobody has opened it",
+    "T0": "**no basis** — a cited evidence record is void, or the id is not in the registry",
+}
+
 # 每个学科的覆盖说明（手写；**不写数字**，数字由 objects 自动统计在旁边）
 SUBJECT_NOTES = {
     "物理": "覆盖中国高中物理的一部分。按人教版章级主题对照，**一半左右**的章级主题"
@@ -245,6 +272,28 @@ def parse_evidence_index():
     return out
 
 
+def provenance_tier(ids, evidence):
+    """一条对象踩到的**最弱一环**读到了哪一层（T0–T4）。
+
+    为什么取最弱而不取平均、不取最多：一条论证的可核性由它**最薄的那份来源**
+    决定。5 份来源里 4 份读完、1 份只核了位置，读者顺着最薄的那份一路核下去，
+    就会撞上「这里其实没人读过」。平均分会把这件事藏起来。
+
+    **它不回答「对不对」**，只回答「顺着它能不能一路核到底」。所以它既能与
+    「0 条已确证」共存，也不构成对 `status` 的任何背书。
+    """
+    depths = []
+    for e in ids:
+        rec = evidence.get(e)
+        if not rec or rec.get("作废"):
+            return "T0"
+        depths.append(DEPTH_RANK.get(rec.get("核验深度"), 0))
+    if not depths:
+        return "T0"
+    worst = min(depths)
+    return {4: "T4", 3: "T3", 2: "T2", 1: "T1"}.get(worst, "T0")
+
+
 def build_indexes(objects, events):
     """生成**三份**机器可读文件 —— 每份只装一件事。
 
@@ -302,6 +351,9 @@ def build_indexes(objects, events):
             "可作事实引用": st not in NOT_CITABLE,
             "先修": [Path(x).name for x in fm_links(o["fm"], "先修")],
             "论证": sorted(arg_ids(o["text"])),
+            # 最弱一环读到了哪一层：T4 全文 / T3 摘要 / T2 仅定位 / T1 未核验 / T0 无据。
+            # 与 `status` **正交**：状态要人判，这一维机器算得出。
+            "溯源": provenance_tier(ids, evidence),
         }
         # 英文标题：让英文页面与英文检索能**用英文叫出这条**，而不是把中文标题
         # 塞给英文读者。只读一次 en 文件的前 4 KB（front-matter 一定在里面）。
@@ -334,6 +386,7 @@ def build_indexes(objects, events):
         objs.append(entry)
         cite = {
             "status": st,
+            "溯源": provenance_tier(ids, evidence),
             "证据": ids,
             "来源": src_list(ids),
             "适用": fm_nested(o["fm"], "适用"),
@@ -353,10 +406,12 @@ def build_indexes(objects, events):
         cites[_id] = cite
 
     by_type, by_status, by_subject = collections.Counter(), collections.Counter(), collections.Counter()
+    by_tier = collections.Counter()
     for x in objs:
         by_type[x["type"]] += 1
         by_status[x["status"]] += 1
         by_subject[x["学科"].split(" ")[0]] += 1
+        by_tier[x["溯源"]] += 1
 
     # 事件：与 objects 并列的一节。只有证据，没有论证、没有边。
     events_list = []
@@ -399,11 +454,17 @@ def build_indexes(objects, events):
 
     index = {
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。运行 `python tools/kbcheck.py --write-index` 重新生成。",
-        "schema_version": 5,
+        "schema_version": 6,
         "repo": "https://github.com/hpleapfrog/Scholia",
         "读到这个文件的 AI 请注意": [
             "**本库是跨学科的**，覆盖程度**按学科差别很大**；它**不只做物理**。",
             "**本库没有任何一条处于 `已确证`。** 不要把这里的任何内容当作『已确证的事实』转述。",
+            "每条对象还有一个与 `status` **正交**的 `溯源`（T0–T4）：它说的是"
+            "**引用的来源被读到了哪一层**（取最弱一环），不是真假。"
+            "`T4`＝引用的每一份来源都通读过；`T2`=最弱那份只核了位置；"
+            "`T1`=登记了但没人打开过；`T0`=有作废或查不到的编号。"
+            "**引用时请连它一起给出**——「T4 · 全书通读」与「T2 · 只核了位置」"
+            "对读者是完全不同的承诺，而 `status` 这一栏看不出这个差别。",
             "`可作事实引用=false` 的条目（状态为 失据/已推翻/已失效）**不要引用**。",
             "**判断「本库有没有 X」要查本文件的 `objects`，不要凭印象。**",
             "**不要整读 `index.json` 之外的东西**：本文件只回答「有什么、能不能引」。"
@@ -430,12 +491,18 @@ def build_indexes(objects, events):
         ],
         "状态含义": STATUS_MEANING,
         "状态英文": STATUS_EN,
+        "溯源档含义": TIER_MEANING,
+        "溯源档英文": TIER_EN,
+        "溯源档怎么算": "取该对象 `citations.json` 里全部 `证据` 的**最弱一环**"
+                        "（`evidence.json` 的 `核验深度`）：任一条作废或查不到 → T0。"
+                        "它**不是** `status`：不表示真假，不参与「已确证」判定。",
         "事件状态含义": EVENT_STATUS_MEANING,
         "事件状态英文": EVENT_STATUS_EN,
         "统计": {
             "对象总数": len(objs),
             "按类型": dict(by_type),
             "按状态": dict(by_status),
+            "按溯源档": {k: by_tier[k] for k in TIER_ORDER if by_tier.get(k)},
             "按学科": dict(by_subject),
             "已确证条数": by_status.get("已确证", 0),
             "事件条数": len(events_list),
@@ -464,7 +531,7 @@ def build_indexes(objects, events):
     citations = {
         "$comment": "由 tools/kbcheck.py 生成，**请勿手改**。**按 id 取一条**，不要整份读。"
                     "这里装的是引用时要写进去的东西：定位、限定、免责块位置。",
-        "schema_version": 2,
+        "schema_version": 3,
         "by_id": cites,
     }
 
@@ -2115,6 +2182,12 @@ def render_stats_block(index):
     by, sub = s["按类型"], s["按学科"]
     types = " · ".join(f"{k} {TYPE_EN[k]} {by[k]}" for k in TYPE_ORDER if by.get(k))
     subs = " · ".join(f"{k} {SUBJECT_EN[k]} {sub[k]}" for k in SUBJECT_ORDER if sub.get(k))
+    tier = s.get("按溯源档") or {}
+    total = s["对象总数"] or 1
+    # 溯源档：**取最弱一环**。这一行是「0 条已确证」的另一半——
+    # 只报状态，读者会把「待审」读成「没核过」；两个数并排出现才是完整的事实。
+    tn = " · ".join(f"{k} {tier[k]}" for k in TIER_ORDER if tier.get(k))
+    deep = tier.get("T4", 0) + tier.get("T3", 0)
     return "\n".join([
         "| | |",
         "|---|---|",
@@ -2122,6 +2195,7 @@ def render_stats_block(index):
         f"| 事件 / Events | **{s.get('事件条数', 0)}** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |",
         f"| 学科 / Subjects | {subs} |",
         f"| 证据 / Evidence | {s['证据条数']}（含作废 / void {s['作废证据条数']}） |",
+        f"| 溯源 / Provenance | **{deep} / {s['对象总数']}（{deep / total:.0%}）读到全文或摘要** —— {tn} |",
         f"| 已确证 / Confirmed | **{s['已确证条数']}** |",
     ])
 
@@ -2362,6 +2436,11 @@ def _gap_item_line(key, it, en=False):
         else:
             why = f"evidence unread: {evs}" if en else f"证据未读：{evs}"
         return f"`{it['id']}` · {title} — {why}" if en else f"`{it['id']}` · {title} —— {why}"
+    if key == "provenance":
+        evs = ", ".join(f"`{e}`" for e in it.get("薄证据") or []) or "—"
+        tier = it.get("溯源", "?")
+        return (f"`{it['id']}` · {title} — {tier}, weakest: {evs}" if en
+                else f"`{it['id']}` · {title} —— {tier}，最弱：{evs}")
     return f"`{it['id']}` · {title}"
 
 
@@ -2386,6 +2465,10 @@ def render_gaps_block(data, en=False):
         if p:
             L.append(f"**{p['条数']}** paths · all **{p['声明']}** learning outcomes covered · "
                      f"**{p['单环节']}** ({p['单环节占比']}%) taught exactly once")
+        tr = s.get("溯源") or {}
+        if tr:
+            L.append(" · ".join(f"{k} {tr[k]}" for k in TIER_ORDER if tr.get(k))
+                     + " — provenance tier (**weakest link** over cited evidence)")
         L += ["", "| Gap | Count | Why it counts as a gap |", "|---|---|---|"]
     else:
         L.append(f"**{s['对象']}** 条对象 · **{s['可作事实引用']}** 条可作事实引用 · "
@@ -2397,6 +2480,10 @@ def render_gaps_block(data, en=False):
         if p:
             L.append(f"**{p['条数']}** 条路径 · **{p['声明']}** 个学习成果全部有环节覆盖 · "
                      f"**{p['单环节']}** 个（{p['单环节占比']}%）只讲一次")
+        tr = s.get("溯源") or {}
+        if tr:
+            L.append(" · ".join(f"{k} {tr[k]}" for k in TIER_ORDER if tr.get(k))
+                     + " —— 溯源档（**取最弱一环**，与「已确证」正交）")
         L += ["", "| 缺口 | 数量 | 为什么算缺口 |", "|---|---|---|"]
 
     for key in data["顺序"]:
@@ -2642,6 +2729,8 @@ def check_bilingual_pairs(objects, events, en_docs, errors, warnings):
 
     seen = set()
     for rel, oid in sorted(en_docs.items()):
+        if rel.startswith(DRAFT_DIR):
+            continue
         name = rel.split("/")[-1]
         # README 与规格文档（FORMAT / CONTRIBUTING / docs/…）本来就没有 id，
         # 它们不是「某个条目的译本」，不参与配对。
@@ -2785,7 +2874,10 @@ def check_all():
         links = re.findall(r"\[([^\]]*)\]\(([^)]+)\)", prose)
         # YAML 里的 `url:`（Issue 模板的 contact_links 用过）也要查——
         # 它同样指向本仓库，改标题一样会改坏它。
-        links += [(u, u) for u in re.findall(r"^\s*url:\s*(\S+)", text, re.M)]
+        # **但 GitHub Actions 的 `url: ${{ steps... }}` 不是链接**：按 `\S+` 截出来会是
+        # `${{` 这一截，于是流水线文件一加进来就报一条假断链。带 `{` 的一律跳过。
+        links += [(u, u) for u in re.findall(r"^\s*url:\s*(\S+)", text, re.M)
+                  if "{" not in u]
         # R-LINK-03 的豁免：`English version of …` 行是有意指向中文正本的约定行
         en_pointer = set()
         for _ln in prose.splitlines():

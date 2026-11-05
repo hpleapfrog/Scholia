@@ -49,6 +49,8 @@ python tools/kbcheck.py                 # 必须通过
 python tools/kbcheck.py --write-index   # 若改了内容：重生成三份机器文件与文档生成块
 python tools/verify_rules.py            # 改了规则：每条规则要有会失败的注入样本
 python tools/selftest.py                # 改了 MCP / make_tasks / new_entry / review_packet：真的起进程跑一遍
+python tools/quote_check.py <条目> --module <m#####>   # 动了英文引文：引文必须**真的在来源里**
+python tools/evid.py next               # 要新编号：别自己数（编号是全局键，手数看不见别的分支）
 ```
 
 铁律：

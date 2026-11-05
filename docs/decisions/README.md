@@ -31,3 +31,4 @@
 | [entry-cost-phases.md](entry-cost-phases.md) | 录入成本分段实测：中文正文先完，超出的是双语与登记。**门槛单位已定为「双语一条」**（451 墙钟 13 分 16 秒，含一次中断 = 至多 2.6 倍，未达标）；第三次试测把双语尾部拆成四段（代理计时 61 秒，P1→P10 3 分 44 秒，不能当人类读数） |
 | [gap-dashboard.md](gap-dashboard.md) | 缺口看板：四个出口共用**一个** `compute()`；什么算缺口、什么只归人判；`index.json` schema 5 的 `覆盖度` / `title_en` |
 | [interface-selftest.md](interface-selftest.md) | `kbcheck` 看不见的三个接口：MCP 握手、`make_tasks --json`、`new_entry` 骨架；九条**真起进程**的检查（含复核包只排版、不替人回答） |
+| [provenance-tier.md](provenance-tier.md) | `status` 之外的第二把尺子：全库 99% 的来源被通读过却从不显示；为什么不是第七种状态、为什么取最弱一环、以及它对「项目还要不要做」意味着什么 |

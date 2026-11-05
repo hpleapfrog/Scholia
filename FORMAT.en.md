@@ -294,6 +294,37 @@ and **do not** stuff out-of-library content into `edges.先修`.
 > conditional; there is no single correct answer. Allowing it for methods would admit a unique
 > optimal method. **Only `命题` may be `已确证`.**
 
+### Provenance tier: the second ruler beside `status`
+
+`status` answers "is there an argument that survives attack" — **a human judgement**. It cannot
+answer a different question: **how far was each cited source actually read.** That one the machine
+can answer, and the answer is the **provenance tier** (`溯源档`).
+
+| Tier | Meaning | How it is computed |
+|---|---|---|
+| `T4` | read in full | **every** cited evidence record has `核验深度 = 全文` |
+| `T3` | read as summary | the weakest one is `摘要` |
+| `T2` | located only | the weakest one is `仅定位` ("is this passage here", not read) |
+| `T1` | unverified | the weakest one is `未核验` (registered, never opened) |
+| `T0` | no basis | a cited record is **void**, or the id is not in the registry |
+
+**The rule is the weakest link — not the average, not the best one.** Five sources with four read
+end to end and one merely located still send a reader who follows the thinnest one into a place
+nobody has read; an average hides exactly that.
+
+> [!IMPORTANT]
+> **The tier is not a seventh `status` and does not feed the `status` computation.**
+> It does not say "true"; it says "can you follow this to the end and actually verify it".
+> That is why "**0 confirmed**" and "**99% at T3 or above**" can both hold, and both are true —
+> the status column simply cannot show this difference, which is the whole point of having a second one.
+>
+> `tools/kbcheck.py` writes it into `index.json` (`objects[].溯源`) and `citations.json`
+> (`by_id.<id>.溯源`), **never into an entry's front-matter**: a hand-written derived value drifts,
+> and the only value of this dimension is that it is correct.
+
+When citing, **give it together with `status`**: "`status=待审` (written, no non-author review) ·
+`溯源=T4` (every cited source read in full)" is closer to the truth than either half alone.
+
 ### Extra required field for 教法 (methods)
 
 A `教法` **must** have `knowledge_point` pointing to its concept:
