@@ -1,5 +1,11 @@
 # Scholia
 
+> [!IMPORTANT]
+> **本库自 2026-11-05 起收窄为「医学治理指南库」。** 其余 9 个学科已整体归档到
+> [`archive/`](archive/)，不进索引、不参与校验、随时可移回。
+> **本页下方关于「跨十学科」的描述是历史记录**，不代表当前任务范围。
+
+
 > **给 AI 与人类的知识库：只存有据可查的知识。**
 > 每条内容都带三样东西——**它的来源**、**它的状态**、**对它的反驳**。
 >
@@ -99,12 +105,12 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **746** —— 教法 methods 62 · 知识点 concepts 71 · 命题 claims 579 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 17 |
+| 对象 / Objects | **25** —— 命题 claims 25 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 370 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 29 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
-| 证据 / Evidence | 188（含作废 / void 5） |
-| 溯源 / Provenance | **738 / 746（99%）读到全文或摘要** —— T4 733 · T3 5 · T2 8 |
-| 已确证 / Confirmed | **527** |
+| 学科 / Subjects | 医学 Medicine 25 |
+| 证据 / Evidence | 190（含作废 / void 5） |
+| 溯源 / Provenance | **24 / 25（96%）读到全文或摘要** —— T4 3 · T3 21 · T2 1 |
+| 已确证 / Confirmed | **2** |
 <!-- kbcheck:end -->
 
 来源：OpenStax《Physics》(**CC BY**) · Utah 7 年级科学 · 出版社勘误表 · AASM 临床指南 · 随机对照试验（RCT）。
@@ -132,9 +138,9 @@ python tools/kbcheck.py     # 零依赖、不联网；提交前手动跑一次
 1. **双语一条能否压到 5 分钟以内** ← **决定项目生死**。**门槛单位已定**（2026-10-20，作者）：
    那个「5 分钟」= **双语一条**（中文正文 + 英文译本 + 两份登记），**不是**单语言一条。
    已给 [`templates/`](templates/README.md) + `tools/new_entry.py`（结构交给脚本，内容留给人）。
-   第一次试测（[速度—时间图的面积等于位移](knowledge/physics/claims/速度—时间图的面积等于位移.md)）
+   第一次试测（[速度—时间图的面积等于位移](archive/knowledge/physics/claims/速度—时间图的面积等于位移.md)）
    只留下总数：约 12 分钟——**按已定门槛约 2.4 倍**。第二次试测（2026-10-20，
-   [HTTP 451 因法律要求拒绝访问且不暗示资源存在与否](knowledge/computing/claims/HTTP451因法律要求拒绝访问且不暗示资源存在与否.md)）
+   [HTTP 451 因法律要求拒绝访问且不暗示资源存在与否](archive/knowledge/computing/claims/HTTP451因法律要求拒绝访问且不暗示资源存在与否.md)）
    **按阶段打点**：**双语一条墙钟 13 分 16 秒，按墙钟算至多 2.6 倍，未达标**。其中
    选题 → 中文正文写完 **4 分 9 秒**（这段没有中断），其后到索引完成是 **9 分 7 秒**，
    几乎全花在**双语平行结构、证据登记与索引计数**上；骨架 **319 ms**、全量校验 **2.2 秒**——

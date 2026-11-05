@@ -637,7 +637,9 @@ def scan_text_files():
     """
     files = []
     for base, dirs, names in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if d not in {".git", "node_modules", "__pycache__"}]
+        # `archive/` 是移出任务范围的旧学科：**留在库里但不参与校验**，
+        # 也不该因为它的旧链接把主库判红。
+        dirs[:] = [d for d in dirs if d not in {".git", "node_modules", "__pycache__", "archive"}]
         for n in names:
             if n.endswith((".md", ".yml", ".yaml")):
                 files.append(Path(base) / n)
@@ -2643,8 +2645,6 @@ def generated_blocks(objects, events):
         "README.en.md": render_stats_block(index),
         "knowledge/README.md": render_subject_block(index),
         "knowledge/README.en.md": render_subject_block_en(index),
-        "knowledge/physics/README.md": render_physics_methods_block(index),
-        "knowledge/physics/README.en.md": render_physics_methods_block(index, english=True),
         "START.md": render_subject_overview_block(index),
         "START.en.md": render_subject_overview_block(index, en=True),
         "docs/RULES.md": render_rules_block(),
@@ -2654,6 +2654,11 @@ def generated_blocks(objects, events):
         "llms.txt": render_machine_files_block(built),
         "llms.en.txt": render_machine_files_block(built, en=True),
     }
+    # 物理 README 与覆盖度页随学科一起归档：存在才生成，否则跳过（不再要求文件必须在）。
+    for rel, body in (("knowledge/physics/README.md", render_physics_methods_block(index)),
+                      ("knowledge/physics/README.en.md", render_physics_methods_block(index, english=True))):
+        if (ROOT / rel).exists():
+            blocks[rel] = body
     cov = render_coverage_block()
     if cov:
         blocks["knowledge/physics/coverage/README.md"] = cov

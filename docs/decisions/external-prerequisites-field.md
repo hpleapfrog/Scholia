@@ -54,10 +54,10 @@ Issue #17 的选项 1 原文写的是「自由文本字段」。实现时改成�
 
 | `标识` | 名称 | 学科 · 学段 | 条目 | 来源 |
 |---|---|---|---|---|
-| `angle` | 几何中的角 | 数学 · 初中 | [光的反射](../../knowledge/physics/concepts/光的反射.md) · [反射-BL-几何前提](../../knowledge/physics/methods/光的反射-BL-几何前提.md) · [光的折射](../../knowledge/physics/concepts/光的折射.md) · [折射-BL-几何前提与n大于1](../../knowledge/physics/methods/折射-BL-几何前提与n大于1.md) | `ev-026` / `ev-038` |
-| `inverse-trig` | 反三角函数 | 数学 · 高中 | [光的折射](../../knowledge/physics/concepts/光的折射.md) | `ev-038` |
-| `vector` | 矢量与矢量加法 | 数学 · 高中 | [力（高中）](../../knowledge/physics/concepts/力-高中.md) · [加速度](../../knowledge/physics/concepts/加速度.md) | `ev-041` / `ev-039` |
-| `angular-velocity-vector` | 角速度的矢量方向（右手定则） | 物理 · 高中 | [匀速圆周运动](../../knowledge/physics/concepts/匀速圆周运动.md) | `ev-080` |
+| `angle` | 几何中的角 | 数学 · 初中 | [光的反射](../../archive/knowledge/physics/concepts/光的反射.md) · [反射-BL-几何前提](../../archive/knowledge/physics/methods/光的反射-BL-几何前提.md) · [光的折射](../../archive/knowledge/physics/concepts/光的折射.md) · [折射-BL-几何前提与n大于1](../../archive/knowledge/physics/methods/折射-BL-几何前提与n大于1.md) | `ev-026` / `ev-038` |
+| `inverse-trig` | 反三角函数 | 数学 · 高中 | [光的折射](../../archive/knowledge/physics/concepts/光的折射.md) | `ev-038` |
+| `vector` | 矢量与矢量加法 | 数学 · 高中 | [力（高中）](../../archive/knowledge/physics/concepts/力-高中.md) · [加速度](../../archive/knowledge/physics/concepts/加速度.md) | `ev-041` / `ev-039` |
+| `angular-velocity-vector` | 角速度的矢量方向（右手定则） | 物理 · 高中 | [匀速圆周运动](../../archive/knowledge/physics/concepts/匀速圆周运动.md) | `ev-080` |
 
 - **`angle` 4 条、`vector` 2 条**——这正是「反复出现 ⇒ 考虑建节点」要抓的形状。
 - 英文译本同步迁移；`名称` 译成英文，`标识` / `学科` / `学段` / `来源` 与中文一致。

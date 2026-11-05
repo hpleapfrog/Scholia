@@ -9,18 +9,9 @@
 <!-- kbcheck:begin -->
 | Subject | Entries |
 |---|---|
-| [Physics](physics/README.en.md) | 370 |
-| [Life](life/README.en.md) | 8 |
-| [Medicine](medicine/README.en.md) | 8 |
-| [Geography](geography/README.en.md) | 6 |
-| [Science](science/README.en.md) | 1 |
-| [Transport](transport/README.en.md) | 4 |
-| [Computing](computing/README.en.md) | 29 |
-| [Economics](economics/README.en.md) | 8 |
-| [Law](law/README.en.md) | 4 |
-| [Mathematics](mathematics/README.en.md) | 308 |
+| [Medicine](medicine/README.en.md) | 25 |
 | [Events (top level)](../events/README.en.md) | 2 |
-| **Total** | **746** |
+| **Total** | **25** |
 <!-- kbcheck:end -->
 
 > [!NOTE]
@@ -87,7 +78,7 @@ author `@alice` plus constructed classroom data) were rewritten or deleted; thei
 > CC BY-NC-SA and may only be cited by locator. **Collect from CC BY sources first.**
 
 > [!IMPORTANT]
-> **That clean-up was not just a rename.** While writing [analogy choice varies by level](physics/claims/analogy-by-stage.en.md)
+> **That clean-up was not just a rename.** While writing [analogy choice varies by level](../archive/knowledge/physics/claims/analogy-by-stage.en.md)
 > I nearly cited an example entry as evidence — **example entries pollute inference**, they are not
 > just placeholders. One of them ("voltage is like water speed") probably had the right conclusion
 > but invented evidence: **backing a true conclusion with fabricated data is still fabrication.**

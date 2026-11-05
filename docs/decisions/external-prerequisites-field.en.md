@@ -56,10 +56,10 @@ were found by manual grep in the first place.
 
 | `标识` | Name | Subject · stage | Entries | Source |
 |---|---|---|---|---|
-| `angle` | the geometric angle | Mathematics · junior secondary | [Reflection](../../knowledge/physics/concepts/reflection-of-light.en.md) · [reflection BL method](../../knowledge/physics/methods/reflection-bl-geometry.en.md) · [Refraction](../../knowledge/physics/concepts/refraction.en.md) · [refraction BL method](../../knowledge/physics/methods/refraction-bl-geometry.en.md) | `ev-026` / `ev-038` |
-| `inverse-trig` | inverse trigonometric functions | Mathematics · senior secondary | [Refraction](../../knowledge/physics/concepts/refraction.en.md) | `ev-038` |
-| `vector` | vectors and vector addition | Mathematics · senior secondary | [Force (senior)](../../knowledge/physics/concepts/force.en.md) · [Acceleration](../../knowledge/physics/concepts/acceleration.en.md) | `ev-041` / `ev-039` |
-| `angular-velocity-vector` | vector direction of angular velocity (right-hand rule) | Physics · senior secondary | [Uniform circular motion](../../knowledge/physics/concepts/uniform-circular-motion.en.md) | `ev-080` |
+| `angle` | the geometric angle | Mathematics · junior secondary | [Reflection](../../archive/knowledge/physics/concepts/reflection-of-light.en.md) · [reflection BL method](../../archive/knowledge/physics/methods/reflection-bl-geometry.en.md) · [Refraction](../../archive/knowledge/physics/concepts/refraction.en.md) · [refraction BL method](../../archive/knowledge/physics/methods/refraction-bl-geometry.en.md) | `ev-026` / `ev-038` |
+| `inverse-trig` | inverse trigonometric functions | Mathematics · senior secondary | [Refraction](../../archive/knowledge/physics/concepts/refraction.en.md) | `ev-038` |
+| `vector` | vectors and vector addition | Mathematics · senior secondary | [Force (senior)](../../archive/knowledge/physics/concepts/force.en.md) · [Acceleration](../../archive/knowledge/physics/concepts/acceleration.en.md) | `ev-041` / `ev-039` |
+| `angular-velocity-vector` | vector direction of angular velocity (right-hand rule) | Physics · senior secondary | [Uniform circular motion](../../archive/knowledge/physics/concepts/uniform-circular-motion.en.md) | `ev-080` |
 
 - **`angle` in 4 entries, `vector` in 2** — exactly the shape "recurrence ⇒ consider a node" is meant to catch.
 - The English editions migrated in step; `名称` is translated, while `标识` / `学科` / `学段` / `来源`

@@ -110,8 +110,8 @@ They satisfy `u_p < u_mean < u_rms`. A high-school problem that says "average sp
 | Prerequisite | [Temperature and temperature scales](temperature-and-scales.en.md) — postulate 5 uses kelvin temperature; Celsius cannot enter `⟨KE⟩ = (3/2)k_BT` directly |
 | Prerequisite | [Gas laws and the ideal-gas equation](gas-laws-and-ideal-gas-equation.en.md) — the empirical regularities KMT is meant to explain; `pV = nRT` is the model's macroscopic counterpart |
 | Follow-up | Solids and liquids (not yet built in this library) — drops "no intermolecular forces" and discusses intermolecular forces and condensed phases |
-| Follow-up | [Second law of thermodynamics](../../knowledge/physics/concepts/thermodynamic-second-law.en.md) — the microscopic basis of macroscopic irreversibility |
-| Follow-up | [Statistical interpretation of entropy](../../knowledge/physics/concepts/statistical-interpretation-of-entropy.en.md) — microstate counting, Boltzmann entropy, and temperature |
+| Follow-up | [Second law of thermodynamics](../../archive/knowledge/physics/concepts/thermodynamic-second-law.en.md) — the microscopic basis of macroscopic irreversibility |
+| Follow-up | [Statistical interpretation of entropy](../../archive/knowledge/physics/concepts/statistical-interpretation-of-entropy.en.md) — microstate counting, Boltzmann entropy, and temperature |
 | Recorded gap | **The van der Waals equation and compressibility factor for real gases**, **mean free path and transport coefficients (diffusion, thermal conductivity, viscosity)**, **full equipartition of rotational/vibrational degrees of freedom**, **quantum degenerate gases**, and **plasmas** are not built; this entry stops at the ideal-gas model |
 
 ## Argument

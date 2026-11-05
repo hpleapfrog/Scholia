@@ -26,7 +26,7 @@ The signature census is the other half of the same fact: across `author` fields 
 `@hpleapfrog` appears **1,379 times**, while `@alice` appears once, `@bob` once, `@carol` twice —
 **and those three exist only inside historical changelog rows** (the example entries were cleaned on
 2026-10-05; see the ⚠️ section of
-[类比选择与学段相关](../../knowledge/physics/claims/analogy-by-stage.en.md)).
+[类比选择与学段相关](../../archive/knowledge/physics/claims/analogy-by-stage.en.md)).
 **"Single contributor" is not rhetoric; it is a count.**
 
 ## Why "there are attacks" is not "there is a dispute"
@@ -35,10 +35,10 @@ The corpus contains **4** `攻击` edges, landing on argument anchors of **4** e
 
 | Attacked argument | Attacker | Attacker status | Current status of the attacked entry |
 |---|---|---|---|
-| `功与功率.md#k15` | [attack: work and power criterion](../../knowledge/physics/claims/attacks/work-power.en.md) | 暂定确认 | 需复审 |
-| `教材内建分组教学变体.md#a1` | [attack: built-in tiered variants](../../knowledge/physics/claims/attacks/tieredguidance.en.md) | 暂定确认 | 需复审 |
-| `运动物体自然慢下来.md#m1` | [attack: objects slow naturally](../../knowledge/physics/claims/attacks/slownaturally.en.md) | 暂定确认 | 需复审 |
-| `类比选择与学段相关.md#a1` | [two samples cannot attribute](../../knowledge/physics/claims/analogy-stage-attribution-invalid.en.md) | 待审 | **失据** |
+| `功与功率.md#k15` | [attack: work and power criterion](../../archive/knowledge/physics/claims/attacks/work-power.en.md) | 暂定确认 | 需复审 |
+| `教材内建分组教学变体.md#a1` | [attack: built-in tiered variants](../../archive/knowledge/physics/claims/attacks/tieredguidance.en.md) | 暂定确认 | 需复审 |
+| `运动物体自然慢下来.md#m1` | [attack: objects slow naturally](../../archive/knowledge/physics/claims/attacks/slownaturally.en.md) | 暂定确认 | 需复审 |
+| `类比选择与学段相关.md#a1` | [two samples cannot attribute](../../archive/knowledge/physics/claims/analogy-stage-attribution-invalid.en.md) | 待审 | **失据** |
 
 **All four attacked entries satisfy the "≥2 arguments" structural precondition for `争议`** —
 which means what separates them from `争议` is not formatting but
@@ -59,8 +59,8 @@ status", and this record is where it stopped.**
 
 | Entry | The road to `失据` | Inbound `攻击` edge? |
 |---|---|---|
-| [analogy by stage](../../knowledge/physics/claims/analogy-by-stage.en.md) | its argument was knocked down by **another proposition's attack** | ✅ yes |
-| [Ohm's law](../../knowledge/physics/claims/ohm-law.en.md) | its A1 basis `ev-002` was judged **fabricated data and voided** — **no attacker, it collapsed on its own** | ❌ no |
+| [analogy by stage](../../archive/knowledge/physics/claims/analogy-by-stage.en.md) | its argument was knocked down by **another proposition's attack** | ✅ yes |
+| [Ohm's law](../../archive/knowledge/physics/claims/ohm-law.en.md) | its A1 basis `ev-002` was judged **fabricated data and voided** — **no attacker, it collapsed on its own** | ❌ no |
 
 > [!NOTE]
 > **`失据` needs no opponent.** This matters for open item 2: it shows that

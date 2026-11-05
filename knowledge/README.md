@@ -7,18 +7,9 @@
 <!-- kbcheck:begin -->
 | 学科 | 条目数 |
 |---|---|
-| [物理](physics/README.md) | 370 |
-| [生活](life/README.md) | 8 |
-| [医学](medicine/README.md) | 8 |
-| [地理](geography/README.md) | 6 |
-| [科学](science/README.md) | 1 |
-| [交通](transport/README.md) | 4 |
-| [计算机](computing/README.md) | 29 |
-| [经济](economics/README.md) | 8 |
-| [法律](law/README.md) | 4 |
-| [数学](mathematics/README.md) | 308 |
+| [医学](medicine/README.md) | 25 |
 | [事件（顶层）](../events/README.md) | 2 |
-| **合计** | **746** |
+| **合计** | **25** |
 <!-- kbcheck:end -->
 
 > [!NOTE]
@@ -82,7 +73,7 @@
 > **采集应优先在 CC BY 的源上做。**
 
 > [!IMPORTANT]
-> **这次清理不只是「换名字」。** 写 [类比选择与学段相关](physics/claims/类比选择与学段相关.md) 时，
+> **这次清理不只是「换名字」。** 写 [类比选择与学段相关](../archive/knowledge/physics/claims/类比选择与学段相关.md) 时，
 > 我差点把示例条目当作证据引用——**示例条目会污染推论**，而不只是占位。
 > 其中「把电压当成水流速度」那条，结论很可能是对的，但证据是编造的：
 > **拿编造的数据支撑一个正确结论，仍然是造假。** 已替换为教材自身有记录的说法。

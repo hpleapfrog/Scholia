@@ -71,4 +71,4 @@
 **不接受的改法**：放宽 `路径`，允许环节内联步骤。那会让「路径 = 知识点的编排」这个定义失效，
 而 `check_path_steps` 正是这个定义的机械版本。
 
-> 两次探针的完整失败信息见 [`knowledge/生活/README.md`](../../knowledge/life/README.md)。
+> 两次探针的完整失败信息见 [`knowledge/生活/README.md`](../../archive/knowledge/life/README.md)。

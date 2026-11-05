@@ -132,8 +132,17 @@ def quotes_of(path, include_blockquotes=False):
             body = " ".join(re.sub(r"^>\s?", "", ln) for ln in raw.split("\n"))
             inner = re.findall(r"`([^`\n]{%d,400})`" % MIN_CHARS, body)
             found.extend((block.start(), q) for q in inner)
-            if not inner:
-                found.append((block.start(), body.strip("`").strip()))
+            if inner:
+                continue
+            # 中文里夹英文原句（`> 报告的原文是：The criteria …`）：整段拿去比必然不中，
+            # 因为中文不是原文的一部分。**只取其中的英文串**，那才是被引的东西。
+            ascii_ratio = sum(1 for c in body if ord(c) < 128) / max(1, len(body))
+            if ascii_ratio < 0.9:
+                runs = re.findall(r"[A-Za-z0-9][\x20-\x7e]{%d,400}" % (MIN_CHARS - 1), body)
+                found.extend((block.start(), r.strip()) for r in runs)
+                if runs:
+                    continue
+            found.append((block.start(), body.strip("`").strip()))
     out, seen = [], set()
     for pos, q in sorted(found):
         q = q.strip()

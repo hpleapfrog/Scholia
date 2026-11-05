@@ -1,5 +1,11 @@
 # Scholia
 
+> [!IMPORTANT]
+> **Since 2026-11-05 this library is scoped to medical governance guidelines only.** The other
+> nine subjects were moved to [`archive/`](archive/) — not indexed, not validated, reversible.
+> **The "cross-disciplinary" description below is historical** and no longer describes the task.
+
+
 > **A source-traceable knowledge base for AI and humans.**
 > Every entry carries three things — **its source**, **its status**, and **the rebuttals against it**.
 >
@@ -123,12 +129,12 @@ this repository satisfies attribution.
 <!-- kbcheck:begin -->
 | | |
 |---|---|
-| 对象 / Objects | **746** —— 教法 methods 62 · 知识点 concepts 71 · 命题 claims 579 · 误解 misconceptions 9 · 资源 resources 8 · 路径 paths 17 |
+| 对象 / Objects | **25** —— 命题 claims 25 |
 | 事件 / Events | **2** —— 顶层 `events/`，与对象**分开**（无论证、无真值） |
-| 学科 / Subjects | 物理 Physics 370 · 生活 Life 8 · 医学 Medicine 8 · 地理 Geography 6 · 科学 Science 1 · 交通 Transport 4 · 计算机 Computing 29 · 经济 Economics 8 · 法律 Law 4 · 数学 Mathematics 308 |
-| 证据 / Evidence | 188（含作废 / void 5） |
-| 溯源 / Provenance | **738 / 746（99%）读到全文或摘要** —— T4 733 · T3 5 · T2 8 |
-| 已确证 / Confirmed | **527** |
+| 学科 / Subjects | 医学 Medicine 25 |
+| 证据 / Evidence | 190（含作废 / void 5） |
+| 溯源 / Provenance | **24 / 25（96%）读到全文或摘要** —— T4 3 · T3 21 · T2 1 |
+| 已确证 / Confirmed | **2** |
 <!-- kbcheck:end -->
 
 Sources: OpenStax *Physics* (**CC BY**) · Utah Grade-7 Science · publisher errata · AASM clinical
@@ -160,9 +166,9 @@ Closed issues / PRs: see [merged pull requests](https://github.com/hpleapfrog/Sc
    "5 minutes" is now fixed** (2026-10-20, by the author): **one bilingual pair** — Chinese body + English
    translation + both registers — **not** one language. [`templates/`](templates/README.en.md)
    and `tools/new_entry.py` are in place (structure to the script, content to the human). The first trial
-   ([area under a velocity–time graph](knowledge/physics/claims/velocity-time-graph-area.en.md)) left only a
+   ([area under a velocity–time graph](archive/knowledge/physics/claims/velocity-time-graph-area.en.md)) left only a
    total: about 12 minutes — **2.4× the fixed budget**. The second (2026-10-20,
-   [HTTP 451 refuses access for legal reasons](knowledge/computing/claims/http-451-legal-unavailable.en.md))
+   [HTTP 451 refuses access for legal reasons](archive/knowledge/computing/claims/http-451-legal-unavailable.en.md))
    was **stamped per phase**: **13 min 16 s of wall clock for the bilingual pair — at most 2.6× the budget,
    not met**. Inside that, topic selection → Chinese body finished took **4 min 9 s** (an uninterrupted
    segment); the **9 min 7 s** from there to the finished index went almost entirely to the **bilingual
