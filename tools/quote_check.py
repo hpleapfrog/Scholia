@@ -82,7 +82,18 @@ def normalize(s):
         s = s.replace(a, b)
     # 下标写法在 Markdown 里是 `V_rms`、在 cnxml 里是 `Vrms`：下划线不是文字，去掉再比。
     s = s.replace("_", "")
+    # 上标与数量级：`3.0×10⁶` 与 `3.0× 10 6` 是**同一个数**的两种排法，
+    # 而 cnxml 的 MathML 一定把它拆成 `10` + `<m:mn>6</m:mn>`。不归一化，物理条目会整片假阴性。
+    s = s.translate(str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789"))
+    # **先压空白，再处理「数字之间的空格」**：MathML 里 `10` 与 `6` 之间隔着
+    # `<m:mspace>` 与换行，压缩前那是一个 `\n   `，不是空格——顺序反了就永远匹配不到。
     s = re.sub(r"\s+", " ", s)
+    s = re.sub(r"\s*([×÷])\s*", r"\1", s)
+    s = re.sub(r"(?<=[0-9]) (?=[0-9])", "", s)
+    # 等号两侧的空格：`p = hλ` 与 `p=hλ` 是同一个式子。教科书排印与转写常不一样。
+    s = re.sub(r" ?= ?", "=", s)
+    # `[BL] [OL] [AL]` 与 `[bl][ol][al]` 是同一串标记的两种排法：方括号周围有没有空格不算差别。
+    s = re.sub(r"[ \t]*([\[\]])[ \t]*", r"\1", s)
     return s.strip().lower()
 
 
@@ -185,6 +196,7 @@ def modules_from_evidence(entry):
 def check(entry, sources, threshold):
     """逐条引文在来源里找。返回结果列表（含最接近的原文句）。"""
     sents, joined = [], " ".join(t for _l, t in sources)
+    joined_nospace = joined.replace(" ", "")
     for _label, text in sources:
         sents.extend(sentences(text))
     results = []
@@ -193,9 +205,22 @@ def check(entry, sources, threshold):
         if q and q in joined:
             results.append({**item, "命中": True, "相似度": 1.0, "原文": item["quote"]})
             continue
+        # 句末标点不算差别：原文是陈述句 `…charge.`、条目写成疑问句 `…charge?` 的情形真实存在，
+        # 而那是**转写的标点**，不是改动了原文。只对句末生效，句中一个字都不能动。
+        # 长引文里若只差**空格排布**（MathML 把下标拆出来就会这样），按去空格再比一次。
+        if len(q) >= 40 and q.replace(" ", "") in joined.replace(" ", ""):
+            results.append({**item, "命中": True, "相似度": 1.0,
+                            "原文": "（仅空格排布不同：" + item["quote"][:60] + "）"})
+            continue
+        if q and q.rstrip(" .?!") in joined:
+            results.append({**item, "命中": True, "相似度": 1.0,
+                            "原文": "（句末标点不同：" + item["quote"][:60] + "）"})
+            continue
         # 引文里用 `...` / `…` 省略中间部分：**每一段都要在原文里**，否则不算命中。
-        parts = [normalize(x) for x in re.split(r"\.{3}|…", q) if len(normalize(x)) >= 12]
-        if len(parts) > 1 and all(p in joined for p in parts):
+        parts = [normalize(x).rstrip(" .?!") for x in re.split(r"\.{3}|…", q)
+                 if len(normalize(x)) >= 8]
+        if parts and all(p in joined or (len(p) >= 30 and p.replace(" ", "") in joined_nospace)
+                         for p in parts):
             results.append({**item, "命中": True, "相似度": 1.0,
                             "原文": "（分段命中：" + " / ".join(x[:40] for x in parts) + "）"})
             continue

@@ -2,7 +2,7 @@
 id: kb:geog:hk-ssgeog3e-vi-map-sources
 type: 命题
 title: "Erratum: map provenance and map-approval numbers missing (p.vi)"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-05
 updated: 2026-10-05

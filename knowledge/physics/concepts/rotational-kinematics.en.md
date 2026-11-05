@@ -2,7 +2,7 @@
 id: kb:physics:kp-rotational-kinematics
 type: 知识点
 title: "Angular acceleration and rotational kinematics"
-status: 待审
+status: 有效
 author: "@hpleapfrog"
 created: 2026-10-18
 updated: 2026-10-18

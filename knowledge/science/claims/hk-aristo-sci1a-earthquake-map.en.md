@@ -2,7 +2,7 @@
 id: kb:science:hk-aristo-sci1a-earthquake-map
 type: 命题
 title: "Erratum: the 1A volume's earthquake-distribution map has an unreliable data source"
-status: 待审
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-05
 updated: 2026-10-05

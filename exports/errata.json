@@ -28,7 +28,7 @@
    "title": "勘误：p.13「道路的度」应为「道路的長度」",
    "locator": "OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，PDF",
    "url": "https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf",
-   "status": "待审",
+   "status": "已确证",
    "tier": "T4",
    "path": "knowledge/geography/claims/勘误-道路长度漏字.md"
   },
@@ -39,7 +39,7 @@
    "title": "勘误：p.45「清水灣」地圖摘錄指涉有誤",
    "locator": "OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，PDF",
    "url": "https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf",
-   "status": "待审",
+   "status": "已确证",
    "tier": "T4",
    "path": "knowledge/geography/claims/勘误-清水湾地图摘录.md"
   },
@@ -50,7 +50,7 @@
    "title": "勘误：p.56「河盆等級」应为「河流等級」",
    "locator": "OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，PDF",
    "url": "https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf",
-   "status": "待审",
+   "status": "已确证",
    "tier": "T4",
    "path": "knowledge/geography/claims/勘误-河盆应为河流.md"
   },
@@ -61,7 +61,7 @@
    "title": "勘误：「橫切面 cross-section」应为「cross section」",
    "locator": "OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，PDF",
    "url": "https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf",
-   "status": "待审",
+   "status": "已确证",
    "tier": "T4",
    "path": "knowledge/geography/claims/勘误-横切面术语.md"
   },
@@ -72,7 +72,7 @@
    "title": "勘误：地图出处与审图号缺失（p.vi）",
    "locator": "OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，PDF",
    "url": "https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf",
-   "status": "待审",
+   "status": "已确证",
    "tier": "T4",
    "path": "knowledge/geography/claims/勘误-关于本书地图出处.md"
   },
@@ -83,7 +83,7 @@
    "title": "勘误：地形图等高线标注存在系统性错误（至少 6 处）",
    "locator": "OUP《高中活學地理（第三版）》勘誤表，重印兼訂正 2024，PDF",
    "url": "https://eresources.oupchina.com.hk/debundling/corrigenda/ssgeog3e_re_corrigenda_core_c_2024.pdf",
-   "status": "待审",
+   "status": "已确证",
    "tier": "T4",
    "path": "knowledge/geography/claims/勘误-等高线标注系统性错误.md"
   },
@@ -5682,7 +5682,7 @@
    "title": "勘误：1A 冊地震分布图数据来源不可靠",
    "locator": "雅集《科學新世紀 1A》勘誤表，ZIP",
    "url": "https://e-aristo.hk/t/downloads/science/scicent_amendments_2024_c.zip",
-   "status": "待审",
+   "status": "已确证",
    "tier": "T4",
    "path": "knowledge/science/claims/勘误-地震分布图数据来源.md"
   }
