@@ -2,10 +2,10 @@
 id: kb:computing:http-451-legal-unavailable
 type: 命题
 title: HTTP 451 因法律要求拒绝访问且不暗示资源存在与否
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-11-05
 scope:
   学科: 计算机 · 标准与规范
   学段: 不限
@@ -140,6 +140,13 @@ license: CC-BY-SA-4.0
 - [ ] 证明 §15.5 的小节列表之外，RFC 9110 正文另有对 451 的定义或规范性引用
 - [ ] 指出正文把 SHOULD 读成了义务（§3 的说明要求是 SHOULD，不是 MUST）
 
+## 复核记录
+
+- **模型**：DeepSeek-V4.1-Flash（`tools/batch_review.py`）
+- **日期**：2026-11-05
+- **引文核验**：取回来源页面，8 条英文引文、8 条命中
+- **限制**：只核了「来源可访问、引文出现在页面中」；**未判断**该规定的适用条件在条目里是否被完整转述（这需要读全文）
+
 ## 变更记录
 
 | 日期 | 操作 | 依据 | 谁 |
@@ -147,3 +154,4 @@ license: CC-BY-SA-4.0
 | 2026-10-20 | 建立条目；登记 ev-153；按 §3–§6 归集四条规则与一条 MUST | ev-153 · ev-054 · ev-057 | @hpleapfrog |
 | 2026-10-20 | 加一条 `支持` 边指向[注册表命题](HTTP状态码的完整清单在IANA注册表不在RFC9110里.md)的 A1；复算 RFC 9110 文本（行数与哈希与 ev-054 一致） | A2 | @hpleapfrog |
 | 2026-10-20 | **订正本条的 RFC 7725 标题**：原先写成了凭记忆的版本（《An HTTP Status Code for Indicating Denials of Access…》），**不是原文标题**；按 ev-153 登记行与下载文件头部订正为《An HTTP Status Code to Report Legal Obstacles》 | ev-153 | @hpleapfrog |
+| 2026-11-05 | 复核（agent）：已确证；见上方「复核记录」 | 逐条核对引文/记录 | DeepSeek-V4.1-Flash（agent） |

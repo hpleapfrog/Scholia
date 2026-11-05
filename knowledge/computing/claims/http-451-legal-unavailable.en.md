@@ -2,7 +2,7 @@
 id: kb:computing:http-451-legal-unavailable
 type: 命题
 title: "HTTP 451 denies access because of a legal demand, and implies neither that the resource exists nor that it doesn't"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-20
 updated: 2026-10-20
