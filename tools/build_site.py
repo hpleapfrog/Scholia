@@ -440,12 +440,16 @@ const STATUS_TONE = __TONES__;
 
 /* ── 头部 KPI：全部来自 index.json 的统计 ── */
 const st = D.stats, tiers = st['按溯源档'] || {};
+const gl = D.entries.filter(e => /指南|guideline|GOLD|KDIGO|IDSA|WHO|ESC/i.test(e.title + ' ' + (e.id||''))).length;
+const graded = D.entries.filter(e => /\\([12][ABCD]\\)/.test(e.title)).length;
 const deep = (tiers['T4']||0) + (tiers['T3']||0);
 const total = st['对象总数'] || D.entries.length;
 $('#kpis').innerHTML = [
   ['对象', total, ''],
   ['全文/摘要核读', Math.round(100*deep/total) + '%', 'hl'],
   ['已确证', st['已确证条数'] ?? 0, ''],
+  ['指南条目', gl, 'hl'],
+  ['带 GRADE', graded, ''],
   ['证据', st['证据条数'] ?? 0, ''],
   ['学科', Object.keys(st['按学科']||{}).length, ''],
 ].map(([k,v,c]) => `<div class="kpi ${c}"><b>${esc(v)}</b><i>${esc(k)}</i></div>`).join('');
