@@ -1,5 +1,11 @@
 # Scholia
 
+> [!IMPORTANT]
+> **Since 2026-11-05 this library is scoped to medical governance guidelines only.** The other
+> nine subjects were moved to [`archive/`](archive/) — not indexed, not validated, reversible.
+> **The "cross-disciplinary" description below is historical** and no longer describes the task.
+
+
 > **A source-traceable knowledge base for AI and humans.**
 > Every entry carries three things — **its source**, **its status**, and **the rebuttals against it**.
 >

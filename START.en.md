@@ -1,5 +1,11 @@
 # Start Here
 
+> [!IMPORTANT]
+> **Since 2026-11-05 this library is scoped to medical governance guidelines only.** The other
+> nine subjects were moved to [`archive/`](archive/) — not indexed, not validated, reversible.
+> **The "cross-disciplinary" description below is historical** and no longer describes the task.
+
+
 > 中文 → [**START.md**](START.md)
 
 > [!NOTE]
