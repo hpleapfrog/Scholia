@@ -2,7 +2,7 @@
 id: kb:computing:prop-http-405-must-include-allow-header
 type: 命题
 title: "An HTTP 405 response MUST carry an Allow header, and is heuristically cacheable by default"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-12
 updated: 2026-10-12

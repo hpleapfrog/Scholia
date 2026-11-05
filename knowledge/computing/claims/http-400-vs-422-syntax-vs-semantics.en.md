@@ -2,7 +2,7 @@
 id: kb:computing:prop-http-400-vs-422-syntax-vs-semantics
 type: 命题
 title: "An HTTP 400 is a client error at the syntax or routing level; 422 is correct syntax that cannot be processed semantically"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-13
 updated: 2026-10-13

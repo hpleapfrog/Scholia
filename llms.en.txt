@@ -101,7 +101,7 @@
 <!-- kbcheck:begin -->
 | File | Holds | Entries | Whole file ≈ tokens |
 |---|---|---|---|
-| [`index.json`](index.json) | navigation + whether it may be cited | 746 objects · 2 events | **≈101k** |
+| [`index.json`](index.json) | navigation + whether it may be cited | 746 objects · 2 events | **≈102k** |
 | [`citations.json`](citations.json) | citation kit, **by id** | 748 entries | **≈163k** |
 | [`evidence.json`](evidence.json) | evidence registry | 188 entries | **≈38k** |
 

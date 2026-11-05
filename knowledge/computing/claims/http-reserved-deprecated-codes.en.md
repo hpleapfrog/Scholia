@@ -2,7 +2,7 @@
 id: kb:computing:prop-http-reserved-deprecated-codes
 type: 命题
 title: "HTTP 402 is 'reserved for future use', 305 is deprecated and 306 is unused: three registered codes with no semantics"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-18
 updated: 2026-10-18

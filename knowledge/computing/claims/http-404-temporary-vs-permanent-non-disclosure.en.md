@@ -2,7 +2,7 @@
 id: kb:computing:prop-http-404-temporary-vs-permanent-non-disclosure
 type: 命题
 title: "An HTTP 404 does not say whether the lack is temporary or permanent, and is also used to avoid disclosing that a resource exists"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-18
 updated: 2026-10-18

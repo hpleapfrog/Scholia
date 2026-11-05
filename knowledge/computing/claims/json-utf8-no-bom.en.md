@@ -2,7 +2,7 @@
 id: kb:computing:json-utf8-no-bom
 type: 命题
 title: "JSON exchanged between systems must use UTF-8 (closed ecosystems excepted), and network-transmitted JSON must not begin with a BOM"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-21
 updated: 2026-10-21

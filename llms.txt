@@ -99,7 +99,7 @@
 <!-- kbcheck:begin -->
 | 文件 | 装什么 | 条目 | 整份 ≈ tokens |
 |---|---|---|---|
-| [`index.json`](index.json) | 导航 + 能不能引用 | 746 条对象 · 2 条事件 | **≈101k** |
+| [`index.json`](index.json) | 导航 + 能不能引用 | 746 条对象 · 2 条事件 | **≈102k** |
 | [`citations.json`](citations.json) | 引用材料，**按 id 取** | 748 条 | **≈163k** |
 | [`evidence.json`](evidence.json) | 证据登记 | 188 条 | **≈38k** |
 

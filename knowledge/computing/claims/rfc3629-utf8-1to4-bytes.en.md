@@ -2,7 +2,7 @@
 id: kb:computing:rfc3629-utf8-1to4-bytes
 type: 命题
 title: "RFC 3629 limits valid UTF-8 to 1-4 bytes and forbids encoding surrogates or code points above U+10FFFF"
-status: 暂定确认
+status: 已确证
 author: "@hpleapfrog"
 created: 2026-10-21
 updated: 2026-10-21

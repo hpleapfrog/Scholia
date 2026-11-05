@@ -174,6 +174,25 @@ def check_modules(entry_path, ids):
 
 
 # ── 通道 3：官方文件 / 网页 ────────────────────────────────────────────────
+def _strip_page_furniture(text, url):
+    """去掉 RFC / 打印排版每页重复的页眉页脚。
+
+    **引文跨页就被切断**：`…MUST NOT…` 中间插一行 `RFC 9110  HTTP Semantics  June 2022`，
+    整串就再也匹配不上。这不是引文错，是**分页**——不处理就会把 39 条正确引文判成假的。
+    """
+    text = text.replace("\r\n", "\n").replace("\f", "\n")
+    if ".txt" in url:
+        kept = []
+        for line in text.split("\n"):
+            if re.match(r"^\s*RFC \d{3,5}\s+.*\s\d{4}\s*$", line):
+                continue
+            if line.startswith("Internet Engineering Task Force") or line.startswith("Stream:"):
+                continue
+            kept.append(line)
+        text = "\n".join(kept)
+    return text
+
+
 def check_urls(entry_path, ids):
     urls = [EVID.get(e, {}).get("链接") for e in ids if EVID.get(e, {}).get("链接")]
     urls = [u for u in urls if u and not u.startswith("https://openstax.org/apps/cms")]
@@ -183,7 +202,7 @@ def check_urls(entry_path, ids):
         text, err = fetch(url, ".html")
         if text is None:
             continue
-        norm = qc.normalize(text)
+        norm = qc.normalize(_strip_page_furniture(text, url))
         quotes = qc.quotes_of(Path(entry_path), include_blockquotes=True)
         hit = sum(1 for q in quotes if qc.normalize(q["quote"]) in norm)
         return {"ok": bool(quotes) and hit == len(quotes), "url": url,
@@ -247,6 +266,8 @@ def main():
     ap = argparse.ArgumentParser(description="批量机审：把「待审」逐条核完或如实留下")
     ap.add_argument("--apply", action="store_true", help="写盘（默认只报告）")
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--status", default="待审",
+                    help="要复核的状态，逗号分隔（默认 待审）")
     args = ap.parse_args()
 
     global EVID
@@ -254,7 +275,8 @@ def main():
     cites = load("citations.json")["by_id"]
     EVID = load("evidence.json")["entries"]
 
-    todo = [o for o in index["objects"] if o["status"] == "待审"]
+    wanted = {x.strip() for x in args.status.split(",") if x.strip()}
+    todo = [o for o in index["objects"] if o["status"] in wanted]
     if args.limit:
         todo = todo[:args.limit]
 
